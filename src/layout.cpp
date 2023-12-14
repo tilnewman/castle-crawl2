@@ -29,13 +29,13 @@ namespace castlecrawl2
 
     void Layout::setup(const GameConfig & config)
     {
-        m_screenRect.width = static_cast<float>(config.video_mode.width);
+        m_screenRect.width  = static_cast<float>(config.video_mode.width);
         m_screenRect.height = static_cast<float>(config.video_mode.height);
 
-        m_topRect = m_screenRect;
+        m_topRect        = m_screenRect;
         m_topRect.height = std::floor(m_screenRect.height * config.top_panel_height_ratio);
 
-        m_botRect = m_screenRect;
+        m_botRect     = m_screenRect;
         m_botRect.top = m_topRect.height;
         m_botRect.height -= m_botRect.top;
 
@@ -69,15 +69,6 @@ namespace castlecrawl2
                           util::findPowerOfTwoGreaterThan<unsigned>(mapPixelSizeMax.x) };
 
         const unsigned int textureDimmMax = sf::Texture::getMaximumSize();
-
-        std::cout << "map_cells_max=" << mapcellSizeMax << ", cell_size=" << cellSize
-                  << ", map_size_max=" << mapPixelSizeMax
-                  << ", map_texture_size=" << m_mapTextureSize
-                  << ", max_texture_dimm=" << textureDimmMax << std::endl;
-
-        M_CHECK(
-            (m_mapTextureSize.x <= textureDimmMax),
-            "required map texture size is beyond this graphics card's ability!");
     }
 
 } // namespace castlecrawl2
