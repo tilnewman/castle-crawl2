@@ -67,8 +67,6 @@ namespace castlecrawl2
         m_mapTextureSize =
             sf::Vector2u{ util::findPowerOfTwoGreaterThan<unsigned>(mapPixelSizeMax.x),
                           util::findPowerOfTwoGreaterThan<unsigned>(mapPixelSizeMax.x) };
-
-        const unsigned int textureDimmMax = sf::Texture::getMaximumSize();
     }
 
 } // namespace castlecrawl2
