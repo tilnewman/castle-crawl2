@@ -26,7 +26,7 @@ namespace castlecrawl2
 
         if (!isEnemyImageSummoner(enemyImage))
         {
-            using T = std::underlying_type_t<EnemyImage>;
+            using T    = std::underlying_type_t<EnemyImage>;
             enemyImage = static_cast<EnemyImage>(T(enemyImage) + random.zeroTo(T(5)));
         }
 
@@ -46,7 +46,11 @@ namespace castlecrawl2
 
     void Enemies::setup(const GameConfig & config)
     {
-        m_texture.loadFromFile((config.media_path / "image" / "enemies.png").string());
+        const bool loadResult =
+            m_texture.loadFromFile((config.media_path / "image" / "enemy.png").string());
+
+        M_CHECK(loadResult, "Unable to load enemy texture file.");
+
         m_texture.setSmooth(true);
     }
 
