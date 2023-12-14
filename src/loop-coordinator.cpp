@@ -95,7 +95,7 @@ namespace castlecrawl2
     {
         sf::Clock frameClock;
 
-        while (m_context.state.current().which() != State::Quit)
+        while (m_renderWindow.isOpen() && (m_context.state.current().which() != State::Quit))
         {
             handleEvents();
             update(frameClock.restart().asSeconds());
