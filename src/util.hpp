@@ -473,8 +473,8 @@ namespace util
 
         const std::size_t modeCountReturned{ count };
 
-        ss << separator << "(total_supported=" << modeCountOrig << ")";
-        ss << separator << "(total_listed=" << modeCountReturned << ")";
+        // ss << separator << "(total_supported=" << modeCountOrig << ")";
+        // ss << separator << "(total_listed=" << modeCountReturned << ")";
 
         return ss.str();
     }

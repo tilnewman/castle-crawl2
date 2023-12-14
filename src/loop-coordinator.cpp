@@ -142,7 +142,7 @@ namespace castlecrawl2
 
         if (!m_config.video_mode.isValid())
         {
-            std::cout << ".but that is an invalid mode.  Valid video modes at "
+            std::cout << "but that is an invalid mode.  Valid video modes at "
                       << sf::VideoMode::getDesktopMode().bitsPerPixel << "bpp:" << std::endl
                       << util::makeSupportedVideoModesString(true) << std::endl;
 
@@ -154,7 +154,7 @@ namespace castlecrawl2
         m_renderWindow.create(videoMode, "CastleCrawl2", sf::Style::Fullscreen);
 
         // sometimes the resolution of the window created does not match what was specified
-        const unsigned actualWidth = static_cast<unsigned>(m_renderWindow.getSize().x);
+        const unsigned actualWidth  = static_cast<unsigned>(m_renderWindow.getSize().x);
         const unsigned actualHeight = static_cast<unsigned>(m_renderWindow.getSize().y);
         if ((m_config.video_mode.width == actualWidth) &&
             (m_config.video_mode.height == actualHeight))
@@ -165,7 +165,7 @@ namespace castlecrawl2
         {
             std::cout << "Failed" << m_config.video_mode << ".  ";
 
-            m_config.video_mode.width = actualWidth;
+            m_config.video_mode.width  = actualWidth;
             m_config.video_mode.height = actualHeight;
 
             std::cout << "Using " << m_config.video_mode << " instead." << std::endl;
