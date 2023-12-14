@@ -208,7 +208,7 @@ namespace util
     [[nodiscard]] inline std::string containerToString(
         const Container_t & container,
         const std::string & separator = ",",
-        const std::string & wrap = {})
+        const std::string & wrap      = {})
     {
         std::ostringstream ss;
 
@@ -451,7 +451,7 @@ namespace util
         std::vector<sf::VideoMode> videoModes{ sf::VideoMode::getFullscreenModes() };
         std::reverse(std::begin(videoModes), std::end(videoModes));
 
-        const std::size_t modeCountOrig{ videoModes.size() };
+        // const std::size_t modeCountOrig{ videoModes.size() };
 
         std::size_t count{ 0 };
         std::ostringstream ss;
@@ -471,7 +471,7 @@ namespace util
             ++count;
         }
 
-        const std::size_t modeCountReturned{ count };
+        // const std::size_t modeCountReturned{ count };
 
         // ss << separator << "(total_supported=" << modeCountOrig << ")";
         // ss << separator << "(total_listed=" << modeCountReturned << ")";
@@ -1087,7 +1087,7 @@ namespace util
     [[nodiscard]] inline sf::RectangleShape makeRectangleShape(
         const sf::FloatRect & rect,
         const bool willColorFill = false,
-        const sf::Color & color = sf::Color::White)
+        const sf::Color & color  = sf::Color::White)
     {
         sf::RectangleShape rs;
 
@@ -1112,7 +1112,7 @@ namespace util
         sf::RenderTarget & target,
         const sf::FloatRect & rect,
         const bool willColorFill = false,
-        const sf::Color & color = sf::Color::White)
+        const sf::Color & color  = sf::Color::White)
     {
         target.draw(makeRectangleShape(rect, willColorFill, color));
     }
@@ -1120,7 +1120,7 @@ namespace util
     [[nodiscard]] inline sf::CircleShape makeCircleShape(
         const sf::Vector2f & position,
         const float radius,
-        const sf::Color & color = sf::Color::White,
+        const sf::Color & color      = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         sf::CircleShape cs;
@@ -1136,7 +1136,7 @@ namespace util
         sf::RenderTarget & target,
         const sf::Vector2f & position,
         const float radius,
-        const sf::Color & color = sf::Color::White,
+        const sf::Color & color      = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         target.draw(makeCircleShape(position, radius, color, pointCount));
@@ -1144,7 +1144,7 @@ namespace util
 
     [[nodiscard]] inline sf::CircleShape makeCircleShape(
         const sf::FloatRect & rect,
-        const sf::Color & color = sf::Color::White,
+        const sf::Color & color      = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         return makeCircleShape(
@@ -1425,10 +1425,10 @@ namespace util
     [[nodiscard]] std::string makePercentString(
         const T num,
         const U den,
-        const std::string & prefix = {},
-        const std::string & postfix = {},
+        const std::string & prefix      = {},
+        const std::string & postfix     = {},
         const std::size_t afterDotCount = 1,
-        const std::string & wrap = "()")
+        const std::string & wrap        = "()")
     {
         std::ostringstream ss;
 
