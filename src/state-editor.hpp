@@ -18,6 +18,12 @@ namespace castlecrawl2
 {
     struct Context;
 
+    struct MapEntry_t
+    {
+        MapPos_t pos;
+        sf::FloatRect rect;
+    };
+
     class StateEditor : public StateBase
     {
       public:
@@ -46,6 +52,12 @@ namespace castlecrawl2
         void save() const;
         const std::string mapCharToName(const char ch) noexcept;
 
+        void startDragging(const Context & context, const sf::Vector2f & pos);
+        void stopDragging(const Context & context, const sf::Vector2f & pos);
+        void updateDragging(const Context & context, const sf::Vector2f & pos);
+        void updateDragRect();
+        void updateDragSelectedMapCells(const Context & context);
+
       private:
         MapChars_t m_mapChars;
         MapPos_t m_editPos;
@@ -55,6 +67,11 @@ namespace castlecrawl2
         sf::Text m_keyText;
         sf::Text m_fadeText;
         Mouseover m_mouseover;
+        bool m_isDragging;
+        sf::Vector2f m_dragPosStart;
+        sf::Vector2f m_dragPosStop;
+        sf::RectangleShape m_dragRectangle;
+        std::vector<MapEntry_t> m_dragSelectedEntrys;
     };
 
 } // namespace castlecrawl2

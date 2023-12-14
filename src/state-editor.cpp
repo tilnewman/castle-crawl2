@@ -29,6 +29,11 @@ namespace castlecrawl2
         , m_keyText()
         , m_fadeText()
         , m_mouseover()
+        , m_isDragging(false)
+        , m_dragPosStart(0.0f, 0.0f)
+        , m_dragPosStop(0.0f, 0.0f)
+        , m_dragRectangle()
+        , m_dragSelectedEntrys()
     {}
 
     void StateEditor::onEnter(const Context & context)
@@ -50,6 +55,8 @@ namespace castlecrawl2
         m_borderRectangle.setOutlineThickness(1.0f);
         m_borderRectangle.setPosition(util::position(context.layout.mapRect()));
         m_borderRectangle.setSize(util::size(context.layout.mapRect()));
+
+        m_dragRectangle.setFillColor(sf::Color(0, 255, 255, 64));
 
         m_keyText  = context.fonts.makeText(FontSize::Small, "", sf::Color::White);
         m_fadeText = context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
@@ -76,14 +83,59 @@ namespace castlecrawl2
         target.draw(m_borderRectangle, states);
         target.draw(m_editRectangle, states);
         target.draw(m_fadeText, states);
+
+        if (m_isDragging)
+        {
+            target.draw(m_dragRectangle);
+        }
+
+        for (const MapEntry_t & entry : m_dragSelectedEntrys)
+        {
+            sf::RectangleShape rectangle;
+            rectangle.setFillColor(sf::Color(0, 255, 255, 64));
+            rectangle.setPosition(util::position(entry.rect));
+            rectangle.setSize(util::size(entry.rect));
+
+            target.draw(rectangle);
+        }
+
         m_mouseover.draw(context, target, states);
     }
 
     void StateEditor::handleEvent(const Context & context, const sf::Event & event)
     {
-        if (event.type == sf::Event::MouseMoved)
+        if (sf::Event::MouseButtonPressed == event.type)
+        {
+            startDragging(
+                context,
+                { static_cast<float>(event.mouseButton.x),
+                  static_cast<float>(event.mouseButton.y) });
+
+            return;
+        }
+
+        if (sf::Event::MouseButtonReleased == event.type)
+        {
+            stopDragging(
+                context,
+                { static_cast<float>(event.mouseButton.x),
+                  static_cast<float>(event.mouseButton.y) });
+
+            return;
+        }
+
+        if (sf::Event::MouseMoved == event.type)
         {
             m_mouseover.handleMouseMovedEvent({ event.mouseMove.x, event.mouseMove.y });
+
+            if (m_isDragging)
+            {
+                updateDragging(
+                    context,
+                    { static_cast<float>(event.mouseMove.x),
+                      static_cast<float>(event.mouseMove.y) });
+            }
+
             return;
         }
 
@@ -274,8 +326,19 @@ namespace castlecrawl2
 
     void StateEditor::setMapChar(const char ch)
     {
-        m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
-            .at(static_cast<std::size_t>(m_editPos.x)) = ch;
+        if (m_dragSelectedEntrys.empty())
+        {
+            m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
+                .at(static_cast<std::size_t>(m_editPos.x)) = ch;
+        }
+        else
+        {
+            for (const MapEntry_t & entry : m_dragSelectedEntrys)
+            {
+                m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
+                    .at(static_cast<std::size_t>(entry.pos.x)) = ch;
+            }
+        }
     }
 
     void StateEditor::editMap(const Context & context, const char upper, const char lower)
@@ -360,6 +423,92 @@ namespace castlecrawl2
             default:  { return ""; }
         }
         // clang-format on
+    }
+
+    void StateEditor::startDragging(const Context & context, const sf::Vector2f & pos)
+    {
+        m_dragPosStart = pos;
+        m_dragPosStop  = pos;
+
+        updateDragRect();
+
+        m_isDragging = context.layout.mapRect().contains(pos);
+
+        updateDragSelectedMapCells(context);
+
+        context.sfx.play("tick-on-1");
+    }
+
+    void StateEditor::stopDragging(const Context & context, const sf::Vector2f & pos)
+    {
+        const MapPos_t newMapPos = context.map.screenPosToMapPos(context, pos);
+
+        if (context.map.isPosValid(newMapPos))
+        {
+            m_editPos = newMapPos;
+            placeEditCursor(context);
+            context.sfx.play("tick-off-1");
+        }
+
+        m_isDragging = false;
+
+        if (context.layout.mapRect().contains(pos))
+        {
+            updateDragRect();
+        }
+        else
+        {
+            m_dragRectangle.setPosition({ 0.0f, 0.0f });
+            m_dragRectangle.setSize({ 0.0f, 0.0f });
+        }
+    }
+
+    void StateEditor::updateDragging(const Context & context, const sf::Vector2f & pos)
+    {
+        m_dragPosStop = pos;
+        updateDragRect();
+        updateDragSelectedMapCells(context);
+    }
+
+    void StateEditor::updateDragRect()
+    {
+        m_dragRectangle.setPosition(
+            util::min(m_dragPosStart.x, m_dragPosStop.x),
+            util::min(m_dragPosStart.y, m_dragPosStop.y));
+
+        m_dragRectangle.setSize(sf::Vector2f{ util::abs(m_dragPosStart.x - m_dragPosStop.x),
+                                              util::abs(m_dragPosStart.y - m_dragPosStop.y) });
+    }
+
+    void StateEditor::updateDragSelectedMapCells(const Context & context)
+    {
+        m_dragSelectedEntrys.clear();
+
+        const sf::FloatRect mapRect = context.layout.mapRect();
+        const sf::Vector2i mapSize  = context.layout.cellCount();
+
+        sf::Vector2f screenPos = util::position(mapRect);
+        for (int y(0); y < mapSize.y; ++y)
+        {
+            for (int x(0); x < mapSize.x; ++x)
+            {
+                const sf::FloatRect screenRect{ screenPos, context.layout.cellSize() };
+
+                const sf::FloatRect dragRect{ util::position(m_dragRectangle),
+                                              util::size(m_dragRectangle) };
+
+                if (screenRect.intersects(dragRect))
+                {
+                    const MapEntry_t entry{ { x, y }, screenRect };
+                    m_dragSelectedEntrys.push_back(entry);
+                }
+
+                screenPos.x += context.layout.cellSize().x;
+            }
+
+            screenPos.x = mapRect.left;
+            screenPos.y += context.layout.cellSize().y;
+        }
     }
 
 } // namespace castlecrawl2
