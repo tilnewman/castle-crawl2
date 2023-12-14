@@ -5,22 +5,42 @@
 //
 #include <cstdlib>
 #include <exception>
+#include <filesystem>
 #include <iostream>
 
+#include "check-macros.hpp"
 #include "game-config.hpp"
 #include "loop-coordinator.hpp"
 
-int main(void)
+int main(const int argc, const char * const argv[])
 {
     try
     {
         using namespace castlecrawl2;
 
         GameConfig config;
-        config.media_path = std::filesystem::current_path() / "media";
+
+        if (argc > 1)
+        {
+            config.media_path = std::filesystem::current_path() / std::filesystem::path{ argv[1] };
+        }
+        else
+        {
+            config.media_path = std::filesystem::current_path() / "media";
+        }
+
+        config.media_path = std::filesystem::canonical(config.media_path);
+
+        M_CHECK(
+            std::filesystem::exists(config.media_path),
+            "Error:  The media path does not exist:"
+                << config.media_path
+                << "\nPut the media path on the command line or put the 'media' folder here.");
+
+        std::cout << "Using media folder: " << config.media_path.string() << std::endl;
+
         config.video_mode = sf::VideoMode::getDesktopMode();
 
-        // TODO remove after testing
         config.video_mode.width  = 1920;
         config.video_mode.height = 1200;
 
