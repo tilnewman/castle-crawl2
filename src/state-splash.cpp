@@ -32,7 +32,7 @@ namespace castlecrawl2
 
         m_castleSprite.setTexture(m_castleTexture);
 
-        util::fit(m_castleSprite, { (screenRect.width * 0.3f), screenRect.width });
+        util::fit(m_castleSprite, { (screenRect.width * 0.2f), screenRect.width });
 
         m_castleSprite.setPosition(
             ((screenRect.width * 0.5f) - (m_castleSprite.getGlobalBounds().width * 0.5f)),
@@ -47,7 +47,7 @@ namespace castlecrawl2
 
         m_lightningSprite.setTexture(m_lightningTexture);
 
-        util::fit(m_lightningSprite, { (screenRect.width * 0.125f), screenRect.width });
+        util::fit(m_lightningSprite, { (screenRect.width * 0.1f), screenRect.width });
 
         m_lightningSprite.setPosition(
             (m_castleSprite.getGlobalBounds().left -
