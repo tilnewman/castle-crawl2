@@ -22,13 +22,9 @@ namespace castlecrawl2
         const sf::FloatRect mapRect() const { return m_mapRect; }
         const sf::Vector2f cellSize() const { return m_cellSize; }
         const sf::Vector2i cellCount() const { return m_cellCount; }
-        const sf::Vector2u mapTextureSize() const { return m_mapTextureSize; }
 
         void setup(const GameConfig & config);
         void setupNewMap(const sf::Vector2i & cellCount);
-
-      private:
-        void setupOffscreenMapTextureSize(const GameConfig & config);
 
       private:
         sf::FloatRect m_screenRect;
@@ -37,7 +33,6 @@ namespace castlecrawl2
         sf::FloatRect m_mapRect;
         sf::Vector2f m_cellSize;
         sf::Vector2i m_cellCount;
-        sf::Vector2u m_mapTextureSize;
     };
 
 } // namespace castlecrawl2
