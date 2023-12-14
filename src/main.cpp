@@ -10,14 +10,6 @@
 #include "game-config.hpp"
 #include "loop-coordinator.hpp"
 
-//
-// TODO
-//  Handle barrels and breaking them open, some kind of loading and unloading again
-//  SFX for all the enemies spawning
-//  enemies moving toward the player most of the time
-//
-//
-
 int main(void)
 {
     try
@@ -29,7 +21,7 @@ int main(void)
         config.video_mode = sf::VideoMode::getDesktopMode();
 
         // TODO remove after testing
-        config.video_mode.width = 1920;
+        config.video_mode.width  = 1920;
         config.video_mode.height = 1200;
 
         // sometimes the bpp is detected as zero and I don't know why but this forces a valid value
