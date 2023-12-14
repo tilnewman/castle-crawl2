@@ -149,6 +149,7 @@ namespace castlecrawl2
             const bool wasAbleToPickValidVideoMode = util::pickNearestVideoMode(videoMode);
             M_CHECK(wasAbleToPickValidVideoMode, "Unable to find valid video mode!");
             setupRenderWindow(videoMode);
+            return;
         }
 
         m_renderWindow.create(videoMode, "CastleCrawl2", sf::Style::Fullscreen);
