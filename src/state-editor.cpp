@@ -51,7 +51,7 @@ namespace castlecrawl2
         m_borderRectangle.setPosition(util::position(context.layout.mapRect()));
         m_borderRectangle.setSize(util::size(context.layout.mapRect()));
 
-        m_keyText = context.fonts.makeText(FontSize::Small, "", sf::Color::White);
+        m_keyText  = context.fonts.makeText(FontSize::Small, "", sf::Color::White);
         m_fadeText = context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
     }
 
@@ -230,8 +230,7 @@ namespace castlecrawl2
         {
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nSpace-Bare Floor\nPeriod-Erase\n"
-                "1-Dirt Floor\n2-Stone Floor\n3-Wood Floor\n"
-                "r-Rock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
+                "f-Change-Flooring\nr-Rock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
                 "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\n"
                 "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
                 "6-Bat\n7-BatMask\n8-Skeleton\n9-SkeletonGrave\n:-Demon\n;-DemonDoor\n"
