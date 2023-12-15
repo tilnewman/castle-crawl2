@@ -11,9 +11,9 @@
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "map.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
-#include "sfml-util.hpp"
 
 #include <fstream>
 
@@ -81,12 +81,15 @@ namespace castlecrawl
         }
 
         target.draw(m_borderRectangle, states);
-        target.draw(m_editRectangle, states);
         target.draw(m_fadeText, states);
 
         if (m_isDragging)
         {
             target.draw(m_dragRectangle);
+        }
+        else
+        {
+            target.draw(m_editRectangle, states);
         }
 
         for (const MapEntry_t & entry : m_dragSelectedEntrys)
@@ -202,6 +205,7 @@ namespace castlecrawl
             {
                 --m_editPos.y;
                 placeEditCursor(context);
+                m_dragSelectedEntrys.clear();
                 context.sfx.play("tick-off-1");
             }
             else
@@ -215,6 +219,7 @@ namespace castlecrawl
             {
                 ++m_editPos.y;
                 placeEditCursor(context);
+                m_dragSelectedEntrys.clear();
                 context.sfx.play("tick-off-1");
             }
             else
@@ -228,6 +233,7 @@ namespace castlecrawl
             {
                 --m_editPos.x;
                 placeEditCursor(context);
+                m_dragSelectedEntrys.clear();
                 context.sfx.play("tick-off-1");
             }
             else
@@ -241,6 +247,7 @@ namespace castlecrawl
             {
                 ++m_editPos.x;
                 placeEditCursor(context);
+                m_dragSelectedEntrys.clear();
                 context.sfx.play("tick-off-1");
             }
             else
@@ -407,19 +414,19 @@ namespace castlecrawl
             case 'c': { return "Chest"; }
             case 'k': { return "Coffin"; }
             case '0': { return "Snake"; }
-            case '1': { return "SnakeBag"; }
+            case '1': { return "Snake Bag"; }
             case '2': { return "Spider"; }
             case '3': { return "Spiderweb"; }
             case '4': { return "Goblin"; }
-            case '5': { return "GoblinBarrel"; }
+            case '5': { return "Goblin Barrel"; }
             case '6': { return "Bat"; }
-            case '7': { return "BatMask"; }
+            case '7': { return "Bat Mask"; }
             case '8': { return "Skeleton"; }
-            case '9': { return "SkeletonGrave"; }
+            case '9': { return "Skeleton Grave"; }
             case ':': { return "Demon"; }
-            case ';': { return "DemonDoor"; }
+            case ';': { return "Demon Door"; }
             case '[': { return "Dragon"; }
-            case ']': { return "DragonInferno"; }
+            case ']': { return "Dragon Inferno"; }
             default:  { return ""; }
         }
         // clang-format on
