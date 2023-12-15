@@ -76,6 +76,7 @@ namespace castlecrawl
         {
             context.enemies.update(context, frameTimeSec);
             m_mouseover.update(context, frameTimeSec);
+            context.player_display.update(context, frameTimeSec);
         }
 
         context.framerate.update();
@@ -159,6 +160,13 @@ namespace castlecrawl
         const bool didMove = (mapPosBefore != mapPosAfter);
 
         playMoveSfx(context, didMove, mapCharAttempted);
+
+        if (!didMove && (mapCharAttempted == 'l'))
+        {
+            context.player_display.shake();
+            context.player.health().adjNormal(-1);
+            m_healthBar.setCurrentValue(context, context.player.health().normal());
+        }
 
         if (didMove)
         {

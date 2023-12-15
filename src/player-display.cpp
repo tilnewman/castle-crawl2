@@ -15,21 +15,46 @@ namespace castlecrawl
 {
 
     PlayerDisplay::PlayerDisplay()
-        : m_position(0, 0)
+        : m_mapPos(0, 0)
+        , m_screenPos(0.0f, 0.0f)
         , m_sprite()
+        , m_isShaking(false)
+        , m_shakeTimeSec(0.0f)
+        , m_shaker()
     {}
 
     void PlayerDisplay::setup(const Context & context)
     {
         m_sprite = context.tile_images.sprite(context, TileImage::Avatar);
+        m_shaker.setup((context.layout.cellSize().x * 0.1f), 75.0f);
     }
 
     void PlayerDisplay::position(const Context & context, const MapPos_t & newPosition)
     {
-        // assert player in a valid position? -no, because map transitions are invalid positions
+        // assert player in a valid position? -no, because map transitions are invalid
 
-        m_position = newPosition;
-        m_sprite.setPosition(context.map.mapPosToScreenPos(context, m_position));
+        m_isShaking = false;
+        m_mapPos    = newPosition;
+        m_screenPos = context.map.mapPosToScreenPos(context, m_mapPos);
+        m_sprite.setPosition(m_screenPos);
+    }
+
+    void PlayerDisplay::update(const Context &, const float frameTimeSec)
+    {
+        if (m_isShaking)
+        {
+            m_shaker.update(frameTimeSec);
+            m_shakeTimeSec += frameTimeSec;
+
+            const float shakeDurationSec{ 0.5f };
+            if (m_shakeTimeSec > shakeDurationSec)
+            {
+                m_isShaking    = false;
+                m_shakeTimeSec = 0.0f;
+            }
+        }
+
+        m_sprite.setPosition((m_screenPos.x + m_shaker.adjustment()), m_screenPos.y);
     }
 
     void PlayerDisplay::draw(
