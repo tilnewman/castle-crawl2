@@ -12,15 +12,15 @@
 
 namespace castlecrawl
 {
-    using MapPos_t = sf::Vector2i;
+    using MapPos_t   = sf::Vector2i;
     using MapChars_t = std::vector<std::string>;
 
     struct MapCell
     {
         // these default values are safe where needed and invalid where needed -don't change
         MapPos_t position = { -1, -1 };
-        char object_char = '.';
-        char floor_char = ' ';
+        char object_char  = '.';
+        char floor_char   = ' ';
     };
 
     using Map_t = std::vector<std::vector<MapCell>>;
@@ -38,6 +38,9 @@ namespace castlecrawl
     {
         Level_1_Cell,
         Level_1_CellBlock,
+        Level_1_SecretCells,
+        Level_1_CellJunction,
+        Level_1_CellsEnd,
         Level_1_MainHall,
         Level_1_BoilerRoom,
         Level_1_HiddenPassage,
