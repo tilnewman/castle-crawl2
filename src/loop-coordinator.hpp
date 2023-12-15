@@ -8,6 +8,7 @@
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
+#include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "map.hpp"
@@ -65,6 +66,7 @@ namespace castlecrawl
         Enemies m_enemies;
         FramerateText m_framerate;
         TopPanel m_topPanel;
+        item::ItemFactory m_itemFactory;
 
         Context m_context;
     };

@@ -27,6 +27,11 @@ namespace castlecrawl
     class FramerateText;
     class TopPanel;
 
+    namespace item
+    {
+        class ItemFactory;
+    }
+
     struct Context
     {
         Context(
@@ -45,7 +50,8 @@ namespace castlecrawl
             FontManager & fontManagerParam,
             Enemies & enemiesParam,
             FramerateText & framerateTextParam,
-            TopPanel & topPanelParam)
+            TopPanel & topPanelParam,
+            item::ItemFactory & itemFactoryParam)
             : config(configParam)
             , tile_images(tileImagesParam)
             , layout(layoutParam)
@@ -62,6 +68,7 @@ namespace castlecrawl
             , enemies(enemiesParam)
             , framerate(framerateTextParam)
             , top_panel(topPanelParam)
+            , items(itemFactoryParam)
         {}
 
         const GameConfig & config;
@@ -80,6 +87,7 @@ namespace castlecrawl
         Enemies & enemies;
         FramerateText & framerate;
         TopPanel & top_panel;
+        item::ItemFactory & items;
     };
 
 } // namespace castlecrawl

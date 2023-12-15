@@ -35,6 +35,7 @@ namespace castlecrawl
         , m_enemies()
         , m_framerate()
         , m_topPanel()
+        , m_itemFactory()
         , m_context(
               m_config,
               m_tileImages,
@@ -51,7 +52,8 @@ namespace castlecrawl
               m_fonts,
               m_enemies,
               m_framerate,
-              m_topPanel)
+              m_topPanel,
+              m_itemFactory)
     {}
 
     void LoopCoordinator::playGame()
@@ -67,6 +69,8 @@ namespace castlecrawl
 
         m_sfx.setMediaPath((m_config.media_path / "sfx").string());
         m_sfx.loadAll();
+
+        m_itemFactory.processAll();
 
         m_fonts.setup(m_config);
         m_enemies.setup(m_config);
