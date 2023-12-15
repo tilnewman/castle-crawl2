@@ -6,7 +6,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "item.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>

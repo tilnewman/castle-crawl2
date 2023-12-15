@@ -13,7 +13,7 @@
 #include "map.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <fstream>
 

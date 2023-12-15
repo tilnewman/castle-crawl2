@@ -9,7 +9,7 @@
 #include "layout.hpp"
 #include "tile-image-enum.hpp"
 #include "tile-images.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
 

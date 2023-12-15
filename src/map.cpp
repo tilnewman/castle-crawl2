@@ -9,7 +9,7 @@
 #include "context.hpp"
 #include "layout.hpp"
 #include "random.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <iostream>
 

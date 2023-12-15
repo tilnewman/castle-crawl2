@@ -8,7 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 namespace castlecrawl
 {

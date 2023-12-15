@@ -12,7 +12,7 @@
 #include "player-display.hpp"
 #include "random.hpp"
 #include "tile-images.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <type_traits>
 

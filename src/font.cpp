@@ -6,7 +6,7 @@
 #include "font.hpp"
 
 #include "game-config.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 

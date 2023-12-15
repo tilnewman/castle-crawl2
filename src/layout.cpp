@@ -6,7 +6,7 @@
 #include "layout.hpp"
 
 #include "check-macros.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <algorithm>
 #include <iostream>

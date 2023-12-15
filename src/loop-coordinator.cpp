@@ -6,7 +6,7 @@
 #include "loop-coordinator.hpp"
 
 #include "check-macros.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window.hpp>
@@ -152,8 +152,7 @@ namespace castlecrawl
                       << sf::VideoMode::getDesktopMode().bitsPerPixel << "bpp:" << std::endl
                       << util::makeSupportedVideoModesString(true) << std::endl;
 
-            const bool wasAbleToPickValidVideoMode = util::pickNearestVideoMode(videoMode);
-            M_CHECK(wasAbleToPickValidVideoMode, "Unable to find valid video mode!");
+            videoMode = util::findVideoModeClosestTo(videoMode);
             setupRenderWindow(videoMode);
             return;
         }

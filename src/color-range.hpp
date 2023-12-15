@@ -4,7 +4,7 @@
 // color-range.hpp
 //
 #include "random.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <algorithm>
 #include <array>

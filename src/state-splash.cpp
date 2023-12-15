@@ -9,7 +9,7 @@
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "state-manager.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 namespace castlecrawl
 {

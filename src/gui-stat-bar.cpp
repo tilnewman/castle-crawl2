@@ -8,7 +8,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "layout.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <string>
 
