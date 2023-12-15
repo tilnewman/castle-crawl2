@@ -13,7 +13,7 @@
 #include "map.hpp"
 #include "maps.hpp"
 #include "music-player.hpp"
-#include "player.hpp"
+#include "player-display.hpp"
 #include "random.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
@@ -55,7 +55,7 @@ namespace castlecrawl
         Maps m_maps;
         MapDisplay m_mapDisplay;
         StateManager m_stateManager;
-        Player m_player;
+        PlayerDisplay m_playerDisplay;
         util::Random m_random;
         util::SoundPlayer m_sfx;
         util::MusicPlayer m_music;

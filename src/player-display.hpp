@@ -1,7 +1,7 @@
-#ifndef PLAYER_HPP_INCLUDED
-#define PLAYER_HPP_INCLUDED
+#ifndef PLAYERDISPLAY_HPP_INCLUDED
+#define PLAYERDISPLAY_HPP_INCLUDED
 //
-// player.hpp
+// player-display.hpp
 //
 #include "map-types.hpp"
 
@@ -14,10 +14,10 @@ namespace castlecrawl
 {
     struct Context;
 
-    class Player
+    class PlayerDisplay
     {
       public:
-        Player();
+        PlayerDisplay();
 
         void setup(const Context & context);
         const MapPos_t position() const { return m_position; }

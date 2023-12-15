@@ -26,7 +26,7 @@ namespace castlecrawl
         , m_maps()
         , m_mapDisplay()
         , m_stateManager()
-        , m_player()
+        , m_playerDisplay()
         , m_random()
         , m_sfx(m_random)
         , m_music()
@@ -42,7 +42,7 @@ namespace castlecrawl
               m_maps,
               m_mapDisplay,
               m_stateManager,
-              m_player,
+              m_playerDisplay,
               m_random,
               m_sfx,
               m_music,
@@ -71,7 +71,7 @@ namespace castlecrawl
         m_tileImages.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(m_context);
-        m_player.setup(m_context);
+        m_playerDisplay.setup(m_context);
         m_framerate.setup(m_context);
         m_topPanel.setup(m_context);
 

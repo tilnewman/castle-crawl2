@@ -9,7 +9,7 @@
 #include "context.hpp"
 #include "layout.hpp"
 #include "map.hpp"
-#include "player.hpp"
+#include "player-display.hpp"
 #include "random.hpp"
 #include "tile-images.hpp"
 #include "util.hpp"
@@ -178,7 +178,7 @@ namespace castlecrawl
             std::remove_if(
                 std::begin(cells),
                 std::end(cells),
-                [&](const MapCell & cell) { return (cell.position == context.player.position()); }),
+                [&](const MapCell & cell) { return (cell.position == context.player_display.position()); }),
             std::end(cells));
 
         // can't move onto other enemies

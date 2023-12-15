@@ -9,7 +9,7 @@
 #include "font.hpp"
 #include "layout.hpp"
 #include "map.hpp"
-#include "player.hpp"
+#include "player-display.hpp"
 
 namespace castlecrawl
 {
@@ -67,7 +67,7 @@ namespace castlecrawl
 
         std::string message;
 
-        if (context.player.position() == mapPos)
+        if (context.player_display.position() == mapPos)
         {
             message = "you";
         }
@@ -149,7 +149,7 @@ namespace castlecrawl
             return;
         }
 
-        const FontSize fontSize = FontSize::Small;
+        const FontSize fontSize     = FontSize::Small;
         const FontExtent fontExtent = context.fonts.extent(fontSize);
 
         m_text = context.fonts.makeText(fontSize, message);

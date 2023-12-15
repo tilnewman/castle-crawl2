@@ -15,7 +15,7 @@
 #include "maps.hpp"
 #include "mouseover.hpp"
 #include "music-player.hpp"
-#include "player.hpp"
+#include "player-display.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -88,7 +88,7 @@ namespace castlecrawl
 
         if (!m_fader.isFading())
         {
-            context.player.draw(context, target, states);
+            context.player_display.draw(context, target, states);
             m_mouseover.draw(context, target, states);
         }
 
@@ -132,7 +132,7 @@ namespace castlecrawl
 
     void StatePlay::handlePlayerMove(const Context & context, const sf::Keyboard::Key key)
     {
-        const MapPos_t mapPosBefore    = context.player.position();
+        const MapPos_t mapPosBefore    = context.player_display.position();
         const MapPos_t mapPosAttempted = keys::moveIfDir(mapPosBefore, key);
         const bool isEnemyInTheWay     = context.enemies.isAnyAtMapPos(mapPosAttempted);
         const char mapCharAttempted    = context.map.cell(mapPosAttempted).object_char;
@@ -160,7 +160,7 @@ namespace castlecrawl
 
         if (didMove)
         {
-            context.player.position(context, mapPosAfter);
+            context.player_display.position(context, mapPosAfter);
             handleMapTransition(context, mapPosAfter);
             playMoveMusic(context);
         }
@@ -207,7 +207,7 @@ namespace castlecrawl
 
     void StatePlay::playMoveMusic(const Context & context) const
     {
-        const auto surroundingCells = context.map.surroundingCellsAll(context.player.position());
+        const auto surroundingCells = context.map.surroundingCellsAll(context.player_display.position());
 
         const auto foundLavaIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {

@@ -9,7 +9,7 @@
 #include "context.hpp"
 #include "enemy.hpp"
 #include "map-display.hpp"
-#include "player.hpp"
+#include "player-display.hpp"
 
 namespace castlecrawl
 {
@@ -38,7 +38,7 @@ namespace castlecrawl
         context.map = *foundIter;
         loadEnemies(context, context.map);
         context.map_display.load(context);
-        context.player.position(context, pos);
+        context.player_display.position(context, pos);
     }
 
     void Maps::load(const Context & context)
