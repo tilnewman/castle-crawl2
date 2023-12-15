@@ -392,7 +392,7 @@ namespace castlecrawl
 
         for (const std::string & rowStr : m_mapChars)
         {
-            fStream << '\"' << rowStr << '\"' << std::endl;
+            fStream << '\"' << rowStr << "\"," << std::endl;
         }
     }
 
