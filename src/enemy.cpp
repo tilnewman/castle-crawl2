@@ -65,6 +65,14 @@ namespace castlecrawl
                 act(context, enemy);
             }
         }
+
+        // add in enemies who were spawned during this update
+        for (const EnemyInstance & enemy : m_spawned)
+        {
+            m_enemies.push_back(enemy);
+        }
+
+        m_spawned.clear();
     }
 
     void Enemies::add(const EnemyInstance & enemy) { m_enemies.push_back(enemy); }
@@ -151,7 +159,7 @@ namespace castlecrawl
         const EnemyInstance spawnedInstance(
             context.random, spawnType(enemy.enemy), cellToMoveInto.position);
 
-        add(spawnedInstance);
+        m_spawned.push_back(spawnedInstance);
     }
 
     void Enemies::removeSpawnAndMoveObstacles(

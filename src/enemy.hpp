@@ -436,6 +436,7 @@ namespace castlecrawl
       private:
         sf::Texture m_texture;
         std::vector<EnemyInstance> m_enemies;
+        std::vector<EnemyInstance> m_spawned;
     };
 
 } // namespace castlecrawl
