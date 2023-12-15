@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_STATEMANAGER_HPP_INCLUDED
-#define CASTLECRAWL2_STATEMANAGER_HPP_INCLUDED
+#ifndef STATEMANAGER_HPP_INCLUDED
+#define STATEMANAGER_HPP_INCLUDED
 //
 // state-manager.hpp
 //
@@ -28,4 +28,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_STATEMANAGER_HPP_INCLUDED
+#endif // STATEMANAGER_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_MOUSEOVER_HPP_INCLUDED
-#define CASTLECRAWL2_MOUSEOVER_HPP_INCLUDED
+#ifndef MOUSEOVER_HPP_INCLUDED
+#define MOUSEOVER_HPP_INCLUDED
 //
 // mouseover.hpp
 //
@@ -39,4 +39,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_MOUSEOVER_HPP_INCLUDED
+#endif // MOUSEOVER_HPP_INCLUDED

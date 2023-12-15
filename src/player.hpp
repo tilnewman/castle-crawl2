@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_PLAYER_HPP_INCLUDED
-#define CASTLECRAWL2_PLAYER_HPP_INCLUDED
+#ifndef PLAYER_HPP_INCLUDED
+#define PLAYER_HPP_INCLUDED
 //
 // player.hpp
 //
@@ -33,4 +33,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_PLAYER_HPP_INCLUDED
+#endif // PLAYER_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_FADER_HPP_INCLUDED
-#define CASTLECRAWL2_FADER_HPP_INCLUDED
+#ifndef FADER_HPP_INCLUDED
+#define FADER_HPP_INCLUDED
 //
 // fader.hpp
 //
@@ -41,4 +41,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_FADER_HPP_INCLUDED
+#endif // FADER_HPP_INCLUDED

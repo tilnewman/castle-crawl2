@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_LAYOUT_HPP_INCLUDED
-#define CASTLECRAWL2_LAYOUT_HPP_INCLUDED
+#ifndef LAYOUT_HPP_INCLUDED
+#define LAYOUT_HPP_INCLUDED
 //
 // layout.hpp
 //
@@ -37,4 +37,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_LAYOUT_HPP_INCLUDED
+#endif // LAYOUT_HPP_INCLUDED

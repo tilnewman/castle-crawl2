@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_TOPPANEL_HPP_INCLUDED
-#define CASTLECRAWL2_TOPPANEL_HPP_INCLUDED
+#ifndef TOPPANEL_HPP_INCLUDED
+#define TOPPANEL_HPP_INCLUDED
 //
 // top-panel.hpp
 //
@@ -29,4 +29,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_TOPPANEL_HPP_INCLUDED
+#endif // TOPPANEL_HPP_INCLUDED

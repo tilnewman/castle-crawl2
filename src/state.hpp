@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_STATE_HPP_INCLUDED
-#define CASTLECRAWL2_STATE_HPP_INCLUDED
+#ifndef STATE_HPP_INCLUDED
+#define STATE_HPP_INCLUDED
 //
 // state.hpp
 //
@@ -97,4 +97,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_STATE_HPP_INCLUDED
+#endif // STATE_HPP_INCLUDED

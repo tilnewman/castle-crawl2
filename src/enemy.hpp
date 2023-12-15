@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_ENEMY_HPP_INCLUDED
-#define CASTLECRAWL2_ENEMY_HPP_INCLUDED
+#ifndef ENEMY_HPP_INCLUDED
+#define ENEMY_HPP_INCLUDED
 //
 // enemy.hpp
 //
@@ -440,4 +440,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_ENEMY_HPP_INCLUDED
+#endif // ENEMY_HPP_INCLUDED

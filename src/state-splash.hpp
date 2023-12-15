@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_STATESPLASH_HPP_INCLUDED
-#define CASTLECRAWL2_STATESPLASH_HPP_INCLUDED
+#ifndef STATESPLASH_HPP_INCLUDED
+#define STATESPLASH_HPP_INCLUDED
 //
 // state-splash.hpp
 //
@@ -44,4 +44,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_STATESPLASH_HPP_INCLUDED
+#endif // STATESPLASH_HPP_INCLUDED

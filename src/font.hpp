@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_FONT_HPP_INCLUDED
-#define CASTLECRAWL2_FONT_HPP_INCLUDED
+#ifndef FONT_HPP_INCLUDED
+#define FONT_HPP_INCLUDED
 //
 // font.hpp
 //
@@ -65,4 +65,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_FONT_HPP_INCLUDED
+#endif // FONT_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_STATEPLAY_HPP_INCLUDED
-#define CASTLECRAWL2_STATEPLAY_HPP_INCLUDED
+#ifndef STATEPLAY_HPP_INCLUDED
+#define STATEPLAY_HPP_INCLUDED
 //
 // state-play.hpp
 //
@@ -48,4 +48,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_STATEPLAY_HPP_INCLUDED
+#endif // STATEPLAY_HPP_INCLUDED

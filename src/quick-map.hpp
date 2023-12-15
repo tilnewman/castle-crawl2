@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_QUICKMAP_HPP_INCLUDED
-#define CASTLECRAWL2_QUICKMAP_HPP_INCLUDED
+#ifndef QUICKMAP_HPP_INCLUDED
+#define QUICKMAP_HPP_INCLUDED
 //
 // quick-map.hpp
 //
@@ -53,4 +53,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_QUICKMAP_HPP_INCLUDED
+#endif // QUICKMAP_HPP_INCLUDED

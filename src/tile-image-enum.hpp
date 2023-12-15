@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_TILEIMAGEENUM_HPP_INCLUDED
-#define CASTLECRAWL2_TILEIMAGEENUM_HPP_INCLUDED
+#ifndef TILEIMAGEENUM_HPP_INCLUDED
+#define TILEIMAGEENUM_HPP_INCLUDED
 //
 // tile-image-enum.hpp
 //
@@ -209,4 +209,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_CONTEXT_HPP_INCLUDED
+#endif // CONTEXT_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_GUISTATBAR_HPP_INCLUDED
-#define CASTLECRAWL2_GUISTATBAR_HPP_INCLUDED
+#ifndef GUISTATBAR_HPP_INCLUDED
+#define GUISTATBAR_HPP_INCLUDED
 //
 // gui-stat-bar.hpp
 //
@@ -41,4 +41,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_GUISTATBAR_HPP_INCLUDED
+#endif // GUISTATBAR_HPP_INCLUDED

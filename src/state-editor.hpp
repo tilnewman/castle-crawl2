@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_STATEEDITOR_HPP_INCLUDED
-#define CASTLECRAWL2_STATEEDITOR_HPP_INCLUDED
+#ifndef STATEEDITOR_HPP_INCLUDED
+#define STATEEDITOR_HPP_INCLUDED
 //
 // state-editor.hpp
 //
@@ -76,4 +76,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_STATEEDITOR_HPP_INCLUDED
+#endif // STATEEDITOR_HPP_INCLUDED

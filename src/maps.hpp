@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_MAPS_HPP_INCLUDED
-#define CASTLECRAWL2_MAPS_HPP_INCLUDED
+#ifndef MAPS_HPP_INCLUDED
+#define MAPS_HPP_INCLUDED
 //
 // maps.hpp
 //
@@ -33,4 +33,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_MAPS_HPP_INCLUDED
+#endif // MAPS_HPP_INCLUDED

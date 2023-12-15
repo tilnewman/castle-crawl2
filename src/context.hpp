@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_CONTEXT_HPP_INCLUDED
-#define CASTLECRAWL2_CONTEXT_HPP_INCLUDED
+#ifndef CONTEXT_HPP_INCLUDED
+#define CONTEXT_HPP_INCLUDED
 //
 // context.hpp
 //
@@ -80,4 +80,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_CONTEXT_HPP_INCLUDED
+#endif // CONTEXT_HPP_INCLUDED

@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL2_GAMECONFIG_HPP_INCLUDED
-#define CASTLECRAWL2_GAMECONFIG_HPP_INCLUDED
+#ifndef GAMECONFIG_HPP_INCLUDED
+#define GAMECONFIG_HPP_INCLUDED
 //
 // game-config.hpp
 //
@@ -27,4 +27,4 @@ namespace castlecrawl2
 
 } // namespace castlecrawl2
 
-#endif // CASTLECRAWL2_GAMECONFIG_INCLUDED
+#endif // GAMECONFIG_INCLUDED
