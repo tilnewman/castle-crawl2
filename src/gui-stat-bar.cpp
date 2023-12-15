@@ -50,7 +50,7 @@ namespace castlecrawl
 
     void StatBar::setCurrentValue(const Context & context, const int newValue)
     {
-        m_current = newValue;
+        m_current = std::clamp(newValue, 0, m_max);
         update(context);
     }
 
