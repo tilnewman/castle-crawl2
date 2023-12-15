@@ -72,6 +72,10 @@ namespace castlecrawl
             context.fonts.makeText(FontSize::Small, str, (m_color + sf::Color(100, 100, 100, 0)));
 
         util::fitAndCenterInside(m_text, m_innerRectangle.getGlobalBounds());
+
+        const float maxWidth{ m_outerRectangle.getSize().x - 2.0f };
+        const float ratio{ static_cast<float>(m_current) / static_cast<float>(m_max) };
+        m_innerRectangle.setSize({ (ratio * maxWidth), m_innerRectangle.getSize().y });
     }
 
 } // namespace castlecrawl
