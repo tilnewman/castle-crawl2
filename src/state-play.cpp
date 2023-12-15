@@ -28,6 +28,7 @@ namespace castlecrawl2
         , m_fader()
         , m_mapFadeDurationSec(1.0f)
         , m_transition()
+        , m_healthBar()
     {}
 
     void StatePlay::onEnter(const Context & context)
@@ -36,6 +37,16 @@ namespace castlecrawl2
 
         m_fader.setup(
             true, context.config.background_color, m_mapFadeDurationSec, context.layout.mapRect());
+
+        const sf::FloatRect topRect = context.layout.topRect();
+
+        sf::FloatRect healthBarRect;
+        healthBarRect.height = (topRect.height * 0.1f);
+        healthBarRect.top    = (topRect.height - healthBarRect.height);
+        healthBarRect.width  = (topRect.width * 0.25f);
+        healthBarRect.left   = ((topRect.width * 0.5f) - (healthBarRect.width * 0.5f));
+
+        m_healthBar.setup(context, healthBarRect, sf::Color(160, 0, 0), 20);
     }
 
     void StatePlay::update(const Context & context, const float frameTimeSec)
@@ -85,6 +96,7 @@ namespace castlecrawl2
 
         context.framerate.draw(target, states);
         context.top_panel.draw(context, target, states);
+        m_healthBar.draw(target, states);
     }
 
     void StatePlay::handleEvent(const Context & context, const sf::Event & event)
@@ -120,10 +132,10 @@ namespace castlecrawl2
 
     void StatePlay::handlePlayerMove(const Context & context, const sf::Keyboard::Key key)
     {
-        const MapPos_t mapPosBefore = context.player.position();
+        const MapPos_t mapPosBefore    = context.player.position();
         const MapPos_t mapPosAttempted = keys::moveIfDir(mapPosBefore, key);
-        const bool isEnemyInTheWay = context.enemies.isAnyAtMapPos(mapPosAttempted);
-        const char mapCharAttempted = context.map.cell(mapPosAttempted).object_char;
+        const bool isEnemyInTheWay     = context.enemies.isAnyAtMapPos(mapPosAttempted);
+        const char mapCharAttempted    = context.map.cell(mapPosAttempted).object_char;
 
         const MapPos_t mapPosAfter = [&]() {
             if (isEnemyInTheWay)
