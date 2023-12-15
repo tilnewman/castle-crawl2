@@ -136,17 +136,17 @@ namespace castlecrawl2
 
     void Enemies::spawn(const Context & context, EnemyInstance & enemy)
     {
-        std::vector<MapCell> possibleMoveCells =
+        std::vector<MapCell> possibleSpawnCells =
             context.map.surroundingCellsHorizVert(enemy.position);
 
-        removeSpawnAndMoveObstacles(context, possibleMoveCells);
+        removeSpawnAndMoveObstacles(context, possibleSpawnCells);
 
-        if (possibleMoveCells.empty())
+        if (possibleSpawnCells.empty())
         {
             return;
         }
 
-        const MapCell cellToMoveInto = context.random.from(possibleMoveCells);
+        const MapCell cellToMoveInto = context.random.from(possibleSpawnCells);
 
         const EnemyInstance spawnedInstance(
             context.random, spawnType(enemy.enemy), cellToMoveInto.position);
