@@ -11,7 +11,7 @@
 #include "state-manager.hpp"
 #include "util.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     StateSplash::StateSplash()
@@ -121,4 +121,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

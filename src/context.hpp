@@ -11,7 +11,7 @@ namespace util
     class MusicPlayer;
 } // namespace util
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct GameConfig;
     class TileImages;
@@ -78,6 +78,6 @@ namespace castlecrawl2
         TopPanel & top_panel;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // CONTEXT_HPP_INCLUDED

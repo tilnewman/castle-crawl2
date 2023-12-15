@@ -12,7 +12,7 @@
 
 #include <exception>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     StateManager::StateManager()
@@ -52,4 +52,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

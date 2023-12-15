@@ -8,7 +8,7 @@
 #include "mouseover.hpp"
 #include "state.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -46,6 +46,6 @@ namespace castlecrawl2
         StatBar m_healthBar;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // STATEPLAY_HPP_INCLUDED

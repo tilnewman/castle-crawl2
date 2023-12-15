@@ -7,7 +7,7 @@
 
 #include <memory>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -26,6 +26,6 @@ namespace castlecrawl2
         std::unique_ptr<IState> m_stateUPtr;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // STATEMANAGER_HPP_INCLUDED

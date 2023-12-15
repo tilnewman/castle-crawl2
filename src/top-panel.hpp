@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -27,6 +27,6 @@ namespace castlecrawl2
         sf::Sprite m_titleSprite;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // TOPPANEL_HPP_INCLUDED

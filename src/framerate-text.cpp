@@ -11,7 +11,7 @@
 
 #include <string>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     FramerateText::FramerateText()
         : m_text()
@@ -52,4 +52,4 @@ namespace castlecrawl2
         target.draw(m_text, states);
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

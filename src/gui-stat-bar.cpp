@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     StatBar::StatBar()
@@ -74,4 +74,4 @@ namespace castlecrawl2
         util::fitAndCenterInside(m_text, m_innerRectangle.getGlobalBounds());
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

@@ -6,7 +6,7 @@
 #include "game-config.hpp"
 #include "map-types.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     // QuickMaps are the maps found in the source code in quick-maps.hpp, that are temporary
     // placeholders for real maps that are easy for humans to manage and are easily convertible
@@ -51,6 +51,6 @@ namespace castlecrawl2
         MapChars_t m_mapChars;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // QUICKMAP_HPP_INCLUDED

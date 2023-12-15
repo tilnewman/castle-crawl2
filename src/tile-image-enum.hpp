@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     // used to index so keep unsigned
@@ -207,6 +207,6 @@ namespace castlecrawl2
         // clang-format on
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // CONTEXT_HPP_INCLUDED

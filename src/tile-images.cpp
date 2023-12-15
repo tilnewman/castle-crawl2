@@ -11,7 +11,7 @@
 #include "layout.hpp"
 #include "util.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     TileImages::TileImages()
@@ -35,4 +35,4 @@ namespace castlecrawl2
         return sprite;
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

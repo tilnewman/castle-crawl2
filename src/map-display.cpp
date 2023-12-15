@@ -15,7 +15,7 @@
 
 #include <iostream>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     MapDisplay::MapDisplay()
@@ -282,4 +282,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

@@ -12,7 +12,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -54,6 +54,6 @@ namespace castlecrawl2
         MapTransitions_t m_transitions;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // MAP_HPP_INCLUDED

@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     FontManager::FontManager()
@@ -81,4 +81,4 @@ namespace castlecrawl2
         m_fontExtentSmall.letter_size.y = text.getGlobalBounds().height;
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

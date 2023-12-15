@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     QuickMap::QuickMap(const GameConfig & config, const MapChars_t & mapChars)
@@ -194,4 +194,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

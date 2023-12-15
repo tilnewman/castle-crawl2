@@ -9,7 +9,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     struct GameConfig
@@ -25,6 +25,6 @@ namespace castlecrawl2
         sf::Vector2i map_size_max = { 41, 23 };
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // GAMECONFIG_INCLUDED

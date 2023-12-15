@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -31,6 +31,6 @@ namespace castlecrawl2
         sf::Sprite m_sprite;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // PLAYER_HPP_INCLUDED

@@ -17,7 +17,7 @@
 
 #include <fstream>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     StateEditor::StateEditor()
@@ -511,4 +511,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

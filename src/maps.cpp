@@ -11,7 +11,7 @@
 #include "map-display.hpp"
 #include "player.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     Maps::Maps()
         : m_maps()
@@ -432,4 +432,4 @@ namespace castlecrawl2
 
     void Maps::unloadEnemies(const Context & context) const { context.enemies.removeAll(); }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     class Layout
@@ -35,6 +35,6 @@ namespace castlecrawl2
         sf::Vector2i m_cellCount;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // LAYOUT_HPP_INCLUDED

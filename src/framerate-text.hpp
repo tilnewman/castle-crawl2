@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Clock.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -27,6 +27,6 @@ namespace castlecrawl2
         sf::Clock m_secondClock;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // FRAMERATETEXT_HPP_INCLUDED

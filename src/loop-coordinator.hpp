@@ -25,7 +25,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     class LoopCoordinator
     {
@@ -67,6 +67,6 @@ namespace castlecrawl2
         Context m_context;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // LOOPCOORDINATOR_INCLUDED

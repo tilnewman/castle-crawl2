@@ -9,7 +9,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Vector2.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -37,6 +37,6 @@ namespace castlecrawl2
         sf::Text m_text;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // MOUSEOVER_HPP_INCLUDED

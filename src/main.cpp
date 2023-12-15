@@ -16,7 +16,7 @@ int main(const int argc, const char * const argv[])
 {
     try
     {
-        using namespace castlecrawl2;
+        using namespace castlecrawl;
 
         GameConfig config;
 

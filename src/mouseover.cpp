@@ -11,7 +11,7 @@
 #include "map.hpp"
 #include "player.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     Mouseover::Mouseover()
@@ -158,4 +158,4 @@ namespace castlecrawl2
             (mousePos.x + fontExtent.letter_size.x), (mousePos.y - fontExtent.letter_size.y));
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

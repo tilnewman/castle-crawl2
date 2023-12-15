@@ -5,5 +5,5 @@
 //
 #include "state.hpp"
 
-namespace castlecrawl2
-{} // namespace castlecrawl2
+namespace castlecrawl
+{} // namespace castlecrawl

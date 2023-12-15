@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/System/Vector2.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     using MapPos_t = sf::Vector2i;
     using MapChars_t = std::vector<std::string>;
@@ -79,6 +79,6 @@ namespace castlecrawl2
 
     using MapTransitions_t = std::vector<MapTransition>;
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // MAPTYPES_HPP_INCLUDED

@@ -15,7 +15,7 @@
 
 #include <vector>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -438,6 +438,6 @@ namespace castlecrawl2
         std::vector<EnemyInstance> m_enemies;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // ENEMY_HPP_INCLUDED

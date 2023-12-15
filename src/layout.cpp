@@ -14,7 +14,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     Layout::Layout()
@@ -54,4 +54,4 @@ namespace castlecrawl2
         m_mapRect = sf::FloatRect(boardPos, boardSize);
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

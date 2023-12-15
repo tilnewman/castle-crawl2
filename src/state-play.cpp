@@ -20,7 +20,7 @@
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     StatePlay::StatePlay()
@@ -260,4 +260,4 @@ namespace castlecrawl2
         return false;
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

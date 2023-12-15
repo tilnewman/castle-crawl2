@@ -13,7 +13,7 @@
 
 #include <iostream>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     LoopCoordinator::LoopCoordinator(const GameConfig & config)
@@ -178,4 +178,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

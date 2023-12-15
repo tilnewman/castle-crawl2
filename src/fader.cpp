@@ -8,7 +8,7 @@
 #include "color-range.hpp"
 #include "util.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     Fader::Fader()
@@ -86,4 +86,4 @@ namespace castlecrawl2
         target.draw(m_rectangle, states);
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

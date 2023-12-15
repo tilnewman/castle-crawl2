@@ -6,7 +6,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Font.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct GameConfig;
 
@@ -63,6 +63,6 @@ namespace castlecrawl2
         FontExtent m_fontExtentSmall;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // FONT_HPP_INCLUDED

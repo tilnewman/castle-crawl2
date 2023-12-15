@@ -8,7 +8,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -39,6 +39,6 @@ namespace castlecrawl2
         sf::RectangleShape m_innerRectangle;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // GUISTATBAR_HPP_INCLUDED

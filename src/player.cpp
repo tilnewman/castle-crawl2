@@ -11,7 +11,7 @@
 #include "map.hpp"
 #include "tile-images.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     Player::Player()
@@ -37,4 +37,4 @@ namespace castlecrawl2
         target.draw(m_sprite, states);
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

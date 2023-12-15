@@ -14,7 +14,7 @@
 
 #include <string>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -74,6 +74,6 @@ namespace castlecrawl2
         std::vector<MapEntry_t> m_dragSelectedEntrys;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // STATEEDITOR_HPP_INCLUDED

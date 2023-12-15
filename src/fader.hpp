@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     class Fader
     {
@@ -39,6 +39,6 @@ namespace castlecrawl2
         sf::Color m_fadeColor;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // FADER_HPP_INCLUDED

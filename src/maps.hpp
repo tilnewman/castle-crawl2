@@ -8,7 +8,7 @@
 
 #include <vector>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -31,6 +31,6 @@ namespace castlecrawl2
         std::vector<Map> m_maps;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // MAPS_HPP_INCLUDED

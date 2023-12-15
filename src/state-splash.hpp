@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Clock.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -42,6 +42,6 @@ namespace castlecrawl2
         Fader m_fader;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // STATESPLASH_HPP_INCLUDED

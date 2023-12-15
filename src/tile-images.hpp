@@ -10,7 +10,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
     struct GameConfig;
@@ -28,6 +28,6 @@ namespace castlecrawl2
         sf::Texture m_texture;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // TILEIMAGES_HPP_INCLUDED

@@ -10,7 +10,7 @@
 #include "layout.hpp"
 #include "util.hpp"
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     TopPanel::TopPanel()
@@ -42,4 +42,4 @@ namespace castlecrawl2
         target.draw(m_titleSprite, states);
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

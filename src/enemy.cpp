@@ -18,7 +18,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     EnemyImage randomEnemyImage(const util::Random & random, const Enemy enemy)
     {
@@ -192,4 +192,4 @@ namespace castlecrawl2
             std::end(cells));
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

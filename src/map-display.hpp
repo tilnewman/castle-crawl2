@@ -8,7 +8,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -34,6 +34,6 @@ namespace castlecrawl2
         VertVec_t m_borderVerts;
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // MAPDISPLAY_HPP_INCLUDED

@@ -13,7 +13,7 @@
 
 #include <iostream>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
 
     Map::Map()
@@ -224,4 +224,4 @@ namespace castlecrawl2
         }
     }
 
-} // namespace castlecrawl2
+} // namespace castlecrawl

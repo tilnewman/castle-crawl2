@@ -12,7 +12,7 @@
 #include <ostream>
 #include <string_view>
 
-namespace castlecrawl2
+namespace castlecrawl
 {
     struct Context;
 
@@ -95,6 +95,6 @@ namespace castlecrawl2
         virtual State which() const final { return State::Quit; }
     };
 
-} // namespace castlecrawl2
+} // namespace castlecrawl
 
 #endif // STATE_HPP_INCLUDED
