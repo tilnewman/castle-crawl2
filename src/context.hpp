@@ -20,6 +20,7 @@ namespace castlecrawl
     class Maps;
     class MapDisplay;
     class StateManager;
+    class Player;
     class PlayerDisplay;
     class FontManager;
     class Enemies;
@@ -36,6 +37,7 @@ namespace castlecrawl
             Maps & mapsParam,
             MapDisplay & mapDisplayParam,
             StateManager & stateManagerParam,
+            Player & playerParam,
             PlayerDisplay & playerDisplayParam,
             const util::Random & randomParam,
             util::SoundPlayer & sfxParam,
@@ -51,6 +53,7 @@ namespace castlecrawl
             , maps(mapsParam)
             , map_display(mapDisplayParam)
             , state(stateManagerParam)
+            , player(playerParam)
             , player_display(playerDisplayParam)
             , random(randomParam)
             , sfx(sfxParam)
@@ -68,6 +71,7 @@ namespace castlecrawl
         const Maps & maps;
         MapDisplay & map_display;
         StateManager & state;
+        Player & player;
         PlayerDisplay & player_display;
         const util::Random & random;
         util::SoundPlayer & sfx;

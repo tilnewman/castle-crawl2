@@ -16,6 +16,7 @@
 #include "mouseover.hpp"
 #include "music-player.hpp"
 #include "player-display.hpp"
+#include "player.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -46,7 +47,8 @@ namespace castlecrawl
         healthBarRect.width  = (topRect.width * 0.25f);
         healthBarRect.left   = ((topRect.width * 0.5f) - (healthBarRect.width * 0.5f));
 
-        m_healthBar.setup(context, healthBarRect, sf::Color(160, 0, 0), 20);
+        m_healthBar.setup(
+            context, healthBarRect, sf::Color(160, 0, 0), context.player.health().max());
     }
 
     void StatePlay::update(const Context & context, const float frameTimeSec)
@@ -207,7 +209,8 @@ namespace castlecrawl
 
     void StatePlay::playMoveMusic(const Context & context) const
     {
-        const auto surroundingCells = context.map.surroundingCellsAll(context.player_display.position());
+        const auto surroundingCells =
+            context.map.surroundingCellsAll(context.player_display.position());
 
         const auto foundLavaIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {

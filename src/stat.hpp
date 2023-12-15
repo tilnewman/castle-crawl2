@@ -11,7 +11,7 @@ namespace castlecrawl
     // Tracks a player's stat (i.e. strength) which is the m_normal value that
     // is always clamped between a min and max, but can be temporarily changed
     // by magical items etc so this also tracks a m_current value that can
-    // fluctuate higher or lower.
+    // fluctuate higher or lower than m_normal.
     class Stat
     {
       public:
