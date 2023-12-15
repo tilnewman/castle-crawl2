@@ -82,6 +82,34 @@ namespace castlecrawl
         }
     }
 
+    inline constexpr float walkToPlayerRatio(const Enemy enemy) noexcept
+    {
+        // clang-format off
+        switch (enemy)
+        {   
+            case Enemy::Snake:          { return 0.5f; }
+            case Enemy::Spider:         { return 0.5f; }
+            case Enemy::Goblin:         { return 0.8f; }
+            case Enemy::Bat:            { return 0.3f; }
+            case Enemy::Skeleton:       { return 0.9f; }
+            case Enemy::Demon:          { return 1.0f; }
+            case Enemy::Dragon:         { return 1.0f; }
+            case Enemy::Wizard:         { return 0.8f; }
+            case Enemy::Pixie:          { return 0.5f; }
+            case Enemy::SnakeBag:       
+            case Enemy::Spiderweb:      
+            case Enemy::GoblinBarrel:   
+            case Enemy::BatMask:        
+            case Enemy::SkeletonGrave:  
+            case Enemy::DemonDoor:
+            case Enemy::WizardTomb:
+            case Enemy::PixieCup:
+            case Enemy::DragonInferno:
+            default:                    { return 0.0; }
+        }
+        // clang-format on
+    }
+
     inline constexpr bool isEnemySummoner(const Enemy enemy) noexcept
     {
         // clang-format off
@@ -406,6 +434,7 @@ namespace castlecrawl
         EnemyImage image;
         MapPos_t position;
         float timer_sec;
+        float walk_toward_ratio;
     };
 
     class Enemies

@@ -11,8 +11,8 @@
 #include "map.hpp"
 #include "player-display.hpp"
 #include "random.hpp"
-#include "tile-images.hpp"
 #include "sfml-util.hpp"
+#include "tile-images.hpp"
 
 #include <type_traits>
 
@@ -38,6 +38,7 @@ namespace castlecrawl
         , image(randomEnemyImage(random, e))
         , position(p)
         , timer_sec(turnTimeSec(random, e))
+        , walk_toward_ratio(walkToPlayerRatio(e))
     {}
 
     Enemies::Enemies()
@@ -136,10 +137,37 @@ namespace castlecrawl
             return;
         }
 
-        // TODO start with simple random move while testing
-        const MapCell cellToMoveInto = context.random.from(possibleMoveCells);
+        if (context.random.zeroTo(1.0f) < enemy.walk_toward_ratio)
+        {
+            auto distance = [](const MapPos_t & A, const MapPos_t & B) {
+                return (util::abs(A.x - B.x) + util::abs(A.y - B.y));
+            };
 
-        enemy.position = cellToMoveInto.position;
+            std::sort(
+                std::begin(possibleMoveCells),
+                std::end(possibleMoveCells),
+                [&](const MapCell & A, const MapCell & B) {
+                    return (
+                        distance(context.player_display.position(), A.position) <
+                        distance(context.player_display.position(), B.position));
+                });
+
+            const int shortestDistance =
+                distance(possibleMoveCells.front().position, context.player_display.position());
+
+            possibleMoveCells.erase(
+                std::remove_if(
+                    std::begin(possibleMoveCells),
+                    std::end(possibleMoveCells),
+                    [&](const MapCell & cell) {
+                        return (
+                            distance(context.player_display.position(), cell.position) >
+                            shortestDistance);
+                    }),
+                std::end(possibleMoveCells));
+        }
+
+        enemy.position = context.random.from(possibleMoveCells).position;
     }
 
     void Enemies::spawn(const Context & context, EnemyInstance & enemy)
@@ -178,7 +206,9 @@ namespace castlecrawl
             std::remove_if(
                 std::begin(cells),
                 std::end(cells),
-                [&](const MapCell & cell) { return (cell.position == context.player_display.position()); }),
+                [&](const MapCell & cell) {
+                    return (cell.position == context.player_display.position());
+                }),
             std::end(cells));
 
         // can't move onto other enemies
