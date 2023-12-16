@@ -50,6 +50,7 @@ namespace castlecrawl
         void editMap(const Context & context, const char upper, const char lower);
         void fadeText(const Context & context, const std::string & text);
         void save() const;
+        void load(const Context & context);
         const std::string mapCharToName(const char ch) noexcept;
 
         void startDragging(const Context & context, const sf::Vector2f & pos);

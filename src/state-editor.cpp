@@ -175,8 +175,16 @@ namespace castlecrawl
             (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) ||
              sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
         {
-            fadeText(context, "Saving");
+            fadeText(context, "Saving...");
             save();
+        }
+        else if (
+            event.key.code == sf::Keyboard::L &&
+            (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) ||
+             sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
+        {
+            fadeText(context, "Loading...");
+            load(context);
         }
         else if (event.key.code == sf::Keyboard::F)
         {
@@ -288,7 +296,7 @@ namespace castlecrawl
             sf::Keyboard::isKeyPressed(sf::Keyboard::Slash))
         {
             const std::string keyText(
-                "Esc-Quit\nCNTRL-s-Save\nSpace-Bare Floor\nPeriod-Erase\n"
+                "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
                 "f-Change-Flooring\nr-Rock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
                 "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\n"
                 "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
@@ -384,6 +392,56 @@ namespace castlecrawl
         {
             fStream << '\"' << rowStr << "\"," << std::endl;
         }
+    }
+
+    void StateEditor::load(const Context & context)
+    {
+        std::ifstream fStream("map.txt", std::ios::in);
+
+        std::vector<std::string> lines;
+        lines.reserve(m_mapChars.size());
+
+        std::string line;
+        while (std::getline(fStream, line, '\n'))
+        {
+            if (line.size() < m_mapChars[0].size())
+            {
+                return;
+            }
+
+            // remove the leading quote
+            if (line[0] == '\"')
+            {
+                line.erase(std::begin(line));
+            }
+
+            // remove the trailing comma
+            if (line[line.size() - 1] == ',')
+            {
+                line.pop_back();
+            }
+
+            // remove the trailing quote
+            if (line[line.size() - 1] == '\"')
+            {
+                line.pop_back();
+            }
+
+            if (line.size() != m_mapChars[0].size())
+            {
+                return;
+            }
+
+            lines.push_back(line);
+        }
+
+        if (lines.size() != m_mapChars.size())
+        {
+            return;
+        }
+
+        m_mapChars = lines;
+        resetMap(context);
     }
 
     const std::string StateEditor::mapCharToName(const char ch) noexcept
