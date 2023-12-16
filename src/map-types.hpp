@@ -56,6 +56,9 @@ namespace castlecrawl
         {
             case MapName::Level_1_Cell:             { return "Level_1_Cell"; }
             case MapName::Level_1_CellBlock:        { return "Level_1_CellBlock"; }
+            case MapName::Level_1_SecretCells:      { return "Level_1_SecretCells"; }
+            case MapName::Level_1_CellJunction:     { return "Level_1_CellJunction"; }
+            case MapName::Level_1_CellsEnd:         { return "Level_1_CellsEnd"; }
             case MapName::Level_1_MainHall:         { return "Level_1_MainHall"; }
             case MapName::Level_1_BoilerRoom:       { return "Level_1_BoilerRoom"; }
             case MapName::Level_1_HiddenPassage:    { return "Level_1_HiddenPassage"; }
