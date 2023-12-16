@@ -380,16 +380,6 @@ namespace castlecrawl
     {
         std::ofstream fStream("map.txt", std::ios::trunc);
 
-        // clang-format off
-        switch (m_floor)
-        {
-            case Floor::Dirt:   { fStream << "Dirt" << std::endl; break; }
-            case Floor::Stone:  { fStream << "Stone" << std::endl; break; }
-            case Floor::Wood:   { fStream << "Wood" << std::endl; break; }
-            default:            { fStream << "(floor type error)" << std::endl; break; }
-        }
-        // clang-format on
-
         for (const std::string & rowStr : m_mapChars)
         {
             fStream << '\"' << rowStr << "\"," << std::endl;
