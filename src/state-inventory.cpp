@@ -49,10 +49,6 @@ namespace castlecrawl
         context.player.inventory().add(Item(Weapon::Claymore, WeaponMaterial::Bronze));
         context.player.inventory().add(Item(Weapon::Dagger, WeaponMaterial::Diamond));
         context.player.inventory().add(Item(Weapon::Halberd, WeaponMaterial::Gold));
-        context.player.inventory().add(Item(Weapon::Handaxe, WeaponMaterial::Obsidian));
-        context.player.inventory().add(Item(Weapon::Longsword, WeaponMaterial::Platinum));
-        context.player.inventory().add(Item(Weapon::Mace, WeaponMaterial::Silver));
-        context.player.inventory().add(Item(Weapon::Scythe, WeaponMaterial::Steel));
 
         m_unListboxUPtr =
             std::make_unique<Listbox<item::Item>>(context.player.inventory().unItems());
@@ -129,6 +125,41 @@ namespace castlecrawl
         if (event.key.code == sf::Keyboard::Escape)
         {
             context.state.change(context, State::Play);
+            return;
+        }
+        else if (event.key.code == sf::Keyboard::E)
+        {
+            if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
+            {
+                const std::string resultStr =
+                    context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
+
+                if (resultStr.empty())
+                {
+                    m_unListboxUPtr->redraw();
+                    m_eqListboxUPtr->redraw();
+                    updateItemDescText(context);
+                    context.sfx.play("equip.ogg");
+                    return;
+                }
+            }
+
+            context.sfx.play("error-1.ogg");
+            return;
+        }
+        else if (event.key.code == sf::Keyboard::U)
+        {
+            if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
+            {
+                context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
+                context.sfx.play("cloth.ogg");
+                m_unListboxUPtr->redraw();
+                m_eqListboxUPtr->redraw();
+                updateItemDescText(context);
+                return;
+            }
+
+            context.sfx.play("error-1.ogg");
             return;
         }
         else if (event.key.code == sf::Keyboard::Left)
