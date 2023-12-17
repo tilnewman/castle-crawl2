@@ -53,7 +53,7 @@ namespace castlecrawl
         m_listboxUPtr->setPosition({ 50.0f, 50.0f });
     }
 
-    void StateInventory::update(const Context & context, const float frameTimeSec)
+    void StateInventory::update(const Context & context, const float)
     {
         context.framerate.update();
     }
