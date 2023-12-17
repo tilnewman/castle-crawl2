@@ -3,6 +3,7 @@
 //
 // player.hpp
 //
+#include "inventory.hpp"
 #include "stat.hpp"
 
 namespace castlecrawl
@@ -27,6 +28,8 @@ namespace castlecrawl
         void levelAdj(const int adj) { m_level += adj; }
         void goldAdj(const int adj) { m_gold += adj; }
 
+        item::Inventory & inventory() { return m_inventory; }
+
       private:
         constexpr static int statMin     = 1;
         constexpr static int statMax     = 100;
@@ -46,6 +49,8 @@ namespace castlecrawl
 
         int m_level;
         int m_gold;
+
+        item::Inventory m_inventory;
     };
 
 } // namespace castlecrawl
