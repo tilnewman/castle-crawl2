@@ -42,7 +42,7 @@ namespace castlecrawl
             , m_selectionRectangle()
         {}
 
-        void setupSize(
+        void setup(
             const Context & context,
             const FontSize fontSize,
             const std::size_t widthCharsMax,
@@ -50,7 +50,7 @@ namespace castlecrawl
         {
             m_rowCount = heightRows;
 
-            const sf::Vector2f letterSize = context.media.fontExtent(fontSize).letter_size;
+            const sf::Vector2f letterSize = context.fonts.extent(fontSize).letter_size;
 
             m_bgRectangle.setSize({ (letterSize.x * static_cast<float>(widthCharsMax)),
                                     (letterSize.y * static_cast<float>(heightRows)) });
@@ -75,7 +75,7 @@ namespace castlecrawl
                 // The string "Tyjp" is used because the T char reaches high and the others reach
                 // low This makes the string typical in terms of height so that the setPosition()
                 // works.
-                sf::Text & text = m_rowTexts.emplace_back(context.media.makeText(fontSize, "Tyjp"));
+                sf::Text & text = m_rowTexts.emplace_back(context.fonts.makeText(fontSize, "Tyjp"));
                 text.setPosition(util::position(m_rowRects[i]));
             }
 
@@ -190,7 +190,7 @@ namespace castlecrawl
 
             m_bgRectangle.setOutlineThickness(1.0f);
 
-            m_bgRectangle.setFillColor(sf::Color(80, 80, 80, 127));
+            m_bgRectangle.setFillColor(sf::Color(80, 80, 80, 100));
             m_bgRectangle.setOutlineColor(sf::Color(150, 150, 150, 127));
 
             if (m_hasFocus)
