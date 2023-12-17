@@ -17,7 +17,7 @@
 
 namespace castlecrawl
 {
-    struct ListboxIndex
+    struct ListboxIndexes
     {
         std::size_t display = 0;
         std::size_t offset  = 0;
@@ -40,6 +40,7 @@ namespace castlecrawl
             , m_rowLineVerts()
             , m_rowTexts()
             , m_selectionRectangle()
+            , m_guideRectangle()
         {}
 
         void setup(
@@ -54,6 +55,8 @@ namespace castlecrawl
 
             m_bgRectangle.setSize({ (letterSize.x * static_cast<float>(widthCharsMax)),
                                     (letterSize.y * static_cast<float>(heightRows)) });
+
+            m_bgRectangle.setOutlineThickness(1.0f);
 
             m_rowRects.clear();
             float posTop = m_bgRectangle.getGlobalBounds().top;
@@ -85,8 +88,9 @@ namespace castlecrawl
             }
 
             m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 40));
-            m_selectionRectangle.setOutlineThickness(0.0f);
             m_selectionRectangle.setSize(util::size(m_rowRects[0]));
+
+            m_guideRectangle.setFillColor(sf::Color::White);
 
             redraw();
         }
@@ -137,6 +141,11 @@ namespace castlecrawl
             for (const sf::Text & text : m_rowTexts)
             {
                 target.draw(text, states);
+            }
+
+            if (!empty())
+            {
+                target.draw(m_guideRectangle, states);
             }
         }
 
@@ -193,8 +202,6 @@ namespace castlecrawl
                 selectPrev();
             }
 
-            m_bgRectangle.setOutlineThickness(1.0f);
-
             m_bgRectangle.setFillColor(sf::Color(80, 80, 80, 80));
             m_bgRectangle.setOutlineColor(sf::Color(150, 150, 150, 127));
 
@@ -224,13 +231,31 @@ namespace castlecrawl
             }
 
             m_selectionRectangle.setPosition(util::position(m_rowRects[m_indexes.offset]));
-        }
 
-        const ListboxIndex getIndexes() const { return m_indexes; }
-        void setIndexes(const ListboxIndex & indexes)
-        {
-            m_indexes = indexes;
-            redraw();
+            float fillRatio = 0.0f;
+            if (m_items.size() >= m_rowCount)
+            {
+                fillRatio = (static_cast<float>(m_rowCount) / static_cast<float>(m_items.size()));
+            }
+
+            m_guideRectangle.setSize(
+                { 1.0f, (fillRatio * m_bgRectangle.getGlobalBounds().height) });
+
+            float scrollRatio = 0.0f;
+            if ((m_items.size() > m_rowCount) && (m_items.size() > m_indexes.display))
+            {
+                scrollRatio =
+                    (static_cast<float>(m_indexes.display) /
+                     static_cast<float>(m_items.size() - m_rowCount));
+            }
+
+            const float guideVertPos =
+                (m_bgRectangle.getGlobalBounds().top +
+                 (scrollRatio * (m_bgRectangle.getGlobalBounds().height -
+                                 m_guideRectangle.getGlobalBounds().height)));
+
+            m_guideRectangle.setPosition(
+                (m_bgRectangle.getGlobalBounds().left - 3.0f), guideVertPos);
         }
 
       private:
@@ -239,11 +264,12 @@ namespace castlecrawl
         std::size_t m_rowCount;
         const sf::Color m_highlightColor;
         sf::RectangleShape m_bgRectangle;
-        ListboxIndex m_indexes;
+        ListboxIndexes m_indexes;
         std::vector<sf::FloatRect> m_rowRects;
         std::vector<sf::Vertex> m_rowLineVerts;
         std::vector<sf::Text> m_rowTexts;
         sf::RectangleShape m_selectionRectangle;
+        sf::RectangleShape m_guideRectangle;
     };
 
 } // namespace castlecrawl
