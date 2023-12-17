@@ -84,7 +84,7 @@ namespace castlecrawl
                     (util::position(m_rowRects[i]).x + 1.0f), text.getGlobalBounds().top);
             }
 
-            m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 20));
+            m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 40));
             m_selectionRectangle.setOutlineThickness(0.0f);
             m_selectionRectangle.setSize(util::size(m_rowRects[0]));
 
@@ -93,7 +93,7 @@ namespace castlecrawl
 
         bool empty() const { return m_items.empty(); }
 
-        bool hasFocus() const { return m_hasFocus; }
+        bool getFocus() const { return m_hasFocus; }
 
         void setFocus(const bool hasFocus)
         {
@@ -195,7 +195,7 @@ namespace castlecrawl
 
             m_bgRectangle.setOutlineThickness(1.0f);
 
-            m_bgRectangle.setFillColor(sf::Color(80, 80, 80, 100));
+            m_bgRectangle.setFillColor(sf::Color(80, 80, 80, 80));
             m_bgRectangle.setOutlineColor(sf::Color(150, 150, 150, 127));
 
             if (m_hasFocus)

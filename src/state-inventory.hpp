@@ -12,6 +12,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 namespace castlecrawl
 {
@@ -29,8 +30,13 @@ namespace castlecrawl
         virtual void handleEvent(const Context &, const sf::Event &) final;
 
       private:
+        void updateItemDescText(const Context & context);
+
+      private:
         sf::RectangleShape m_fadeRectangle;
-        std::unique_ptr<Listbox<item::Item>> m_listboxUPtr;
+        std::unique_ptr<Listbox<item::Item>> m_unListboxUPtr;
+        std::unique_ptr<Listbox<item::Item>> m_eqListboxUPtr;
+        sf::Text m_itemDescText;
     };
 
 } // namespace castlecrawl

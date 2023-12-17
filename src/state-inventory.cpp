@@ -24,13 +24,17 @@ namespace castlecrawl
 
     StateInventory::StateInventory()
         : m_fadeRectangle()
-        , m_listboxUPtr()
+        , m_unListboxUPtr()
+        , m_eqListboxUPtr()
+        , m_itemDescText()
     {}
 
     void StateInventory::onEnter(const Context & context)
     {
-        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 127));
-        m_fadeRectangle.setSize(util::size(context.layout.screenRect()));
+        const sf::FloatRect screenRect = context.layout.screenRect();
+
+        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 160));
+        m_fadeRectangle.setSize(util::size(screenRect));
 
         // TODO remove after testing
         using namespace item;
@@ -48,9 +52,33 @@ namespace castlecrawl
         context.player.inventory().add(Item(Weapon::Mace, WeaponMaterial::Silver));
         context.player.inventory().add(Item(Weapon::Scythe, WeaponMaterial::Steel));
 
-        m_listboxUPtr = std::make_unique<Listbox<item::Item>>(context.player.inventory().unItems());
-        m_listboxUPtr->setup(context, FontSize::Small, context.items.textExtents().longest_name, 8);
-        m_listboxUPtr->setPosition({ 50.0f, 50.0f });
+        m_unListboxUPtr =
+            std::make_unique<Listbox<item::Item>>(context.player.inventory().unItems());
+
+        m_unListboxUPtr->setup(
+            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
+
+        m_eqListboxUPtr =
+            std::make_unique<Listbox<item::Item>>(context.player.inventory().eqItems());
+
+        m_eqListboxUPtr->setup(
+            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
+
+        const float pad{ screenRect.width * 0.0025f };
+        const sf::FloatRect mapRect = context.layout.mapRect();
+
+        m_unListboxUPtr->setPosition(
+            { ((screenRect.width * 0.5f) - m_unListboxUPtr->getGlobalBounds().width) - pad,
+              (mapRect.top + pad) });
+
+        m_eqListboxUPtr->setPosition(
+            { ((screenRect.width * 0.5f) + pad), m_unListboxUPtr->getGlobalBounds().top });
+
+        m_unListboxUPtr->setFocus(true);
+        m_eqListboxUPtr->setFocus(false);
+
+        m_itemDescText = context.fonts.makeText(FontSize::Small, "");
+        updateItemDescText(context);
     }
 
     void StateInventory::update(const Context & context, const float)
@@ -68,7 +96,9 @@ namespace castlecrawl
         context.framerate.draw(target, states);
         target.draw(m_fadeRectangle, states);
         context.top_panel.draw(context, target, states);
-        target.draw(*m_listboxUPtr, states);
+        target.draw(*m_unListboxUPtr, states);
+        target.draw(*m_eqListboxUPtr, states);
+        target.draw(m_itemDescText, states);
     }
 
     void StateInventory::handleEvent(const Context & context, const sf::Event & event)
@@ -84,6 +114,89 @@ namespace castlecrawl
             context.state.change(context, State::Play);
             return;
         }
+        else if (event.key.code == sf::Keyboard::Left)
+        {
+            if (!m_unListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->setFocus(true);
+                m_eqListboxUPtr->setFocus(false);
+                updateItemDescText(context);
+                context.sfx.play("tick-on");
+            }
+
+            return;
+        }
+        else if (event.key.code == sf::Keyboard::Right)
+        {
+            if (!m_eqListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->setFocus(false);
+                m_eqListboxUPtr->setFocus(true);
+                updateItemDescText(context);
+                context.sfx.play("tick-on");
+            }
+
+            return;
+        }
+        else if (event.key.code == sf::Keyboard::Up)
+        {
+            if (m_unListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->selectPrev();
+            }
+            else
+            {
+                m_eqListboxUPtr->selectPrev();
+            }
+
+            updateItemDescText(context);
+            context.sfx.play("tick-on");
+            return;
+        }
+        else if (event.key.code == sf::Keyboard::Down)
+        {
+            if (m_unListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->selectNext();
+            }
+            else
+            {
+                m_eqListboxUPtr->selectNext();
+            }
+
+            updateItemDescText(context);
+            context.sfx.play("tick-on");
+            return;
+        }
+    }
+
+    void StateInventory::updateItemDescText(const Context & context)
+    {
+        m_itemDescText.setString("");
+
+        if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
+        {
+            const std::size_t index = m_unListboxUPtr->selectedIndex();
+            if (index < context.player.inventory().unItems().size())
+            {
+                m_itemDescText.setString(
+                    context.player.inventory().unItems().at(index).description());
+            }
+        }
+        else if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
+        {
+            const std::size_t index = m_eqListboxUPtr->selectedIndex();
+            if (index < context.player.inventory().eqItems().size())
+            {
+                m_itemDescText.setString(
+                    context.player.inventory().eqItems().at(index).description());
+            }
+        }
+
+        m_itemDescText.setPosition(
+            ((context.layout.screenRect().width * 0.5f) -
+             (m_itemDescText.getGlobalBounds().width * 0.5f)),
+            util::bottom(*m_unListboxUPtr));
     }
 
 } // namespace castlecrawl
