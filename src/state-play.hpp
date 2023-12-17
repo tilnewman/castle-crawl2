@@ -8,6 +8,9 @@
 #include "mouseover.hpp"
 #include "state.hpp"
 
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 namespace castlecrawl
 {
     struct Context;
