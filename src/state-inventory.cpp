@@ -82,13 +82,15 @@ namespace castlecrawl
         m_itemDescText = context.fonts.makeText(FontSize::Small, "");
         updateItemDescText(context);
 
-        m_unTitleText = context.fonts.makeText(FontSize::Small, "Unequipped Items:");
+        m_unTitleText = context.fonts.makeText(
+            FontSize::Small, "Unequipped Items:", sf::Color(255, 255, 255, 160));
 
         m_unTitleText.setPosition(
             m_unListboxUPtr->getGlobalBounds().left,
             (m_unListboxUPtr->getGlobalBounds().top - m_unTitleText.getGlobalBounds().height));
 
-        m_eqTitleText = context.fonts.makeText(FontSize::Small, "Equipped Items:");
+        m_eqTitleText = context.fonts.makeText(
+            FontSize::Small, "Equipped Items:", sf::Color(255, 255, 255, 160));
 
         m_eqTitleText.setPosition(
             m_eqListboxUPtr->getGlobalBounds().left, m_unTitleText.getGlobalBounds().top);
