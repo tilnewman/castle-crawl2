@@ -7,6 +7,7 @@
 
 #include "check-macros.hpp"
 #include "state-editor.hpp"
+#include "state-inventory.hpp"
 #include "state-play.hpp"
 #include "state-splash.hpp"
 
@@ -39,11 +40,12 @@ namespace castlecrawl
         switch (state)
         {
             // clang-format off
-            case State::Init:   { return std::make_unique<StateInit>(); } 
-            case State::Splash: { return std::make_unique<StateSplash>(); }
-            case State::Play:   { return std::make_unique<StatePlay>(); }
-            case State::Quit:   { return std::make_unique<StateQuit>(); }
-            case State::Editor: { return std::make_unique<StateEditor>(); }
+            case State::Init:       { return std::make_unique<StateInit>(); } 
+            case State::Splash:     { return std::make_unique<StateSplash>(); }
+            case State::Play:       { return std::make_unique<StatePlay>(); }
+            case State::Inventory:  { return std::make_unique<StateInventory>(); }
+            case State::Quit:       { return std::make_unique<StateQuit>(); }
+            case State::Editor:     { return std::make_unique<StateEditor>(); }
             default:
             {
                 throw std::runtime_error("Error: state-manager::factory() called with unknown state!");

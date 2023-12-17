@@ -21,6 +21,7 @@ namespace castlecrawl
         Init,
         Splash,
         Play,
+        Inventory,
         Quit,
         Editor
     };
@@ -30,12 +31,13 @@ namespace castlecrawl
         switch (state)
         {
             // clang-format off
-            case State::Init:   { return "Init"; }
-            case State::Splash: { return "Splash"; }
-            case State::Play:   { return "Play"; }
-            case State::Quit:   { return "Quit"; }
-            case State::Editor: { return "Editor"; }
-            default:            { return "(unknown_State)"; }
+            case State::Init:       { return "Init"; }
+            case State::Splash:     { return "Splash"; }
+            case State::Play:       { return "Play"; }
+            case State::Inventory:  { return "Inventory"; }
+            case State::Quit:       { return "Quit"; }
+            case State::Editor:     { return "Editor"; }
+            default:                { return "unknown_state_error"; }
                 // clang-format on
         }
     }
@@ -53,7 +55,7 @@ namespace castlecrawl
         virtual State which() const = 0;
 
         virtual void onEnter(const Context & context) = 0;
-        virtual void onExit(const Context & context) = 0;
+        virtual void onExit(const Context & context)  = 0;
 
         virtual void update(const Context & context, const float frameTimeSec) = 0;
 
