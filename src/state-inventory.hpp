@@ -34,7 +34,9 @@ namespace castlecrawl
 
       private:
         sf::RectangleShape m_fadeRectangle;
+        sf::Text m_unTitleText;
         std::unique_ptr<Listbox<item::Item>> m_unListboxUPtr;
+        sf::Text m_eqTitleText;
         std::unique_ptr<Listbox<item::Item>> m_eqListboxUPtr;
         sf::Text m_itemDescText;
     };

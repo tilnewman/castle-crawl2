@@ -24,7 +24,9 @@ namespace castlecrawl
 
     StateInventory::StateInventory()
         : m_fadeRectangle()
+        , m_unTitleText()
         , m_unListboxUPtr()
+        , m_eqTitleText()
         , m_eqListboxUPtr()
         , m_itemDescText()
     {}
@@ -79,6 +81,17 @@ namespace castlecrawl
 
         m_itemDescText = context.fonts.makeText(FontSize::Small, "");
         updateItemDescText(context);
+
+        m_unTitleText = context.fonts.makeText(FontSize::Small, "Unequipped Items:");
+
+        m_unTitleText.setPosition(
+            m_unListboxUPtr->getGlobalBounds().left,
+            (m_unListboxUPtr->getGlobalBounds().top - m_unTitleText.getGlobalBounds().height));
+
+        m_eqTitleText = context.fonts.makeText(FontSize::Small, "Equipped Items:");
+
+        m_eqTitleText.setPosition(
+            m_eqListboxUPtr->getGlobalBounds().left, m_unTitleText.getGlobalBounds().top);
     }
 
     void StateInventory::update(const Context & context, const float)
@@ -99,6 +112,8 @@ namespace castlecrawl
         target.draw(*m_unListboxUPtr, states);
         target.draw(*m_eqListboxUPtr, states);
         target.draw(m_itemDescText, states);
+        target.draw(m_unTitleText, states);
+        target.draw(m_eqTitleText, states);
     }
 
     void StateInventory::handleEvent(const Context & context, const sf::Event & event)
