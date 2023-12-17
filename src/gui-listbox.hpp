@@ -76,7 +76,12 @@ namespace castlecrawl
                 // low This makes the string typical in terms of height so that the setPosition()
                 // works.
                 sf::Text & text = m_rowTexts.emplace_back(context.fonts.makeText(fontSize, "Tyjp"));
-                text.setPosition(util::position(m_rowRects[i]));
+
+                // use this only to vertically center
+                util::centerInside(text, m_rowRects[i]);
+
+                text.setPosition(
+                    (util::position(m_rowRects[i]).x + 1.0f), text.getGlobalBounds().top);
             }
 
             m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 20));
