@@ -124,12 +124,19 @@ namespace castlecrawl
         if (event.key.code == sf::Keyboard::Escape)
         {
             context.state.change(context, State::Quit);
+            return;
         }
         else if (
             (event.key.code == sf::Keyboard::Up) || (event.key.code == sf::Keyboard::Down) ||
             (event.key.code == sf::Keyboard::Left) || (event.key.code == sf::Keyboard::Right))
         {
             handlePlayerMove(context, event.key.code);
+            return;
+        }
+        else if (event.key.code == sf::Keyboard::I)
+        {
+            context.state.change(context, State::Inventory);
+            return;
         }
     }
 
