@@ -29,6 +29,7 @@ namespace castlecrawl
         , m_eqTitleText()
         , m_eqListboxUPtr()
         , m_itemDescText()
+        , m_errorText()
         , m_strTitleText()
         , m_dexTitleText()
         , m_accTitleText()
@@ -168,11 +169,22 @@ namespace castlecrawl
 
         m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
         m_fadeRectangle.setSize(util::size(screenRect));
+
+        //
+
+        m_errorText = context.fonts.makeText(FontSize::Medium, "");
     }
 
     void StateInventory::update(const Context & context, const float)
     {
         context.framerate.update();
+
+        if (m_errorText.getFillColor().a > 0)
+        {
+            sf::Color color = m_errorText.getFillColor();
+            --color.a;
+            m_errorText.setFillColor(color);
+        }
     }
 
     void StateInventory::draw(
@@ -188,6 +200,7 @@ namespace castlecrawl
         target.draw(*m_unListboxUPtr, states);
         target.draw(*m_eqListboxUPtr, states);
         target.draw(m_itemDescText, states);
+        target.draw(m_errorText, states);
         target.draw(m_unTitleText, states);
         target.draw(m_eqTitleText, states);
 
@@ -237,10 +250,25 @@ namespace castlecrawl
                     context.sfx.play("equip.ogg");
                     return;
                 }
-            }
+                else
+                {
+                    m_errorText.setString(resultStr);
+                    m_errorText.setFillColor(sf::Color::Red);
 
-            context.sfx.play("error-1.ogg");
-            return;
+                    m_errorText.setPosition(
+                        ((context.layout.screenRect().width * 0.5f) -
+                         (m_errorText.getGlobalBounds().width * 0.5f)),
+                        (util::bottom(m_itemDescText) + 20.0f));
+
+                    context.sfx.play("error-1.ogg");
+                    return;
+                }
+            }
+            else
+            {
+                context.sfx.play("error-1.ogg");
+                return;
+            }
         }
         else if (event.key.code == sf::Keyboard::U)
         {
