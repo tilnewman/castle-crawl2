@@ -78,7 +78,7 @@ namespace castlecrawl
 
         m_strTitleText.setPosition((screenRect.width * 0.25f), (botRect.top + padLarge));
 
-        const float statTextVertPad = 2.0f;
+        const float statTextVertPad = 5.0f;
 
         m_dexTitleText.setPosition(
             m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad));
@@ -102,20 +102,11 @@ namespace castlecrawl
 
         const float valueTextHorizPos = (util::right(m_dexTitleText) + padLarge);
 
-        m_strValueText.setPosition(
-            valueTextHorizPos, (m_strTitleText.getPosition().y - statTextVertPad));
-
-        m_dexValueText.setPosition(
-            valueTextHorizPos, (m_dexTitleText.getPosition().y - statTextVertPad));
-
-        m_accValueText.setPosition(
-            valueTextHorizPos, (m_accTitleText.getPosition().y - statTextVertPad));
-
-        m_lckValueText.setPosition(
-            valueTextHorizPos, (m_lckTitleText.getPosition().y - statTextVertPad));
-
-        m_arcValueText.setPosition(
-            valueTextHorizPos, (m_arcTitleText.getPosition().y - statTextVertPad));
+        m_strValueText.setPosition(valueTextHorizPos, m_strTitleText.getGlobalBounds().top - 7.0f);
+        m_dexValueText.setPosition(valueTextHorizPos, m_dexTitleText.getGlobalBounds().top - 7.0f);
+        m_accValueText.setPosition(valueTextHorizPos, m_accTitleText.getGlobalBounds().top - 7.0f);
+        m_lckValueText.setPosition(valueTextHorizPos, m_lckTitleText.getGlobalBounds().top - 7.0f);
+        m_arcValueText.setPosition(valueTextHorizPos, m_arcTitleText.getGlobalBounds().top - 7.0f);
 
         updateStatText(context);
 
@@ -134,11 +125,18 @@ namespace castlecrawl
 
         //
 
+        std::string goldStr{ "Gold: " };
+        goldStr += std::to_string(context.player.gold());
+        m_goldText = context.fonts.makeText(FontSize::Medium, goldStr);
+        util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
+
+        //
+
         m_unListboxUPtr->setup(
-            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
+            context, FontSize::Medium, context.items.textExtents().longest_name, 16);
 
         m_eqListboxUPtr->setup(
-            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
+            context, FontSize::Medium, context.items.textExtents().longest_name, 16);
 
         m_unListboxUPtr->setPosition(
             { ((screenRect.width * 0.5f) - m_unListboxUPtr->getGlobalBounds().width) - pad,
@@ -168,7 +166,7 @@ namespace castlecrawl
 
         //
 
-        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 160));
+        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
         m_fadeRectangle.setSize(util::size(screenRect));
     }
 
@@ -194,6 +192,8 @@ namespace castlecrawl
         target.draw(m_eqTitleText, states);
 
         target.draw(m_statRectangle, states);
+
+        target.draw(m_goldText, states);
 
         target.draw(m_strTitleText, states);
         target.draw(m_dexTitleText, states);
