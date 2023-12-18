@@ -29,15 +29,20 @@ namespace castlecrawl
         , m_eqTitleText()
         , m_eqListboxUPtr()
         , m_itemDescText()
+        , m_strTitleText()
+        , m_dexTitleText()
+        , m_accTitleText()
+        , m_lckTitleText()
+        , m_arcTitleText()
+        , m_strValueText()
+        , m_dexValueText()
+        , m_accValueText()
+        , m_lckValueText()
+        , m_arcValueText()
     {}
 
     void StateInventory::onEnter(const Context & context)
     {
-        const sf::FloatRect screenRect = context.layout.screenRect();
-
-        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 160));
-        m_fadeRectangle.setSize(util::size(screenRect));
-
         // TODO remove after testing
         using namespace item;
         context.player.inventory().add(Item(Armor::Boots, ArmorMaterial::Bronze));
@@ -53,21 +58,91 @@ namespace castlecrawl
         m_unListboxUPtr =
             std::make_unique<Listbox<item::Item>>(context.player.inventory().unItems());
 
-        m_unListboxUPtr->setup(
-            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
-
         m_eqListboxUPtr =
             std::make_unique<Listbox<item::Item>>(context.player.inventory().eqItems());
+
+        //
+
+        const sf::FloatRect screenRect = context.layout.screenRect();
+        const float pad{ screenRect.width * 0.0025f };
+        const float padLarge{ pad * 10.0f };
+        const sf::FloatRect botRect = context.layout.botRect();
+
+        //
+
+        m_strTitleText = context.fonts.makeText(FontSize::Medium, "Strength");
+        m_dexTitleText = context.fonts.makeText(FontSize::Medium, "Dexterity");
+        m_accTitleText = context.fonts.makeText(FontSize::Medium, "Accuracy");
+        m_lckTitleText = context.fonts.makeText(FontSize::Medium, "Luck");
+        m_arcTitleText = context.fonts.makeText(FontSize::Medium, "Arcane");
+
+        m_strTitleText.setPosition((screenRect.width * 0.25f), (botRect.top + padLarge));
+
+        const float statTextVertPad = 2.0f;
+
+        m_dexTitleText.setPosition(
+            m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad));
+
+        m_accTitleText.setPosition(
+            m_strTitleText.getPosition().x, (util::bottom(m_dexTitleText) + statTextVertPad));
+
+        m_lckTitleText.setPosition(
+            m_strTitleText.getPosition().x, (util::bottom(m_accTitleText) + statTextVertPad));
+
+        m_arcTitleText.setPosition(
+            m_strTitleText.getPosition().x, (util::bottom(m_lckTitleText) + statTextVertPad));
+
+        //
+
+        m_strValueText = context.fonts.makeText(FontSize::Medium, "");
+        m_dexValueText = context.fonts.makeText(FontSize::Medium, "");
+        m_accValueText = context.fonts.makeText(FontSize::Medium, "");
+        m_lckValueText = context.fonts.makeText(FontSize::Medium, "");
+        m_arcValueText = context.fonts.makeText(FontSize::Medium, "");
+
+        const float valueTextHorizPos = (util::right(m_dexTitleText) + padLarge);
+
+        m_strValueText.setPosition(
+            valueTextHorizPos, (m_strTitleText.getPosition().y - statTextVertPad));
+
+        m_dexValueText.setPosition(
+            valueTextHorizPos, (m_dexTitleText.getPosition().y - statTextVertPad));
+
+        m_accValueText.setPosition(
+            valueTextHorizPos, (m_accTitleText.getPosition().y - statTextVertPad));
+
+        m_lckValueText.setPosition(
+            valueTextHorizPos, (m_lckTitleText.getPosition().y - statTextVertPad));
+
+        m_arcValueText.setPosition(
+            valueTextHorizPos, (m_arcTitleText.getPosition().y - statTextVertPad));
+
+        updateStatText(context);
+
+        //
+
+        m_statRectangle.setFillColor(sf::Color(255, 255, 255, 32));
+        m_statRectangle.setOutlineColor(sf::Color(255, 255, 255, 64));
+        m_statRectangle.setOutlineThickness(2.0f);
+
+        m_statRectangle.setPosition(
+            (m_strTitleText.getPosition().x - pad), (m_strTitleText.getPosition().y - pad));
+
+        m_statRectangle.setSize(
+            { (screenRect.width - (m_statRectangle.getPosition().x * 2.0f)),
+              (util::bottom(m_arcValueText) - m_strTitleText.getPosition().y) + pad });
+
+        //
+
+        m_unListboxUPtr->setup(
+            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
 
         m_eqListboxUPtr->setup(
             context, FontSize::Medium, context.items.textExtents().longest_name, 8);
 
-        const float pad{ screenRect.width * 0.0025f };
-        const sf::FloatRect mapRect = context.layout.mapRect();
-
         m_unListboxUPtr->setPosition(
             { ((screenRect.width * 0.5f) - m_unListboxUPtr->getGlobalBounds().width) - pad,
-              (mapRect.top + pad) });
+              (util::bottom(m_statRectangle) + (padLarge * 2.0f)) });
 
         m_eqListboxUPtr->setPosition(
             { ((screenRect.width * 0.5f) + pad), m_unListboxUPtr->getGlobalBounds().top });
@@ -90,6 +165,11 @@ namespace castlecrawl
 
         m_eqTitleText.setPosition(
             m_eqListboxUPtr->getGlobalBounds().left, m_unTitleText.getGlobalBounds().top);
+
+        //
+
+        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 160));
+        m_fadeRectangle.setSize(util::size(screenRect));
     }
 
     void StateInventory::update(const Context & context, const float)
@@ -112,6 +192,20 @@ namespace castlecrawl
         target.draw(m_itemDescText, states);
         target.draw(m_unTitleText, states);
         target.draw(m_eqTitleText, states);
+
+        target.draw(m_statRectangle, states);
+
+        target.draw(m_strTitleText, states);
+        target.draw(m_dexTitleText, states);
+        target.draw(m_accTitleText, states);
+        target.draw(m_lckTitleText, states);
+        target.draw(m_arcTitleText, states);
+
+        target.draw(m_strValueText, states);
+        target.draw(m_dexValueText, states);
+        target.draw(m_accValueText, states);
+        target.draw(m_lckValueText, states);
+        target.draw(m_arcValueText, states);
     }
 
     void StateInventory::handleEvent(const Context & context, const sf::Event & event)
@@ -138,6 +232,7 @@ namespace castlecrawl
                 {
                     m_unListboxUPtr->redraw();
                     m_eqListboxUPtr->redraw();
+                    updateStatText(context);
                     updateItemDescText(context);
                     context.sfx.play("equip.ogg");
                     return;
@@ -155,6 +250,7 @@ namespace castlecrawl
                 context.sfx.play("cloth.ogg");
                 m_unListboxUPtr->redraw();
                 m_eqListboxUPtr->redraw();
+                updateStatText(context);
                 updateItemDescText(context);
                 return;
             }
@@ -245,6 +341,36 @@ namespace castlecrawl
             ((context.layout.screenRect().width * 0.5f) -
              (m_itemDescText.getGlobalBounds().width * 0.5f)),
             util::bottom(*m_unListboxUPtr));
+    }
+
+    void StateInventory::updateStatText(const Context & context)
+    {
+        std::string str;
+
+        str = std::to_string(context.player.strength().current());
+        str += '//';
+        str += std::to_string(context.player.strength().max());
+        m_strValueText.setString(str);
+
+        str = std::to_string(context.player.dexterity().current());
+        str += '//';
+        str += std::to_string(context.player.dexterity().max());
+        m_dexValueText.setString(str);
+
+        str = std::to_string(context.player.accuracy().current());
+        str += '//';
+        str += std::to_string(context.player.accuracy().max());
+        m_accValueText.setString(str);
+
+        str = std::to_string(context.player.luck().current());
+        str += '//';
+        str += std::to_string(context.player.luck().max());
+        m_lckValueText.setString(str);
+
+        str = std::to_string(context.player.arcane().current());
+        str += '//';
+        str += std::to_string(context.player.arcane().max());
+        m_arcValueText.setString(str);
     }
 
 } // namespace castlecrawl

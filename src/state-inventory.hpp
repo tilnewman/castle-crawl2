@@ -31,6 +31,7 @@ namespace castlecrawl
 
       private:
         void updateItemDescText(const Context & context);
+        void updateStatText(const Context & context);
 
       private:
         sf::RectangleShape m_fadeRectangle;
@@ -39,6 +40,20 @@ namespace castlecrawl
         sf::Text m_eqTitleText;
         std::unique_ptr<Listbox<item::Item>> m_eqListboxUPtr;
         sf::Text m_itemDescText;
+
+        sf::Text m_strTitleText;
+        sf::Text m_dexTitleText;
+        sf::Text m_accTitleText;
+        sf::Text m_lckTitleText;
+        sf::Text m_arcTitleText;
+        //
+        sf::Text m_strValueText;
+        sf::Text m_dexValueText;
+        sf::Text m_accValueText;
+        sf::Text m_lckValueText;
+        sf::Text m_arcValueText;
+        //
+        sf::RectangleShape m_statRectangle;
     };
 
 } // namespace castlecrawl

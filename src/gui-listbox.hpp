@@ -90,7 +90,7 @@ namespace castlecrawl
             m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 40));
             m_selectionRectangle.setSize(util::size(m_rowRects[0]));
 
-            m_guideRectangle.setFillColor(sf::Color::White);
+            m_guideRectangle.setFillColor(sf::Color(255, 255, 255, 127));
 
             redraw();
         }
