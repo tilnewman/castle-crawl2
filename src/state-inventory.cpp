@@ -348,27 +348,27 @@ namespace castlecrawl
         std::string str;
 
         str = std::to_string(context.player.strength().current());
-        str += '//';
+        str += "/";
         str += std::to_string(context.player.strength().max());
         m_strValueText.setString(str);
 
         str = std::to_string(context.player.dexterity().current());
-        str += '//';
+        str += "/";
         str += std::to_string(context.player.dexterity().max());
         m_dexValueText.setString(str);
 
         str = std::to_string(context.player.accuracy().current());
-        str += '//';
+        str += "/";
         str += std::to_string(context.player.accuracy().max());
         m_accValueText.setString(str);
 
         str = std::to_string(context.player.luck().current());
-        str += '//';
+        str += "/";
         str += std::to_string(context.player.luck().max());
         m_lckValueText.setString(str);
 
         str = std::to_string(context.player.arcane().current());
-        str += '//';
+        str += "/";
         str += std::to_string(context.player.arcane().max());
         m_arcValueText.setString(str);
     }
