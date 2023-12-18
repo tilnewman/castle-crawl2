@@ -54,7 +54,9 @@ namespace castlecrawl
         context.player.inventory().add(Item(Armor::Helm, ArmorMaterial::Silver));
         context.player.inventory().add(Item(Weapon::Claymore, WeaponMaterial::Bronze));
         context.player.inventory().add(Item(Weapon::Dagger, WeaponMaterial::Diamond));
-        context.player.inventory().add(Item(Weapon::Halberd, WeaponMaterial::Gold));
+
+        context.player.inventory().add(Item(
+            Weapon::Shortsword, WeaponMaterial::Gold, "Lucky Shortsword", { .acc = 4, .lck = 10 }));
 
         m_unListboxUPtr =
             std::make_unique<Listbox<item::Item>>(context.player.inventory().unItems());
@@ -243,6 +245,7 @@ namespace castlecrawl
 
                 if (resultStr.empty())
                 {
+                    context.player.updateEquipEffects();
                     m_unListboxUPtr->redraw();
                     m_eqListboxUPtr->redraw();
                     updateStatText(context);
@@ -275,11 +278,12 @@ namespace castlecrawl
             if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
             {
                 context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
-                context.sfx.play("cloth.ogg");
+                context.player.updateEquipEffects();
                 m_unListboxUPtr->redraw();
                 m_eqListboxUPtr->redraw();
                 updateStatText(context);
                 updateItemDescText(context);
+                context.sfx.play("cloth.ogg");
                 return;
             }
 

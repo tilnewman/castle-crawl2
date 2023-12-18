@@ -30,6 +30,9 @@ namespace castlecrawl
 
         item::Inventory & inventory() { return m_inventory; }
 
+        void updateEquipEffects();
+        item::EquipEffect equipEffects() const { return m_equipEffects; }
+
       private:
         constexpr static int statMin     = 1;
         constexpr static int statMax     = 100;
@@ -51,6 +54,7 @@ namespace castlecrawl
         int m_gold;
 
         item::Inventory m_inventory;
+        item::EquipEffect m_equipEffects;
     };
 
 } // namespace castlecrawl
