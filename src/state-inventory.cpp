@@ -52,17 +52,27 @@ namespace castlecrawl
         context.player.inventory().add(Item(Armor::Gauntlets, ArmorMaterial::Leather));
         context.player.inventory().add(Item(Armor::Greaves, ArmorMaterial::Platinum));
         context.player.inventory().add(Item(Armor::Helm, ArmorMaterial::Silver));
+        //
         context.player.inventory().add(Item(Weapon::Claymore, WeaponMaterial::Bronze));
         context.player.inventory().add(Item(Weapon::Dagger, WeaponMaterial::Diamond));
-
+        context.player.inventory().add(Item(Weapon::Claymore, WeaponMaterial::Bronze));
+        context.player.inventory().add(Item(Weapon::Handaxe, WeaponMaterial::Obsidian));
+        context.player.inventory().add(Item(Weapon::Longsword, WeaponMaterial::Steel));
+        //
+        context.player.inventory().add(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
+        context.player.inventory().add(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
+        context.player.inventory().add(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
+        context.player.inventory().add(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
+        //
         context.player.inventory().add(Item(
             Weapon::Shortsword, WeaponMaterial::Gold, "Lucky Shortsword", { .acc = 4, .lck = 10 }));
 
-        m_unListboxUPtr =
-            std::make_unique<Listbox<item::Item>>(context.player.inventory().unItems());
-
-        m_eqListboxUPtr =
-            std::make_unique<Listbox<item::Item>>(context.player.inventory().eqItems());
+        m_unListboxUPtr = std::make_unique<Listbox>(context.player.inventory().unItems());
+        m_eqListboxUPtr = std::make_unique<Listbox>(context.player.inventory().eqItems());
 
         //
 
