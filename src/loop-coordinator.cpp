@@ -37,6 +37,7 @@ namespace castlecrawl
         , m_topPanel()
         , m_itemFactory()
         , m_healthBar()
+        , m_manaBar()
         , m_context(
               m_config,
               m_tileImages,
@@ -55,7 +56,8 @@ namespace castlecrawl
               m_framerate,
               m_topPanel,
               m_itemFactory,
-              m_healthBar)
+              m_healthBar,
+              m_manaBar)
     {}
 
     void LoopCoordinator::playGame()
@@ -83,6 +85,7 @@ namespace castlecrawl
         m_framerate.setup(m_context);
         m_topPanel.setup(m_context);
         m_healthBar.setup(m_context);
+        m_manaBar.setup(m_context);
 
         m_stateManager.change(m_context, State::Splash);
 

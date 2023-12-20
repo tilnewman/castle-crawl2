@@ -12,6 +12,7 @@
 #include "health-bar.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
+#include "mana-bar.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "mouseover.hpp"
@@ -50,6 +51,7 @@ namespace castlecrawl
         context.framerate.draw(target, states);
         context.top_panel.draw(context, target, states);
         target.draw(context.health_bar, states);
+        target.draw(context.mana_bar, states);
     }
 
     void StatePlay::handleEvent(const Context & context, const sf::Event & event)

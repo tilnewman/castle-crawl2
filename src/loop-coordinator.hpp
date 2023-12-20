@@ -11,6 +11,7 @@
 #include "health-bar.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
+#include "mana-bar.hpp"
 #include "map-display.hpp"
 #include "map.hpp"
 #include "maps.hpp"
@@ -69,6 +70,7 @@ namespace castlecrawl
         TopPanel m_topPanel;
         item::ItemFactory m_itemFactory;
         HealthBar m_healthBar;
+        ManaBar m_manaBar;
 
         Context m_context;
     };
