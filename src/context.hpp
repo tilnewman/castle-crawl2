@@ -26,8 +26,6 @@ namespace castlecrawl
     class Enemies;
     class FramerateText;
     class TopPanel;
-    class HealthBar;
-    class ManaBar;
 
     namespace item
     {
@@ -53,9 +51,7 @@ namespace castlecrawl
             Enemies & enemiesParam,
             FramerateText & framerateTextParam,
             TopPanel & topPanelParam,
-            item::ItemFactory & itemFactoryParam,
-            HealthBar & healthBarParam,
-            ManaBar & manaBarParam)
+            item::ItemFactory & itemFactoryParam)
             : config(configParam)
             , tile_images(tileImagesParam)
             , layout(layoutParam)
@@ -73,8 +69,6 @@ namespace castlecrawl
             , framerate(framerateTextParam)
             , top_panel(topPanelParam)
             , items(itemFactoryParam)
-            , health_bar(healthBarParam)
-            , mana_bar(manaBarParam)
         {}
 
         const GameConfig & config;
@@ -94,8 +88,6 @@ namespace castlecrawl
         FramerateText & framerate;
         TopPanel & top_panel;
         item::ItemFactory & items;
-        HealthBar & health_bar;
-        ManaBar & mana_bar;
     };
 
 } // namespace castlecrawl

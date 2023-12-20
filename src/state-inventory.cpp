@@ -208,7 +208,7 @@ namespace castlecrawl
         context.player_display.draw(context, target, states);
         context.framerate.draw(target, states);
         target.draw(m_fadeRectangle, states);
-        context.top_panel.draw(context, target, states);
+        target.draw(context.top_panel, states);
         target.draw(*m_unListboxUPtr, states);
         target.draw(*m_eqListboxUPtr, states);
         target.draw(m_itemDescText, states);

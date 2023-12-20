@@ -16,6 +16,8 @@ namespace castlecrawl
     TopPanel::TopPanel()
         : m_titleTexture()
         , m_titleSprite()
+        , m_healthBar()
+        , m_manaBar()
     {}
 
     void TopPanel::setup(const Context & context)
@@ -35,11 +37,22 @@ namespace castlecrawl
 
         m_titleSprite.setPosition(
             ((topRect.width * 0.5f) - (m_titleSprite.getGlobalBounds().width * 0.5f)), 0.0f);
+
+        m_healthBar.setup(context);
+        m_manaBar.setup(context);
     }
 
-    void TopPanel::draw(const Context &, sf::RenderTarget & target, sf::RenderStates states) const
+    void TopPanel::update(const Context & context)
+    {
+        m_healthBar.update(context);
+        m_manaBar.update(context);
+    }
+
+    void TopPanel::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_titleSprite, states);
+        target.draw(m_healthBar, states);
+        target.draw(m_manaBar, states);
     }
 
 } // namespace castlecrawl

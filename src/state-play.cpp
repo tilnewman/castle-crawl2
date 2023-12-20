@@ -49,9 +49,7 @@ namespace castlecrawl
         context.player_display.draw(context, target, states);
         m_mouseover.draw(context, target, states);
         context.framerate.draw(target, states);
-        context.top_panel.draw(context, target, states);
-        target.draw(context.health_bar, states);
-        target.draw(context.mana_bar, states);
+        target.draw(context.top_panel, states);
     }
 
     void StatePlay::handleEvent(const Context & context, const sf::Event & event)
@@ -125,7 +123,7 @@ namespace castlecrawl
         {
             context.player_display.shake();
             context.player.health().adjCurrent(-1);
-            context.health_bar.update(context);
+            context.top_panel.update(context);
         }
 
         if (didMove)

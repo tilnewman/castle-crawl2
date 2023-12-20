@@ -38,7 +38,7 @@ namespace castlecrawl
         context.enemies.draw(context, target, states);
         context.player_display.draw(context, target, states);
         context.framerate.draw(target, states);
-        context.top_panel.draw(context, target, states);
+        target.draw(context.top_panel, states);
 
         if (!m_isDirectionSelected)
         {
