@@ -26,19 +26,11 @@ namespace castlecrawl
 
     StatePlay::StatePlay()
         : m_mouseover()
-        , m_fader()
-        , m_mapFadeDurationSec(1.0f)
-        , m_transition()
         , m_healthBar()
     {}
 
     void StatePlay::onEnter(const Context & context)
     {
-        m_transition = MapTransition{ { -1, -1 }, MapName::Level_1_Cell, { 3, 2 } };
-
-        m_fader.setup(
-            true, context.config.background_color, m_mapFadeDurationSec, context.layout.mapRect());
-
         const sf::FloatRect topRect = context.layout.topRect();
 
         sf::FloatRect healthBarRect;
@@ -53,32 +45,9 @@ namespace castlecrawl
 
     void StatePlay::update(const Context & context, const float frameTimeSec)
     {
-        const bool didMapJustFinishFading = m_fader.update(frameTimeSec);
-        if (didMapJustFinishFading)
-        {
-            context.maps.change(context, m_transition.to_name, m_transition.to_pos);
-
-            if (m_fader.isFadingIn())
-            {
-                m_fader.reset();
-            }
-            else
-            {
-                m_fader.setup(
-                    true,
-                    context.config.background_color,
-                    m_mapFadeDurationSec,
-                    context.layout.mapRect());
-            }
-        }
-
-        if (!m_fader.isFading())
-        {
-            context.enemies.update(context, frameTimeSec);
-            m_mouseover.update(context, frameTimeSec);
-            context.player_display.update(context, frameTimeSec);
-        }
-
+        context.enemies.update(context, frameTimeSec);
+        m_mouseover.update(context, frameTimeSec);
+        context.player_display.update(context, frameTimeSec);
         context.framerate.update();
     }
 
@@ -88,15 +57,8 @@ namespace castlecrawl
         target.clear(context.config.background_color);
         context.map_display.draw(context, target, states);
         context.enemies.draw(context, target, states);
-
-        if (!m_fader.isFading())
-        {
-            context.player_display.draw(context, target, states);
-            m_mouseover.draw(context, target, states);
-        }
-
-        m_fader.draw(target, states);
-
+        context.player_display.draw(context, target, states);
+        m_mouseover.draw(context, target, states);
         context.framerate.draw(target, states);
         context.top_panel.draw(context, target, states);
         m_healthBar.draw(target, states);
@@ -104,11 +66,6 @@ namespace castlecrawl
 
     void StatePlay::handleEvent(const Context & context, const sf::Event & event)
     {
-        if (m_fader.isFading())
-        {
-            return;
-        }
-
         if (event.type == sf::Event::MouseMoved)
         {
             m_mouseover.handleMouseMovedEvent({ event.mouseMove.x, event.mouseMove.y });
@@ -267,14 +224,7 @@ namespace castlecrawl
         {
             if (transition.from_pos == mapPosAfter)
             {
-                m_transition = transition;
-
-                m_fader.setup(
-                    false,
-                    context.config.background_color,
-                    m_mapFadeDurationSec,
-                    context.layout.mapRect());
-
+                context.maps.change(context, transition.to_name, transition.to_pos);
                 m_mouseover.reset();
                 return true;
             }

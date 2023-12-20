@@ -3,7 +3,6 @@
 //
 // state-play.hpp
 //
-#include "fader.hpp"
 #include "gui-stat-bar.hpp"
 #include "mouseover.hpp"
 #include "state.hpp"
@@ -43,9 +42,6 @@ namespace castlecrawl
 
       private:
         Mouseover m_mouseover;
-        Fader m_fader;
-        float m_mapFadeDurationSec;
-        MapTransition m_transition;
         StatBar m_healthBar;
     };
 
