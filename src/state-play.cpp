@@ -138,6 +138,11 @@ namespace castlecrawl
             context.state.change(context, State::Inventory);
             return;
         }
+        else if (event.key.code == sf::Keyboard::F)
+        {
+            context.state.change(context, State::Fight);
+            return;
+        }
     }
 
     void StatePlay::handlePlayerMove(const Context & context, const sf::Keyboard::Key key)

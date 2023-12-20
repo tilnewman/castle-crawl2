@@ -22,6 +22,7 @@ namespace castlecrawl
         Splash,
         Play,
         Inventory,
+        Fight,
         Quit,
         Editor
     };
@@ -35,6 +36,7 @@ namespace castlecrawl
             case State::Splash:     { return "Splash"; }
             case State::Play:       { return "Play"; }
             case State::Inventory:  { return "Inventory"; }
+            case State::Fight:      { return "Fight"; }
             case State::Quit:       { return "Quit"; }
             case State::Editor:     { return "Editor"; }
             default:                { return "unknown_state_error"; }
