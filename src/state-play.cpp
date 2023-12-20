@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
+#include "health-bar.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -26,10 +27,9 @@ namespace castlecrawl
 
     StatePlay::StatePlay()
         : m_mouseover()
-        , m_healthBar()
     {}
 
-    void StatePlay::onEnter(const Context & context) { m_healthBar.setup(context); }
+    void StatePlay::onEnter(const Context &) {}
 
     void StatePlay::update(const Context & context, const float frameTimeSec)
     {
@@ -49,7 +49,7 @@ namespace castlecrawl
         m_mouseover.draw(context, target, states);
         context.framerate.draw(target, states);
         context.top_panel.draw(context, target, states);
-        target.draw(m_healthBar, states);
+        target.draw(context.health_bar, states);
     }
 
     void StatePlay::handleEvent(const Context & context, const sf::Event & event)
@@ -123,7 +123,7 @@ namespace castlecrawl
         {
             context.player_display.shake();
             context.player.health().adjCurrent(-1);
-            m_healthBar.update(context);
+            context.health_bar.update(context);
         }
 
         if (didMove)
