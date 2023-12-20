@@ -18,7 +18,7 @@ namespace castlecrawl
         DirectionSelectDisplay();
 
         void setup(const Context & context);
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
       private:
         sf::RectangleShape m_topRectangle;
