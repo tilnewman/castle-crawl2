@@ -112,6 +112,10 @@ namespace castlecrawl
         {
             context.sfx.play("miss.ogg");
         }
+        else if (objectChar == 'b')
+        {
+            context.sfx.play("barrel-break.ogg");
+        }
         else
         {
             context.sfx.play("hit.ogg");
