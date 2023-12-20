@@ -54,6 +54,18 @@ namespace castlecrawl
         update(context);
     }
 
+    void StatBar::setMaxValue(const Context & context, const int newValue)
+    {
+        m_max = newValue;
+
+        if (m_current > m_max)
+        {
+            m_current = m_max;
+        }
+
+        update(context);
+    }
+
     void StatBar::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_outerRectangle, states);

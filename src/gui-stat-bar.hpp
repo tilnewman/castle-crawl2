@@ -3,6 +3,7 @@
 //
 // gui-stat-bar.hpp
 //
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -12,7 +13,7 @@ namespace castlecrawl
 {
     struct Context;
 
-    class StatBar
+    class StatBar : public sf::Drawable
     {
       public:
         StatBar();
@@ -24,8 +25,8 @@ namespace castlecrawl
             const int maxValue);
 
         void setCurrentValue(const Context & context, const int newValue);
-
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+        void setMaxValue(const Context & context, const int newValue);
+        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
       private:
         void update(const Context & context);

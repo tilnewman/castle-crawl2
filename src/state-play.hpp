@@ -4,6 +4,7 @@
 // state-play.hpp
 //
 #include "gui-stat-bar.hpp"
+#include "health-bar.hpp"
 #include "mouseover.hpp"
 #include "state.hpp"
 
@@ -42,7 +43,7 @@ namespace castlecrawl
 
       private:
         Mouseover m_mouseover;
-        StatBar m_healthBar;
+        HealthBar m_healthBar;
     };
 
 } // namespace castlecrawl

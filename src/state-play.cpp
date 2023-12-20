@@ -29,19 +29,7 @@ namespace castlecrawl
         , m_healthBar()
     {}
 
-    void StatePlay::onEnter(const Context & context)
-    {
-        const sf::FloatRect topRect = context.layout.topRect();
-
-        sf::FloatRect healthBarRect;
-        healthBarRect.height = (topRect.height * 0.1f);
-        healthBarRect.top    = (topRect.height - healthBarRect.height);
-        healthBarRect.width  = (topRect.width * 0.25f);
-        healthBarRect.left   = ((topRect.width * 0.5f) - (healthBarRect.width * 0.5f));
-
-        m_healthBar.setup(
-            context, healthBarRect, sf::Color(160, 0, 0), context.player.health().max());
-    }
+    void StatePlay::onEnter(const Context & context) { m_healthBar.setup(context); }
 
     void StatePlay::update(const Context & context, const float frameTimeSec)
     {
@@ -61,7 +49,7 @@ namespace castlecrawl
         m_mouseover.draw(context, target, states);
         context.framerate.draw(target, states);
         context.top_panel.draw(context, target, states);
-        m_healthBar.draw(target, states);
+        target.draw(m_healthBar, states);
     }
 
     void StatePlay::handleEvent(const Context & context, const sf::Event & event)
@@ -130,11 +118,12 @@ namespace castlecrawl
 
         playMoveSfx(context, didMove, mapCharAttempted);
 
+        // handle walking into lava health drop
         if (!didMove && (mapCharAttempted == 'l'))
         {
             context.player_display.shake();
-            context.player.health().adjNormal(-1);
-            m_healthBar.setCurrentValue(context, context.player.health().normal());
+            context.player.health().adjCurrent(-1);
+            m_healthBar.update(context);
         }
 
         if (didMove)
