@@ -3,11 +3,15 @@
 //
 // state-treasure.hpp
 //
+#include "gui-listbox.hpp"
+#include "item.hpp"
 #include "state.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+
+#include <memory>
 
 namespace castlecrawl
 {
@@ -30,8 +34,12 @@ namespace castlecrawl
 
         virtual void handleEvent(const Context & context, const sf::Event & event) final;
 
+        static void setTreasure(const item::Treasure & treasure) { m_treasure = treasure; }
+
       private:
+        static item::Treasure m_treasure;
         sf::RectangleShape m_fadeRectangle;
+        std::unique_ptr<Listbox> m_itemListboxUPtr;
     };
 
 } // namespace castlecrawl

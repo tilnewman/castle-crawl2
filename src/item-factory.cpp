@@ -19,50 +19,6 @@
 namespace castlecrawl::item
 {
 
-    const std::string Treasure::description() const
-    {
-        std::string str;
-        str.reserve(200);
-
-        str += "You find";
-
-        if ((0 == gold) && items.empty())
-        {
-            str += " nothing.";
-            return str;
-        }
-
-        if (gold > 0)
-        {
-            str += ' ';
-            str += std::to_string(gold);
-            str += " gold";
-        }
-
-        if (items.empty())
-        {
-            str += '.';
-        }
-        else
-        {
-            if (gold > 0)
-            {
-                str += " and";
-            }
-
-            str += ":\n";
-
-            for (const Item & item : items)
-            {
-                str += "    ";
-                str += item.name();
-                str += '\n';
-            }
-        }
-
-        return str;
-    }
-
     ItemFactory::ItemFactory()
         : m_lowestValue(0)
         , m_textExtent()
@@ -684,7 +640,7 @@ namespace castlecrawl::item
         M_CHECK((item.value() > 0), "Item's Value is zero or less: " << item);
     }
 
-    const Treasure ItemFactory::randomTreasureFind(Context & context) const
+    const Treasure ItemFactory::randomTreasureFind(const Context & context) const
     {
         Treasure treasure;
 
@@ -738,7 +694,7 @@ namespace castlecrawl::item
         return treasure;
     }
 
-    const Treasure ItemFactory::randomHerbFind(Context & context) const
+    const Treasure ItemFactory::randomHerbFind(const Context & context) const
     {
         Treasure treasure;
 

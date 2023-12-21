@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
+#include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "map.hpp"
@@ -20,14 +21,26 @@
 
 namespace castlecrawl
 {
+    item::Treasure StateTreasure::m_treasure;
 
     StateTreasure::StateTreasure()
         : m_fadeRectangle()
+        , m_itemListboxUPtr()
     {}
 
     void StateTreasure::onEnter(const Context & context)
     {
+        m_itemListboxUPtr = std::make_unique<Listbox>(m_treasure.items);
+
+        m_itemListboxUPtr->setup(
+            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
+
         const sf::FloatRect boardRect = context.layout.botRect();
+
+        m_itemListboxUPtr->setPosition(
+            { ((boardRect.width * 0.5f) - (m_itemListboxUPtr->getGlobalBounds().width * 0.5f)),
+              (boardRect.top + (boardRect.height * 0.15f)) });
+
         m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 127));
         m_fadeRectangle.setPosition(util::position(boardRect));
         m_fadeRectangle.setSize(util::size(boardRect));
@@ -44,6 +57,7 @@ namespace castlecrawl
         context.framerate.draw(target, states);
         target.draw(context.top_panel, states);
         target.draw(m_fadeRectangle, states);
+        target.draw(*m_itemListboxUPtr, states);
     }
 
     void StateTreasure::handleEvent(const Context & context, const sf::Event & event)

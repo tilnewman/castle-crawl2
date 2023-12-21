@@ -115,6 +115,17 @@ namespace castlecrawl::item
 
     inline const std::string toString(const item::Item & item) { return item.name(); }
 
+    //
+
+    struct Treasure
+    {
+        int gold = 0;
+        ItemVec_t items;
+
+        bool empty() const { return ((0 == gold) && items.empty()); }
+        const std::string description() const;
+    };
+
 } // namespace castlecrawl::item
 
 #endif // ITEM_HPP_INCLUDED

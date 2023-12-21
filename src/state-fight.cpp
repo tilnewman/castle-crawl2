@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
+#include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "map.hpp"
@@ -16,6 +17,7 @@
 #include "player.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
+#include "state-treasure.hpp"
 #include "top-panel.hpp"
 
 namespace castlecrawl
@@ -117,7 +119,21 @@ namespace castlecrawl
         else if (objectChar == 'b')
         {
             context.sfx.play("barrel-break.ogg");
-            context.state.change(context, State::Treasure);
+
+            // TODO
+            // context.map.setObjectChar(pos, ' ');
+
+            const item::Treasure treasure = context.items.randomTreasureFind(context);
+            if (treasure.empty())
+            {
+                context.state.change(context, State::Play);
+            }
+            else
+            {
+                StateTreasure::setTreasure(treasure);
+                context.state.change(context, State::Treasure);
+            }
+
             return;
         }
         else

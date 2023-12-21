@@ -13,15 +13,6 @@ namespace castlecrawl
 namespace castlecrawl::item
 {
 
-    struct Treasure
-    {
-        int gold = 0;
-        ItemVec_t items;
-
-        bool empty() const { return ((0 == gold) && items.empty()); }
-        const std::string description() const;
-    };
-
     struct TextExtent
     {
         std::size_t longest_name = 0;
@@ -36,8 +27,8 @@ namespace castlecrawl::item
         void processAll();
         void printSummaries() const;
         const TextExtent textExtents() const { return m_textExtent; }
-        const Treasure randomTreasureFind(Context & context) const;
-        const Treasure randomHerbFind(Context & context) const;
+        const Treasure randomTreasureFind(const Context & context) const;
+        const Treasure randomHerbFind(const Context & context) const;
         const ItemVec_t makeAll() const;
 
       private:
