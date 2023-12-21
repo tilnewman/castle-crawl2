@@ -108,20 +108,25 @@ namespace castlecrawl
     {
         const char objectChar = context.map.cell(pos).object_char;
 
+        // TODO lots more needed here, like checking for enemies etc.
         if (objectChar == ' ')
         {
             context.sfx.play("miss.ogg");
+            context.state.change(context, State::Play);
+            return;
         }
         else if (objectChar == 'b')
         {
             context.sfx.play("barrel-break.ogg");
+            context.state.change(context, State::Treasure);
+            return;
         }
         else
         {
             context.sfx.play("hit.ogg");
+            context.state.change(context, State::Play);
+            return;
         }
-
-        context.state.change(context, State::Play);
     }
 
 } // namespace castlecrawl

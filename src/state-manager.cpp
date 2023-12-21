@@ -11,6 +11,7 @@
 #include "state-inventory.hpp"
 #include "state-play.hpp"
 #include "state-splash.hpp"
+#include "state-treasure.hpp"
 
 #include <exception>
 
@@ -43,6 +44,7 @@ namespace castlecrawl
             case State::Play:       { return std::make_unique<StatePlay>(); }
             case State::Inventory:  { return std::make_unique<StateInventory>(); }
             case State::Fight:      { return std::make_unique<StateFight>(); }
+            case State::Treasure:   { return std::make_unique<StateTreasure>(); }
             case State::Quit:       { return std::make_unique<StateQuit>(); }
             case State::Editor:     { return std::make_unique<StateEditor>(); }
             default:

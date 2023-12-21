@@ -23,6 +23,7 @@ namespace castlecrawl
         Play,
         Inventory,
         Fight,
+        Treasure,
         Quit,
         Editor
     };
@@ -37,6 +38,7 @@ namespace castlecrawl
             case State::Play:       { return "Play"; }
             case State::Inventory:  { return "Inventory"; }
             case State::Fight:      { return "Fight"; }
+            case State::Treasure:   { return "Treasure"; }
             case State::Quit:       { return "Quit"; }
             case State::Editor:     { return "Editor"; }
             default:                { return "unknown_state_error"; }
@@ -58,7 +60,6 @@ namespace castlecrawl
 
         virtual void onEnter(const Context & context) = 0;
         virtual void onExit(const Context & context)  = 0;
-
         virtual void update(const Context & context, const float frameTimeSec) = 0;
 
         virtual void draw(
@@ -75,11 +76,8 @@ namespace castlecrawl
 
         virtual void onEnter(const Context &) override {}
         virtual void onExit(const Context &) override {}
-
         virtual void update(const Context &, const float) override {}
-
         virtual void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override {}
-
         virtual void handleEvent(const Context &, const sf::Event &) override {}
     };
 
