@@ -19,6 +19,8 @@
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
+#include <string>
+
 namespace castlecrawl
 {
     item::Treasure StateTreasure::m_treasure;
@@ -26,6 +28,9 @@ namespace castlecrawl
     StateTreasure::StateTreasure()
         : m_fadeRectangle()
         , m_itemListboxUPtr()
+        , m_titleText()
+        , m_descText()
+        , m_itemDescText()
     {}
 
     void StateTreasure::onEnter(const Context & context)
@@ -35,15 +40,63 @@ namespace castlecrawl
         m_itemListboxUPtr->setup(
             context, FontSize::Medium, context.items.textExtents().longest_name, 8);
 
+        //
+
         const sf::FloatRect boardRect = context.layout.botRect();
+        const float pad               = (boardRect.height * 0.015f);
+
+        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
+        m_fadeRectangle.setPosition(util::position(boardRect));
+        m_fadeRectangle.setSize(util::size(boardRect));
+
+        //
+
+        m_titleText = context.fonts.makeText(FontSize::Huge, "Treasure!", sf::Color(255, 200, 100));
+
+        m_titleText.setPosition(
+            ((boardRect.width * 0.5f) - (m_titleText.getGlobalBounds().width * 0.5f)),
+            (boardRect.top + (pad * 10.0f)));
+
+        //
+
+        std::string descStr{ "You find " };
+
+        if (m_treasure.gold > 0)
+        {
+            descStr += std::to_string(m_treasure.gold);
+            descStr += " gold and ";
+        }
+
+        descStr += std::to_string(m_treasure.items.size());
+        descStr += " items";
+
+        if (m_treasure.items.empty())
+        {
+            descStr += ".";
+        }
+        else
+        {
+            descStr += ":";
+        }
+
+        m_descText = context.fonts.makeText(FontSize::Large, descStr);
+
+        m_descText.setPosition(
+            ((boardRect.width * 0.5f) - (m_descText.getGlobalBounds().width * 0.5f)),
+            (util::bottom(m_titleText) + pad));
+
+        //
 
         m_itemListboxUPtr->setPosition(
             { ((boardRect.width * 0.5f) - (m_itemListboxUPtr->getGlobalBounds().width * 0.5f)),
-              (boardRect.top + (boardRect.height * 0.15f)) });
+              (util::bottom(m_descText) + pad) });
 
-        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 127));
-        m_fadeRectangle.setPosition(util::position(boardRect));
-        m_fadeRectangle.setSize(util::size(boardRect));
+        m_itemListboxUPtr->setFocus(true);
+
+        //
+
+        m_itemDescText = context.fonts.makeText(FontSize::Small, "");
+        updateItemDescText(context);
     }
 
     void StateTreasure::update(const Context & context, const float) { context.framerate.update(); }
@@ -58,6 +111,9 @@ namespace castlecrawl
         target.draw(context.top_panel, states);
         target.draw(m_fadeRectangle, states);
         target.draw(*m_itemListboxUPtr, states);
+        target.draw(m_titleText, states);
+        target.draw(m_descText, states);
+        target.draw(m_itemDescText, states);
     }
 
     void StateTreasure::handleEvent(const Context & context, const sf::Event & event)
@@ -73,6 +129,43 @@ namespace castlecrawl
             context.state.change(context, State::Play);
             return;
         }
+        else if (event.key.code == sf::Keyboard::Up)
+        {
+            if (m_itemListboxUPtr->selectPrev())
+            {
+                context.sfx.play("tick-on");
+            }
+
+            updateItemDescText(context);
+        }
+        else if (event.key.code == sf::Keyboard::Down)
+        {
+            if (m_itemListboxUPtr->selectNext())
+            {
+                context.sfx.play("tick-on");
+            }
+
+            updateItemDescText(context);
+        }
+    }
+
+    void StateTreasure::updateItemDescText(const Context & context)
+    {
+        m_itemDescText.setString("");
+
+        if (!m_itemListboxUPtr->empty())
+        {
+            const std::size_t index = m_itemListboxUPtr->selectedIndex();
+            if (index < m_treasure.items.size())
+            {
+                m_itemDescText.setString(m_treasure.items.at(index).description());
+            }
+        }
+
+        m_itemDescText.setPosition(
+            ((context.layout.screenRect().width * 0.5f) -
+             (m_itemDescText.getGlobalBounds().width * 0.5f)),
+            util::bottom(*m_itemListboxUPtr));
     }
 
 } // namespace castlecrawl

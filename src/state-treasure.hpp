@@ -10,6 +10,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 #include <memory>
 
@@ -36,10 +37,16 @@ namespace castlecrawl
 
         static void setTreasure(const item::Treasure & treasure) { m_treasure = treasure; }
 
+        private:
+        void updateItemDescText(const Context & context);
+
       private:
         static item::Treasure m_treasure;
         sf::RectangleShape m_fadeRectangle;
         std::unique_ptr<Listbox> m_itemListboxUPtr;
+        sf::Text m_titleText;
+        sf::Text m_descText;
+        sf::Text m_itemDescText;
     };
 
 } // namespace castlecrawl
