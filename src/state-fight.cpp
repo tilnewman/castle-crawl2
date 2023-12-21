@@ -33,7 +33,6 @@ namespace castlecrawl
     void StateFight::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        target.clear(context.config.background_color);
         context.map_display.draw(context, target, states);
         context.enemies.draw(context, target, states);
         context.player_display.draw(context, target, states);

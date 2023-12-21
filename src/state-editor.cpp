@@ -72,7 +72,6 @@ namespace castlecrawl
     void StateEditor::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        target.clear(context.config.background_color);
         context.map_display.draw(context, target, states);
 
         if (!m_keyText.getString().isEmpty())

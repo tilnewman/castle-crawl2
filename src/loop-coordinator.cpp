@@ -132,7 +132,7 @@ namespace castlecrawl
 
     void LoopCoordinator::draw()
     {
-        m_renderWindow.clear();
+        m_renderWindow.clear(m_config.background_color);
         m_stateManager.current().draw(m_context, m_renderWindow, m_renderStates);
         m_renderWindow.display();
     }
