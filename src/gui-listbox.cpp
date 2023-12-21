@@ -192,15 +192,15 @@ namespace castlecrawl
 
                 if (item.isArmor())
                 {
-                    m_rowTexts[offset].setFillColor(sf::Color(255, 127, 255));
+                    m_rowTexts[offset].setFillColor(sf::Color(255, 220, 200));
                 }
                 else if (item.isWeapon())
                 {
-                    m_rowTexts[offset].setFillColor(sf::Color(127, 127, 255));
+                    m_rowTexts[offset].setFillColor(sf::Color(200, 200, 255));
                 }
                 else
                 {
-                    m_rowTexts[offset].setFillColor(sf::Color(127, 255, 127));
+                    m_rowTexts[offset].setFillColor(sf::Color(200, 255, 200));
                 }
             }
 
