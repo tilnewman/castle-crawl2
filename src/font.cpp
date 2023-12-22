@@ -56,28 +56,28 @@ namespace castlecrawl
         const std::string widthStr{ "M" };
         const std::string heightStr{ "|g" };
 
-        m_fontExtentHuge.char_size = static_cast<unsigned>(130.0f * ratioRes);
-        text = makeText(FontSize::Huge, widthStr);
+        m_fontExtentHuge.char_size     = static_cast<unsigned>(200.0f * ratioRes);
+        text                           = makeText(FontSize::Huge, widthStr);
         m_fontExtentHuge.letter_size.x = text.getGlobalBounds().width;
-        text = makeText(FontSize::Huge, heightStr);
+        text                           = makeText(FontSize::Huge, heightStr);
         m_fontExtentHuge.letter_size.y = text.getGlobalBounds().height;
 
-        m_fontExtentLarge.char_size = static_cast<unsigned>(90.0f * ratioRes);
-        text = makeText(FontSize::Large, widthStr);
+        m_fontExtentLarge.char_size     = static_cast<unsigned>(90.0f * ratioRes);
+        text                            = makeText(FontSize::Large, widthStr);
         m_fontExtentLarge.letter_size.x = text.getGlobalBounds().width;
-        text = makeText(FontSize::Large, heightStr);
+        text                            = makeText(FontSize::Large, heightStr);
         m_fontExtentLarge.letter_size.y = text.getGlobalBounds().height;
 
-        m_fontExtentMedium.char_size = static_cast<unsigned>(60.0f * ratioRes);
-        text = makeText(FontSize::Medium, widthStr);
+        m_fontExtentMedium.char_size     = static_cast<unsigned>(60.0f * ratioRes);
+        text                             = makeText(FontSize::Medium, widthStr);
         m_fontExtentMedium.letter_size.x = text.getGlobalBounds().width;
-        text = makeText(FontSize::Medium, heightStr);
+        text                             = makeText(FontSize::Medium, heightStr);
         m_fontExtentMedium.letter_size.y = text.getGlobalBounds().height;
 
-        m_fontExtentSmall.char_size = static_cast<unsigned>(40.0f * ratioRes);
-        text = makeText(FontSize::Small, widthStr);
+        m_fontExtentSmall.char_size     = static_cast<unsigned>(40.0f * ratioRes);
+        text                            = makeText(FontSize::Small, widthStr);
         m_fontExtentSmall.letter_size.x = text.getGlobalBounds().width;
-        text = makeText(FontSize::Small, heightStr);
+        text                            = makeText(FontSize::Small, heightStr);
         m_fontExtentSmall.letter_size.y = text.getGlobalBounds().height;
     }
 
