@@ -31,6 +31,7 @@ namespace castlecrawl
         , m_titleText()
         , m_descText()
         , m_itemDescText()
+        , m_helpText()
     {}
 
     void StateTreasure::onEnter(const Context & context)
@@ -87,9 +88,22 @@ namespace castlecrawl
 
         //
 
+        m_helpText = context.fonts.makeText(
+            FontSize::Small,
+            "(Press 'T' to take items then 'Enter' when finished)",
+            sf::Color(200, 200, 200));
+
+        m_helpText.setStyle(sf::Text::Italic);
+
+        m_helpText.setPosition(
+            ((boardRect.width * 0.5f) - (m_helpText.getGlobalBounds().width * 0.5f)),
+            util::bottom(m_descText));
+
+        //
+
         m_itemListboxUPtr->setPosition(
             { ((boardRect.width * 0.5f) - (m_itemListboxUPtr->getGlobalBounds().width * 0.5f)),
-              (util::bottom(m_descText) + pad) });
+              (util::bottom(m_helpText) + (pad * 2.0f)) });
 
         m_itemListboxUPtr->setFocus(true);
 
@@ -119,6 +133,7 @@ namespace castlecrawl
         }
 
         target.draw(m_itemDescText, states);
+        target.draw(m_helpText, states);
     }
 
     void StateTreasure::handleEvent(const Context & context, const sf::Event & event)
@@ -129,7 +144,7 @@ namespace castlecrawl
             return;
         }
 
-        if (event.key.code == sf::Keyboard::Escape)
+        if ((event.key.code == sf::Keyboard::Enter) || (event.key.code == sf::Keyboard::Escape))
         {
             context.state.change(context, State::Play);
             return;
@@ -151,6 +166,35 @@ namespace castlecrawl
             }
 
             updateItemDescText(context);
+        }
+        else if (event.key.code == sf::Keyboard::T)
+        {
+            if (m_itemListboxUPtr->empty())
+            {
+                context.sfx.play("error-1.ogg");
+            }
+            else
+            {
+                const std::size_t index = m_itemListboxUPtr->selectedIndex();
+                if (index < m_treasure.items.size())
+                {
+                    context.player.inventory().add(m_treasure.items.at(index));
+
+                    m_treasure.items.erase(
+                        std::begin(m_treasure.items) + static_cast<std::ptrdiff_t>(index));
+
+                    m_itemListboxUPtr->redraw();
+                    updateItemDescText(context);
+                    context.sfx.play("equip.ogg");
+
+                    if (m_treasure.items.empty())
+                    {
+                        context.state.change(context, State::Play);
+                    }
+                }
+            }
+
+            return;
         }
     }
 

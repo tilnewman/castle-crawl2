@@ -37,7 +37,7 @@ namespace castlecrawl
 
         static void setTreasure(const item::Treasure & treasure) { m_treasure = treasure; }
 
-        private:
+      private:
         void updateItemDescText(const Context & context);
 
       private:
@@ -47,6 +47,7 @@ namespace castlecrawl
         sf::Text m_titleText;
         sf::Text m_descText;
         sf::Text m_itemDescText;
+        sf::Text m_helpText;
     };
 
 } // namespace castlecrawl
