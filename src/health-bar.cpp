@@ -22,7 +22,7 @@ namespace castlecrawl
 
         sf::FloatRect healthBarRect;
         healthBarRect.height = (topRect.height * 0.1f);
-        healthBarRect.top    = (topRect.height - healthBarRect.height);
+        healthBarRect.top    = ((topRect.height - healthBarRect.height) - 3.0f);
         healthBarRect.width  = (topRect.width * 0.25f);
         healthBarRect.left   = ((topRect.width * 0.5f) - (healthBarRect.width * 0.5f));
 

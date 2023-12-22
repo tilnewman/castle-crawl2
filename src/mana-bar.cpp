@@ -22,7 +22,7 @@ namespace castlecrawl
 
         sf::FloatRect rect;
         rect.height = (topRect.height * 0.1f);
-        rect.top    = (topRect.height - rect.height);
+        rect.top    = ((topRect.height - rect.height) - 3.0f);
         rect.width  = (topRect.width * 0.25f);
         rect.left   = ((topRect.width * 0.5f) - (rect.width * 0.5f));
 
