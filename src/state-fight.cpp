@@ -120,8 +120,8 @@ namespace castlecrawl
         {
             context.sfx.play("barrel-break.ogg");
 
-            // TODO
-            // context.map.setObjectChar(pos, ' ');
+            context.map.setObjectChar(pos, ' ');
+            context.map_display.load(context);
 
             const item::Treasure treasure = context.items.randomTreasureFind(context);
             if (treasure.empty())
