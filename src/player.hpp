@@ -5,6 +5,7 @@
 //
 #include "inventory.hpp"
 #include "stat.hpp"
+#include "strong-types.hpp"
 
 namespace castlecrawl
 {
@@ -24,6 +25,8 @@ namespace castlecrawl
 
         int level() const { return m_level; }
         int gold() const { return m_gold; }
+
+        Armor_t armor() const { return m_inventory.armorRating(); }
 
         void levelAdj(const int adj) { m_level += adj; }
         void goldAdj(const int adj) { m_gold += adj; }

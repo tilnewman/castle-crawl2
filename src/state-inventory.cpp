@@ -40,6 +40,9 @@ namespace castlecrawl
         , m_accValueText()
         , m_lckValueText()
         , m_arcValueText()
+        , m_goldText()
+        , m_armorText()
+        , m_statRectangle()
     {}
 
     void StateInventory::onEnter(const Context & context)
@@ -115,6 +118,15 @@ namespace castlecrawl
         goldStr += std::to_string(context.player.gold());
         m_goldText = context.fonts.makeText(FontSize::Medium, goldStr, sf::Color(255, 200, 100));
         util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
+        m_goldText.move(0.0f, -m_goldText.getGlobalBounds().height);
+        m_goldText.move(0.0f, -pad);
+
+        //
+
+        std::string armorStr{ "Armor: " };
+        armorStr += std::to_string(context.player.armor().get());
+        m_armorText = context.fonts.makeText(FontSize::Medium, armorStr);
+        m_armorText.setPosition(m_goldText.getPosition().x, (util::bottom(m_goldText) + pad));
 
         //
 
@@ -191,6 +203,7 @@ namespace castlecrawl
         target.draw(m_statRectangle, states);
 
         target.draw(m_goldText, states);
+        target.draw(m_armorText, states);
 
         target.draw(m_strTitleText, states);
         target.draw(m_dexTitleText, states);
@@ -385,6 +398,10 @@ namespace castlecrawl
         str += "/";
         str += std::to_string(context.player.arcane().max());
         m_arcValueText.setString(str);
+
+        str = "Armor: ";
+        str += std::to_string(context.player.armor().get());
+        m_armorText.setString(str);
     }
 
 } // namespace castlecrawl

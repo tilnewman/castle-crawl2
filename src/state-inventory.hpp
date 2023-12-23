@@ -55,6 +55,7 @@ namespace castlecrawl
         sf::Text m_arcValueText;
         //
         sf::Text m_goldText;
+        sf::Text m_armorText;
         //
         sf::RectangleShape m_statRectangle;
     };
