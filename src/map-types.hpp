@@ -46,7 +46,8 @@ namespace castlecrawl
         Level_1_HiddenPassage,
         Level_1_CoffinRoom,
         Level_1_LakeStronghold,
-        Level_1_LavaGatehouse
+        Level_1_LavaGatehouse,
+        Level_1_LavaHiddenPath
     };
 
     inline constexpr std::string_view toString(const MapName name) noexcept
@@ -65,6 +66,7 @@ namespace castlecrawl
             case MapName::Level_1_CoffinRoom:       { return "Level_1_CoffinRoom"; }
             case MapName::Level_1_LakeStronghold:   { return "Level_1_LakeStronghold"; }
             case MapName::Level_1_LavaGatehouse:    { return "Level_1_LavaGatehouse"; }
+            case MapName::Level_1_LavaHiddenPath:   { return "Level_1_LavaHiddenPath"; }
             default:                                { return "(unknown_MapName)"; }
         }
         // clang-format on

@@ -395,9 +395,44 @@ namespace castlecrawl
                 "l    .....    rrr",
                 "l             rrl",
                 "lllll       lllll",
-                "lllllllllllllllll"
+                "llllllllll llllll"
                 },
-            MapTransitions_t {{ { 17,  14 }, MapName::Level_1_BoilerRoom, { 1, 13 } }}
+            MapTransitions_t {
+                { { 17,  14 }, MapName::Level_1_BoilerRoom, { 1, 13 } },
+                { { 10,  21 }, MapName::Level_1_LavaHiddenPath, { 24, 0 } }
+            }
+            );
+
+        m_maps.emplace_back(
+            MapName::Level_1_LavaHiddenPath,
+            context,
+            Floor::Stone,
+            MapChars_t {
+                "llllllllllllllllllllllll llllllllllllllll",
+                "llllllllllllllllllllllll llllllllllllllll",
+                "llllllllllllllllllllllll llllllllllllllll",
+                "llllllllllllllllllllllll    lllllllllllll",
+                "llllllllllllllllllllllll     llllllllllll",
+                "lllllllllllllllllllllllll    llllllllllll",
+                "llllllllllllllllllll    l   lllllllllllll",
+                "llllllllllllllllllll ll ll  lllllllllllll",
+                "llllllllllllllllllll  l  l   llllllllllll",
+                "lllllllllllllllllllll ll     llllllllllll",
+                "llllllllllllllllllll   llllllllllllllllll",
+                "lllllllllllllllllllc 9 clllllllllllllllll",
+                "llllllllllllllllllll   llllllllllllllllll",
+                "lllllllllllllllllllllclllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                "lllllllllllllllllllllllllllllllllllllllll",
+                },
+            MapTransitions_t {{ { 24,  -1 }, MapName::Level_1_LavaGatehouse, { 10, 20 } }}
             );
         // clang-format on
     }
