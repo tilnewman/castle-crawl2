@@ -110,12 +110,12 @@ namespace castlecrawl
             return;
         }
 
-        if ((event.type == sf::Event::KeyReleased) && (event.key.code == sf::Keyboard::E))
+        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::E))
         {
             context.state.change(context, State::Editor);
         }
         else if (
-            (event.type == sf::Event::KeyReleased) || (event.type == sf::Event::MouseButtonPressed))
+            (event.type == sf::Event::KeyPressed) || (event.type == sf::Event::MouseButtonPressed))
         {
             context.state.change(context, State::Play);
         }

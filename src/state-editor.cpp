@@ -160,7 +160,7 @@ namespace castlecrawl
         }
 
         // all events are key released events
-        if (event.type != sf::Event::KeyReleased)
+        if (event.type != sf::Event::KeyPressed)
         {
             return;
         }

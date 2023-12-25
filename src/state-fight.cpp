@@ -50,7 +50,7 @@ namespace castlecrawl
     void StateFight::handleEvent(const Context & context, const sf::Event & event)
     {
         // all other handlers are key released events
-        if (event.type != sf::Event::KeyReleased)
+        if (event.type != sf::Event::KeyPressed)
         {
             return;
         }
