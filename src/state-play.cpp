@@ -121,8 +121,17 @@ namespace castlecrawl
         if (!didMove && (mapCharAttempted == 'l'))
         {
             context.player_display.shake();
-            context.player.health().adjCurrent(-1);
-            context.top_panel.update(context);
+            if (context.player.health().current() > 1)
+            {
+                context.player.health().adjCurrent(-1);
+                context.top_panel.update(context);
+            }
+            else
+            {
+                context.state.change(context, State::Death);
+            }
+
+            return;
         }
 
         if (didMove)

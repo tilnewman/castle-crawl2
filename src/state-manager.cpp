@@ -6,6 +6,7 @@
 #include "state-manager.hpp"
 
 #include "check-macros.hpp"
+#include "state-death.hpp"
 #include "state-editor.hpp"
 #include "state-fight.hpp"
 #include "state-inventory.hpp"
@@ -46,6 +47,7 @@ namespace castlecrawl
             case State::Fight:      { return std::make_unique<StateFight>(); }
             case State::Treasure:   { return std::make_unique<StateTreasure>(); }
             case State::Quit:       { return std::make_unique<StateQuit>(); }
+            case State::Death:      { return std::make_unique<StateDeath>(); }
             case State::Editor:     { return std::make_unique<StateEditor>(); }
             default:
             {

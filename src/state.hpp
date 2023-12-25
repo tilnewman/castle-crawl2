@@ -25,6 +25,7 @@ namespace castlecrawl
         Fight,
         Treasure,
         Quit,
+        Death,
         Editor
     };
 
@@ -40,6 +41,7 @@ namespace castlecrawl
             case State::Fight:      { return "Fight"; }
             case State::Treasure:   { return "Treasure"; }
             case State::Quit:       { return "Quit"; }
+            case State::Death:      { return "Death"; }
             case State::Editor:     { return "Editor"; }
             default:                { return "unknown_state_error"; }
                 // clang-format on
@@ -58,8 +60,8 @@ namespace castlecrawl
 
         virtual State which() const = 0;
 
-        virtual void onEnter(const Context & context) = 0;
-        virtual void onExit(const Context & context)  = 0;
+        virtual void onEnter(const Context & context)                          = 0;
+        virtual void onExit(const Context & context)                           = 0;
         virtual void update(const Context & context, const float frameTimeSec) = 0;
 
         virtual void draw(

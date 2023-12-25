@@ -1,10 +1,8 @@
-#ifndef STATETREASURE_HPP_INCLUDED
-#define STATETREASURE_HPP_INCLUDED
+#ifndef STATEDEATH_HPP_INCLUDED
+#define STATEDEATH_HPP_INCLUDED
 //
-// state-treasure.hpp
+// state-death.hpp
 //
-#include "gui-listbox.hpp"
-#include "item.hpp"
 #include "state.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -18,14 +16,14 @@ namespace castlecrawl
 {
     struct Context;
 
-    class StateTreasure : public StateBase
+    class StateDeath : public StateBase
     {
       public:
-        StateTreasure();
-        virtual ~StateTreasure() final {}
+        StateDeath();
+        virtual ~StateDeath() final {}
 
         virtual void onEnter(const Context & context) final;
-        virtual State which() const final { return State::Treasure; }
+        virtual State which() const final { return State::Death; }
         virtual void update(const Context & context, const float frameTimeSec) final;
 
         virtual void draw(
@@ -35,21 +33,12 @@ namespace castlecrawl
 
         virtual void handleEvent(const Context & context, const sf::Event & event) final;
 
-        static void setTreasure(const item::Treasure & treasure) { m_treasure = treasure; }
-
       private:
-        void updateItemDescText(const Context & context);
-
-      private:
-        static item::Treasure m_treasure;
-        sf::RectangleShape m_fadeRectangle;
-        std::unique_ptr<Listbox> m_itemListboxUPtr;
+        sf::RectangleShape m_fadeRedRectangle;
+        sf::RectangleShape m_fadeBlackRectangle;
         sf::Text m_titleText;
-        sf::Text m_descText;
-        sf::Text m_itemDescText;
-        sf::Text m_helpText;
     };
 
 } // namespace castlecrawl
 
-#endif // STATETREASURE_HPP_INCLUDED
+#endif // STATEDEATH_HPP_INCLUDED
