@@ -7,7 +7,7 @@ Link:          creativecommons.org/licenses/by/3.0/
 
 
 File:          tile.png
-Comment:	       Some of the images in this file are from...
+Comment:       Some of the images in this file are from...
 By:            lostgarden.home.blog/2006/07/08/more-free-game-graphics/
 Original Name: “Daniel Cook’s Map Tiles"
 License:       CC-BY 3.0
