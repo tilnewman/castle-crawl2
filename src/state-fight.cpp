@@ -12,7 +12,7 @@
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
-#include "map.hpp"
+#include "maps.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
 #include "sound-player.hpp"
@@ -79,22 +79,22 @@ namespace castlecrawl
         const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
         const MapPos_t rightPos{ (mapPos.x + 1), mapPos.y };
 
-        if ((key == sf::Keyboard::Up) && (context.map.isPosValid(upPos)))
+        if ((key == sf::Keyboard::Up) && (context.maps.current().isPosValid(upPos)))
         {
             m_isDirectionSelected = true;
             fight(context, upPos);
         }
-        else if ((key == sf::Keyboard::Down) && (context.map.isPosValid(downPos)))
+        else if ((key == sf::Keyboard::Down) && (context.maps.current().isPosValid(downPos)))
         {
             m_isDirectionSelected = true;
             fight(context, downPos);
         }
-        else if ((key == sf::Keyboard::Left) && (context.map.isPosValid(leftPos)))
+        else if ((key == sf::Keyboard::Left) && (context.maps.current().isPosValid(leftPos)))
         {
             m_isDirectionSelected = true;
             fight(context, leftPos);
         }
-        else if ((key == sf::Keyboard::Right) && (context.map.isPosValid(rightPos)))
+        else if ((key == sf::Keyboard::Right) && (context.maps.current().isPosValid(rightPos)))
         {
             m_isDirectionSelected = true;
             fight(context, rightPos);
@@ -107,7 +107,7 @@ namespace castlecrawl
 
     void StateFight::fight(const Context & context, const MapPos_t & pos)
     {
-        const char objectChar = context.map.cell(pos).object_char;
+        const char objectChar = context.maps.current().cell(pos).object_char;
 
         // TODO lots more needed here, like checking for enemies etc.
         if (objectChar == ' ')
@@ -120,7 +120,7 @@ namespace castlecrawl
         {
             context.sfx.play("barrel-break.ogg");
 
-            context.map.setObjectChar(pos, ' ');
+            context.maps.current().setObjectChar(pos, ' ');
             context.map_display.load(context);
 
             const item::Treasure treasure = context.items.randomTreasureFind(context);

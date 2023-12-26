@@ -18,7 +18,9 @@ namespace castlecrawl
         Maps();
 
         void setup(const Context & context);
-        void change(const Context & context, const MapName mapName, const MapPos_t & pos) const;
+        void change(const Context & context, const MapName mapName, const MapPos_t & pos);
+        void forceMapForEditting(const Map map);
+        Map & current() { return *m_currentIter; }
 
       private:
         void load(const Context & context);
@@ -29,6 +31,7 @@ namespace castlecrawl
 
       private:
         std::vector<Map> m_maps;
+        std::vector<Map>::iterator m_currentIter;
     };
 
 } // namespace castlecrawl

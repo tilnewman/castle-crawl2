@@ -22,7 +22,6 @@ namespace castlecrawl
         , m_config(config)
         , m_tileImages()
         , m_layout()
-        , m_map()
         , m_maps()
         , m_mapDisplay()
         , m_stateManager()
@@ -40,7 +39,6 @@ namespace castlecrawl
               m_config,
               m_tileImages,
               m_layout,
-              m_map,
               m_maps,
               m_mapDisplay,
               m_stateManager,
@@ -77,6 +75,7 @@ namespace castlecrawl
         m_tileImages.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(m_context);
+        m_maps.change(m_context, MapName::Level_1_Cell, { 3, 2 }); // TODO move somewhere else
         m_playerDisplay.setup(m_context);
         m_framerate.setup(m_context);
         m_topPanel.setup(m_context);
@@ -85,9 +84,6 @@ namespace castlecrawl
 
         m_music.setup((m_config.media_path / "music").string());
         m_music.start("music.ogg", m_config.music_volume);
-
-        // TODO move somewhere else
-        m_maps.change(m_context, MapName::Level_1_Cell, { 3, 2 });
     }
 
     void LoopCoordinator::teardown()

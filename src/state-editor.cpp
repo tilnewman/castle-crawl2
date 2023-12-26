@@ -10,7 +10,7 @@
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
-#include "map.hpp"
+#include "maps.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
@@ -147,7 +147,7 @@ namespace castlecrawl
             const sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
 
             const MapPos_t newMapPos =
-                context.map.screenPosToMapPos(context, sf::Vector2f{ mousePos });
+                context.maps.current().screenPosToMapPos(context, sf::Vector2f{ mousePos });
 
             if ((newMapPos.x >= 0) && (newMapPos.y >= 0))
             {
@@ -327,15 +327,15 @@ namespace castlecrawl
 
     void StateEditor::resetMap(const Context & context)
     {
-        Map startingMap(MapName::Level_1_Cell, context, m_floor, m_mapChars, MapTransitions_t{});
+        Map map(MapName::Level_1_Cell, context, m_floor, m_mapChars, MapTransitions_t{});
 
-        context.map = startingMap;
+        context.maps.forceMapForEditting(map);
         context.map_display.load(context);
     }
 
     void StateEditor::placeEditCursor(const Context & context)
     {
-        m_editRectangle.setPosition(context.map.mapPosToScreenPos(context, m_editPos));
+        m_editRectangle.setPosition(context.maps.current().mapPosToScreenPos(context, m_editPos));
     }
 
     void StateEditor::setMapChar(const char ch)
@@ -495,9 +495,9 @@ namespace castlecrawl
 
     void StateEditor::stopDragging(const Context & context, const sf::Vector2f & pos)
     {
-        const MapPos_t newMapPos = context.map.screenPosToMapPos(context, pos);
+        const MapPos_t newMapPos = context.maps.current().screenPosToMapPos(context, pos);
 
-        if (context.map.isPosValid(newMapPos))
+        if (context.maps.current().isPosValid(newMapPos))
         {
             m_editPos = newMapPos;
             placeEditCursor(context);

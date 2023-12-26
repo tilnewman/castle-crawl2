@@ -16,7 +16,6 @@ namespace castlecrawl
     struct GameConfig;
     class TileImages;
     class Layout;
-    class Map;
     class Maps;
     class MapDisplay;
     class StateManager;
@@ -38,7 +37,6 @@ namespace castlecrawl
             const GameConfig & configParam,
             const TileImages & tileImagesParam,
             Layout & layoutParam,
-            Map & mapParam,
             Maps & mapsParam,
             MapDisplay & mapDisplayParam,
             StateManager & stateManagerParam,
@@ -55,7 +53,6 @@ namespace castlecrawl
             : config(configParam)
             , tile_images(tileImagesParam)
             , layout(layoutParam)
-            , map(mapParam)
             , maps(mapsParam)
             , map_display(mapDisplayParam)
             , state(stateManagerParam)
@@ -74,8 +71,7 @@ namespace castlecrawl
         const GameConfig & config;
         const TileImages & tile_images;
         Layout & layout;
-        Map & map;
-        const Maps & maps;
+        Maps & maps;
         MapDisplay & map_display;
         StateManager & state;
         Player & player;

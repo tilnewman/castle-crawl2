@@ -8,7 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
-#include "map.hpp"
+#include "maps.hpp"
 #include "player-display.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
@@ -95,7 +95,7 @@ namespace castlecrawl
         {
             sf::Sprite sprite(m_texture, enemyImageRect(enemy.image));
             util::fit(sprite, context.layout.cellSize());
-            sprite.setPosition(context.map.mapPosToScreenPos(context, enemy.position));
+            sprite.setPosition(context.maps.current().mapPosToScreenPos(context, enemy.position));
             target.draw(sprite, states);
         }
     }
@@ -128,7 +128,7 @@ namespace castlecrawl
     void Enemies::move(const Context & context, EnemyInstance & enemy)
     {
         std::vector<MapCell> possibleMoveCells =
-            context.map.surroundingCellsHorizVert(enemy.position);
+            context.maps.current().surroundingCellsHorizVert(enemy.position);
 
         removeSpawnAndMoveObstacles(context, possibleMoveCells);
 
@@ -173,7 +173,7 @@ namespace castlecrawl
     void Enemies::spawn(const Context & context, EnemyInstance & enemy)
     {
         std::vector<MapCell> possibleSpawnCells =
-            context.map.surroundingCellsHorizVert(enemy.position);
+            context.maps.current().surroundingCellsHorizVert(enemy.position);
 
         removeSpawnAndMoveObstacles(context, possibleSpawnCells);
 

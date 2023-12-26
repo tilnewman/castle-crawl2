@@ -94,7 +94,7 @@ namespace castlecrawl
         const MapPos_t mapPosBefore    = context.player_display.position();
         const MapPos_t mapPosAttempted = keys::moveIfDir(mapPosBefore, key);
         const bool isEnemyInTheWay     = context.enemies.isAnyAtMapPos(mapPosAttempted);
-        const char mapCharAttempted    = context.map.cell(mapPosAttempted).object_char;
+        const char mapCharAttempted    = context.maps.current().cell(mapPosAttempted).object_char;
 
         const MapPos_t mapPosAfter = [&]() {
             if (isEnemyInTheWay)
@@ -184,7 +184,7 @@ namespace castlecrawl
     void StatePlay::playMoveMusic(const Context & context) const
     {
         const auto surroundingCells =
-            context.map.surroundingCellsAll(context.player_display.position());
+            context.maps.current().surroundingCellsAll(context.player_display.position());
 
         const auto foundLavaIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {
@@ -217,7 +217,7 @@ namespace castlecrawl
 
     bool StatePlay::handleMapTransition(const Context & context, const MapPos_t & mapPosAfter)
     {
-        for (const MapTransition & transition : context.map.transitions())
+        for (const MapTransition & transition : context.maps.current().transitions())
         {
             if (transition.from_pos == mapPosAfter)
             {

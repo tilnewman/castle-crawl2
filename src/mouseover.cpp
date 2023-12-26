@@ -8,7 +8,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "layout.hpp"
-#include "map.hpp"
+#include "maps.hpp"
 #include "player-display.hpp"
 
 namespace castlecrawl
@@ -62,8 +62,8 @@ namespace castlecrawl
     {
         const sf::Vector2f mousePos{ m_mousePos };
 
-        const MapPos_t mapPos = context.map.screenPosToMapPos(context, mousePos);
-        const MapCell mapCell = context.map.cell(mapPos);
+        const MapPos_t mapPos = context.maps.current().screenPosToMapPos(context, mousePos);
+        const MapCell mapCell = context.maps.current().cell(mapPos);
 
         std::string message;
 

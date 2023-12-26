@@ -15,6 +15,7 @@ namespace castlecrawl
 {
     Maps::Maps()
         : m_maps()
+        , m_currentIter(std::end(m_maps))
     {}
 
     void Maps::setup(const Context & context)
@@ -23,23 +24,24 @@ namespace castlecrawl
         verify();
     }
 
-    void Maps::change(const Context & context, MapName mapName, const MapPos_t & pos) const
+    void Maps::change(const Context & context, MapName mapName, const MapPos_t & pos)
     {
-        const auto foundIter =
-            std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
-                return (map.name() == mapName);
-            });
+        unloadEnemies(context);
+
+        m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
+            return (map.name() == mapName);
+        });
 
         M_CHECK(
-            (foundIter != std::end(m_maps)),
+            (m_currentIter != std::end(m_maps)),
             "Tried to change to an invalid map named \"" << toString(mapName) << "\"");
 
-        unloadEnemies(context);
-        context.map = *foundIter;
-        loadEnemies(context, context.map);
+        loadEnemies(context, *m_currentIter);
         context.map_display.load(context);
         context.player_display.position(context, pos);
     }
+
+    void Maps::forceMapForEditting(const Map map) { *m_currentIter = map; }
 
     void Maps::load(const Context & context)
     {
@@ -435,6 +437,8 @@ namespace castlecrawl
             MapTransitions_t {{ { 24,  -1 }, MapName::Level_1_LavaGatehouse, { 10, 20 } }}
             );
         // clang-format on
+
+        m_currentIter = std::begin(m_maps);
     }
 
     void Maps::verify() const

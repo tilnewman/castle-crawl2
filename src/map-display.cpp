@@ -7,9 +7,10 @@
 
 #include "context.hpp"
 #include "layout.hpp"
+#include "maps.hpp"
+#include "sfml-util.hpp"
 #include "tile-image-enum.hpp"
 #include "tile-images.hpp"
-#include "sfml-util.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -26,7 +27,7 @@ namespace castlecrawl
 
     void MapDisplay::load(const Context & context)
     {
-        context.layout.setupNewMap(context.map.size());
+        context.layout.setupNewMap(context.maps.current().size());
         reset();
         appendVerts(context);
         appendLiquidEdgeVerts(context);
@@ -66,13 +67,13 @@ namespace castlecrawl
         const float overlapDimm{ mapCellDimm * (growScale * 0.5f) };
         const sf::Vector2f overlap{ overlapDimm, overlapDimm };
 
-        const sf::Vector2i mapSize = context.map.size();
-        sf::Vector2f screenPos = util::position(context.layout.mapRect());
+        const sf::Vector2i mapSize = context.maps.current().size();
+        sf::Vector2f screenPos     = util::position(context.layout.mapRect());
         for (int y(0); y < mapSize.y; ++y)
         {
             for (int x(0); x < mapSize.x; ++x)
             {
-                const MapCell cell = context.map.cell({ x, y });
+                const MapCell cell = context.maps.current().cell({ x, y });
 
                 if ('.' == cell.object_char)
                 {
@@ -130,16 +131,16 @@ namespace castlecrawl
         auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w')); };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
-            return (notLiq(ch) && context.map.isPosValid(pos));
+            return (notLiq(ch) && context.maps.current().isPosValid(pos));
         };
 
         auto getChar = [&](const int x, const int y) {
-            const MapCell cell = context.map.cell({ x, y });
+            const MapCell cell = context.maps.current().cell({ x, y });
             return cell.object_char;
         };
 
-        const sf::Vector2i mapSize = context.map.size();
-        sf::Vector2f screenPos = util::position(context.layout.mapRect());
+        const sf::Vector2i mapSize = context.maps.current().size();
+        sf::Vector2f screenPos     = util::position(context.layout.mapRect());
         for (int y(0); y < mapSize.y; ++y)
         {
             for (int x(0); x < mapSize.x; ++x)

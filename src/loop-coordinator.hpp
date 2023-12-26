@@ -11,7 +11,6 @@
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
-#include "map.hpp"
 #include "maps.hpp"
 #include "music-player.hpp"
 #include "player-display.hpp"
@@ -53,7 +52,6 @@ namespace castlecrawl
         GameConfig m_config;
         TileImages m_tileImages;
         Layout m_layout;
-        Map m_map;
         Maps m_maps;
         MapDisplay m_mapDisplay;
         StateManager m_stateManager;

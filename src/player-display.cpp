@@ -8,7 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
-#include "map.hpp"
+#include "maps.hpp"
 #include "tile-images.hpp"
 
 namespace castlecrawl
@@ -35,7 +35,7 @@ namespace castlecrawl
 
         m_isShaking = false;
         m_mapPos    = newPosition;
-        m_screenPos = context.map.mapPosToScreenPos(context, m_mapPos);
+        m_screenPos = context.maps.current().mapPosToScreenPos(context, m_mapPos);
         m_sprite.setPosition(m_screenPos);
     }
 
