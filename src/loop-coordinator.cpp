@@ -80,7 +80,8 @@ namespace castlecrawl
         m_framerate.setup(m_context);
         m_topPanel.setup(m_context);
 
-        m_stateManager.change(m_context, State::Splash);
+        // TODO switch to Splash after testing
+        m_stateManager.change(m_context, State::Credits);
 
         m_music.setup((m_config.media_path / "music").string());
         m_music.start("music.ogg", m_config.music_volume);

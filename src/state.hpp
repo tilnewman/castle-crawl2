@@ -26,6 +26,7 @@ namespace castlecrawl
         Treasure,
         Quit,
         Death,
+        Credits,
         Editor
     };
 
@@ -42,6 +43,7 @@ namespace castlecrawl
             case State::Treasure:   { return "Treasure"; }
             case State::Quit:       { return "Quit"; }
             case State::Death:      { return "Death"; }
+            case State::Credits:    { return "Credits"; }
             case State::Editor:     { return "Editor"; }
             default:                { return "unknown_state_error"; }
                 // clang-format on
