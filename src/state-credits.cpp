@@ -26,12 +26,19 @@
 
 namespace castlecrawl
 {
-    Credit::Credit()
+
+    const float Credit::m_vertPad{ 10.0f };
+
+    Credit::Credit(
+        const Context & context,
+        const std::string & name,
+        const std::string & desc,
+        const std::string & license,
+        const std::string & extra)
         : m_nameText()
         , m_descText()
-    {}
-
-    void Credit::setup(const Context & context, const std::string & name, const std::string & desc)
+        , m_licenseText()
+        , m_extraText()
     {
         const sf::FloatRect screenRect = context.layout.screenRect();
         m_nameText                     = context.fonts.makeText(FontSize::Large, name);
@@ -40,13 +47,23 @@ namespace castlecrawl
             ((screenRect.width * 0.5f) - (m_nameText.getGlobalBounds().width * 0.5f)),
             screenRect.height);
 
-        m_descText = context.fonts.makeText(FontSize::Medium, desc, sf::Color(200, 200, 200));
-
-        const float vertPad = 10.0f;
+        m_descText = context.fonts.makeText(FontSize::Medium, desc, sf::Color(220, 220, 220));
 
         m_descText.setPosition(
             ((screenRect.width * 0.5f) - (m_descText.getGlobalBounds().width * 0.5f)),
-            util::bottom(m_nameText) + vertPad);
+            util::bottom(m_nameText) + m_vertPad);
+
+        m_licenseText = context.fonts.makeText(FontSize::Small, license, sf::Color(220, 220, 220));
+
+        m_licenseText.setPosition(
+            ((screenRect.width * 0.5f) - (m_licenseText.getGlobalBounds().width * 0.5f)),
+            util::bottom(m_descText) + m_vertPad);
+
+        m_extraText = context.fonts.makeText(FontSize::Small, extra, sf::Color(220, 220, 220));
+
+        m_extraText.setPosition(
+            ((screenRect.width * 0.5f) - (m_extraText.getGlobalBounds().width * 0.5f)),
+            util::bottom(m_licenseText) + m_vertPad);
     }
 
     void Credit::update(const float frameTimeSec)
@@ -54,18 +71,38 @@ namespace castlecrawl
         const float scrollSpeed = 30.0f;
         m_nameText.move(0.0f, -(frameTimeSec * scrollSpeed));
         m_descText.move(0.0f, -(frameTimeSec * scrollSpeed));
+        m_licenseText.move(0.0f, -(frameTimeSec * scrollSpeed));
+        m_extraText.move(0.0f, -(frameTimeSec * scrollSpeed));
     }
 
     void Credit::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_nameText, states);
         target.draw(m_descText, states);
+        target.draw(m_licenseText, states);
+        target.draw(m_extraText, states);
     }
+
+    void Credit::vertPosition(const float pos)
+    {
+        m_nameText.setPosition(m_nameText.getGlobalBounds().left, pos);
+
+        m_descText.setPosition(
+            m_descText.getGlobalBounds().left, util::bottom(m_nameText) + m_vertPad);
+
+        m_licenseText.setPosition(
+            m_licenseText.getGlobalBounds().left, util::bottom(m_descText) + m_vertPad);
+
+        m_extraText.setPosition(
+            m_extraText.getGlobalBounds().left, util::bottom(m_licenseText) + m_vertPad);
+    }
+
+    float Credit::bottom() const { return util::bottom(m_licenseText); }
 
     StateCredits::StateCredits()
         : m_castleTexture()
         , m_castleSprite()
-        , m_testCredit()
+        , m_credits()
     {}
 
     void StateCredits::onEnter(const Context & context)
@@ -84,19 +121,88 @@ namespace castlecrawl
             ((screenRect.width * 0.5f) - (m_castleSprite.getGlobalBounds().width * 0.5f)),
             ((screenRect.height * 0.5f) - (m_castleSprite.getGlobalBounds().height * 0.5f)));
 
-        m_testCredit.setup(context, "Ziesche Til Newman", "Software");
+        Credit & softwareCredit = m_credits.emplace_back(context, "Somebody", "Software");
+
+        Credit & fontCredit = m_credits.emplace_back(
+            context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
+
+        const float vertSpacer = (screenRect.height * 0.125f);
+        fontCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
+
+        Credit & tileCredit = m_credits.emplace_back(
+            context,
+            "Daniel Cook's Map Tiles",
+            "Image",
+            "www.lostgarden.home.blog/2006/07/08/more-free-game-graphic",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        tileCredit.vertPosition(fontCredit.bottom() + vertSpacer);
+
+        Credit & iconCredit = m_credits.emplace_back(
+            context, "game-icons.net", "Image", "www.creativecommons.org/licenses/by/3.0");
+
+        iconCredit.vertPosition(tileCredit.bottom() + vertSpacer);
+
+        Credit & doorSfxCredit = m_credits.emplace_back(
+            context,
+            "door-church-close-e",
+            "Sound Effect",
+            "www.freesound.org/people/InspectorJ/sounds/339677",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        doorSfxCredit.vertPosition(iconCredit.bottom() + vertSpacer);
+
+        Credit & spiderSfxCredit = m_credits.emplace_back(
+            context,
+            "spider-voice",
+            "Sound Effect",
+            "www.freesound.org/people/columbia23",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        spiderSfxCredit.vertPosition(doorSfxCredit.bottom() + vertSpacer);
+
+        Credit & stepsSfxCredit = m_credits.emplace_back(
+            context,
+            "footsteps-wooden-floor-loop",
+            "Sound Effect",
+            "www.freesound.org/people/sinatra314/sounds/58454",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        stepsSfxCredit.vertPosition(spiderSfxCredit.bottom() + vertSpacer);
+
+        Credit & gameOverSfxCredit = m_credits.emplace_back(
+            context,
+            "jingle-lose-00",
+            "Sound Effect",
+            "Little Robot Sound Factory",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        gameOverSfxCredit.vertPosition(stepsSfxCredit.bottom() + vertSpacer);
     }
 
-    void StateCredits::update(const Context &, const float frameTimeSec)
+    void StateCredits::update(const Context & context, const float frameTimeSec)
     {
-        m_testCredit.update(frameTimeSec);
+        for (Credit & credit : m_credits)
+        {
+            credit.update(frameTimeSec);
+        }
+
+        Credit & lastCredit = m_credits.back();
+        if (lastCredit.bottom() < 0.0f)
+        {
+            context.state.change(context, State::Quit);
+        }
     }
 
     void StateCredits::draw(
         const Context &, sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_castleSprite, states);
-        target.draw(m_testCredit, states);
+
+        for (const Credit & credit : m_credits)
+        {
+            target.draw(credit, states);
+        }
     }
 
     void StateCredits::handleEvent(const Context & context, const sf::Event & event)

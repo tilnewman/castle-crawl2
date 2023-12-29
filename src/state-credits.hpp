@@ -12,8 +12,8 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
-#include <memory>
 #include <string>
+#include <vector>
 
 namespace castlecrawl
 {
@@ -22,15 +22,24 @@ namespace castlecrawl
     class Credit : public sf::Drawable
     {
       public:
-        Credit();
+        Credit(
+            const Context & context,
+            const std::string & name,
+            const std::string & desc,
+            const std::string & license = "",
+            const std::string & extra = "");
 
-        void setup(const Context & context, const std::string & name, const std::string & desc);
         void update(const float frameTimeSec);
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
+        void vertPosition(const float pos);
+        float bottom() const;
 
       private:
         sf::Text m_nameText;
         sf::Text m_descText;
+        sf::Text m_licenseText;
+        sf::Text m_extraText;
+        static const float m_vertPad;
     };
 
     //
@@ -55,7 +64,7 @@ namespace castlecrawl
       private:
         sf::Texture m_castleTexture;
         sf::Sprite m_castleSprite;
-        Credit m_testCredit;
+        std::vector<Credit> m_credits;
     };
 
 } // namespace castlecrawl

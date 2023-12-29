@@ -7,7 +7,7 @@ Link:          creativecommons.org/licenses/by/3.0/
 
 
 File:          spider.ogg
-By:            freesound.org/people/columbia23 
+By:            freesound.org/people/columbia23
 Original Name: “spider-voice"
 License:       CC-BY 3.0
 Link:          creativecommons.org/licenses/by/3.0/
@@ -16,9 +16,10 @@ Link:          creativecommons.org/licenses/by/3.0/
 File:	       stairs.ogg
 By:            sinatra314
 Original Name: "footsteps-wooden-floor-loop"
-From:          footsteps-wood__freesound.org/people/sinatra314/sounds/58454
+From:          freesound.org/people/sinatra314/sounds/58454
 License:       CC-BY-3.0
 Link:          creativecommons.org/licenses/by/3.0/
+
 
 File:		game-over.ogg
 By:		littlerobotsoundfactory

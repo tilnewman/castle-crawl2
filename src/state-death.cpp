@@ -64,7 +64,7 @@ namespace castlecrawl
         }
         else
         {
-            context.state.change(context, State::Quit);
+            context.state.change(context, State::Credits);
         }
     }
 
@@ -94,7 +94,7 @@ namespace castlecrawl
 
         if (event.key.code == sf::Keyboard::Escape)
         {
-            context.state.change(context, State::Quit);
+            context.state.change(context, State::Credits);
             return;
         }
     }
