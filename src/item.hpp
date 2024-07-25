@@ -64,7 +64,7 @@ namespace castlecrawl::item
         WeaponMaterial weaponMaterial() const { return m_weaponMaterial; }
         MiscMaterial miscMaterial() const { return m_miscMaterial; }
 
-        // these three are mutually exclusive but one must be true to be a valid item
+        // these three are mutually exclusive but one must return true
         bool isWeapon() const { return (m_weapon != Weapon::Count); }
         bool isArmor() const { return (m_armor != Armor::Count); }
         bool isMisc() const { return ((m_misc != Misc::Count)); }

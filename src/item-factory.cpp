@@ -557,18 +557,24 @@ namespace castlecrawl::item
         M_CHECK(
             (typeCount == 1),
             "Item's basic type count of Weapon/Armor/Misc is "
-                << typeCount << " (mutually exclusive so the count should always be 1): " << item);
+                << typeCount << " (mutually exclusive so the count must always be 1): " << item);
 
         M_CHECK(!item.name().empty(), "Item has no name: " << item);
 
         if (item.isUseable())
         {
-            M_CHECK(!item.isEquipable(), "Item is Useable AND Equipable: " << item);
+            M_CHECK(
+                !item.isEquipable(),
+                "Item is Useable AND Equipable (both should never be true): " << item);
+
+            M_CHECK(item.isMisc(), "Item is Useable but not misc: " << item);
         }
 
         if (item.isEquipable())
         {
-            M_CHECK(!item.isUseable(), "Item is Equipable AND Useable: " << item);
+            M_CHECK(
+                !item.isUseable(),
+                "Item is Equipable AND Useable (both should never be true): " << item);
         }
 
         if (item.isArmor())

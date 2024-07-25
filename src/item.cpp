@@ -371,21 +371,14 @@ namespace castlecrawl::item
             os << ",damage=" << item.damageMin() << '-' << item.damageMax();
         }
 
-        if (item.isMisc())
+        if (item.isUseable())
         {
-            if (item.isUseable())
-            {
-                os << ",useable";
-            }
+            os << ",useable";
+        }
 
-            if (item.equipCount() > 1)
-            {
-                os << ",equip_count=" << item.equipCount();
-            }
-            else if (item.equipCount() == 1)
-            {
-                os << ",equipable";
-            }
+        if (item.equipCount() > 0)
+        {
+            os << ",equipMax=" << item.equipCount();
         }
 
         const EquipEffect & ef = item.equipEffect();
