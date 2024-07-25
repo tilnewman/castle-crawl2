@@ -376,7 +376,7 @@ namespace castlecrawl::item
             os << ",useable";
         }
 
-        if (item.equipCount() > 0)
+        if (item.isMisc() && item.equipCount() > 0)
         {
             os << ",equipMax=" << item.equipCount();
         }
