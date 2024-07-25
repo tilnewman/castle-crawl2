@@ -49,7 +49,7 @@ namespace castlecrawl::item
             items.push_back(item);
         }
 
-        // not required, only for speed
+        // keep sorted by value
         std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) {
             return (A.value() < B.value());
         });
@@ -108,9 +108,9 @@ namespace castlecrawl::item
              static_cast<std::size_t>(MiscMaterial::Count)) +
             9);
 
-        // these are the equipable misc items
         for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
         {
+            // these are the equipable misc items only
             const auto type = static_cast<Misc>(i);
             if (requiredMiscMaterial(type) != MiscMaterial::Count)
             {
@@ -392,7 +392,7 @@ namespace castlecrawl::item
 
     void ItemFactory::validateAll(const ItemVec_t & items) const
     {
-        // loook for duplicate names
+        // look for duplicate names
         std::set<std::string> names;
         for (const Item & item : items)
         {
@@ -556,8 +556,8 @@ namespace castlecrawl::item
 
         M_CHECK(
             (typeCount == 1),
-            "Item's basic type of Weapon/Armor/Misc count is "
-                << typeCount << " (not essential and mutually exclusive): " << item);
+            "Item's basic type count of Weapon/Armor/Misc is "
+                << typeCount << " (mutually exclusive so the count should always be 1): " << item);
 
         M_CHECK(!item.name().empty(), "Item has no name: " << item);
 
@@ -573,13 +573,13 @@ namespace castlecrawl::item
 
         if (item.isArmor())
         {
-            M_CHECK((item.armorRating() >= 1_armor), "Armor Item's amor_rating invalid: " << item);
+            M_CHECK((item.armorRating() >= 1_armor), "Armor item's amor_rating invalid: " << item);
 
             M_CHECK(
                 (item.armorMaterial() != ArmorMaterial::Count),
-                "Armor Item has no material: " << item);
+                "Armor item has no material: " << item);
 
-            M_CHECK(item.isEquipable(), "Armor Item SHOULD be Equipable but is not: " << item);
+            M_CHECK(item.isEquipable(), "Armor item SHOULD be Equipable but is not: " << item);
 
             if (item.isMagical())
             {
@@ -591,20 +591,28 @@ namespace castlecrawl::item
                     (item.equipEffect().total() > 0), "Magical armor has no equip effect:" << item);
             }
         }
+        else
+        {
+            M_CHECK((item.armorRating() == 0_armor), "Non-Armor item had an amor_rating: " << item);
+
+            M_CHECK(
+                (item.armorMaterial() == ArmorMaterial::Count),
+                "Non-Armor item has armor_material: " << item);
+        }
 
         if (item.isWeapon())
         {
-            M_CHECK((item.damageMin() > 0), "Weapon Item's damage_min invalid: " << item);
+            M_CHECK((item.damageMin() > 0), "Weapon item's damage_min invalid: " << item);
 
             M_CHECK(
                 (item.damageMax() >= item.damageMin()),
-                "Weapon Item's damage_max is not >= than the min: " << item);
+                "Weapon item's damage_max is not >= than the min: " << item);
 
             M_CHECK(
                 (item.weaponMaterial() != WeaponMaterial::Count),
-                "Weapon Item has no material: " << item);
+                "Weapon item has no material: " << item);
 
-            M_CHECK(item.isEquipable(), "Weapon Item SHOULD be Equipable but is not: " << item);
+            M_CHECK(item.isEquipable(), "Weapon item SHOULD be Equipable but is not: " << item);
 
             if (item.isMagical())
             {
@@ -616,6 +624,15 @@ namespace castlecrawl::item
                     (item.equipEffect().total() > 0),
                     "Magical weapon has no equip effect:" << item);
             }
+        }
+        else
+        {
+            M_CHECK((item.damageMin() == 0), "Non-Weapon item has a damage_min: " << item);
+            M_CHECK((item.damageMax() == 0), "Non-Weapon item has a damage_max: " << item);
+
+            M_CHECK(
+                (item.weaponMaterial() == WeaponMaterial::Count),
+                "Non-Weapon item has weapon_material: " << item);
         }
 
         if (item.isMisc())
@@ -635,6 +652,12 @@ namespace castlecrawl::item
                     (item.miscMaterial() != MiscMaterial::Magic),
                     "This Misc item must NOT have the material 'Magic': " << item);
             }
+        }
+        else
+        {
+            M_CHECK(
+                (item.miscMaterial() == MiscMaterial::Count),
+                "Non-Misc item has misc_material: " << item);
         }
 
         M_CHECK((item.value() > 0), "Item's Value is zero or less: " << item);
