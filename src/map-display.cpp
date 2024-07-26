@@ -56,16 +56,14 @@ namespace castlecrawl
     {
         char prevObjectChar('.'); // anything except '-' works here
 
-        // any non-empty works here because empty would be transparent and the color would not work
+        // any TileImage works here because only using the pos and size of it
         sf::Sprite edgeSprite = context.tile_images.sprite(context, TileImage::Lava);
-        edgeSprite.setColor(context.config.background_color);
 
-        // make edge verts bigger to cover corner cases (it's drawn below walls anyway)
+        // make edge verts bigger to cover outside edges of walls with solid black
         const float growScale = 0.5f;
         edgeSprite.scale((1.0f + growScale), (1.0f + growScale));
         const float mapCellDimm{ context.layout.cellSize().x };
         const float overlapDimm{ mapCellDimm * (growScale * 0.5f) };
-        const sf::Vector2f overlap{ overlapDimm, overlapDimm };
 
         const sf::Vector2i mapSize = context.maps.current().size();
         sf::Vector2f screenPos     = util::position(context.layout.mapRect());
@@ -273,7 +271,7 @@ namespace castlecrawl
 
         if (!m_borderVerts.empty())
         {
-            // don't use states because the floor edge verts are just solid color
+            // don't use states because the floor edge verts are just solid black
             target.draw(&m_borderVerts[0], m_borderVerts.size(), sf::Quads);
         }
 
