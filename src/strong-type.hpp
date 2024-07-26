@@ -71,13 +71,13 @@ namespace util
             return *this;
         }
 
-        StrongType operator+(const StrongType & rhs) const { return StrongType(*this) += rhs; }
+        StrongType operator+(const StrongType & rhs) const { return (StrongType(*this) += rhs); }
 
-        StrongType operator-(const StrongType & rhs) const { return StrongType(*this) -= rhs; }
+        StrongType operator-(const StrongType & rhs) const { return (StrongType(*this) -= rhs); }
 
-        StrongType operator*(const StrongType & rhs) const { return StrongType(*this) *= rhs; }
+        StrongType operator*(const StrongType & rhs) const { return (StrongType(*this) *= rhs); }
 
-        StrongType operator/(const StrongType & rhs) const { return StrongType(*this) /= rhs; }
+        StrongType operator/(const StrongType & rhs) const { return (StrongType(*this) /= rhs); }
 
         StrongType & operator++()
         {
@@ -87,7 +87,7 @@ namespace util
 
         StrongType operator++(int)
         {
-            StrongType temp{ *this };
+            const StrongType temp{ *this };
             operator++();
             return temp;
         }
@@ -100,7 +100,7 @@ namespace util
 
         StrongType operator--(int)
         {
-            StrongType temp{ *this };
+            const StrongType temp{ *this };
             operator--();
             return temp;
         }
