@@ -141,25 +141,7 @@ namespace castlecrawl
             return;
         }
 
-        if ((event.type == sf::Event::MouseButtonPressed) &&
-            (event.mouseButton.button == sf::Mouse::Button::Left))
-        {
-            const sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
-
-            const MapPos_t newMapPos =
-                context.maps.current().screenPosToMapPos(context, sf::Vector2f{ mousePos });
-
-            if ((newMapPos.x >= 0) && (newMapPos.y >= 0))
-            {
-                m_editPos = newMapPos;
-                placeEditCursor(context);
-                context.sfx.play("tick-off-1");
-            }
-
-            return;
-        }
-
-        // all events are key released events
+        // all remaining events are key pressed events
         if (event.type != sf::Event::KeyPressed)
         {
             return;
