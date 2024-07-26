@@ -339,7 +339,7 @@ namespace util
             std::unique(std::begin(container), std::end(container)), std::end(container));
     }
 
-    // requires random access but a quick way to erase back without invalidating other iters
+    // requires random access but a quick way to erase without invalidating other iters
     template <typename Container_t>
     void swapAndPop(Container_t & container, const typename Container_t::iterator & toErase)
     {
@@ -360,7 +360,7 @@ namespace util
     [[nodiscard]] inline std::string containerToString(
         const Container_t & container,
         const std::string & separator = ",",
-        const std::string & wrap = {})
+        const std::string & wrap      = {})
     {
         std::ostringstream ss;
 
@@ -513,10 +513,10 @@ namespace util
     [[nodiscard]] std::string makePercentString(
         const T num,
         const U den,
-        const std::string & prefix = {},
-        const std::string & postfix = {},
+        const std::string & prefix      = {},
+        const std::string & postfix     = {},
         const std::size_t afterDotCount = 1,
-        const std::string & wrap = "()")
+        const std::string & wrap        = "()")
     {
         std::ostringstream ss;
 
