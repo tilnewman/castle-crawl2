@@ -67,7 +67,7 @@ namespace castlecrawl
 
         m_strTitleText.setPosition((screenRect.width * 0.25f), (botRect.top + padLarge));
 
-        const float statTextVertPad = 5.0f;
+        const float statTextVertPad = 5.0f; //TODO make this based on m_strTitleText height
 
         m_dexTitleText.setPosition(
             m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad));
@@ -220,7 +220,7 @@ namespace castlecrawl
 
     void StateInventory::handleEvent(const Context & context, const sf::Event & event)
     {
-        // all other handlers are key released events
+        // all other handlers are key pressed events
         if (event.type != sf::Event::KeyPressed)
         {
             return;
