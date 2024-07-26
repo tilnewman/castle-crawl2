@@ -34,7 +34,7 @@ namespace castlecrawl
         , m_floor(floor)
         , m_transitions(transVec)
     {
-        QuickMap quickMap(context.config, mapChars);
+        const QuickMap quickMap(context.config, mapChars);
 
         const sf::Vector2i size = quickMap.size();
 
@@ -45,7 +45,7 @@ namespace castlecrawl
             for (int x(0); x < size.x; ++x)
             {
                 MapCell cell;
-                cell.position = { x, y };
+                cell.position    = { x, y };
                 cell.object_char = quickMap.getChar(x, y);
 
                 // put random floor tiles under everything except edge markers
@@ -105,11 +105,9 @@ namespace castlecrawl
         {
             return {}; // MapCell default values are both safe and invalid
         }
-        else
-        {
-            const sf::Vector2s pos{ posParam };
-            return m_map[pos.y][pos.x];
-        }
+
+        const sf::Vector2s pos{ posParam };
+        return m_map[pos.y][pos.x];
     }
 
     void Map::setObjectChar(const MapPos_t & posParam, const char newChar)
@@ -127,7 +125,7 @@ namespace castlecrawl
         Map::screenPosToMapPos(const Context & context, const sf::Vector2f & screenPos) const
     {
         const sf::FloatRect mapRect = context.layout.mapRect();
-        sf::Vector2f pos = util::position(mapRect);
+        sf::Vector2f pos            = util::position(mapRect);
 
         const sf::Vector2i mapSize = size();
         for (int y(0); y < mapSize.y; ++y)
