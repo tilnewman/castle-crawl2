@@ -34,7 +34,7 @@ namespace castlecrawl
         item::Inventory & inventory() { return m_inventory; }
 
         void updateEquipEffects();
-        item::EquipEffect equipEffects() const { return m_equipEffects; }
+        const item::EquipEffect equipEffects() const { return m_equipEffects; }
 
       private:
         constexpr static int statMin     = 1;
