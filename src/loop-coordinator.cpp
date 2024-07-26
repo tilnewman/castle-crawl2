@@ -156,8 +156,8 @@ namespace castlecrawl
         m_renderWindow.create(videoMode, "CastleCrawl2", sf::Style::Fullscreen);
 
         // sometimes the resolution of the window created does not match what was specified
-        const unsigned actualWidth  = static_cast<unsigned>(m_renderWindow.getSize().x);
-        const unsigned actualHeight = static_cast<unsigned>(m_renderWindow.getSize().y);
+        const unsigned actualWidth  = m_renderWindow.getSize().x;
+        const unsigned actualHeight = m_renderWindow.getSize().y;
         if ((m_config.video_mode.width == actualWidth) &&
             (m_config.video_mode.height == actualHeight))
         {
