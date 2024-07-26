@@ -277,7 +277,7 @@ namespace util
         thing.setOrigin(centerLocal(thing));
     }
 
-    // sf::Text needs correction after changing the: string, scale, or characterSize
+    // sf::Text needs this correction after changing the string, scale, or characterSize
     template <typename T>
     void setOriginToPosition(T & thing)
     {
@@ -456,7 +456,7 @@ namespace util
     template <typename T>
     void fit(T & thing, const sf::Vector2f & size)
     {
-        // skip if source size is zero (or close) to avoid dividing by zero below
+        // skip if source size is zero (or close enough) to avoid dividing by zero below
         const sf::FloatRect localBounds{ thing.getLocalBounds() };
         if ((localBounds.width < 1.0f) || (localBounds.height < 1.0f))
         {
@@ -505,6 +505,7 @@ namespace util
 
     // quad making and appending
 
+    // colors not changed if color given is transparent
     template <typename Container_t>
     void setupQuadVerts(
         const sf::Vector2f & pos,
@@ -529,6 +530,7 @@ namespace util
         }
     }
 
+    // colors not changed if color given is transparent
     template <typename Container_t>
     void setupQuadVerts(
         const sf::FloatRect & rect,
@@ -539,6 +541,7 @@ namespace util
         setupQuadVerts(position(rect), size(rect), index, verts, color);
     }
 
+    // colors not changed if color given is transparent
     template <typename Container_t>
     void appendQuadVerts(
         const sf::Vector2f & pos,
@@ -561,6 +564,7 @@ namespace util
         setupQuadVerts(pos, size, origSize, verts, color);
     }
 
+    // colors not changed if color given is transparent
     template <typename Container_t>
     void appendQuadVerts(
         const sf::FloatRect & rect,
@@ -829,6 +833,7 @@ namespace util
         return color;
     }
 
+    // returns desktop mode if none found matching the bpp
     inline const sf::VideoMode findVideoModeClosestTo(const sf::VideoMode & targetMode)
     {
         std::vector<sf::VideoMode> videoModes = sf::VideoMode::getFullscreenModes();
