@@ -560,7 +560,7 @@ namespace util
             origSize = verts.size();
         }
 
-        verts.resize(origSize + 4);
+        verts.resize(origSize + verts_per_quad);
 
         setupQuadVerts(pos, size, origSize, verts, color);
     }
@@ -591,7 +591,7 @@ namespace util
             index = verts.size();
         }
 
-        index -= 4;
+        index -= verts_per_quad;
 
         const sf::Vector2f pos{ util::position(textureCoordinates) };
         const sf::Vector2f size{ util::size(textureCoordinates) };
@@ -633,7 +633,7 @@ namespace util
     [[nodiscard]] inline sf::VertexArray
         makeRectangleVerts(const sf::FloatRect & rect, const sf::Color & color = sf::Color::White)
     {
-        sf::VertexArray verts(sf::Quads, 4);
+        sf::VertexArray verts(sf::Quads, verts_per_quad);
         setupQuadVerts(position(rect), size(rect), 0, verts, color);
         return verts;
     }
