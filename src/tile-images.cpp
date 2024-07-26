@@ -24,7 +24,8 @@ namespace castlecrawl
             m_texture.loadFromFile((config.media_path / "image" / "tile.png").string()),
             "Failed to load tile.png");
 
-        // improves image quality BUT also causes mass artifacts for unknown reasons...
+        // improves image quality BUT also causes mass tile edge artifacts
+        // texture smoothing really only works when the images have transparent edges
         // m_texture.setSmooth(true);
     }
 
