@@ -24,15 +24,17 @@ namespace castlecrawl
             m_texture.loadFromFile((config.media_path / "image" / "tile.png").string()),
             "Failed to load tile.png");
 
-        // improves image quality BUT also causes mass tile edge artifacts
+        // improves image quality BUT also causes mass tile edge artifacts.
         // texture smoothing really only works when the images have transparent edges
         // m_texture.setSmooth(true);
     }
 
-    const sf::Sprite TileImages::sprite(const Context & context, const TileImage tileImage) const
+    const sf::Sprite TileImages::sprite(
+        const Context & context, const TileImage tileImage, const sf::Vector2f & pos) const
     {
         sf::Sprite sprite(m_texture, tileImageToRect(tileImage));
         util::fit(sprite, context.layout.cellSize());
+        sprite.setPosition(pos);
         return sprite;
     }
 

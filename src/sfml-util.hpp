@@ -13,6 +13,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Window/VideoMode.hpp>
@@ -601,6 +602,12 @@ namespace util
         verts[index + 2].texCoords = sf::Vector2f((pos.x + size.x), (pos.y + size.y));
         verts[index + 3].texCoords = sf::Vector2f( pos.x          , (pos.y + size.y));
         // clang-format on
+    }
+
+    template <typename Container_t>
+    void appendQuadVerts(const sf::Sprite & sprite, Container_t & verts)
+    {
+        appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
     }
 
     inline void appendLineVerts(
