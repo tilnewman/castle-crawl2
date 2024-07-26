@@ -28,7 +28,7 @@ namespace castlecrawl
     float Shaker::update(const float frameTimeSec)
     {
         m_elapsedTimeSec += frameTimeSec;
-        m_current = (sin(m_elapsedTimeSec * m_speed) * static_cast<float>(m_range));
+        m_current = (static_cast<float>(sin(m_elapsedTimeSec * m_speed)) * m_range);
         return m_current;
     }
 
