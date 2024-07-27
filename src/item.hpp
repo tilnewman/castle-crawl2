@@ -87,21 +87,20 @@ namespace castlecrawl::item
         int calcValue() const;
 
       private:
-        int m_value; // keep as the first data member so always sorted by value first
+        std::string m_name;
 
         Weapon m_weapon;
         Armor m_armor;
         Misc m_misc;
-
-        std::string m_name;
 
         ArmorMaterial m_armorMaterial;
         WeaponMaterial m_weaponMaterial;
         MiscMaterial m_miscMaterial;
 
         UseStrength m_useStrength;
-
         Armor_t m_armorRating;
+        
+        int m_value;
         int m_damageMin;
         int m_damageMax;
 
