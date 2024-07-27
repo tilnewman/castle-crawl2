@@ -25,7 +25,7 @@ namespace castlecrawl
             draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
 
       private:
-        void reset(const Context & context);
+        void resetVertexVectors(const Context & context);
         void appendVerts(const Context & context);
         void appendLiquidEdgeVerts(const Context & context);
         void resetVertexBuffers();

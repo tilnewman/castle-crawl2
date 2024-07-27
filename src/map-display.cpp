@@ -28,7 +28,7 @@ namespace castlecrawl
     void MapDisplay::load(const Context & context)
     {
         context.layout.setupNewMap(context.maps.current().size());
-        reset(context);
+        resetVertexVectors(context);
         appendVerts(context);
         appendLiquidEdgeVerts(context);
         resetVertexBuffers();
@@ -47,7 +47,7 @@ namespace castlecrawl
         target.draw(m_objectBuffer, states);
     }
 
-    void MapDisplay::reset(const Context & context)
+    void MapDisplay::resetVertexVectors(const Context & context)
     {
         m_objectVerts.clear();
         m_floorVerts.clear();
@@ -77,6 +77,7 @@ namespace castlecrawl
 
         edgeSprite.scale((1.0f + growScale), (1.0f + growScale));
 
+        // loop over map chars and for each map tile/object/shadow/etc append quad verts
         const sf::Vector2i mapSize = context.maps.current().size();
         sf::Vector2f screenPos     = util::position(context.layout.mapRect());
         for (int y(0); y < mapSize.y; ++y)
