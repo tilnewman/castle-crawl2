@@ -74,7 +74,7 @@ namespace castlecrawl
                 {
                     bool isFloorBorderRequired = false;
                     for (const MapCell & surrCell :
-                         context.maps.current().surroundingCellsAll(cell.position))
+                         context.maps.current().surroundingCellsHorizVert(cell.position))
                     {
                         if (' ' != surrCell.floor_char)
                         {
