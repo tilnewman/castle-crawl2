@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/VertexBuffer.hpp>
 
 namespace castlecrawl
 {
@@ -26,11 +27,16 @@ namespace castlecrawl
         void reset(const Context & context);
         void appendVerts(const Context & context);
         void appendLiquidEdgeVerts(const Context & context);
+        void resetVertexBuffers();
 
       private:
         VertVec_t m_objectVerts;
         VertVec_t m_floorVerts;
         VertVec_t m_borderVerts;
+
+        sf::VertexBuffer m_objectBuffer;
+        sf::VertexBuffer m_floorBuffer;
+        sf::VertexBuffer m_borderBuffer;
     };
 
 } // namespace castlecrawl

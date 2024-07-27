@@ -14,8 +14,6 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 
-#include <iostream>
-
 namespace castlecrawl
 {
 
@@ -23,6 +21,9 @@ namespace castlecrawl
         : m_objectVerts()
         , m_floorVerts()
         , m_borderVerts()
+        , m_objectBuffer(sf::Quads, sf::VertexBuffer::Static)
+        , m_floorBuffer(sf::Quads, sf::VertexBuffer::Static)
+        , m_borderBuffer(sf::Quads, sf::VertexBuffer::Static)
     {}
 
     void MapDisplay::load(const Context & context)
@@ -31,6 +32,20 @@ namespace castlecrawl
         reset(context);
         appendVerts(context);
         appendLiquidEdgeVerts(context);
+        resetVertexBuffers();
+    }
+
+    void MapDisplay::draw(
+        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+    {
+        states.texture = &context.tile_images.texture();
+
+        target.draw(m_floorBuffer, states);
+
+        // don't use states because the floor edge verts are just solid black (no texture)
+        target.draw(m_borderBuffer);
+
+        target.draw(m_objectBuffer, states);
     }
 
     void MapDisplay::reset(const Context & context)
@@ -246,26 +261,16 @@ namespace castlecrawl
         }
     }
 
-    void MapDisplay::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+    void MapDisplay::resetVertexBuffers()
     {
-        states.texture = &context.tile_images.texture();
+        m_objectBuffer.create(m_objectVerts.size());
+        m_objectBuffer.update(&m_objectVerts[0]);
 
-        if (!m_floorVerts.empty())
-        {
-            target.draw(&m_floorVerts[0], m_floorVerts.size(), sf::Quads, states);
-        }
+        m_floorBuffer.create(m_floorVerts.size());
+        m_floorBuffer.update(&m_floorVerts[0]);
 
-        if (!m_borderVerts.empty())
-        {
-            // don't use states because the floor edge verts are just solid black
-            target.draw(&m_borderVerts[0], m_borderVerts.size(), sf::Quads);
-        }
-
-        if (!m_objectVerts.empty())
-        {
-            target.draw(&m_objectVerts[0], m_objectVerts.size(), sf::Quads, states);
-        }
+        m_borderBuffer.create(m_borderVerts.size());
+        m_borderBuffer.update(&m_borderVerts[0]);
     }
 
 } // namespace castlecrawl
