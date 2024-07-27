@@ -86,29 +86,15 @@ namespace castlecrawl
                 const MapCell cell = context.maps.current().cell({ x, y });
 
                 // black floor borders tiles
-                if ('.' == cell.object_char)
+                if (('.' == cell.object_char) && isFloorAdjacent(context, cell.position))
                 {
-                    bool isFloorBorderRequired = false;
-                    for (const MapCell & surrCell :
-                         context.maps.current().surroundingCellsHorizVert(cell.position))
-                    {
-                        if (' ' != surrCell.floor_char)
-                        {
-                            isFloorBorderRequired = true;
-                            break;
-                        }
-                    }
+                    edgeSprite.setPosition(screenPos);
+                    edgeSprite.move(-overlapDimm, -overlapDimm);
 
-                    if (isFloorBorderRequired)
-                    {
-                        edgeSprite.setPosition(screenPos);
-                        edgeSprite.move(-overlapDimm, -overlapDimm);
-
-                        util::appendQuadVerts(
-                            edgeSprite.getGlobalBounds(),
-                            m_borderVerts,
-                            context.config.background_color);
-                    }
+                    util::appendQuadVerts(
+                        edgeSprite.getGlobalBounds(),
+                        m_borderVerts,
+                        context.config.background_color);
                 }
 
                 // floor tiles
@@ -251,6 +237,22 @@ namespace castlecrawl
         VertVec_t & verts) const
     {
         util::appendQuadVerts(context.tile_images.sprite(context, image, pos), verts);
+    }
+
+    bool MapDisplay::isFloorAdjacent(const Context & context, const MapPos_t pos) const
+    {
+        bool isFloorAdjacent = false;
+
+        for (const MapCell & surrCell : context.maps.current().surroundingCellsHorizVert(pos))
+        {
+            if (' ' != surrCell.floor_char)
+            {
+                isFloorAdjacent = true;
+                break;
+            }
+        }
+
+        return isFloorAdjacent;
     }
 
 } // namespace castlecrawl
