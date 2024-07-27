@@ -55,11 +55,13 @@ namespace castlecrawl
         // any TileImage works here because only using the pos and size of it
         sf::Sprite edgeSprite = context.tile_images.sprite(context, TileImage::Lava);
 
-        // make edge verts bigger to cover outside edges of walls with solid black
+        // make floor border tile bigger to cover outside edges of walls with solid black
         const float growScale = 0.25f;
+
+        const float overlapDimm{ static_cast<float>(context.layout.cellSize().x) *
+                                 (growScale * 0.5f) };
+
         edgeSprite.scale((1.0f + growScale), (1.0f + growScale));
-        const float mapCellDimm{ context.layout.cellSize().x };
-        const float overlapDimm{ mapCellDimm * (growScale * 0.5f) };
 
         const sf::Vector2i mapSize = context.maps.current().size();
         sf::Vector2f screenPos     = util::position(context.layout.mapRect());
@@ -114,7 +116,7 @@ namespace castlecrawl
                     util::appendQuadVerts(objectSprite, m_objectVerts);
                 }
 
-                // wall block shadow tiles
+                // wall shadow tiles to the right of various wall blocks
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
                     const sf::Sprite shadowSprite =
