@@ -121,7 +121,7 @@ namespace castlecrawl
             ((screenRect.width * 0.5f) - (m_castleSprite.getGlobalBounds().width * 0.5f)),
             ((screenRect.height * 0.5f) - (m_castleSprite.getGlobalBounds().height * 0.5f)));
 
-        Credit & softwareCredit = m_credits.emplace_back(context, "Somebody", "Software");
+        Credit & softwareCredit = m_credits.emplace_back(context, "Ziesche Til Newman", "Software");
 
         Credit & fontCredit = m_credits.emplace_back(
             context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
@@ -132,14 +132,14 @@ namespace castlecrawl
         Credit & tileCredit = m_credits.emplace_back(
             context,
             "Daniel Cook's Map Tiles",
-            "Image",
+            "Images",
             "www.lostgarden.home.blog/2006/07/08/more-free-game-graphic",
             "www.creativecommons.org/licenses/by/3.0");
 
         tileCredit.vertPosition(fontCredit.bottom() + vertSpacer);
 
         Credit & iconCredit = m_credits.emplace_back(
-            context, "game-icons.net", "Image", "www.creativecommons.org/licenses/by/3.0");
+            context, "game-icons.net", "Images", "www.creativecommons.org/licenses/by/3.0");
 
         iconCredit.vertPosition(tileCredit.bottom() + vertSpacer);
 
