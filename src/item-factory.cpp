@@ -462,6 +462,11 @@ namespace castlecrawl::item
         }
         for (const auto pair : valueCountMap)
         {
+            if (1 == pair.second)
+            {
+                continue;
+            }
+
             std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
         }
 
@@ -519,6 +524,11 @@ namespace castlecrawl::item
             M_CHECK(
                 !item.isUseable(),
                 "Item is Equipable AND Useable (both should never be true): " << item);
+        }
+
+        if (MiscMaterial::Magic == item.miscMaterial())
+        {
+            M_CHECK((item.isMagical()), "Item with MiscMaterial::Magical is not magical: " << item);
         }
 
         if (item.isArmor())
