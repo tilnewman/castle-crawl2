@@ -18,13 +18,12 @@ namespace castlecrawl
         MapDisplay();
 
         void load(const Context & context);
-        void dumpToConsole() const;
 
         void
             draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
 
       private:
-        void reset();
+        void reset(const Context & context);
         void appendVerts(const Context & context);
         void appendLiquidEdgeVerts(const Context & context);
 

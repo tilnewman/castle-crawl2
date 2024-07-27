@@ -28,28 +28,24 @@ namespace castlecrawl
     void MapDisplay::load(const Context & context)
     {
         context.layout.setupNewMap(context.maps.current().size());
-        reset();
+        reset(context);
         appendVerts(context);
         appendLiquidEdgeVerts(context);
     }
 
-    void MapDisplay::reset()
+    void MapDisplay::reset(const Context & context)
     {
         m_objectVerts.clear();
         m_floorVerts.clear();
         m_borderVerts.clear();
 
-        // these values found by experiment to work well with even the largest of maps
-        m_objectVerts.reserve(2000);
-        m_floorVerts.reserve(3000);
-        m_borderVerts.reserve(2000);
-    }
+        const std::size_t reserveCount =
+            (static_cast<std::size_t>(context.layout.cellCount().x) *
+             static_cast<std::size_t>(context.layout.cellCount().y) * util::verts_per_quad);
 
-    void MapDisplay::dumpToConsole() const
-    {
-        std::cout << "object_verts: " << m_objectVerts.size() << std::endl;
-        std::cout << "floor_verts: " << m_floorVerts.size() << std::endl;
-        std::cout << "edge_verts: " << m_borderVerts.size() << std::endl << std::endl;
+        m_objectVerts.reserve(reserveCount * 2); // there can be extra shadow and liquid edge verts
+        m_floorVerts.reserve(reserveCount);
+        m_borderVerts.reserve(reserveCount);
     }
 
     void MapDisplay::appendVerts(const Context & context)
@@ -73,17 +69,33 @@ namespace castlecrawl
             {
                 const MapCell cell = context.maps.current().cell({ x, y });
 
+                // black floor borders tiles
                 if ('.' == cell.object_char)
                 {
-                    edgeSprite.setPosition(screenPos);
-                    edgeSprite.move(-overlapDimm, -overlapDimm);
+                    bool isFloorBorderRequired = false;
+                    for (const MapCell & surrCell :
+                         context.maps.current().surroundingCellsAll(cell.position))
+                    {
+                        if (' ' != surrCell.floor_char)
+                        {
+                            isFloorBorderRequired = true;
+                            break;
+                        }
+                    }
 
-                    util::appendQuadVerts(
-                        edgeSprite.getGlobalBounds(),
-                        m_borderVerts,
-                        context.config.background_color);
+                    if (isFloorBorderRequired)
+                    {
+                        edgeSprite.setPosition(screenPos);
+                        edgeSprite.move(-overlapDimm, -overlapDimm);
+
+                        util::appendQuadVerts(
+                            edgeSprite.getGlobalBounds(),
+                            m_borderVerts,
+                            context.config.background_color);
+                    }
                 }
 
+                // floor tiles
                 if (' ' != cell.floor_char)
                 {
                     const sf::Sprite floorSprite = context.tile_images.sprite(
@@ -92,15 +104,17 @@ namespace castlecrawl
                     util::appendQuadVerts(floorSprite, m_floorVerts);
                 }
 
-                const TileImage tileImage = charToTileImage(cell.object_char);
-                if (tileImage != TileImage::Empty)
+                // various object tiles
+                if (const TileImage tileImage = charToTileImage(cell.object_char);
+                    tileImage != TileImage::Empty)
                 {
-                    const sf::Sprite sprite =
+                    const sf::Sprite objectSprite =
                         context.tile_images.sprite(context, tileImage, screenPos);
 
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    util::appendQuadVerts(objectSprite, m_objectVerts);
                 }
 
+                // wall shadow tiles
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
                     const sf::Sprite shadowSprite =
