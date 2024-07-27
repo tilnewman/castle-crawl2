@@ -20,51 +20,23 @@ namespace castlecrawl::item
 {
 
     ItemFactory::ItemFactory()
-        : m_lowestValue(0)
-        , m_textExtent()
-    {}
-
-    const ItemVec_t ItemFactory::makeAll() const
+        : m_textExtent()
+        , m_allItems()
     {
-        ItemVec_t items;
-        items.reserve(1000); // acutally 883 as of 2022-3-13
-
-        for (const Item & item : makeWeapons())
-        {
-            items.push_back(item);
-        }
-
-        for (const Item & item : makeArmor())
-        {
-            items.push_back(item);
-        }
-
-        for (const Item & item : makeMisc())
-        {
-            items.push_back(item);
-        }
-
-        for (const Item & item : makeCustom())
-        {
-            items.push_back(item);
-        }
-
-        // keep sorted by value
-        std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) {
-            return (A.value() < B.value());
-        });
-
-        return items;
+        m_allItems.reserve(1000); // acutally 883 as of 2022-3-13
     }
 
-    const ItemVec_t ItemFactory::makeWeapons() const
+    void ItemFactory::makeAll()
     {
-        ItemVec_t items;
+        m_allItems.clear();
+        makeWeapons(m_allItems);
+        makeArmor(m_allItems);
+        makeMisc(m_allItems);
+        makeCustom(m_allItems);
+    }
 
-        items.reserve(
-            static_cast<std::size_t>(Weapon::Count) *
-            static_cast<std::size_t>(WeaponMaterial::Count));
-
+    void ItemFactory::makeWeapons(ItemVec_t & items) const
+    {
         for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
         {
             const auto type = static_cast<Weapon>(i);
@@ -74,18 +46,10 @@ namespace castlecrawl::item
                 items.emplace_back(type, material);
             }
         }
-
-        return items;
     }
 
-    const ItemVec_t ItemFactory::makeArmor() const
+    void ItemFactory::makeArmor(ItemVec_t & items) const
     {
-        ItemVec_t items;
-
-        items.reserve(
-            static_cast<std::size_t>(Armor::Count) *
-            static_cast<std::size_t>(ArmorMaterial::Count));
-
         for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
@@ -95,19 +59,10 @@ namespace castlecrawl::item
                 items.emplace_back(type, material);
             }
         }
-
-        return items;
     }
 
-    const ItemVec_t ItemFactory::makeMisc() const
+    void ItemFactory::makeMisc(ItemVec_t & items) const
     {
-        ItemVec_t items;
-
-        items.reserve(
-            (static_cast<std::size_t>(Misc::Count) *
-             static_cast<std::size_t>(MiscMaterial::Count)) +
-            9);
-
         for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
         {
             // these are the equipable misc items only
@@ -144,17 +99,10 @@ namespace castlecrawl::item
         items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
         items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
         // clang-format on
-
-        return items;
     }
 
-    const ItemVec_t ItemFactory::makeCustom() const
+    void ItemFactory::makeCustom(ItemVec_t & items) const
     {
-        // All items, custom magical or not, must have a unique name!
-
-        ItemVec_t items;
-        items.reserve(200); // actually 110 as of 2022-3-13
-
         // weapons
 
         for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
@@ -386,77 +334,72 @@ namespace castlecrawl::item
 
         items.push_back(Item(
             Armor::Greaves, ArmorMaterial::Leather, "Beastcall Greaves", { .arc = 1, .str = 3 }));
-
-        return items;
     }
 
-    void ItemFactory::validateAll(const ItemVec_t & items) const
+    void ItemFactory::validate() const
     {
-        // look for duplicate names
+        // throw if any names are the same
         std::set<std::string> names;
-        for (const Item & item : items)
+        for (const Item & item : m_allItems)
         {
-            const std::string name = item.name();
-
-            const auto iter = names.find(name);
-            if (iter != std::end(names))
-            {
-                std::cout << "Error: Two items had the same name: " << item << '\n';
-            }
-            else
-            {
-                names.insert(name);
-            }
+            const auto iter = names.find(item.name());
+            M_CHECK((iter == std::end(names)), "Items had the same name: " << item);
+            names.insert(item.name());
         }
 
         // throw if any item is invalid
-        for (const Item & item : items)
+        for (const Item & item : m_allItems)
         {
             throwIfInvalid(item);
         }
     }
 
-    const TextExtent ItemFactory::findTextExtents(const ItemVec_t & items) const
+    const TextExtent ItemFactory::findTextExtents() const
     {
         TextExtent extents;
 
-        for (const Item & item : items)
+        for (const Item & item : m_allItems)
         {
-            const std::string name = item.name();
-
-            if (name.size() > extents.longest_name)
+            if (item.name().size() > extents.longest_name)
             {
-                extents.longest_name = name.size();
+                extents.longest_name = item.name().size();
             }
 
-            const std::string desc = item.description();
-            if (desc.size() > extents.longest_desc)
+            if (item.description().size() > extents.longest_desc)
             {
-                extents.longest_desc = desc.size();
+                extents.longest_desc = item.description().size();
             }
         }
 
         return extents;
     }
 
-    void ItemFactory::processAll()
+    void ItemFactory::setup()
     {
-        const ItemVec_t items{ makeAll() };
-        validateAll(items);
-        m_textExtent  = findTextExtents(items);
-        m_lowestValue = std::begin(items)->value();
+        makeAll();
+
+        // sorting speeds things up slightly and code scattered around depends on this sort by value
+        std::sort(std::begin(m_allItems), std::end(m_allItems), [](const Item & A, const Item & B) {
+            return (A.value() < B.value());
+        });
+
+        m_textExtent = findTextExtents();
+        validate();
+        // dumpInfo();
     }
 
-    void ItemFactory::printSummaries() const
+    void ItemFactory::dumpInfo() const
     {
-        const ItemVec_t items{ makeAll() };
-
-        // write out all items to a spreadsheet
+        // write all items to a spreadsheet
         {
             std::ofstream fileStream("items.csv", std::ios_base::trunc);
 
-            for (const Item & item : items)
+            fileStream << "name,value,type,magical,Description\n";
+            for (const Item & item : m_allItems)
             {
+                fileStream << item.name() << ',';
+                fileStream << std::to_string(item.value()) << ',';
+
                 if (item.isArmor())
                 {
                     fileStream << "armor,";
@@ -470,8 +413,6 @@ namespace castlecrawl::item
                     fileStream << "misc,";
                 }
 
-                fileStream << std::to_string(item.value()) << ',';
-
                 if (item.isMagical())
                 {
                     fileStream << "magic,";
@@ -481,24 +422,21 @@ namespace castlecrawl::item
                     fileStream << "non-magic,";
                 }
 
-                fileStream << item.name() << ',';
-                fileStream << item.description() << "\n";
+                fileStream << item.description() << '\n';
             }
         }
 
-        std::cout << std::endl << "All Useable Names:" << std::endl;
-
-        for (const Item & item : items)
+        std::cout << std::endl << "All Useable:" << std::endl;
+        for (const Item & item : m_allItems)
         {
             if (item.isUseable())
             {
-                std::cout << '\t' << item.value() << "\t" << item.name() << '\n';
+                std::cout << '\t' << item.value() << "\t" << item << '\n';
             }
         }
 
         std::cout << std::endl << "All Non-Magical:" << std::endl;
-
-        for (const Item & item : items)
+        for (const Item & item : m_allItems)
         {
             if (!item.isMagical())
             {
@@ -507,28 +445,21 @@ namespace castlecrawl::item
         }
 
         std::cout << std::endl << "All Magical Weapons and Armor:" << std::endl;
-
-        for (const Item & item : items)
+        for (const Item & item : m_allItems)
         {
-            if (!item.isMagical())
-            {
-                continue;
-            }
-
-            if (item.isWeapon() || item.isArmor())
+            if (item.isMagical() && (item.isWeapon() || item.isArmor()))
             {
                 std::cout << '\t' << item.value() << '\t' << item.description() << '\n';
             }
         }
 
         std::cout << std::endl;
-
-        std::cout << items.size() << " total items" << std::endl << std::endl;
-
-        std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
-        std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
-
-        std::cout << "An Item is " << sizeof(Item) << "bytes" << std::endl;
+        std::cout << "item count    = " << m_allItems.size() << std::endl;
+        std::cout << "lowest value  = " << m_allItems.front().value() << std::endl;
+        std::cout << "largest value = " << m_allItems.back().value() << std::endl;
+        std::cout << "longest name  = " << m_textExtent.longest_name << std::endl;
+        std::cout << "longest desc  = " << m_textExtent.longest_desc << std::endl;
+        std::cout << "item size     = " << sizeof(Item) << "bytes" << std::endl;
         std::cout << std::endl;
     }
 
@@ -671,8 +602,6 @@ namespace castlecrawl::item
 
     const Treasure ItemFactory::randomTreasureFind(const Context & context) const
     {
-        Treasure treasure;
-
         // establish how much value this random find is worth
         const int valuePerLevel{ 100 };
         int value = context.player.level() * valuePerLevel;
@@ -680,14 +609,16 @@ namespace castlecrawl::item
         value = context.random.fromTo(0, value);
 
         // determine how much will be gold
+        Treasure treasure;
         const int valueOfGold = context.random.fromTo(0, value);
         treasure.gold         = (valueOfGold / 5);
         value -= valueOfGold;
 
         // use remaining value to add items
-        while (value >= m_lowestValue)
+        const int lowestValue = m_allItems.front().value();
+        while (value >= lowestValue)
         {
-            ItemVec_t items = makeAll();
+            ItemVec_t items = m_allItems;
 
             // remove items worth too much
             items.erase(
@@ -716,7 +647,6 @@ namespace castlecrawl::item
             }
 
             const Item & item = treasure.items.emplace_back(context.random.from(items));
-
             value -= item.value();
         }
 
@@ -725,9 +655,9 @@ namespace castlecrawl::item
 
     const Treasure ItemFactory::randomHerbFind(const Context & context) const
     {
-        Treasure treasure;
-
-        ItemVec_t miscItems{ makeMisc() };
+        ItemVec_t miscItems;
+        miscItems.reserve(100);
+        makeMisc(miscItems);
 
         miscItems.erase(
             std::remove_if(
@@ -736,8 +666,8 @@ namespace castlecrawl::item
                 [](const Item & item) { return (item.miscType() != Misc::Herbs); }),
             std::end(miscItems));
 
+        Treasure treasure;
         treasure.items.push_back(context.random.from(miscItems));
-
         return treasure;
     }
 

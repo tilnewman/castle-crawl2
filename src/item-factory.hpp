@@ -24,26 +24,27 @@ namespace castlecrawl::item
       public:
         ItemFactory();
 
-        void processAll();
-        void printSummaries() const;
+        void setup();
         const TextExtent textExtents() const { return m_textExtent; }
         const Treasure randomTreasureFind(const Context & context) const;
         const Treasure randomHerbFind(const Context & context) const;
-        const ItemVec_t makeAll() const;
+        const ItemVec_t & allItems() const { return m_allItems; }
 
       private:
-        const ItemVec_t makeWeapons() const;
-        const ItemVec_t makeArmor() const;
-        const ItemVec_t makeMisc() const;
-        const ItemVec_t makeCustom() const;
+        void makeAll();
+        void makeWeapons(ItemVec_t & items) const;
+        void makeArmor(ItemVec_t & items) const;
+        void makeMisc(ItemVec_t & items) const;
+        void makeCustom(ItemVec_t & items) const;
 
-        const TextExtent findTextExtents(const ItemVec_t & items) const;
-        void validateAll(const ItemVec_t & items) const;
+        const TextExtent findTextExtents() const;
+        void validate() const;
         void throwIfInvalid(const Item & item) const;
+        void dumpInfo() const;
 
       private:
-        int m_lowestValue;
         TextExtent m_textExtent;
+        ItemVec_t m_allItems;
     };
 
 } // namespace castlecrawl::item
