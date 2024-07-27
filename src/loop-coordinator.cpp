@@ -64,11 +64,9 @@ namespace castlecrawl
 
     void LoopCoordinator::setup()
     {
-        if (!sf::VertexBuffer::isAvailable)
-        {
-            throw std::runtime_error(
-                "sf::VertexBuffers are required but not supported by this video driver.");
-        }
+        M_CHECK(
+            sf::VertexBuffer::isAvailable(),
+            "sf::VertexBuffers are required but not supported by this video driver.");
 
         setupRenderWindow(m_config.video_mode);
 
@@ -82,7 +80,7 @@ namespace castlecrawl
         m_tileImages.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(m_context);
-        m_maps.change(m_context, MapName::Level_1_Cell, { 3, 2 }); // TODO move somewhere else
+        m_maps.change(m_context, MapName::Level_1_Cell, { 3, 2 });
         m_playerDisplay.setup(m_context);
         m_framerate.setup(m_context);
         m_topPanel.setup(m_context);
@@ -103,7 +101,6 @@ namespace castlecrawl
     void LoopCoordinator::runLoop()
     {
         sf::Clock frameClock;
-
         while (m_renderWindow.isOpen() && (m_context.state.current().which() != State::Quit))
         {
             handleEvents();
@@ -172,7 +169,8 @@ namespace castlecrawl
         }
         else
         {
-            std::cout << "Failed" << m_config.video_mode << ".  ";
+            std::cout << "Failed"
+                      << ".  ";
 
             m_config.video_mode.width  = actualWidth;
             m_config.video_mode.height = actualHeight;
