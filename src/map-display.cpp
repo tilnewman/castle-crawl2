@@ -56,7 +56,7 @@ namespace castlecrawl
         sf::Sprite edgeSprite = context.tile_images.sprite(context, TileImage::Lava);
 
         // make edge verts bigger to cover outside edges of walls with solid black
-        const float growScale = 0.5f;
+        const float growScale = 0.25f;
         edgeSprite.scale((1.0f + growScale), (1.0f + growScale));
         const float mapCellDimm{ context.layout.cellSize().x };
         const float overlapDimm{ mapCellDimm * (growScale * 0.5f) };
@@ -114,7 +114,7 @@ namespace castlecrawl
                     util::appendQuadVerts(objectSprite, m_objectVerts);
                 }
 
-                // wall shadow tiles
+                // wall block shadow tiles
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
                     const sf::Sprite shadowSprite =
