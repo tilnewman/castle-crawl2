@@ -627,41 +627,44 @@ namespace castlecrawl::item
     {
         // establish how much value this random find is worth
         const int valuePerLevel{ 100 };
-        int value = context.player.level() * valuePerLevel;
-        value += context.random.fromTo(0, valuePerLevel);
-        value = context.random.fromTo(0, value);
+        int valueRemaining = context.player.level() * valuePerLevel;
+        valueRemaining += context.random.fromTo(0, valuePerLevel);
+        valueRemaining = context.random.fromTo(0, valueRemaining);
 
         // determine how much will be gold
         Treasure treasure;
-        const int valueOfGold = context.random.fromTo(0, value);
+        const int valueOfGold = context.random.fromTo(0, valueRemaining);
         treasure.gold         = (valueOfGold / 5);
-        value -= valueOfGold;
+        valueRemaining -= valueOfGold;
 
         // use remaining value to add items
+        ItemVec_t items;
+        items.reserve(m_allItems.size());
         const int lowestValue = m_allItems.front().value();
-        while (value >= lowestValue)
+        while (valueRemaining >= lowestValue)
         {
-            ItemVec_t items = m_allItems;
-
-            // remove items worth too much
-            items.erase(
-                std::remove_if(
-                    std::begin(items),
-                    std::end(items),
-                    [&](const Item & item) { return (item.value() > value); }),
-                std::end(items));
-
-            // remove items already found
-            for (const Item & alreadyFoundItem : treasure.items)
+            // create a vector of items that could still possibly be found
+            items.clear();
+            for (const Item & item : m_allItems)
             {
-                items.erase(
-                    std::remove_if(
-                        std::begin(items),
-                        std::end(items),
-                        [&](const Item & item) {
-                            return (item.name() == alreadyFoundItem.name());
-                        }),
-                    std::end(items));
+                // skip items worth too much
+                if (item.value() > valueRemaining)
+                {
+                    break; // don't continue because m_allItems is sorted by value
+                }
+
+                // skip items already found
+                const auto iter = std::find_if(
+                    std::begin(treasure.items), std::end(treasure.items), [&](const Item & i) {
+                        return (item.name() == i.name());
+                    });
+
+                if (std::end(treasure.items) != iter)
+                {
+                    continue;
+                }
+
+                items.push_back(item);
             }
 
             if (items.empty())
@@ -670,7 +673,7 @@ namespace castlecrawl::item
             }
 
             const Item & item = treasure.items.emplace_back(context.random.from(items));
-            value -= item.value();
+            valueRemaining -= item.value();
         }
 
         return treasure;
