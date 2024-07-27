@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <set>
 #include <vector>
 
@@ -453,8 +454,20 @@ namespace castlecrawl::item
             }
         }
 
+        std::cout << std::endl << "Value Distribution:" << std::endl;
+        std::map<int, std::size_t> valueCountMap;
+        for (const Item & item : m_allItems)
+        {
+            ++valueCountMap[item.value()];
+        }
+        for (const auto pair : valueCountMap)
+        {
+            std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
+        }
+
         std::cout << std::endl;
         std::cout << "item count    = " << m_allItems.size() << std::endl;
+        std::cout << "unique values = " << valueCountMap.size() << std::endl;
         std::cout << "lowest value  = " << m_allItems.front().value() << std::endl;
         std::cout << "largest value = " << m_allItems.back().value() << std::endl;
         std::cout << "longest name  = " << m_textExtent.longest_name << std::endl;
