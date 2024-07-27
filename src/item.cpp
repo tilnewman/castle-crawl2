@@ -314,7 +314,7 @@ namespace castlecrawl::item
     }
 
     // This equation full of magic numbers yeilds a good range of values over all items.
-    // As of 2024-7-27, the lowest is 5 and highest is 9284.
+    // As of 2024-7-27, the values range from 5 to 9289, with 558 unique values of 883 total.
     int Item::calcValue() const
     {
         int value = 0;
@@ -323,7 +323,22 @@ namespace castlecrawl::item
         value += ((m_damageMin * m_damageMin) * 5);
         value += ((m_damageMax * m_damageMax) * 5);
 
-        value += miscMaterialValue(m_miscMaterial);
+        if (WeaponMaterial::Count != m_weaponMaterial)
+        {
+            value += static_cast<int>(m_weaponMaterial);
+        }
+
+        if (ArmorMaterial::Count != m_armorMaterial)
+        {
+            value += static_cast<int>(m_armorMaterial);
+        }
+
+        if (MiscMaterial::Count != m_miscMaterial)
+        {
+            value += static_cast<int>(m_miscMaterial);
+        }
+
+        value += miscBaseValue(m_misc);
 
         value += (m_equipEffect.total() * m_equipEffect.total());
         value += (m_equipEffect.total() * 250);

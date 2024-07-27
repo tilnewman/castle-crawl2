@@ -310,6 +310,62 @@ namespace castlecrawl::item
         Count
     };
 
+    inline constexpr int miscBaseValue(const Misc misc) noexcept
+    {
+        // clang-format off
+        switch (misc)
+        {
+            case Misc::Feather:         { return 1;  }
+            case Misc::Tooth:           { return 2;  }
+            case Misc::Doll:            { return 3;  }
+            case Misc::Figurine:        { return 4;  }
+            case Misc::Puppet:          { return 5;  }
+            case Misc::Chime:           { return 6;  }
+            case Misc::Whistle:         { return 7;  }
+            case Misc::Ankh:            { return 8;  }
+            case Misc::Egg:             { return 9;  }
+            case Misc::Key:             { return 10; }
+            case Misc::Ring:            { return 11; }
+            case Misc::Armband:         { return 12; }
+            case Misc::Mask:            { return 13; }
+            case Misc::Mirror:          { return 14; }
+            case Misc::Pin:             { return 15; }
+            case Misc::PixieBell:       { return 16; }
+            case Misc::Talisman:        { return 17; }
+            case Misc::Brooch:          { return 18; }
+            case Misc::Necklace:        { return 19; }
+            case Misc::Goblet:          { return 20; }
+            case Misc::DriedHead:       { return 21; }
+            case Misc::Wolfpelt:        { return 22; }
+            case Misc::Herbs:           { return 23; }
+            case Misc::Horn:            { return 24; }
+            case Misc::Horseshoe:       { return 25; }
+            case Misc::Hourglass:       { return 26; }
+            case Misc::MagnifyingGlass: { return 27; }
+            case Misc::Scroll:          { return 28; }
+            case Misc::Vial:            { return 29; }
+            case Misc::Amulet:          { return 30; }
+            case Misc::Potion:          { return 31; }
+            case Misc::Conch:           { return 32; }
+            case Misc::CyclopsEye:      { return 33; }
+            case Misc::GnomeNose:       { return 34; }
+            case Misc::ImpTail:         { return 35; }
+            case Misc::RatJuju:         { return 36; }
+            case Misc::Totem:           { return 37; }
+            case Misc::RavenClaw:       { return 38; }
+            case Misc::Crown:           { return 39; }
+            case Misc::Headdress:       { return 40; }
+            case Misc::Veil:            { return 41; }
+            case Misc::Orb:             { return 42; }
+            case Misc::Rainmaker:       { return 43; }
+            case Misc::Scepter:         { return 44; }
+            case Misc::Wand:            { return 45; }
+            case Misc::Count:
+            default:                    { return 0;  }
+        }
+        // clang-format on
+    }
+
     inline constexpr std::string_view toString(const Misc misc) noexcept
     {
         // clang-format off
@@ -519,33 +575,6 @@ namespace castlecrawl::item
         }
 
         return material;
-    }
-
-    inline constexpr int miscMaterialValue(const MiscMaterial material) noexcept
-    {
-        // clang-format off
-        switch (material)
-        {
-            case MiscMaterial::Pewter:   { return 0; }
-            case MiscMaterial::Iron:     { return 1; }
-            case MiscMaterial::Bronze:   { return 2; }
-            case MiscMaterial::Glass:    { return 3; }
-            case MiscMaterial::Bone:     { return 4; }
-            case MiscMaterial::Tribal:   { return 5; }
-            case MiscMaterial::Fanged:   { return 6; }
-            case MiscMaterial::Jade:     { return 7; }
-            case MiscMaterial::Amethyst: { return 8; }
-            case MiscMaterial::Emerald:  { return 9; }
-            case MiscMaterial::Ruby:     { return 10; }
-            case MiscMaterial::Obsidian: { return 11; }
-            case MiscMaterial::Lazuli:   { return 12; }
-            case MiscMaterial::Bloody:   { return 13; }
-            case MiscMaterial::Jeweled:  { return 14; }
-            case MiscMaterial::Magic:    //intentionally zero
-            case MiscMaterial::Count:
-            default:                     { return 0; }
-        }
-        // clang-format on
     }
 
     enum class UseStrength : std::int_fast8_t
