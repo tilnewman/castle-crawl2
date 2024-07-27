@@ -9,7 +9,6 @@
 #include "layout.hpp"
 #include "maps.hpp"
 #include "sfml-util.hpp"
-#include "tile-image-enum.hpp"
 #include "tile-images.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -115,29 +114,21 @@ namespace castlecrawl
                 // floor tiles
                 if (' ' != cell.floor_char)
                 {
-                    const sf::Sprite floorSprite = context.tile_images.sprite(
-                        context, charToTileImage(cell.floor_char), screenPos);
-
-                    util::appendQuadVerts(floorSprite, m_floorVerts);
+                    appendTileVerts(
+                        context, charToTileImage(cell.floor_char), screenPos, m_floorVerts);
                 }
 
                 // various object tiles
                 if (const TileImage tileImage = charToTileImage(cell.object_char);
                     tileImage != TileImage::Empty)
                 {
-                    const sf::Sprite objectSprite =
-                        context.tile_images.sprite(context, tileImage, screenPos);
-
-                    util::appendQuadVerts(objectSprite, m_objectVerts);
+                    appendTileVerts(context, tileImage, screenPos, m_objectVerts);
                 }
 
                 // wall shadow tiles to the right of various wall blocks
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
-                    const sf::Sprite shadowSprite =
-                        context.tile_images.sprite(context, TileImage::Wall_Shadow, screenPos);
-
-                    util::appendQuadVerts(shadowSprite, m_objectVerts);
+                    appendTileVerts(context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
                 }
 
                 prevObjectChar = cell.object_char;
@@ -191,66 +182,46 @@ namespace castlecrawl
 
                 if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
                 {
-                    const sf::Sprite sprite = context.tile_images.sprite(
-                        context, TileImage::LiquidRim_TopLeft, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(
+                        context, TileImage::LiquidRim_TopLeft, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(upChar, upPos) && validNotLiquid(rightChar, rightPos))
                 {
-                    const sf::Sprite sprite = context.tile_images.sprite(
-                        context, TileImage::LiquidRim_TopRight, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(
+                        context, TileImage::LiquidRim_TopRight, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(downChar, downPos) && validNotLiquid(leftChar, leftPos))
                 {
-                    const sf::Sprite sprite = context.tile_images.sprite(
-                        context, TileImage::LiquidRim_BotLeft, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(
+                        context, TileImage::LiquidRim_BotLeft, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(downChar, downPos) && validNotLiquid(rightChar, rightPos))
                 {
-                    const sf::Sprite sprite = context.tile_images.sprite(
-                        context, TileImage::LiquidRim_BotRight, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(
+                        context, TileImage::LiquidRim_BotRight, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(upChar, upPos))
                 {
-                    const sf::Sprite sprite =
-                        context.tile_images.sprite(context, TileImage::LiquidRim_Top, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(context, TileImage::LiquidRim_Top, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(downChar, downPos))
                 {
-                    const sf::Sprite sprite =
-                        context.tile_images.sprite(context, TileImage::LiquidRim_Bot, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(context, TileImage::LiquidRim_Bot, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(leftChar, leftPos))
                 {
-                    const sf::Sprite sprite =
-                        context.tile_images.sprite(context, TileImage::LiquidRim_Left, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(context, TileImage::LiquidRim_Left, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(rightChar, rightPos))
                 {
-                    const sf::Sprite sprite =
-                        context.tile_images.sprite(context, TileImage::LiquidRim_Right, screenPos);
-
-                    util::appendQuadVerts(sprite, m_objectVerts);
+                    appendTileVerts(context, TileImage::LiquidRim_Right, screenPos, m_objectVerts);
                 }
 
                 screenPos.x += context.layout.cellSize().x;
@@ -271,6 +242,15 @@ namespace castlecrawl
 
         m_borderBuffer.create(m_borderVerts.size());
         m_borderBuffer.update(&m_borderVerts[0]);
+    }
+
+    void MapDisplay::appendTileVerts(
+        const Context & context,
+        const TileImage image,
+        const sf::Vector2f & pos,
+        VertVec_t & verts) const
+    {
+        util::appendQuadVerts(context.tile_images.sprite(context, image, pos), verts);
     }
 
 } // namespace castlecrawl

@@ -4,6 +4,7 @@
 // map-display.hpp
 //
 #include "map.hpp"
+#include "tile-image-enum.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -28,6 +29,12 @@ namespace castlecrawl
         void appendVerts(const Context & context);
         void appendLiquidEdgeVerts(const Context & context);
         void resetVertexBuffers();
+
+        void appendTileVerts(
+            const Context & context,
+            const TileImage image,
+            const sf::Vector2f & pos,
+            VertVec_t & verts) const;
 
       private:
         VertVec_t m_objectVerts;
