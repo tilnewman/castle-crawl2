@@ -8,6 +8,7 @@
 #include "check-macros.hpp"
 #include "sfml-util.hpp"
 
+#include <SFML/Graphics/VertexBuffer.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window.hpp>
 
@@ -63,6 +64,12 @@ namespace castlecrawl
 
     void LoopCoordinator::setup()
     {
+        if (!sf::VertexBuffer::isAvailable)
+        {
+            throw std::runtime_error(
+                "sf::VertexBuffers are required but not supported by this video driver.");
+        }
+
         setupRenderWindow(m_config.video_mode);
 
         m_sfx.setMediaPath((m_config.media_path / "sfx").string());
