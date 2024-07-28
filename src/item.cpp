@@ -223,7 +223,7 @@ namespace castlecrawl::item
                 str += ' ';
             }
         }
-        else // must be misc
+        else if (isMisc())
         {
             if (isUseable() && (m_useStrength != UseStrength::Normal))
             {
@@ -256,6 +256,12 @@ namespace castlecrawl::item
     const std::string Item::makeDescription() const
     {
         std::string str;
+
+        if (m_baseName.empty())
+        {
+            return str;
+        }
+
         str.reserve(256); // longest is 104 as of 2024-7-28
 
         str += name();
@@ -286,7 +292,7 @@ namespace castlecrawl::item
             str += " armor that has a rating of ";
             str += std::to_string(m_armorRating.get());
         }
-        else // must be a misc item
+        else if (isMisc())
         {
             str += " a magical item";
 
@@ -334,7 +340,7 @@ namespace castlecrawl::item
 
     // This equation full of magic numbers yeilds a good range of values over all items,
     // with the default item having a value of zero and higher values being more and more rare.
-    // As of 2024-7-28: values range [5,9289] with 558 of 883 unique, and std_dev of 1176.
+    // As of 2024-7-28: values range [5,9289] with 558 unique of 883, and std_dev of 1176.
     int Item::calcValue() const
     {
         int value = 0;
