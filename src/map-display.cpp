@@ -40,10 +40,7 @@ namespace castlecrawl
         states.texture = &context.tile_images.texture();
 
         target.draw(m_floorBuffer, states);
-
-        // don't use states because the floor edge verts are just solid black (no texture)
-        target.draw(m_borderBuffer);
-
+        target.draw(m_borderBuffer); // don't use states because floor edge verts are solid black
         target.draw(m_objectBuffer, states);
     }
 
@@ -66,7 +63,7 @@ namespace castlecrawl
     {
         char prevObjectChar('.'); // anything except '-' works here
 
-        // any TileImage works here because only using the pos and size of it
+        // any TileImage works here because only using the position and size
         sf::Sprite edgeSprite = context.tile_images.sprite(context, TileImage::Lava);
 
         // make floor border tile bigger to cover outside edges of walls with solid black
@@ -106,20 +103,19 @@ namespace castlecrawl
                 }
 
                 // various object tiles
-                if (const TileImage tileImage = charToTileImage(cell.object_char);
-                    tileImage != TileImage::Empty)
+                if (const TileImage objectTileImage = charToTileImage(cell.object_char);
+                    objectTileImage != TileImage::Empty)
                 {
-                    appendTileVerts(context, tileImage, screenPos, m_objectVerts);
+                    appendTileVerts(context, objectTileImage, screenPos, m_objectVerts);
                 }
 
-                // wall shadow tiles to the right of various wall blocks
+                // wall shadow object tiles to the right of various wall blocks
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
                     appendTileVerts(context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
                 }
 
                 prevObjectChar = cell.object_char;
-
                 screenPos.x += context.layout.cellSize().x;
             }
 
@@ -137,8 +133,7 @@ namespace castlecrawl
         };
 
         auto getChar = [&](const int x, const int y) {
-            const MapCell cell = context.maps.current().cell({ x, y });
-            return cell.object_char;
+            return context.maps.current().cell({ x, y }).object_char;
         };
 
         const sf::Vector2i mapSize = context.maps.current().size();
@@ -242,18 +237,15 @@ namespace castlecrawl
 
     bool MapDisplay::isFloorAdjacent(const Context & context, const MapPos_t pos) const
     {
-        bool isFloorAdjacent = false;
-
         for (const MapCell & surrCell : context.maps.current().surroundingCellsHorizVert(pos))
         {
             if (' ' != surrCell.floor_char)
             {
-                isFloorAdjacent = true;
-                break;
+                return true;
             }
         }
 
-        return isFloorAdjacent;
+        return false;
     }
 
 } // namespace castlecrawl
