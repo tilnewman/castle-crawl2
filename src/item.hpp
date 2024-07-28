@@ -49,7 +49,7 @@ namespace castlecrawl::item
             const UseEffect & useEffect,
             const EquipEffect & equipEffect);
 
-        const std::string name() const;
+        const std::string name() const { return m_fullName; }
 
         Weapon weaponType() const { return m_weapon; }
         Armor armorType() const { return m_armor; }
@@ -78,16 +78,21 @@ namespace castlecrawl::item
 
         bool isMagical() const { return (!m_useEffect.empty() || !m_equipEffect.empty()); }
 
-        const std::string description() const;
+        const std::string description() const { return m_description; }
 
         auto operator<=>(const Item &) const = default;
         friend std::ostream & operator<<(std::ostream & os, const Item & item);
 
       private:
         int calcValue() const;
+        const std::string makeFullName() const;
+        const std::string makeDescription() const;
+        void setup();
 
       private:
-        std::string m_name;
+        std::string m_baseName; // must be kept unique among all items
+        std::string m_fullName; // always includes m_baseName so it will also always be unique
+        std::string m_description;
 
         Weapon m_weapon;
         Armor m_armor;
@@ -99,7 +104,7 @@ namespace castlecrawl::item
 
         UseStrength m_useStrength;
         Armor_t m_armorRating;
-        
+
         int m_value;
         int m_damageMin;
         int m_damageMax;

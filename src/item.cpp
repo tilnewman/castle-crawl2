@@ -57,7 +57,9 @@ namespace castlecrawl::item
     //
 
     Item::Item()
-        : m_name()
+        : m_baseName()
+        , m_fullName()
+        , m_description()
         , m_weapon(Weapon::Count)
         , m_armor(Armor::Count)
         , m_misc(Misc::Count)
@@ -72,11 +74,13 @@ namespace castlecrawl::item
         , m_useEffect()
         , m_equipEffect()
     {
-        m_value = calcValue(); // should be zero for invalid items but consistency, meh
+        setup();
     }
 
     Item::Item(const Weapon weapon, const WeaponMaterial material)
-        : m_name(toString(weapon))
+        : m_baseName(toString(weapon))
+        , m_fullName()
+        , m_description()
         , m_weapon(weapon)
         , m_armor(Armor::Count)
         , m_misc(Misc::Count)
@@ -91,7 +95,7 @@ namespace castlecrawl::item
         , m_useEffect()
         , m_equipEffect()
     {
-        m_value = calcValue();
+        setup();
     }
 
     Item::Item(
@@ -99,7 +103,9 @@ namespace castlecrawl::item
         const WeaponMaterial material,
         const std::string & uniqueName,
         const EquipEffect & effect)
-        : m_name(uniqueName)
+        : m_baseName(uniqueName)
+        , m_fullName()
+        , m_description()
         , m_weapon(weapon)
         , m_armor(Armor::Count)
         , m_misc(Misc::Count)
@@ -114,11 +120,13 @@ namespace castlecrawl::item
         , m_useEffect()
         , m_equipEffect(effect)
     {
-        m_value = calcValue();
+        setup();
     }
 
     Item::Item(const Armor armor, const ArmorMaterial material)
-        : m_name(toString(armor))
+        : m_baseName(toString(armor))
+        , m_fullName()
+        , m_description()
         , m_weapon(Weapon::Count)
         , m_armor(armor)
         , m_misc(Misc::Count)
@@ -133,7 +141,7 @@ namespace castlecrawl::item
         , m_useEffect()
         , m_equipEffect()
     {
-        m_value = calcValue();
+        setup();
     }
 
     Item::Item(
@@ -141,7 +149,9 @@ namespace castlecrawl::item
         const ArmorMaterial material,
         const std::string & uniqueName,
         const EquipEffect & effect)
-        : m_name(uniqueName)
+        : m_baseName(uniqueName)
+        , m_fullName()
+        , m_description()
         , m_weapon(Weapon::Count)
         , m_armor(armor)
         , m_misc(Misc::Count)
@@ -156,7 +166,7 @@ namespace castlecrawl::item
         , m_useEffect()
         , m_equipEffect(effect)
     {
-        m_value = calcValue();
+        setup();
     }
 
     Item::Item(
@@ -165,7 +175,9 @@ namespace castlecrawl::item
         const UseStrength strength,
         const UseEffect & useEffect,
         const EquipEffect & equipEffect)
-        : m_name(toString(misc))
+        : m_baseName(toString(misc))
+        , m_fullName()
+        , m_description()
         , m_weapon(Weapon::Count)
         , m_armor(Armor::Count)
         , m_misc(misc)
@@ -180,13 +192,20 @@ namespace castlecrawl::item
         , m_useEffect(useEffect)
         , m_equipEffect(equipEffect)
     {
-        m_value = calcValue();
+        setup();
     }
 
-    const std::string Item::name() const
+    void Item::setup()
+    {
+        m_value       = calcValue();
+        m_fullName    = makeFullName();
+        m_description = makeDescription();
+    }
+
+    const std::string Item::makeFullName() const
     {
         std::string str;
-        str.reserve(100);
+        str.reserve(32); // longest is 25 as of 2024-7-28
 
         if (isArmor())
         {
@@ -230,14 +249,14 @@ namespace castlecrawl::item
             }
         }
 
-        str += m_name;
+        str += m_baseName;
         return str;
     }
 
-    const std::string Item::description() const
+    const std::string Item::makeDescription() const
     {
         std::string str;
-        str.reserve(200);
+        str.reserve(256); // longest is 104 as of 2024-7-28
 
         str += name();
         str += " is";
@@ -297,12 +316,12 @@ namespace castlecrawl::item
             const EquipEffect & ef = m_equipEffect;
 
             // clang-format off
-                if (ef.acc > 0) { str += "+" + std::to_string(ef.acc) + "acc, "; }
-                if (ef.arc > 0) { str += "+" + std::to_string(ef.arc) + "arc, "; }
-                if (ef.dex > 0) { str += "+" + std::to_string(ef.dex) + "dex, "; }
-                if (ef.dmg > 0) { str += "+" + std::to_string(ef.dmg) + "dmg, "; }
-                if (ef.lck > 0) { str += "+" + std::to_string(ef.lck) + "lck, "; }
-                if (ef.str > 0) { str += "+" + std::to_string(ef.str) + "str, "; }
+            if (ef.acc > 0) { str += "+" + std::to_string(ef.acc) + "acc, "; }
+            if (ef.arc > 0) { str += "+" + std::to_string(ef.arc) + "arc, "; }
+            if (ef.dex > 0) { str += "+" + std::to_string(ef.dex) + "dex, "; }
+            if (ef.dmg > 0) { str += "+" + std::to_string(ef.dmg) + "dmg, "; }
+            if (ef.lck > 0) { str += "+" + std::to_string(ef.lck) + "lck, "; }
+            if (ef.str > 0) { str += "+" + std::to_string(ef.str) + "str, "; }
             // clang-format on
 
             str.pop_back();
@@ -313,8 +332,9 @@ namespace castlecrawl::item
         return str;
     }
 
-    // This equation full of magic numbers yeilds a good range of values over all items.
-    // As of 2024-7-27, the values range from 5 to 9289, with 558 unique values of 883 total.
+    // This equation full of magic numbers yeilds a good range of values over all items,
+    // with the default item having a value of zero and higher values being more and more rare.
+    // As of 2024-7-28, the values range from 5 to 9289, with 558 unique values of 883 total.
     int Item::calcValue() const
     {
         int value = 0;
