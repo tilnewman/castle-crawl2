@@ -23,13 +23,13 @@ namespace castlecrawl::item
     ItemFactory::ItemFactory()
         : m_textExtent()
         , m_allItems()
-    {
-        m_allItems.reserve(1000); // acutally 883 as of 2022-3-13
-    }
+    {}
 
     void ItemFactory::makeAll()
     {
         m_allItems.clear();
+        m_allItems.reserve(1000); // acutally 883 as of 2024-7-28
+
         makeWeapons(m_allItems);
         makeArmor(m_allItems);
         makeMisc(m_allItems);
@@ -379,7 +379,7 @@ namespace castlecrawl::item
     {
         makeAll();
 
-        // sorting speeds things up slightly and code scattered around depends on this sort by value
+        // sorting by value allows for various optimizations
         std::sort(std::begin(m_allItems), std::end(m_allItems), [](const Item & A, const Item & B) {
             return (A.value() < B.value());
         });
@@ -396,6 +396,7 @@ namespace castlecrawl::item
             std::ofstream fileStream("items.csv", std::ios_base::trunc);
 
             fileStream << "name,value,type,magical,Description\n";
+
             for (const Item & item : m_allItems)
             {
                 fileStream << item.name() << ',';
@@ -416,16 +417,52 @@ namespace castlecrawl::item
 
                 if (item.isMagical())
                 {
-                    fileStream << "magic,";
+                    fileStream << "magical,";
                 }
                 else
                 {
-                    fileStream << "non-magic,";
+                    fileStream << "normal,";
                 }
 
                 fileStream << item.description() << '\n';
             }
         }
+
+        std::cout << std::endl << "Armor/Weapon/Misc Counts and Value:" << std::endl;
+        std::size_t miscCount   = 0;
+        std::size_t weaponCount = 0;
+        std::size_t armorCount  = 0;
+        std::size_t miscValue   = 0;
+        std::size_t weaponValue = 0;
+        std::size_t armorValue  = 0;
+        for (const Item & item : m_allItems)
+        {
+            if (item.isWeapon())
+            {
+                ++weaponCount;
+                weaponValue += static_cast<std::size_t>(item.value());
+            }
+
+            if (item.isArmor())
+            {
+                ++armorCount;
+                armorValue += static_cast<std::size_t>(item.value());
+            }
+
+            if (item.isMisc())
+            {
+                ++miscCount;
+                miscValue = static_cast<std::size_t>(item.value());
+            }
+        }
+        std::cout << "\tWeapons Count " << weaponCount << " with total value " << weaponValue
+                  << " and average " << (weaponValue / weaponCount) << std::endl;
+
+        std::cout << "\tArmor   Count " << armorCount << " with total value " << armorValue
+                  << " and average " << (armorValue / armorCount) << std::endl;
+
+        std::cout << "\tMisc    Count " << miscCount << " with total value " << miscValue
+                  << " and average " << (miscValue / miscCount) << std::endl;
 
         std::cout << std::endl << "All Useable:" << std::endl;
         for (const Item & item : m_allItems)
@@ -557,7 +594,7 @@ namespace castlecrawl::item
 
             M_CHECK(
                 (item.armorMaterial() == ArmorMaterial::Count),
-                "Non-Armor item has armor_material: " << item);
+                "Non-Armor item has armor material: " << item);
         }
 
         if (item.isWeapon())
@@ -570,7 +607,7 @@ namespace castlecrawl::item
 
             M_CHECK(
                 (item.weaponMaterial() != WeaponMaterial::Count),
-                "Weapon item has no material: " << item);
+                "Weapon item has no weapon material: " << item);
 
             M_CHECK(item.isEquipable(), "Weapon item SHOULD be Equipable but is not: " << item);
 
@@ -592,7 +629,7 @@ namespace castlecrawl::item
 
             M_CHECK(
                 (item.weaponMaterial() == WeaponMaterial::Count),
-                "Non-Weapon item has weapon_material: " << item);
+                "Non-Weapon item has weapon material: " << item);
         }
 
         if (item.isMisc())
@@ -617,7 +654,7 @@ namespace castlecrawl::item
         {
             M_CHECK(
                 (item.miscMaterial() == MiscMaterial::Count),
-                "Non-Misc item has misc_material: " << item);
+                "Non-Misc item has misc material: " << item);
         }
 
         M_CHECK((item.value() > 0), "Item's Value is zero or less: " << item);
