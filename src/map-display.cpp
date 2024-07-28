@@ -110,6 +110,7 @@ namespace castlecrawl
                 }
 
                 // wall shadow object tiles to the right of various wall blocks
+                // must be added after object tiles
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
                     appendTileVerts(context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
