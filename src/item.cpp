@@ -334,7 +334,7 @@ namespace castlecrawl::item
 
     // This equation full of magic numbers yeilds a good range of values over all items,
     // with the default item having a value of zero and higher values being more and more rare.
-    // As of 2024-7-28, the values range from 5 to 9289, with 558 unique values of 883 total.
+    // As of 2024-7-28: values range [5,9289] with 558 of 883 unique, and std_dev of 1176.
     int Item::calcValue() const
     {
         int value = 0;

@@ -400,7 +400,7 @@ namespace util
     template <typename T>
     struct Stats
     {
-        std::string toString(const std::streamsize numberWidth = 5) const
+        std::string toString(const int numberWidth = 5) const
         {
             std::ostringstream ss;
             ss.imbue(std::locale("")); // this is only to put commas in the big numbers

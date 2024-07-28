@@ -493,8 +493,10 @@ namespace castlecrawl::item
 
         std::cout << std::endl << "Value Distribution:" << std::endl;
         std::map<int, std::size_t> valueCountMap;
+        std::vector<int> values;
         for (const Item & item : m_allItems)
         {
+            values.push_back(item.value());
             ++valueCountMap[item.value()];
         }
         for (const auto pair : valueCountMap)
@@ -504,6 +506,40 @@ namespace castlecrawl::item
                 continue;
             }
 
+            std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
+        }
+        const auto valueStats = util::makeStats(values);
+        std::cout << "  Value Statistics: " << valueStats.toString(0) << std::endl;
+
+        std::cout << std::endl << "Armor Rating Distribution:" << std::endl;
+        std::map<Armor_t, std::size_t> armorRatingCountMap;
+        for (const Item & item : m_allItems)
+        {
+            if (!item.isArmor())
+            {
+                continue;
+            }
+
+            ++armorRatingCountMap[item.armorRating()];
+        }
+        for (const auto pair : armorRatingCountMap)
+        {
+            std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
+        }
+
+        std::cout << std::endl << "Weapon Average Damage Distribution:" << std::endl;
+        std::map<int, std::size_t> avgDamageCountMap;
+        for (const Item & item : m_allItems)
+        {
+            if (!item.isWeapon())
+            {
+                continue;
+            }
+
+            ++avgDamageCountMap[item.damageMin() + (item.damageMax() - item.damageMin())];
+        }
+        for (const auto pair : avgDamageCountMap)
+        {
             std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
         }
 
