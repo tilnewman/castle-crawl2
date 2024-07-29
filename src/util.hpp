@@ -438,6 +438,11 @@ namespace util
 
         stats.count = container.size();
 
+        if (0 == stats.count)
+        {
+            return stats;
+        }
+
         stats.min = std::numeric_limits<T>::max();
 
         for (const T number : container)
