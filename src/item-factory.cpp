@@ -547,6 +547,8 @@ namespace castlecrawl::item
         std::vector<int> weaponValues;
         std::vector<int> armorValues;
         std::vector<int> miscValues;
+        std::vector<std::size_t> nameLengths;
+        std::vector<std::size_t> descLengths;
         for (const auto & item : m_allItems)
         {
             allValues.push_back(item.value());
@@ -559,11 +561,18 @@ namespace castlecrawl::item
 
             if (item.isMisc())
                 miscValues.push_back(item.value());
+
+            nameLengths.push_back(item.name().size());
+            descLengths.push_back(item.description().size());
         }
+        std::sort(std::begin(nameLengths), std::end(nameLengths));
+        std::sort(std::begin(descLengths), std::end(descLengths));
         util::StatsDisplay<int>::makeAndSavePNG("all-item-values", font, allValues);
         util::StatsDisplay<int>::makeAndSavePNG("weapon-item-values", font, weaponValues);
         util::StatsDisplay<int>::makeAndSavePNG("armor-item-values", font, armorValues);
         util::StatsDisplay<int>::makeAndSavePNG("misc-item-values", font, miscValues);
+        util::StatsDisplay<std::size_t>::makeAndSavePNG("item-name-lengths", font, nameLengths);
+        util::StatsDisplay<std::size_t>::makeAndSavePNG("item-desc-lengths", font, descLengths);
 
         std::cout << std::endl;
         std::cout << "item count    = " << m_allItems.size() << std::endl;
