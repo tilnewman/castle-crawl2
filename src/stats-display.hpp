@@ -106,14 +106,15 @@ namespace util
         }
 
         bool wasDatasetChanged() const { return m_wasDatasetChanged; }
-        const sf::Texture & getTexture() const { m_renderTexture.getTexture(); }
-        const sf::Vector2u getSize() const { return m_size; }
+        const sf::Texture & texture() const { return m_renderTexture.getTexture(); }
+        const sf::Vector2u size() const { return m_size; }
+        const std::vector<data_t> & data() const { return m_data; }
 
       private:
         const std::vector<data_t> makeHalfSizeDataSet(const std::vector<data_t> & oldValues) const
         {
             std::vector<data_t> newValues;
-            newValues.reserve(oldValues.size() / 2);
+            newValues.reserve((oldValues.size() / 2) + 1);
 
             std::size_t oldIndex = 0;
             while (oldIndex < oldValues.size())
@@ -136,16 +137,16 @@ namespace util
 
         float calcDataBarWidth() const
         {
-            const float result =
+            const float width =
                 std::floor(static_cast<float>(m_size.x) / static_cast<float>(m_data.size()));
 
-            if (result < 1.0f)
+            if (width < 1.0f)
             {
                 return 1.0f;
             }
             else
             {
-                return result;
+                return width;
             }
         }
 
@@ -185,15 +186,27 @@ namespace util
             const sf::Color & backgroundColor,
             const std::vector<sf::FloatRect> & dataBarRects) const
         {
+            sf::RectangleShape rectangle;
+
             for (const sf::FloatRect & dataBarRect : dataBarRects)
             {
-                util::drawRectangleShape(renderTexture, dataBarRect, true, barColor);
+                rectangle.setSize(util::size(dataBarRect));
+                rectangle.setPosition(util::position(dataBarRect));
 
-                // if bars are wide enough then draw a dark outline around them because it's
-                // pretty
+                rectangle.setFillColor(barColor);
+                rectangle.setOutlineColor(sf::Color::Transparent);
+                rectangle.setOutlineThickness(0.0f);
+
+                renderTexture.draw(rectangle);
+
+                // if bars are wide enough then draw dark outline around them because it's pretty
                 if (dataBarRect.width > 4.0f)
                 {
-                    util::drawRectangleShape(renderTexture, dataBarRect, false, backgroundColor);
+                    rectangle.setOutlineThickness(1.0f);
+                    rectangle.setOutlineColor(backgroundColor);
+                    rectangle.setFillColor(sf::Color::Transparent);
+
+                    renderTexture.draw(rectangle);
                 }
             }
         }
@@ -283,7 +296,10 @@ namespace util
             m_renderTexture.display();
         }
 
-        bool wasDatasetChanged() const { return m_graphDisplay.wasDatasetChanged(); }
+        const sf::Texture & texture() const { return m_renderTexture.getTexture(); }
+        const GraphDisplay<data_t> & graph() const { return m_graphDisplay; }
+        const sf::Vector2u size() const { return m_size; }
+        const std::vector<data_t> & data() const { return m_data; }
 
         void saveToFile(const std::string & filename) const
         {

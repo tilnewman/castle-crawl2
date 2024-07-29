@@ -85,7 +85,7 @@ namespace castlecrawl
         m_framerate.setup(m_context);
         m_topPanel.setup(m_context);
 
-        m_itemFactory.dumpInfo(m_fonts.font());
+        // m_itemFactory.dumpInfo(m_fonts.font());
 
         m_stateManager.change(m_context, State::Splash);
 
