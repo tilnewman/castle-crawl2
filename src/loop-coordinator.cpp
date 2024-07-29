@@ -73,9 +73,8 @@ namespace castlecrawl
         m_sfx.setMediaPath((m_config.media_path / "sfx").string());
         m_sfx.loadAll();
 
-        m_itemFactory.setup();
-
         m_fonts.setup(m_config);
+        m_itemFactory.setup(m_fonts.font());
         m_enemies.setup(m_config);
         m_tileImages.setup(m_config);
         m_layout.setup(m_config);

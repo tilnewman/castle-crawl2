@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "player.hpp"
 #include "random.hpp"
+#include "stats-display.hpp"
 
 #include <algorithm>
 #include <fstream>
@@ -375,7 +376,7 @@ namespace castlecrawl::item
         return extents;
     }
 
-    void ItemFactory::setup()
+    void ItemFactory::setup(const sf::Font & font)
     {
         makeAll();
 
@@ -386,10 +387,10 @@ namespace castlecrawl::item
 
         m_textExtent = findTextExtents();
         validate();
-        // dumpInfo();
+        // dumpInfo(font);
     }
 
-    void ItemFactory::dumpInfo() const
+    void ItemFactory::dumpInfo(const sf::Font & font) const
     {
         // write all items to a spreadsheet
         {
@@ -491,7 +492,7 @@ namespace castlecrawl::item
             }
         }
 
-        std::cout << std::endl << "Value Distribution:" << std::endl;
+        std::cout << std::endl << "Value to Item Count Distribution:" << std::endl;
         std::map<int, std::size_t> valueCountMap;
         std::vector<int> values;
         for (const Item & item : m_allItems)
@@ -543,11 +544,33 @@ namespace castlecrawl::item
             std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
         }
 
+        std::vector<int> allValues;
+        std::vector<int> weaponValues;
+        std::vector<int> armorValues;
+        std::vector<int> miscValues;
+        for (const auto & item : m_allItems)
+        {
+            allValues.push_back(item.value());
+
+            if (item.isWeapon())
+                weaponValues.push_back(item.value());
+
+            if (item.isArmor())
+                armorValues.push_back(item.value());
+
+            if (item.isMisc())
+                miscValues.push_back(item.value());
+        }
+        util::StatsDisplay<int>::makeAndSavePNG("all-item-values", font, allValues);
+        util::StatsDisplay<int>::makeAndSavePNG("weapons-item-values", font, weaponValues);
+        util::StatsDisplay<int>::makeAndSavePNG("armor-item-values", font, armorValues);
+        util::StatsDisplay<int>::makeAndSavePNG("misc-item-values", font, miscValues);
+
         std::cout << std::endl;
         std::cout << "item count    = " << m_allItems.size() << std::endl;
         std::cout << "unique values = " << valueCountMap.size() << std::endl;
         std::cout << "lowest value  = " << m_allItems.front().value() << std::endl;
-        std::cout << "largest value = " << m_allItems.back().value() << std::endl;
+        std::cout << "highest value = " << m_allItems.back().value() << std::endl;
         std::cout << "longest name  = " << m_textExtent.longest_name << std::endl;
         std::cout << "longest desc  = " << m_textExtent.longest_desc << std::endl;
         std::cout << "item size     = " << sizeof(Item) << "bytes" << std::endl;

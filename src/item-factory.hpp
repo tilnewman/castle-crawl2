@@ -5,6 +5,8 @@
 //
 #include "item.hpp"
 
+#include <SFML/Graphics/Font.hpp>
+
 namespace castlecrawl
 {
     struct Context;
@@ -24,7 +26,7 @@ namespace castlecrawl::item
       public:
         ItemFactory();
 
-        void setup();
+        void setup(const sf::Font & font);
         const TextExtent textExtents() const { return m_textExtent; }
         const Treasure randomTreasureFind(const Context & context) const;
         const Treasure randomHerbFind(const Context & context) const;
@@ -40,7 +42,7 @@ namespace castlecrawl::item
         const TextExtent findTextExtents() const;
         void validate() const;
         void throwIfInvalid(const Item & item) const;
-        void dumpInfo() const;
+        void dumpInfo(const sf::Font & font) const;
 
       private:
         TextExtent m_textExtent;
