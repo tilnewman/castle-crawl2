@@ -453,6 +453,27 @@ namespace util
 
     // re-sizing (scaling), centering, and all while maintaining origins
 
+    // changes the shape
+    template <typename T>
+    void scale(T & thing, const sf::Vector2f & size)
+    {
+        // skip if source size is zero (or close enough) to avoid dividing by zero below
+        const sf::FloatRect localBounds{ thing.getLocalBounds() };
+        if ((localBounds.width < 1.0f) || (localBounds.height < 1.0f))
+        {
+            return;
+        }
+
+        const float scaleHoriz{ size.x / localBounds.width };
+        const float scaleVert{ size.y / localBounds.height };
+        thing.setScale(scaleHoriz, scaleVert);
+
+        if constexpr (std::is_same_v<std::remove_cv_t<T>, sf::Text>)
+        {
+            setOriginToPosition(thing);
+        }
+    }
+
     // without changing the shape
     template <typename T>
     void fit(T & thing, const sf::Vector2f & size)
