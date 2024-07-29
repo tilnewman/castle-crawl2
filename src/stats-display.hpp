@@ -240,10 +240,10 @@ namespace util
             const sf::FloatRect borderRect(1.0f, 1.0f, (m_size.x - 2.0f), (m_size.y - 2.0f));
 
             sf::FloatRect titleRect(2.0f, 2.0f, (m_size.x - 4.0f), (graphRect.top - 3.0f));
-            util::scaleRectInPlace(titleRect, 0.8f);
+            util::scaleRectInPlace(titleRect, 0.6f);
             sf::Text titleText;
             titleText.setFont(font);
-            titleText.setCharacterSize(99);
+            titleText.setCharacterSize(50);
             titleText.setFillColor(m_titleTextColor);
             titleText.setString(title);
             util::setOriginToPosition(titleText);
@@ -257,7 +257,7 @@ namespace util
             util::scaleRectInPlace(subTitleRect, 0.5f);
             sf::Text subTitleText;
             subTitleText.setFont(font);
-            subTitleText.setCharacterSize(99);
+            subTitleText.setCharacterSize(50);
             subTitleText.setFillColor(m_subTitleTextColor);
             subTitleText.setString(stats.toString());
             util::setOriginToPosition(subTitleText);

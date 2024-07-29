@@ -376,7 +376,7 @@ namespace castlecrawl::item
         return extents;
     }
 
-    void ItemFactory::setup(const sf::Font & font)
+    void ItemFactory::setup()
     {
         makeAll();
 
@@ -387,7 +387,6 @@ namespace castlecrawl::item
 
         m_textExtent = findTextExtents();
         validate();
-        // dumpInfo(font);
     }
 
     void ItemFactory::dumpInfo(const sf::Font & font) const
@@ -562,7 +561,7 @@ namespace castlecrawl::item
                 miscValues.push_back(item.value());
         }
         util::StatsDisplay<int>::makeAndSavePNG("all-item-values", font, allValues);
-        util::StatsDisplay<int>::makeAndSavePNG("weapons-item-values", font, weaponValues);
+        util::StatsDisplay<int>::makeAndSavePNG("weapon-item-values", font, weaponValues);
         util::StatsDisplay<int>::makeAndSavePNG("armor-item-values", font, armorValues);
         util::StatsDisplay<int>::makeAndSavePNG("misc-item-values", font, miscValues);
 

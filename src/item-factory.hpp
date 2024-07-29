@@ -26,11 +26,12 @@ namespace castlecrawl::item
       public:
         ItemFactory();
 
-        void setup(const sf::Font & font);
+        void setup();
         const TextExtent textExtents() const { return m_textExtent; }
         const Treasure randomTreasureFind(const Context & context) const;
         const Treasure randomHerbFind(const Context & context) const;
         const ItemVec_t & allItems() const { return m_allItems; }
+        void dumpInfo(const sf::Font & font) const;
 
       private:
         void makeAll();
@@ -42,7 +43,6 @@ namespace castlecrawl::item
         const TextExtent findTextExtents() const;
         void validate() const;
         void throwIfInvalid(const Item & item) const;
-        void dumpInfo(const sf::Font & font) const;
 
       private:
         TextExtent m_textExtent;
