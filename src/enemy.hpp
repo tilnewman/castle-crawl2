@@ -41,11 +41,12 @@ namespace castlecrawl
         PixieCup
     };
 
-    inline float turnTimeSec(const util::Random & random, const Enemy enemy) noexcept
+    [[nodiscard]] inline float
+        turnTimeSec(const util::Random & t_random, const Enemy t_enemy) noexcept
     {
         const float turnTimeSec = [&]() {
             // clang-format off
-            switch (enemy)
+            switch (t_enemy)
             {
                 case Enemy::Snake:          { return 2.0f; }
                 case Enemy::SnakeBag:       { return 20.0f; }
@@ -70,9 +71,9 @@ namespace castlecrawl
             // clang-format on
         }();
 
-        const float range = random.zeroTo(0.3f * turnTimeSec);
+        const float range = t_random.zeroTo(0.3f * turnTimeSec);
 
-        if (random.boolean())
+        if (t_random.boolean())
         {
             return (turnTimeSec - range);
         }
@@ -82,10 +83,10 @@ namespace castlecrawl
         }
     }
 
-    inline constexpr float walkToPlayerRatio(const Enemy enemy) noexcept
+    [[nodiscard]] inline constexpr float walkToPlayerRatio(const Enemy t_enemy) noexcept
     {
         // clang-format off
-        switch (enemy)
+        switch (t_enemy)
         {   
             case Enemy::Snake:          { return 0.5f; }
             case Enemy::Spider:         { return 0.5f; }
@@ -110,10 +111,10 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline constexpr bool isEnemySummoner(const Enemy enemy) noexcept
+    [[nodiscard]] inline constexpr bool isEnemySummoner(const Enemy t_enemy) noexcept
     {
         // clang-format off
-        switch (enemy)
+        switch (t_enemy)
         {
             case Enemy::SnakeBag:       
             case Enemy::Spiderweb:      
@@ -206,10 +207,10 @@ namespace castlecrawl
         FireLord
     };
 
-    inline constexpr EnemyImage defaultEnemyImage(const Enemy enemy) noexcept
+    [[nodiscard]] inline constexpr EnemyImage defaultEnemyImage(const Enemy t_enemy) noexcept
     {
         // clang-format off
-        switch (enemy)
+        switch (t_enemy)
         {
             case Enemy::Snake:          { return EnemyImage::Snake1; }
             case Enemy::SnakeBag:       { return EnemyImage::SnakeBag; }
@@ -234,10 +235,10 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline constexpr bool isEnemyImageSummoner(const EnemyImage enemyImage) noexcept
+    [[nodiscard]] inline constexpr bool isEnemyImageSummoner(const EnemyImage t_enemyImage) noexcept
     {
         // clang-format off
-        switch (enemyImage)
+        switch (t_enemyImage)
         {
             case EnemyImage::Snake1:        
             case EnemyImage::Snake2:        
@@ -308,10 +309,10 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline const sf::IntRect enemyImageRect(const EnemyImage enemyImage) noexcept
+    [[nodiscard]] inline const sf::IntRect enemyImageRect(const EnemyImage t_enemyImage) noexcept
     {
         // clang-format off
-        switch (enemyImage)
+        switch (t_enemyImage)
         {
             case EnemyImage::SnakeBag:      { return {   0,   0, 64, 64}; }
             case EnemyImage::Snake1:        { return {  64,   0, 64, 64}; }
@@ -382,39 +383,39 @@ namespace castlecrawl
         // clang-format on
     }
 
-    EnemyImage randomEnemyImage(const util::Random & random, const Enemy enemy);
+    [[nodiscard]] EnemyImage randomEnemyImage(const util::Random & t_random, const Enemy t_enemy);
 
-    inline constexpr Enemy spawnType(const Enemy summoner) noexcept
+    [[nodiscard]] inline constexpr Enemy spawnType(const Enemy t_summoner) noexcept
     {
-        if (summoner == Enemy::BatMask)
+        if (t_summoner == Enemy::BatMask)
         {
             return Enemy::Bat;
         }
-        else if (summoner == Enemy::DemonDoor)
+        else if (t_summoner == Enemy::DemonDoor)
         {
             return Enemy::Demon;
         }
-        else if (summoner == Enemy::DragonInferno)
+        else if (t_summoner == Enemy::DragonInferno)
         {
             return Enemy::Dragon;
         }
-        else if (summoner == Enemy::GoblinBarrel)
+        else if (t_summoner == Enemy::GoblinBarrel)
         {
             return Enemy::Goblin;
         }
-        else if (summoner == Enemy::SkeletonGrave)
+        else if (t_summoner == Enemy::SkeletonGrave)
         {
             return Enemy::Skeleton;
         }
-        else if (summoner == Enemy::SnakeBag)
+        else if (t_summoner == Enemy::SnakeBag)
         {
             return Enemy::Snake;
         }
-        else if (summoner == Enemy::WizardTomb)
+        else if (t_summoner == Enemy::WizardTomb)
         {
             return Enemy::Wizard;
         }
-        else if (summoner == Enemy::PixieCup)
+        else if (t_summoner == Enemy::PixieCup)
         {
             return Enemy::Pixie;
         }
@@ -426,7 +427,7 @@ namespace castlecrawl
 
     struct EnemyInstance
     {
-        EnemyInstance(const util::Random & random, const Enemy e, const MapPos_t & p);
+        EnemyInstance(const util::Random & t_random, const Enemy t_enemy, const MapPos_t & t_pos);
 
         bool isSummoner() const { return isEnemySummoner(enemy); }
 
@@ -442,25 +443,25 @@ namespace castlecrawl
       public:
         Enemies();
 
-        void setup(const GameConfig & config);
+        void setup(const GameConfig & t_config);
 
-        void update(const Context & context, const float frameTimeSec);
-        void add(const EnemyInstance & enemy);
-        void remove(const MapPos_t & position);
+        void update(const Context & t_context, const float t_frameTimeSec);
+        void add(const EnemyInstance & t_enemy);
+        void remove(const MapPos_t & t_position);
         void removeAll() { m_enemies.clear(); }
 
-        void
-            draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
+            const;
 
-        bool isAnyAtMapPos(const MapPos_t & pos) const;
+        bool isAnyAtMapPos(const MapPos_t & t_pos) const;
 
       private:
-        void act(const Context & context, EnemyInstance & enemy);
-        void move(const Context & context, EnemyInstance & enemy);
-        void spawn(const Context & context, EnemyInstance & enemy);
+        void act(const Context & t_context, EnemyInstance & t_enemy);
+        void move(const Context & t_context, EnemyInstance & t_enemy);
+        void spawn(const Context & t_context, EnemyInstance & t_enemy);
 
         void removeSpawnAndMoveObstacles(
-            const Context & context, std::vector<MapCell> & cells) const;
+            const Context & t_context, std::vector<MapCell> & t_cells) const;
 
       private:
         sf::Texture m_texture;
