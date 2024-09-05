@@ -28,7 +28,7 @@ namespace util
 
     constexpr std::size_t verts_per_quad{ 4 };
 
-    [[nodiscard]] inline const std::string colorToString(const sf::Color & C)
+    [[nodiscard]] inline std::string colorToString(const sf::Color & C)
     {
         std::string str;
         str.reserve(16);
@@ -472,6 +472,12 @@ namespace util
 
     // re-sizing (scaling), centering, and all while maintaining origins
 
+    template <typename T>
+    void centerInside(T & thing, const sf::FloatRect & rect)
+    {
+        thing.setPosition(center(rect) - (size(thing) * 0.5f));
+    }
+
     // changes the shape
     template <typename T>
     void scale(T & thing, const sf::Vector2f & size)
@@ -493,7 +499,26 @@ namespace util
         }
     }
 
-    // without changing the shape
+    template <typename T>
+    void scale(T & thing, const sf::FloatRect & rect)
+    {
+        scale(thing, { rect.width, rect.height });
+    }
+
+    template <typename T>
+    void scale(T & thing, const float newScale)
+    {
+        scale(thing, { newScale, newScale });
+    }
+
+    template <typename T>
+    void scaleAndCenterInside(T & thing, const sf::FloatRect & rect)
+    {
+        scale(thing, rect);
+        centerInside(thing, rect);
+    }
+
+    // one dimm perfectly fits and one is left LESS than without changing the shape
     template <typename T>
     void fit(T & thing, const sf::Vector2f & size)
     {
@@ -532,18 +557,56 @@ namespace util
     }
 
     template <typename T>
-    void centerInside(T & thing, const sf::FloatRect & rect)
-    {
-        thing.setPosition(center(rect) - (size(thing) * 0.5f));
-    }
-
-    template <typename T>
     void fitAndCenterInside(T & thing, const sf::FloatRect & rect)
     {
         fit(thing, rect);
         centerInside(thing, rect);
     }
 
+    // one dimm perfectly fits and one is left MORE than without changing the shape
+    template <typename T>
+    void grow(T & thing, const sf::Vector2f & size)
+    {
+        // skip if source size is zero (or close enough) to avoid dividing by zero below
+        const sf::FloatRect localBounds{ thing.getLocalBounds() };
+        if ((localBounds.width < 1.0f) || (localBounds.height < 1.0f))
+        {
+            return;
+        }
+
+        const float scaleHoriz{ size.x / localBounds.width };
+        thing.setScale(scaleHoriz, scaleHoriz);
+
+        if (size.y > thing.getGlobalBounds().height)
+        {
+            const float scaleVert{ size.y / localBounds.height };
+            thing.setScale(scaleVert, scaleVert);
+        }
+
+        if constexpr (std::is_same_v<std::remove_cv_t<T>, sf::Text>)
+        {
+            setOriginToPosition(thing);
+        }
+    }
+
+    template <typename T>
+    void grow(T & thing, const sf::FloatRect & rect)
+    {
+        grow(thing, { rect.width, rect.height });
+    }
+
+    template <typename T>
+    void grow(T & thing, const float newScale)
+    {
+        grow(thing, { newScale, newScale });
+    }
+
+    template <typename T>
+    void growAndCenterInside(T & thing, const sf::FloatRect & rect)
+    {
+        grow(thing, rect);
+        centerInside(thing, rect);
+    }
     // quad making and appending
 
     // colors not changed if color given is transparent
@@ -915,7 +978,7 @@ namespace util
         return *videoModes.begin();
     }
 
-    [[nodiscard]] inline const std::string makeSupportedVideoModesString(
+    [[nodiscard]] inline std::string makeSupportedVideoModesString(
         const bool willSkipDiffBitsPerPixel = false, const std::string & separator = "\n")
     {
         const unsigned int desktopBitsPerPixel{ sf::VideoMode::getDesktopMode().bitsPerPixel };
