@@ -81,12 +81,7 @@ namespace castlecrawl
 
     void Enemies::remove(const MapPos_t & t_pos)
     {
-        m_enemies.erase(
-            std::remove_if(
-                std::begin(m_enemies),
-                std::end(m_enemies),
-                [&](const EnemyInstance & si) { return (si.position == t_pos); }),
-            std::end(m_enemies));
+        std::erase_if(m_enemies, [&](const EnemyInstance & si) { return (si.position == t_pos); });
     }
 
     void Enemies::draw(
@@ -99,7 +94,7 @@ namespace castlecrawl
 
             sprite.setPosition(
                 t_context.maps.current().mapPosToScreenPos(t_context, enemy.position));
-            
+
             t_target.draw(sprite, t_states);
         }
     }
@@ -147,28 +142,20 @@ namespace castlecrawl
                 return (util::abs(A.x - B.x) + util::abs(A.y - B.y));
             };
 
-            std::sort(
-                std::begin(possibleMoveCells),
-                std::end(possibleMoveCells),
-                [&](const MapCell & A, const MapCell & B) {
-                    return (
-                        distance(t_context.player_display.position(), A.position) <
-                        distance(t_context.player_display.position(), B.position));
-                });
+            std::ranges::sort(possibleMoveCells, [&](const MapCell & A, const MapCell & B) {
+                return (
+                    distance(t_context.player_display.position(), A.position) <
+                    distance(t_context.player_display.position(), B.position));
+            });
 
             const int shortestDistance =
                 distance(possibleMoveCells.front().position, t_context.player_display.position());
 
-            possibleMoveCells.erase(
-                std::remove_if(
-                    std::begin(possibleMoveCells),
-                    std::end(possibleMoveCells),
-                    [&](const MapCell & cell) {
-                        return (
-                            distance(t_context.player_display.position(), cell.position) >
-                            shortestDistance);
-                    }),
-                std::end(possibleMoveCells));
+            std::erase_if(possibleMoveCells, [&](const MapCell & cell) {
+                return (
+                    distance(t_context.player_display.position(), cell.position) >
+                    shortestDistance);
+            });
         }
 
         t_enemy.position = t_context.random.from(possibleMoveCells).position;
@@ -198,40 +185,25 @@ namespace castlecrawl
         const Context & t_context, std::vector<MapCell> & t_cells) const
     {
         // can't move onto obstacles
-        t_cells.erase(
-            std::remove_if(
-                std::begin(t_cells),
-                std::end(t_cells),
-                [&](const MapCell & cell) { return (cell.object_char != ' '); }),
-            std::end(t_cells));
+        std::erase_if(t_cells, [&](const MapCell & cell) { return (cell.object_char != ' '); });
 
         // can't move onto player
-        t_cells.erase(
-            std::remove_if(
-                std::begin(t_cells),
-                std::end(t_cells),
-                [&](const MapCell & cell) {
-                    return (cell.position == t_context.player_display.position());
-                }),
-            std::end(t_cells));
+        std::erase_if(t_cells, [&](const MapCell & cell) {
+            return (cell.position == t_context.player_display.position());
+        });
 
         // can't move onto other enemies
-        t_cells.erase(
-            std::remove_if(
-                std::begin(t_cells),
-                std::end(t_cells),
-                [&](const MapCell & cell) {
-                    for (const EnemyInstance & e : m_enemies)
-                    {
-                        if (cell.position == e.position)
-                        {
-                            return true;
-                        }
-                    }
+        std::erase_if(t_cells, [&](const MapCell & cell) {
+            for (const EnemyInstance & e : m_enemies)
+            {
+                if (cell.position == e.position)
+                {
+                    return true;
+                }
+            }
 
-                    return false;
-                }),
-            std::end(t_cells));
+            return false;
+        });
     }
 
 } // namespace castlecrawl
