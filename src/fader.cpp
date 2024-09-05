@@ -12,33 +12,33 @@ namespace castlecrawl
 {
 
     Fader::Fader()
-        : m_isFadingIn(true) // anything works here
-        , m_rectangle()
-        , m_timerSec(0.0f)
-        , m_durationSec(0.0f)
-        , m_fadeColor(sf::Color::Black)
+        : m_isFadingIn{ true } // anything works here
+        , m_rectangle{}
+        , m_timerSec{ 0.0f }
+        , m_durationSec{ 0.0f }
+        , m_fadeColor{ sf::Color::Black }
     {
         reset();
     }
 
     void Fader::reset()
     {
-        m_timerSec = 0.0f;
+        m_timerSec    = 0.0f;
         m_durationSec = 0.0f;
         m_rectangle.setPosition({ 0.0f, 0.0f });
         m_rectangle.setSize({ 0.0f, 0.0f });
     }
 
     void Fader::setup(
-        const bool isFadingIn,
-        const sf::Color & color,
-        const float durationSec,
-        const sf::FloatRect & rect)
+        const bool t_isFadingIn,
+        const sf::Color & t_color,
+        const float t_durationSec,
+        const sf::FloatRect & t_rect)
     {
-        m_timerSec = 0.0f;
-        m_fadeColor = color;
-        m_isFadingIn = isFadingIn;
-        m_durationSec = durationSec;
+        m_timerSec    = 0.0f;
+        m_fadeColor   = t_color;
+        m_isFadingIn  = t_isFadingIn;
+        m_durationSec = t_durationSec;
 
         if (m_isFadingIn)
         {
@@ -51,15 +51,15 @@ namespace castlecrawl
 
         m_rectangle.setOutlineColor(sf::Color::Transparent);
         m_rectangle.setOutlineThickness(0.0f);
-        m_rectangle.setPosition(util::position(rect));
-        m_rectangle.setSize(util::size(rect));
+        m_rectangle.setPosition(util::position(t_rect));
+        m_rectangle.setSize(util::size(t_rect));
     }
 
-    bool Fader::update(const float frameTimeSec)
+    bool Fader::update(const float t_frameTimeSec)
     {
         const bool isFadingBefore = isFading();
 
-        m_timerSec += frameTimeSec;
+        m_timerSec += t_frameTimeSec;
         if (m_timerSec > m_durationSec)
         {
             m_timerSec = m_durationSec;
@@ -81,9 +81,9 @@ namespace castlecrawl
         return (isFadingBefore && !isFadingAfter);
     }
 
-    void Fader::draw(sf::RenderTarget & target, sf::RenderStates states) const
+    void Fader::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(m_rectangle, states);
+        t_target.draw(m_rectangle, t_states);
     }
 
 } // namespace castlecrawl

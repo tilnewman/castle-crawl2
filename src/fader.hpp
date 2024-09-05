@@ -19,15 +19,15 @@ namespace castlecrawl
         void reset();
 
         void setup(
-            const bool isFadingIn,
-            const sf::Color & color,
-            const float durationSec,
-            const sf::FloatRect & rect);
+            const bool t_isFadingIn,
+            const sf::Color & t_color,
+            const float t_durationSec,
+            const sf::FloatRect & t_rect);
 
         // returns true only if the update transitioned from isFading() to !isFading()
-        bool update(const float frameTimeSec);
+        bool update(const float t_frameTimeSec);
 
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         bool isFading() const { return (m_timerSec < m_durationSec); }
         bool isFadingIn() const { return m_isFadingIn; }
 
