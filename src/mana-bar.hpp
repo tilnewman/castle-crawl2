@@ -14,9 +14,9 @@ namespace castlecrawl
       public:
         ManaBar();
 
-        void setup(const Context & context);
-        void update(const Context & context);
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
+        void setup(const Context & t_context);
+        void update(const Context & t_context);
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 
       private:
         StatBar m_statBar;

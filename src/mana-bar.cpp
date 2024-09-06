@@ -16,9 +16,9 @@ namespace castlecrawl
         : m_statBar()
     {}
 
-    void ManaBar::setup(const Context & context)
+    void ManaBar::setup(const Context & t_context)
     {
-        const sf::FloatRect topRect = context.layout.topRect();
+        const sf::FloatRect topRect = t_context.layout.topRect();
 
         sf::FloatRect rect;
         rect.height = (topRect.height * 0.1f);
@@ -29,18 +29,18 @@ namespace castlecrawl
         rect.top -= rect.height;
         rect.top -= 5.0f;
 
-        m_statBar.setup(context, rect, sf::Color(100, 0, 220), context.player.mana().max());
+        m_statBar.setup(t_context, rect, sf::Color(100, 0, 220), t_context.player.mana().max());
     }
 
-    void ManaBar::update(const Context & context)
+    void ManaBar::update(const Context & t_context)
     {
-        m_statBar.setMaxValue(context, context.player.mana().max());
-        m_statBar.setCurrentValue(context, context.player.mana().current());
+        m_statBar.setMaxValue(t_context, t_context.player.mana().max());
+        m_statBar.setCurrentValue(t_context, t_context.player.mana().current());
     }
 
-    void ManaBar::draw(sf::RenderTarget & target, sf::RenderStates states) const
+    void ManaBar::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(m_statBar, states);
+        t_target.draw(m_statBar, t_states);
     }
 
 } // namespace castlecrawl
