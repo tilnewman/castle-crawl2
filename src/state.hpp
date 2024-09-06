@@ -30,11 +30,11 @@ namespace castlecrawl
         Editor
     };
 
-    inline constexpr std::string_view toString(const State state) noexcept
+    inline constexpr std::string_view toString(const State t_state) noexcept
     {
-        switch (state)
+        switch (t_state)
         {
-            // clang-format off
+                // clang-format off
             case State::Init:       { return "Init"; }
             case State::Splash:     { return "Splash"; }
             case State::Play:       { return "Play"; }
@@ -50,10 +50,10 @@ namespace castlecrawl
         }
     }
 
-    inline std::ostream & operator<<(std::ostream & os, const State state)
+    inline std::ostream & operator<<(std::ostream & t_os, const State t_state)
     {
-        os << toString(state);
-        return os;
+        t_os << toString(t_state);
+        return t_os;
     }
 
     struct IState
@@ -62,14 +62,16 @@ namespace castlecrawl
 
         virtual State which() const = 0;
 
-        virtual void onEnter(const Context & context)                          = 0;
-        virtual void onExit(const Context & context)                           = 0;
-        virtual void update(const Context & context, const float frameTimeSec) = 0;
+        virtual void onEnter(const Context & t_context)                            = 0;
+        virtual void onExit(const Context & t_context)                             = 0;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) = 0;
 
         virtual void draw(
-            const Context & context, sf::RenderTarget & target, sf::RenderStates states) const = 0;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const = 0;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) = 0;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) = 0;
     };
 
     class StateBase : public IState
