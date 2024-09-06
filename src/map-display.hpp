@@ -19,24 +19,24 @@ namespace castlecrawl
       public:
         MapDisplay();
 
-        void load(const Context & context);
+        void load(const Context & t_context);
 
-        void
-            draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
+            const;
 
       private:
-        void resetVertexVectors(const Context & context);
-        void appendVerts(const Context & context);
-        void appendLiquidEdgeVerts(const Context & context);
+        void resetVertexVectors(const Context & t_context);
+        void appendVerts(const Context & t_context);
+        void appendLiquidEdgeVerts(const Context & t_context);
         void resetVertexBuffers();
 
         void appendTileVerts(
-            const Context & context,
-            const TileImage image,
-            const sf::Vector2f & pos,
-            VertVec_t & verts) const;
+            const Context & t_context,
+            const TileImage t_image,
+            const sf::Vector2f & t_pos,
+            VertVec_t & t_verts) const;
 
-        bool isFloorAdjacent(const Context & context, const MapPos_t pos) const;
+        bool isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const;
 
       private:
         VertVec_t m_objectVerts;

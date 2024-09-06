@@ -17,74 +17,74 @@ namespace castlecrawl
 {
 
     MapDisplay::MapDisplay()
-        : m_objectVerts()
-        , m_floorVerts()
-        , m_borderVerts()
-        , m_objectBuffer(sf::Quads, sf::VertexBuffer::Static)
-        , m_floorBuffer(sf::Quads, sf::VertexBuffer::Static)
-        , m_borderBuffer(sf::Quads, sf::VertexBuffer::Static)
+        : m_objectVerts{}
+        , m_floorVerts{}
+        , m_borderVerts{}
+        , m_objectBuffer{ sf::Quads, sf::VertexBuffer::Static }
+        , m_floorBuffer{ sf::Quads, sf::VertexBuffer::Static }
+        , m_borderBuffer{ sf::Quads, sf::VertexBuffer::Static }
     {}
 
-    void MapDisplay::load(const Context & context)
+    void MapDisplay::load(const Context & t_context)
     {
-        context.layout.setupNewMap(context.maps.current().size());
-        resetVertexVectors(context);
-        appendVerts(context);
-        appendLiquidEdgeVerts(context);
+        t_context.layout.setupNewMap(t_context.maps.current().size());
+        resetVertexVectors(t_context);
+        appendVerts(t_context);
+        appendLiquidEdgeVerts(t_context);
         resetVertexBuffers();
     }
 
     void MapDisplay::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        states.texture = &context.tile_images.texture();
+        t_states.texture = &t_context.tile_images.texture();
 
-        target.draw(m_floorBuffer, states);
-        target.draw(m_borderBuffer); // don't use states because floor edge verts are solid black
-        target.draw(m_objectBuffer, states);
+        t_target.draw(m_floorBuffer, t_states);
+        t_target.draw(m_borderBuffer); // avoid states because floor edge verts are solid black
+        t_target.draw(m_objectBuffer, t_states);
     }
 
-    void MapDisplay::resetVertexVectors(const Context & context)
+    void MapDisplay::resetVertexVectors(const Context & t_context)
     {
         m_objectVerts.clear();
         m_floorVerts.clear();
         m_borderVerts.clear();
 
         const std::size_t reserveCount =
-            (static_cast<std::size_t>(context.layout.cellCount().x) *
-             static_cast<std::size_t>(context.layout.cellCount().y) * util::verts_per_quad);
+            (static_cast<std::size_t>(t_context.layout.cellCount().x) *
+             static_cast<std::size_t>(t_context.layout.cellCount().y) * util::verts_per_quad);
 
         m_objectVerts.reserve(reserveCount * 2); // there can be extra shadow and liquid edge verts
         m_floorVerts.reserve(reserveCount);
         m_borderVerts.reserve(reserveCount);
     }
 
-    void MapDisplay::appendVerts(const Context & context)
+    void MapDisplay::appendVerts(const Context & t_context)
     {
         char prevObjectChar('.'); // anything except '-' works here
 
         // any TileImage works here because only using the position and size
-        sf::Sprite edgeSprite = context.tile_images.sprite(context, TileImage::Lava);
+        sf::Sprite edgeSprite = t_context.tile_images.sprite(t_context, TileImage::Lava);
 
         // make floor border tile bigger to cover outside edges of walls with solid black
         const float growScale = 0.25f;
 
-        const float overlapDimm{ static_cast<float>(context.layout.cellSize().x) *
+        const float overlapDimm{ static_cast<float>(t_context.layout.cellSize().x) *
                                  (growScale * 0.5f) };
 
         edgeSprite.scale((1.0f + growScale), (1.0f + growScale));
 
         // loop over map chars and for each map tile/object/shadow/etc append quad verts
-        const sf::Vector2i mapSize = context.maps.current().size();
-        sf::Vector2f screenPos     = util::position(context.layout.mapRect());
+        const sf::Vector2i mapSize = t_context.maps.current().size();
+        sf::Vector2f screenPos     = util::position(t_context.layout.mapRect());
         for (int y(0); y < mapSize.y; ++y)
         {
             for (int x(0); x < mapSize.x; ++x)
             {
-                const MapCell cell = context.maps.current().cell({ x, y });
+                const MapCell cell = t_context.maps.current().cell({ x, y });
 
                 // black floor borders tiles
-                if (('.' == cell.object_char) && isFloorAdjacent(context, cell.position))
+                if (('.' == cell.object_char) && isFloorAdjacent(t_context, cell.position))
                 {
                     edgeSprite.setPosition(screenPos);
                     edgeSprite.move(-overlapDimm, -overlapDimm);
@@ -92,53 +92,53 @@ namespace castlecrawl
                     util::appendQuadVerts(
                         edgeSprite.getGlobalBounds(),
                         m_borderVerts,
-                        context.config.background_color);
+                        t_context.config.background_color);
                 }
 
                 // floor tiles
                 if (' ' != cell.floor_char)
                 {
                     appendTileVerts(
-                        context, charToTileImage(cell.floor_char), screenPos, m_floorVerts);
+                        t_context, charToTileImage(cell.floor_char), screenPos, m_floorVerts);
                 }
 
                 // various object tiles
                 if (const TileImage objectTileImage = charToTileImage(cell.object_char);
                     objectTileImage != TileImage::Empty)
                 {
-                    appendTileVerts(context, objectTileImage, screenPos, m_objectVerts);
+                    appendTileVerts(t_context, objectTileImage, screenPos, m_objectVerts);
                 }
 
                 // wall shadow object tiles to the right of various wall blocks
                 // must be added after object tiles
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
-                    appendTileVerts(context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
+                    appendTileVerts(t_context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
                 }
 
                 prevObjectChar = cell.object_char;
-                screenPos.x += context.layout.cellSize().x;
+                screenPos.x += t_context.layout.cellSize().x;
             }
 
-            screenPos.x = context.layout.mapRect().left;
-            screenPos.y += context.layout.cellSize().y;
+            screenPos.x = t_context.layout.mapRect().left;
+            screenPos.y += t_context.layout.cellSize().y;
         }
     }
 
-    void MapDisplay::appendLiquidEdgeVerts(const Context & context)
+    void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
         auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w')); };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
-            return (notLiq(ch) && context.maps.current().isPosValid(pos));
+            return (notLiq(ch) && t_context.maps.current().isPosValid(pos));
         };
 
         auto getChar = [&](const int x, const int y) {
-            return context.maps.current().cell({ x, y }).object_char;
+            return t_context.maps.current().cell({ x, y }).object_char;
         };
 
-        const sf::Vector2i mapSize = context.maps.current().size();
-        sf::Vector2f screenPos     = util::position(context.layout.mapRect());
+        const sf::Vector2i mapSize = t_context.maps.current().size();
+        sf::Vector2f screenPos     = util::position(t_context.layout.mapRect());
         for (int y(0); y < mapSize.y; ++y)
         {
             for (int x(0); x < mapSize.x; ++x)
@@ -147,7 +147,7 @@ namespace castlecrawl
 
                 if (notLiq(ch))
                 {
-                    screenPos.x += context.layout.cellSize().x;
+                    screenPos.x += t_context.layout.cellSize().x;
                     continue;
                 }
 
@@ -166,52 +166,53 @@ namespace castlecrawl
                 if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
                 {
                     appendTileVerts(
-                        context, TileImage::LiquidRim_TopLeft, screenPos, m_objectVerts);
+                        t_context, TileImage::LiquidRim_TopLeft, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(upChar, upPos) && validNotLiquid(rightChar, rightPos))
                 {
                     appendTileVerts(
-                        context, TileImage::LiquidRim_TopRight, screenPos, m_objectVerts);
+                        t_context, TileImage::LiquidRim_TopRight, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(downChar, downPos) && validNotLiquid(leftChar, leftPos))
                 {
                     appendTileVerts(
-                        context, TileImage::LiquidRim_BotLeft, screenPos, m_objectVerts);
+                        t_context, TileImage::LiquidRim_BotLeft, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(downChar, downPos) && validNotLiquid(rightChar, rightPos))
                 {
                     appendTileVerts(
-                        context, TileImage::LiquidRim_BotRight, screenPos, m_objectVerts);
+                        t_context, TileImage::LiquidRim_BotRight, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(upChar, upPos))
                 {
-                    appendTileVerts(context, TileImage::LiquidRim_Top, screenPos, m_objectVerts);
+                    appendTileVerts(t_context, TileImage::LiquidRim_Top, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(downChar, downPos))
                 {
-                    appendTileVerts(context, TileImage::LiquidRim_Bot, screenPos, m_objectVerts);
+                    appendTileVerts(t_context, TileImage::LiquidRim_Bot, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(leftChar, leftPos))
                 {
-                    appendTileVerts(context, TileImage::LiquidRim_Left, screenPos, m_objectVerts);
+                    appendTileVerts(t_context, TileImage::LiquidRim_Left, screenPos, m_objectVerts);
                 }
 
                 if (validNotLiquid(rightChar, rightPos))
                 {
-                    appendTileVerts(context, TileImage::LiquidRim_Right, screenPos, m_objectVerts);
+                    appendTileVerts(
+                        t_context, TileImage::LiquidRim_Right, screenPos, m_objectVerts);
                 }
 
-                screenPos.x += context.layout.cellSize().x;
+                screenPos.x += t_context.layout.cellSize().x;
             }
 
-            screenPos.x = context.layout.mapRect().left;
-            screenPos.y += context.layout.cellSize().x;
+            screenPos.x = t_context.layout.mapRect().left;
+            screenPos.y += t_context.layout.cellSize().x;
         }
     }
 
@@ -228,17 +229,17 @@ namespace castlecrawl
     }
 
     void MapDisplay::appendTileVerts(
-        const Context & context,
-        const TileImage image,
-        const sf::Vector2f & pos,
-        VertVec_t & verts) const
+        const Context & t_context,
+        const TileImage t_image,
+        const sf::Vector2f & t_pos,
+        VertVec_t & t_verts) const
     {
-        util::appendQuadVerts(context.tile_images.sprite(context, image, pos), verts);
+        util::appendQuadVerts(t_context.tile_images.sprite(t_context, t_image, t_pos), t_verts);
     }
 
-    bool MapDisplay::isFloorAdjacent(const Context & context, const MapPos_t pos) const
+    bool MapDisplay::isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const
     {
-        for (const MapCell & surrCell : context.maps.current().surroundingCellsHorizVert(pos))
+        for (const MapCell & surrCell : t_context.maps.current().surroundingCellsHorizVert(t_pos))
         {
             if (' ' != surrCell.floor_char)
             {
