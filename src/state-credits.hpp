@@ -23,15 +23,15 @@ namespace castlecrawl
     {
       public:
         Credit(
-            const Context & context,
-            const std::string & name,
-            const std::string & desc,
-            const std::string & license = "",
-            const std::string & extra = "");
+            const Context & t_context,
+            const std::string & t_name,
+            const std::string & t_desc,
+            const std::string & t_license = "",
+            const std::string & t_extra   = "");
 
-        void update(const float frameTimeSec);
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
-        void vertPosition(const float pos);
+        void update(const float t_frameTimeSec);
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
+        void vertPosition(const float t_pos);
         float bottom() const;
 
       private:
@@ -50,16 +50,16 @@ namespace castlecrawl
         StateCredits();
         virtual ~StateCredits() final {}
 
-        virtual void onEnter(const Context & context) final;
+        virtual void onEnter(const Context & t_context) final;
         virtual State which() const final { return State::Credits; }
-        virtual void update(const Context & context, const float frameTimeSec) final;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
-            const Context & context,
-            sf::RenderTarget & target,
-            sf::RenderStates states) const final;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) final;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
         sf::Texture m_castleTexture;
