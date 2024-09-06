@@ -11,23 +11,23 @@ namespace castlecrawl
 {
 
     Shaker::Shaker()
-        : m_range(0.0f)
-        , m_speed(0.0f)
-        , m_elapsedTimeSec(0.0f)
-        , m_current(0.0f)
+        : m_range{ 0.0f }
+        , m_speed{ 0.0f }
+        , m_elapsedTimeSec{ 0.0f }
+        , m_current{ 0.0f }
     {}
 
-    void Shaker::setup(const float range, float speed)
+    void Shaker::setup(const float t_range, float t_speed)
     {
-        m_range          = range; // try (context.layout.cellSize().x * 0.1f)
-        m_speed          = speed; // try 75.0f
+        m_range          = t_range; // try (context.layout.cellSize().x * 0.1f)
+        m_speed          = t_speed; // try 75.0f
         m_elapsedTimeSec = 0.0f;
         m_current        = 0.0f;
     }
 
-    float Shaker::update(const float frameTimeSec)
+    float Shaker::update(const float t_frameTimeSec)
     {
-        m_elapsedTimeSec += frameTimeSec;
+        m_elapsedTimeSec += t_frameTimeSec;
         m_current = (static_cast<float>(sin(m_elapsedTimeSec * m_speed)) * m_range);
         return m_current;
     }
