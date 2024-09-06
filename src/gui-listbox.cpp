@@ -8,42 +8,43 @@
 namespace castlecrawl
 {
 
-    Listbox::Listbox(const std::vector<item::Item> & items)
-        : m_items(items)
-        , m_hasFocus()
-        , m_rowCount(0)
-        , m_highlightColor(20, 20, 20, 20)
-        , m_bgRectangle()
-        , m_indexes()
-        , m_rowRects()
-        , m_rowLineVerts()
-        , m_rowTexts()
-        , m_selectionRectangle()
-        , m_guideRectangle()
+    Listbox::Listbox(const std::vector<item::Item> & t_items)
+        : m_items{ t_items }
+        , m_hasFocus{}
+        , m_rowCount{ 0 }
+        , m_highlightColor{ 20, 20, 20, 20 }
+        , m_bgRectangle{}
+        , m_indexes{}
+        , m_rowRects{}
+        , m_rowLineVerts{}
+        , m_rowTexts{}
+        , m_selectionRectangle{}
+        , m_guideRectangle{}
     {}
 
     void Listbox::setup(
-        const Context & context,
-        const FontSize fontSize,
-        const std::size_t widthCharsMax,
-        const std::size_t heightRows)
+        const Context & t_context,
+        const FontSize t_fontSize,
+        const std::size_t t_widthCharsMax,
+        const std::size_t t_heightRows)
     {
-        m_rowCount = heightRows;
+        m_rowCount = t_heightRows;
 
-        const sf::Vector2f letterSize = context.fonts.extent(fontSize).letter_size;
+        const sf::Vector2f letterSize = t_context.fonts.extent(t_fontSize).letter_size;
 
-        m_bgRectangle.setSize({ (letterSize.x * static_cast<float>(widthCharsMax)),
-                                (letterSize.y * static_cast<float>(heightRows)) });
+        m_bgRectangle.setSize({ (letterSize.x * static_cast<float>(t_widthCharsMax)),
+                                (letterSize.y * static_cast<float>(t_heightRows)) });
 
         m_bgRectangle.setOutlineThickness(1.0f);
 
         m_rowRects.clear();
         float posTop = m_bgRectangle.getGlobalBounds().top;
-        for (std::size_t i = 0; i < heightRows; ++i)
+        for (std::size_t i = 0; i < t_heightRows; ++i)
         {
             sf::FloatRect rect{ m_bgRectangle.getGlobalBounds() };
 
-            rect.height = (m_bgRectangle.getGlobalBounds().height / static_cast<float>(heightRows));
+            rect.height =
+                (m_bgRectangle.getGlobalBounds().height / static_cast<float>(t_heightRows));
 
             rect.top = posTop;
             posTop += rect.height;
@@ -56,7 +57,7 @@ namespace castlecrawl
             // The string "Tyjp" is used because the T char reaches high and the others reach
             // low This makes the string typical in terms of height so that the setPosition()
             // works.
-            sf::Text & text = m_rowTexts.emplace_back(context.fonts.makeText(fontSize, "Tyjp"));
+            sf::Text & text = m_rowTexts.emplace_back(t_context.fonts.makeText(t_fontSize, "Tyjp"));
 
             // use this only to vertically center
             util::centerInside(text, m_rowRects[i]);
@@ -72,9 +73,9 @@ namespace castlecrawl
         redraw();
     }
 
-    void Listbox::setPosition(const sf::Vector2f & pos)
+    void Listbox::setPosition(const sf::Vector2f & t_pos)
     {
-        const sf::Vector2f move{ pos - util::position(m_bgRectangle) };
+        const sf::Vector2f move{ t_pos - util::position(m_bgRectangle) };
         m_bgRectangle.move(move);
 
         for (sf::FloatRect & rect : m_rowRects)
@@ -91,24 +92,24 @@ namespace castlecrawl
         redraw();
     }
 
-    void Listbox::draw(sf::RenderTarget & target, sf::RenderStates states) const
+    void Listbox::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(&m_rowLineVerts[0], m_rowLineVerts.size(), sf::PrimitiveType::Lines);
-        target.draw(m_bgRectangle, states);
+        t_target.draw(&m_rowLineVerts[0], m_rowLineVerts.size(), sf::PrimitiveType::Lines);
+        t_target.draw(m_bgRectangle, t_states);
 
         if (m_hasFocus && !m_items.empty())
         {
-            target.draw(m_selectionRectangle, states);
+            t_target.draw(m_selectionRectangle, t_states);
         }
 
         for (const sf::Text & text : m_rowTexts)
         {
-            target.draw(text, states);
+            t_target.draw(text, t_states);
         }
 
         if (!empty())
         {
-            target.draw(m_guideRectangle, states);
+            t_target.draw(m_guideRectangle, t_states);
         }
     }
 

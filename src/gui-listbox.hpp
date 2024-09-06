@@ -19,8 +19,8 @@ namespace castlecrawl
 {
     struct ListboxIndexes
     {
-        std::size_t display = 0;
-        std::size_t offset  = 0;
+        std::size_t display{ 0 };
+        std::size_t offset{ 0 };
     };
 
     //
@@ -28,27 +28,35 @@ namespace castlecrawl
     class Listbox : public sf::Drawable
     {
       public:
-        Listbox(const std::vector<item::Item> & items);
+        Listbox(const std::vector<item::Item> & t_items);
 
         void setup(
-            const Context & context,
-            const FontSize fontSize,
-            const std::size_t widthCharsMax,
-            const std::size_t heightRows);
+            const Context & t_context,
+            const FontSize t_fontSize,
+            const std::size_t t_widthCharsMax,
+            const std::size_t t_heightRows);
 
-        bool empty() const { return m_items.empty(); }
-        bool getFocus() const { return m_hasFocus; }
+        [[nodiscard]] inline bool empty() const { return m_items.empty(); }
+        [[nodiscard]] inline bool getFocus() const { return m_hasFocus; }
 
-        void setFocus(const bool hasFocus)
+        void setFocus(const bool t_hasFocus)
         {
-            m_hasFocus = hasFocus;
+            m_hasFocus = t_hasFocus;
             redraw();
         }
 
-        std::size_t selectedIndex() const { return (m_indexes.display + m_indexes.offset); }
-        const sf::FloatRect getGlobalBounds() const { return m_bgRectangle.getGlobalBounds(); }
-        void setPosition(const sf::Vector2f & pos);
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
+        [[nodiscard]] std::size_t selectedIndex() const
+        {
+            return (m_indexes.display + m_indexes.offset);
+        }
+
+        [[nodiscard]] sf::FloatRect getGlobalBounds() const
+        {
+            return m_bgRectangle.getGlobalBounds();
+        }
+
+        void setPosition(const sf::Vector2f & t_pos);
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         bool selectNext();
         bool selectPrev();
         void redraw();
