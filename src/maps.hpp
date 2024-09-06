@@ -17,17 +17,17 @@ namespace castlecrawl
       public:
         Maps();
 
-        void setup(const Context & context);
-        void change(const Context & context, const MapName mapName, const MapPos_t & pos);
-        void forceMapForEditting(const Map map);
-        Map & current() { return *m_currentIter; }
+        void setup(const Context & t_context);
+        void change(const Context & t_context, const MapName t_mapName, const MapPos_t & t_pos);
+        void forceMapForEditting(const Map t_map);
+        [[nodiscard]] Map & current() { return *m_currentIter; }
 
       private:
-        void load(const Context & context);
+        void load(const Context & t_context);
         void verify() const;
 
-        void loadEnemies(const Context & context, Map & map) const;
-        void unloadEnemies(const Context & context) const;
+        void loadEnemies(const Context & t_context, Map & t_map) const;
+        void unloadEnemies(const Context & t_context) const;
 
       private:
         std::vector<Map> m_maps;

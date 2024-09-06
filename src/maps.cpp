@@ -14,43 +14,43 @@
 namespace castlecrawl
 {
     Maps::Maps()
-        : m_maps()
-        , m_currentIter(std::end(m_maps))
+        : m_maps{}
+        , m_currentIter{ std::end(m_maps) }
     {}
 
-    void Maps::setup(const Context & context)
+    void Maps::setup(const Context & t_context)
     {
-        load(context);
+        load(t_context);
         verify();
     }
 
-    void Maps::change(const Context & context, MapName mapName, const MapPos_t & pos)
+    void Maps::change(const Context & t_context, MapName t_mapName, const MapPos_t & t_pos)
     {
-        unloadEnemies(context);
+        unloadEnemies(t_context);
 
         m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
-            return (map.name() == mapName);
+            return (map.name() == t_mapName);
         });
 
         M_CHECK(
             (m_currentIter != std::end(m_maps)),
-            "Tried to change to an invalid map named \"" << toString(mapName) << "\"");
+            "Tried to change to an invalid map named \"" << toString(t_mapName) << "\"");
 
-        loadEnemies(context, *m_currentIter);
-        context.map_display.load(context);
-        context.player_display.position(context, pos);
+        loadEnemies(t_context, *m_currentIter);
+        t_context.map_display.load(t_context);
+        t_context.player_display.position(t_context, t_pos);
     }
 
-    void Maps::forceMapForEditting(const Map map) { *m_currentIter = map; }
+    void Maps::forceMapForEditting(const Map t_map) { *m_currentIter = t_map; }
 
-    void Maps::load(const Context & context)
+    void Maps::load(const Context & t_context)
     {
         m_maps.clear();
 
         // clang-format off
         m_maps.emplace_back(
             MapName::Level_1_Cell,
-            context,
+            t_context,
             Floor::Stone,
             MapChars_t {
                 "...........",
@@ -71,7 +71,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_CellBlock,
-            context,
+            t_context,
             Floor::Wood,
             MapChars_t {
                 ".....d............................",
@@ -105,7 +105,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_SecretCells,
-            context,
+            t_context,
             Floor::Wood,
             MapChars_t {
                 ".........................................",
@@ -138,7 +138,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_CellJunction,
-            context,
+            t_context,
             Floor::Wood,
             MapChars_t {
                 ".........................................",
@@ -173,7 +173,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_CellsEnd,
-            context,
+            t_context,
             Floor::Wood,
             MapChars_t {
                 ".........................................",
@@ -207,7 +207,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_MainHall,
-            context,
+            t_context,
             Floor::Wood,
             MapChars_t {
                 "................d.................",
@@ -243,7 +243,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_BoilerRoom,
-            context,
+            t_context,
             Floor::Stone,
             MapChars_t {
                 "..S..........................",
@@ -277,7 +277,7 @@ namespace castlecrawl
         
         m_maps.emplace_back(
             MapName::Level_1_HiddenPassage,
-            context,
+            t_context,
             Floor::Wood,
             MapChars_t {
                 "...................d.......",
@@ -310,7 +310,7 @@ namespace castlecrawl
 
         m_maps.emplace_back( 
             MapName::Level_1_CoffinRoom,
-            context,
+            t_context,
             Floor::Stone,
             MapChars_t {
                 ".................................",
@@ -342,7 +342,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_LakeStronghold,
-            context,
+            t_context,
             Floor::Stone,
             MapChars_t {
                 "wwwww.........................wwwwwwwwwww",
@@ -374,7 +374,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_LavaGatehouse,
-            context,
+            t_context,
             Floor::Stone,
             MapChars_t {
                 "lllllllllllllllll",
@@ -407,7 +407,7 @@ namespace castlecrawl
 
         m_maps.emplace_back(
             MapName::Level_1_LavaHiddenPath,
-            context,
+            t_context,
             Floor::Stone,
             MapChars_t {
                 "llllllllllllllllllllllll llllllllllllllll",
@@ -467,111 +467,114 @@ namespace castlecrawl
         }
     }
 
-    void Maps::loadEnemies(const Context & context, Map & map) const
+    void Maps::loadEnemies(const Context & t_context, Map & t_map) const
     {
-        const sf::Vector2i size = map.size();
+        const sf::Vector2i size = t_map.size();
 
         for (int y(0); y < size.y; ++y)
         {
             for (int x(0); x < size.x; ++x)
             {
                 const MapPos_t pos(x, y);
-                const MapCell & cell = map.cell(pos);
+                const MapCell & cell = t_map.cell(pos);
 
                 if (cell.object_char == '0')
                 {
-                    context.enemies.add({ context.random, Enemy::Snake, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Snake, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '1')
                 {
-                    context.enemies.add({ context.random, Enemy::SnakeBag, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::SnakeBag, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '2')
                 {
-                    context.enemies.add({ context.random, Enemy::Spider, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Spider, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '3')
                 {
-                    context.enemies.add({ context.random, Enemy::Spiderweb, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Spiderweb, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '4')
                 {
-                    context.enemies.add({ context.random, Enemy::Goblin, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Goblin, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '5')
                 {
-                    context.enemies.add({ context.random, Enemy::GoblinBarrel, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::GoblinBarrel, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '6')
                 {
-                    context.enemies.add({ context.random, Enemy::Bat, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Bat, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '7')
                 {
-                    context.enemies.add({ context.random, Enemy::BatMask, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::BatMask, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '8')
                 {
-                    context.enemies.add({ context.random, Enemy::Skeleton, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Skeleton, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '9')
                 {
-                    context.enemies.add({ context.random, Enemy::SkeletonGrave, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add(
+                        { t_context.random, Enemy::SkeletonGrave, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == ':')
                 {
-                    context.enemies.add({ context.random, Enemy::Demon, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Demon, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == ';')
                 {
-                    context.enemies.add({ context.random, Enemy::DemonDoor, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::DemonDoor, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '[')
                 {
-                    context.enemies.add({ context.random, Enemy::Dragon, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Dragon, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == ']')
                 {
-                    context.enemies.add({ context.random, Enemy::DragonInferno, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add(
+                        { t_context.random, Enemy::DragonInferno, cell.position });
+
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '`')
                 {
-                    context.enemies.add({ context.random, Enemy::Wizard, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Wizard, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '~')
                 {
-                    context.enemies.add({ context.random, Enemy::WizardTomb, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::WizardTomb, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '\'')
                 {
-                    context.enemies.add({ context.random, Enemy::Pixie, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::Pixie, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
                 else if (cell.object_char == '\"')
                 {
-                    context.enemies.add({ context.random, Enemy::PixieCup, cell.position });
-                    map.setObjectChar(pos, ' ');
+                    t_context.enemies.add({ t_context.random, Enemy::PixieCup, cell.position });
+                    t_map.setObjectChar(pos, ' ');
                 }
             }
         }
     }
 
-    void Maps::unloadEnemies(const Context & context) const { context.enemies.removeAll(); }
+    void Maps::unloadEnemies(const Context & t_context) const { t_context.enemies.removeAll(); }
 
 } // namespace castlecrawl
