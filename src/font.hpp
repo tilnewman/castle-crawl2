@@ -10,6 +10,8 @@ namespace castlecrawl
 {
     struct GameConfig;
 
+    //
+
     enum class FontSize
     {
         Huge,
@@ -18,24 +20,28 @@ namespace castlecrawl
         Small
     };
 
+    //
+
     struct FontExtent
     {
         unsigned int char_size = 0;
-        sf::Vector2f letter_size;
+        sf::Vector2f letter_size{};
     };
+
+    //
 
     class FontManager
     {
       public:
         FontManager();
 
-        void setup(const GameConfig & config);
-        const sf::Font & font() const { return m_font; }
+        void setup(const GameConfig & t_config);
+       [[nodiscard]] const sf::Font & font() const { return m_font; }
 
-        inline const FontExtent extent(const FontSize size) const noexcept
+        [[nodiscard]] inline const FontExtent extent(const FontSize t_size) const noexcept
         {
             // clang-format off
-            switch (size)
+            switch (t_size)
             {
                 case FontSize::Huge:    { return m_fontExtentHuge; }
                 case FontSize::Large:   { return m_fontExtentLarge; }
@@ -46,13 +52,13 @@ namespace castlecrawl
             // clang-format on
         }
 
-        const sf::Text makeText(
-            const FontSize size,
-            const std::string & str,
-            const sf::Color & color = sf::Color::White) const;
+        sf::Text makeText(
+            const FontSize t_size,
+            const std::string & t_str,
+            const sf::Color & t_color = sf::Color::White) const;
 
       private:
-        void setupFontExtents(const GameConfig & config);
+        void setupFontExtents(const GameConfig & t_config);
 
       private:
         sf::Font m_font;

@@ -16,39 +16,39 @@ namespace castlecrawl
 {
 
     FontManager::FontManager()
-        : m_font()
+        : m_font{}
     {}
 
-    void FontManager::setup(const GameConfig & config)
+    void FontManager::setup(const GameConfig & t_config)
     {
         m_font.loadFromFile(
-            (config.media_path / "font" / "gentium-plus" / "gentium-plus.ttf").string());
+            (t_config.media_path / "font" / "gentium-plus" / "gentium-plus.ttf").string());
 
-        setupFontExtents(config);
+        setupFontExtents(t_config);
     }
 
-    const sf::Text FontManager::makeText(
-        const FontSize size, const std::string & str, const sf::Color & color) const
+    sf::Text FontManager::makeText(
+        const FontSize t_size, const std::string & t_str, const sf::Color & t_color) const
     {
         sf::Text text;
 
         text.setFont(m_font);
-        text.setCharacterSize(extent(size).char_size);
-        text.setFillColor(color);
-        text.setString(str);
+        text.setCharacterSize(extent(t_size).char_size);
+        text.setFillColor(t_color);
+        text.setString(t_str);
 
         util::setOriginToPosition(text);
 
         return text;
     }
 
-    void FontManager::setupFontExtents(const GameConfig & config)
+    void FontManager::setupFontExtents(const GameConfig & t_config)
     {
         // these values are based on default MacBook Pros resolution and are close enough to others
         const float standardRes = std::sqrt(3840.f * 2400.0f);
 
         const float currentRes =
-            std::sqrt(static_cast<float>(config.video_mode.width * config.video_mode.height));
+            std::sqrt(static_cast<float>(t_config.video_mode.width * t_config.video_mode.height));
 
         const float ratioRes = (currentRes / standardRes);
 
