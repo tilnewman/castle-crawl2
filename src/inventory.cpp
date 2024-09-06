@@ -10,28 +10,30 @@
 namespace castlecrawl::item
 {
     Inventory::Inventory()
-        : m_items()
+        : m_items{}
     {}
 
-    void Inventory::add(const ItemVec_t & items)
+    void Inventory::add(const ItemVec_t & t_items)
     {
-        for (const Item & item : items)
+        for (const Item & item : t_items)
         {
             m_items.push_back(item);
         }
     }
 
-    void Inventory::remove(const std::size_t index)
+    void Inventory::remove(const std::size_t t_index)
     {
-        M_CHECK(index < m_items.size(), "Tried to remove(" << index << ") out of bounds index!");
-        m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(index));
+        M_CHECK(
+            t_index < m_items.size(), "Tried to remove(" << t_index << ") out of bounds index!");
+
+        m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(t_index));
     }
 
-    const std::string Inventory::equip(const std::size_t index)
+    std::string Inventory::equip(const std::size_t t_index)
     {
-        M_CHECK(index < m_items.size(), "Tried to equip(" << index << ") out of bounds index!");
+        M_CHECK(t_index < m_items.size(), "Tried to equip(" << t_index << ") out of bounds index!");
 
-        const Item & item = m_items[index];
+        const Item & item = m_items[t_index];
 
         if (item.isWeapon() && hasWeaponEquipped())
         {
@@ -69,19 +71,21 @@ namespace castlecrawl::item
             }
         }
 
-        m_eqItems.push_back(m_items[index]);
-        m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(index));
+        m_eqItems.push_back(m_items[t_index]);
+        m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(t_index));
         return "";
     }
 
-    void Inventory::unequip(const std::size_t index)
+    void Inventory::unequip(const std::size_t t_index)
     {
-        M_CHECK(index < m_eqItems.size(), "Tried to unequip(" << index << ") out of bounds index!");
-        m_items.push_back(m_eqItems[index]);
-        m_eqItems.erase(std::begin(m_eqItems) + static_cast<std::ptrdiff_t>(index));
+        M_CHECK(
+            t_index < m_eqItems.size(), "Tried to unequip(" << t_index << ") out of bounds index!");
+
+        m_items.push_back(m_eqItems[t_index]);
+        m_eqItems.erase(std::begin(m_eqItems) + static_cast<std::ptrdiff_t>(t_index));
     }
 
-    const EquipEffect Inventory::totalEquipEffects() const
+    EquipEffect Inventory::totalEquipEffects() const
     {
         EquipEffect equipEffect;
 
@@ -121,17 +125,17 @@ namespace castlecrawl::item
         return false;
     }
 
-    const std::optional<Item> Inventory::weaponEquipped() const
+    std::optional<Item> Inventory::weaponEquipped() const
     {
         for (const Item & item : m_eqItems)
         {
             if (item.isWeapon())
             {
-                return item;
+                return { item };
             }
         }
 
-        return std::nullopt;
+        return {};
     }
 
     bool Inventory::hasEquipped(const Armor armor) const

@@ -16,26 +16,26 @@ namespace castlecrawl::item
       public:
         Inventory();
 
-        void add(const Item & item) { m_items.push_back(item); }
-        void add(const ItemVec_t & items);
-        void remove(const std::size_t index);
+        void add(const Item & t_item) { m_items.push_back(t_item); }
+        void add(const ItemVec_t & t_items);
+        void remove(const std::size_t t_index);
 
         // returns an error message if fails
-        const std::string equip(const std::size_t index);
+        std::string equip(const std::size_t t_index);
 
-        void unequip(const std::size_t index);
+        void unequip(const std::size_t t_index);
 
-        const ItemVec_t & unItems() const { return m_items; }
-        const ItemVec_t & eqItems() const { return m_eqItems; }
+        [[nodiscard]] const ItemVec_t & unItems() const { return m_items; }
+        [[nodiscard]] const ItemVec_t & eqItems() const { return m_eqItems; }
 
-        const EquipEffect totalEquipEffects() const;
-        Armor_t armorRating() const;
-        bool hasWeaponEquipped() const;
-        const std::optional<Item> weaponEquipped() const;
+        [[nodiscard]] EquipEffect totalEquipEffects() const;
+        [[nodiscard]] Armor_t armorRating() const;
+        [[nodiscard]] bool hasWeaponEquipped() const;
+        [[nodiscard]] std::optional<Item> weaponEquipped() const;
 
       private:
-        bool hasEquipped(const Armor armor) const;
-        std::size_t countOfEquipped(const Misc misc) const;
+        [[nodiscard]] bool hasEquipped(const Armor armor) const;
+        [[nodiscard]] std::size_t countOfEquipped(const Misc misc) const;
 
       private:
         ItemVec_t m_items;
