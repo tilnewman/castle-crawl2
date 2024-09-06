@@ -15,45 +15,56 @@ namespace castlecrawl
     class Stat
     {
       public:
-        Stat(const int value, const int theMin, const int theMax)
-            : m_current(value)
-            , m_normal(value)
-            , m_min(theMin)
-            , m_max(theMax)
+        constexpr Stat(const int t_value, const int t_min, const int t_max) noexcept
+            : m_current{ t_value }
+            , m_normal{ t_value }
+            , m_min{ t_min }
+            , m_max{ t_max }
         {}
 
-        int current() const { return m_current; }
-        int normal() const { return m_normal; }
+        [[nodiscard]] constexpr int current() const noexcept { return m_current; }
+        [[nodiscard]] constexpr int normal() const noexcept { return m_normal; }
 
-        int min() const { return m_min; }
-        int max() const { return m_max; }
+        [[nodiscard]] constexpr int min() const noexcept { return m_min; }
+        [[nodiscard]] constexpr int max() const noexcept { return m_max; }
 
-        void adjCurrent(const int adjustment) { current(m_current + adjustment); }
-        void adjNormal(const int adjustment) { normal(m_normal + adjustment); }
+        constexpr void adjCurrent(const int adjustment) noexcept
+        {
+            current(m_current + adjustment);
+        }
 
-        void adjCurrentNormalClamped(const int adjustment)
+        constexpr void adjNormal(const int adjustment) noexcept { normal(m_normal + adjustment); }
+
+        constexpr void adjCurrentNormalClamped(const int adjustment) noexcept
         {
             adjCurrent(adjustment);
             m_current = std::clamp(m_current, m_min, m_normal);
         }
 
-        void current(const int newValue)
+        constexpr void current(const int newValue) noexcept
         {
             m_current = newValue;
             m_current = std::clamp(m_current, m_min, m_max);
         }
 
-        void normal(const int newValue)
+        constexpr void normal(const int newValue) noexcept
         {
             m_normal = newValue;
             m_normal = std::clamp(m_normal, m_min, m_max);
         }
 
-        void reset() { m_current = m_normal; }
+        constexpr void reset() noexcept { m_current = m_normal; }
 
-        float ratio() const
+        [[nodiscard]] constexpr float ratio() const noexcept
         {
-            return (static_cast<float>(m_current) / static_cast<float>(m_normal));
+            if (0 == m_normal)
+            {
+                return 0.0f;
+            }
+            else
+            {
+                return (static_cast<float>(m_current) / static_cast<float>(m_normal));
+            }
         }
 
       private:
