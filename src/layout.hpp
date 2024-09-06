@@ -16,15 +16,15 @@ namespace castlecrawl
       public:
         Layout();
 
-        const sf::FloatRect screenRect() const { return m_screenRect; }
-        const sf::FloatRect topRect() const { return m_topRect; }
-        const sf::FloatRect botRect() const { return m_botRect; }
-        const sf::FloatRect mapRect() const { return m_mapRect; }
-        const sf::Vector2f cellSize() const { return m_cellSize; }
-        const sf::Vector2i cellCount() const { return m_cellCount; }
+        [[nodiscard]] sf::FloatRect screenRect() const { return m_screenRect; }
+        [[nodiscard]] sf::FloatRect topRect() const { return m_topRect; }
+        [[nodiscard]] sf::FloatRect botRect() const { return m_botRect; }
+        [[nodiscard]] sf::FloatRect mapRect() const { return m_mapRect; }
+        [[nodiscard]] sf::Vector2f cellSize() const { return m_cellSize; }
+        [[nodiscard]] sf::Vector2i cellCount() const { return m_cellCount; }
 
-        void setup(const GameConfig & config);
-        void setupNewMap(const sf::Vector2i & cellCount);
+        void setup(const GameConfig & t_config);
+        void setupNewMap(const sf::Vector2i & t_cellCount);
 
       private:
         sf::FloatRect m_screenRect;
