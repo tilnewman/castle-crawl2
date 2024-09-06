@@ -15,26 +15,26 @@ namespace castlecrawl
       public:
         Player();
 
-        Stat & strength() { return m_strength; }
-        Stat & dexterity() { return m_dexterity; }
-        Stat & accuracy() { return m_accuracy; }
-        Stat & luck() { return m_luck; }
-        Stat & arcane() { return m_arcane; }
-        Stat & health() { return m_health; }
-        Stat & mana() { return m_mana; }
+        [[nodiscard]] Stat & strength() { return m_strength; }
+        [[nodiscard]] Stat & dexterity() { return m_dexterity; }
+        [[nodiscard]] Stat & accuracy() { return m_accuracy; }
+        [[nodiscard]] Stat & luck() { return m_luck; }
+        [[nodiscard]] Stat & arcane() { return m_arcane; }
+        [[nodiscard]] Stat & health() { return m_health; }
+        [[nodiscard]] Stat & mana() { return m_mana; }
 
-        int level() const { return m_level; }
-        int gold() const { return m_gold; }
+        [[nodiscard]] int level() const { return m_level; }
+        [[nodiscard]] int gold() const { return m_gold; }
 
-        Armor_t armor() const { return m_inventory.armorRating(); }
+        [[nodiscard]] Armor_t armor() const { return m_inventory.armorRating(); }
 
-        void levelAdj(const int adj) { m_level += adj; }
-        void goldAdj(const int adj) { m_gold += adj; }
+        void levelAdj(const int t_adj) { m_level += t_adj; }
+        void goldAdj(const int t_adj) { m_gold += t_adj; }
 
-        item::Inventory & inventory() { return m_inventory; }
+        [[nodiscard]] item::Inventory & inventory() { return m_inventory; }
 
         void updateEquipEffects();
-        const item::EquipEffect equipEffects() const { return m_equipEffects; }
+        [[nodiscard]] item::EquipEffect equipEffects() const { return m_equipEffects; }
 
       private:
         constexpr static int statMin     = 1;
