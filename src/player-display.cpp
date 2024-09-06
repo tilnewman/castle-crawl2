@@ -15,36 +15,36 @@ namespace castlecrawl
 {
 
     PlayerDisplay::PlayerDisplay()
-        : m_mapPos(0, 0)
-        , m_screenPos(0.0f, 0.0f)
-        , m_sprite()
-        , m_isShaking(false)
-        , m_shakeTimeSec(0.0f)
-        , m_shaker()
+        : m_mapPos{ 0, 0 }
+        , m_screenPos{ 0.0f, 0.0f }
+        , m_sprite{}
+        , m_isShaking{ false }
+        , m_shakeTimeSec{ 0.0f }
+        , m_shaker{}
     {}
 
-    void PlayerDisplay::setup(const Context & context)
+    void PlayerDisplay::setup(const Context & t_context)
     {
-        m_sprite = context.tile_images.sprite(context, TileImage::Avatar);
-        m_shaker.setup((context.layout.cellSize().x * 0.1f), 75.0f);
+        m_sprite = t_context.tile_images.sprite(t_context, TileImage::Avatar);
+        m_shaker.setup((t_context.layout.cellSize().x * 0.1f), 75.0f);
     }
 
-    void PlayerDisplay::position(const Context & context, const MapPos_t & newPosition)
+    void PlayerDisplay::position(const Context & t_context, const MapPos_t & t_newPosition)
     {
         // assert player in a valid position? -no, because map transitions are invalid
 
         m_isShaking = false;
-        m_mapPos    = newPosition;
-        m_screenPos = context.maps.current().mapPosToScreenPos(context, m_mapPos);
+        m_mapPos    = t_newPosition;
+        m_screenPos = t_context.maps.current().mapPosToScreenPos(t_context, m_mapPos);
         m_sprite.setPosition(m_screenPos);
     }
 
-    void PlayerDisplay::update(const Context &, const float frameTimeSec)
+    void PlayerDisplay::update(const Context &, const float t_frameTimeSec)
     {
         if (m_isShaking)
         {
-            m_shaker.update(frameTimeSec);
-            m_shakeTimeSec += frameTimeSec;
+            m_shaker.update(t_frameTimeSec);
+            m_shakeTimeSec += t_frameTimeSec;
 
             const float shakeDurationSec{ 0.5f };
             if (m_shakeTimeSec > shakeDurationSec)
@@ -58,9 +58,9 @@ namespace castlecrawl
     }
 
     void PlayerDisplay::draw(
-        const Context &, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context &, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(m_sprite, states);
+        t_target.draw(m_sprite, t_states);
     }
 
 } // namespace castlecrawl

@@ -20,14 +20,14 @@ namespace castlecrawl
       public:
         PlayerDisplay();
 
-        void setup(const Context & context);
-        const MapPos_t position() const { return m_mapPos; }
-        void position(const Context & context, const MapPos_t & newPosition);
-        void update(const Context & context, const float frameTimeSec);
+        void setup(const Context & t_context);
+        [[nodiscard]] MapPos_t position() const { return m_mapPos; }
+        void position(const Context & t_context, const MapPos_t & t_newPosition);
+        void update(const Context & t_context, const float t_frameTimeSec);
         void shake() { m_isShaking = true; }
 
-        void
-            draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
+            const;
 
       private:
         MapPos_t m_mapPos;
