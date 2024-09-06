@@ -17,9 +17,9 @@ namespace castlecrawl
       public:
         FramerateText();
 
-        void setup(const Context & context);
+        void setup(const Context & t_context);
         void update();
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
       private:
         sf::Text m_text;

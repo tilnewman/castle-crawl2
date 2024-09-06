@@ -14,21 +14,21 @@
 namespace castlecrawl
 {
     FramerateText::FramerateText()
-        : m_text()
-        , m_frameCounter(0.0f)
-        , m_secondClock()
+        : m_text{}
+        , m_frameCounter{ 0.0f }
+        , m_secondClock{}
     {}
 
-    void FramerateText::setup(const Context & context)
+    void FramerateText::setup(const Context & t_context)
     {
         m_secondClock.restart();
 
-        m_text.setFont(context.fonts.font());
+        m_text.setFont(t_context.fonts.font());
         m_text.setCharacterSize(30);
         m_text.setFillColor(sf::Color::White);
 
         m_text.setPosition(
-            0.0f, (context.layout.botRect().top + context.layout.botRect().height) - 50.0f);
+            0.0f, (t_context.layout.botRect().top + t_context.layout.botRect().height) - 50.0f);
     }
 
     void FramerateText::update()
@@ -38,7 +38,7 @@ namespace castlecrawl
         const float elapsedTimeSec = m_secondClock.getElapsedTime().asSeconds();
         if (elapsedTimeSec >= 1.0f)
         {
-            const std::size_t fps = static_cast<std::size_t>(m_frameCounter / elapsedTimeSec);
+            const std::size_t fps       = static_cast<std::size_t>(m_frameCounter / elapsedTimeSec);
             const std::string fpsString = std::to_string(fps) + "fps";
             m_text.setString(fpsString);
 
@@ -47,9 +47,9 @@ namespace castlecrawl
         }
     }
 
-    void FramerateText::draw(sf::RenderTarget & target, sf::RenderStates states) const
+    void FramerateText::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(m_text, states);
+        t_target.draw(m_text, t_states);
     }
 
 } // namespace castlecrawl
