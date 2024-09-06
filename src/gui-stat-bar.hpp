@@ -13,23 +13,25 @@ namespace castlecrawl
 {
     struct Context;
 
+    //
+
     class StatBar : public sf::Drawable
     {
       public:
         StatBar();
 
         void setup(
-            const Context & context,
-            const sf::FloatRect & region,
-            const sf::Color & color,
-            const int maxValue);
+            const Context & t_context,
+            const sf::FloatRect & t_region,
+            const sf::Color & t_color,
+            const int t_maxValue);
 
-        void setCurrentValue(const Context & context, const int newValue);
-        void setMaxValue(const Context & context, const int newValue);
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
+        void setCurrentValue(const Context & t_context, const int t_newValue);
+        void setMaxValue(const Context & t_context, const int t_newValue);
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 
       private:
-        void update(const Context & context);
+        void update(const Context & t_context);
 
       private:
         sf::Text m_text;
