@@ -22,8 +22,8 @@ namespace castlecrawl::item
 {
 
     ItemFactory::ItemFactory()
-        : m_textExtent()
-        , m_allItems()
+        : m_textExtent{}
+        , m_allItems{}
     {}
 
     void ItemFactory::makeAll()
@@ -37,7 +37,7 @@ namespace castlecrawl::item
         makeCustom(m_allItems);
     }
 
-    void ItemFactory::makeWeapons(ItemVec_t & items) const
+    void ItemFactory::makeWeapons(ItemVec_t & t_items) const
     {
         for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
         {
@@ -45,12 +45,12 @@ namespace castlecrawl::item
             for (int m = 0; m < static_cast<int>(WeaponMaterial::Count); ++m)
             {
                 const auto material = static_cast<WeaponMaterial>(m);
-                items.emplace_back(type, material);
+                t_items.emplace_back(type, material);
             }
         }
     }
 
-    void ItemFactory::makeArmor(ItemVec_t & items) const
+    void ItemFactory::makeArmor(ItemVec_t & t_items) const
     {
         for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
         {
@@ -58,12 +58,12 @@ namespace castlecrawl::item
             for (int m = 0; m < static_cast<int>(ArmorMaterial::Count); ++m)
             {
                 const auto material = static_cast<ArmorMaterial>(m);
-                items.emplace_back(type, material);
+                t_items.emplace_back(type, material);
             }
         }
     }
 
-    void ItemFactory::makeMisc(ItemVec_t & items) const
+    void ItemFactory::makeMisc(ItemVec_t & t_items) const
     {
         for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
         {
@@ -78,7 +78,7 @@ namespace castlecrawl::item
             {
                 const auto material = static_cast<MiscMaterial>(m);
 
-                items.emplace_back(
+                t_items.emplace_back(
                     type,
                     material,
                     UseStrength::Normal,
@@ -89,21 +89,21 @@ namespace castlecrawl::item
 
         // these are the useable misc items
         // clang-format off
-        items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
-        items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.health=16}, {}));
-        items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.health=32}, {}));
+        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
+        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.health=16}, {}));
+        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.health=32}, {}));
         //
-        items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.mana=5}, {}));
-        items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.mana=10}, {}));
-        items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.mana=20}, {}));
+        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.mana=5}, {}));
+        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.mana=10}, {}));
+        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.mana=20}, {}));
         //
-        items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak,   {.health=5}, {}));
-        items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
-        items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
+        t_items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak,   {.health=5}, {}));
+        t_items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
+        t_items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
         // clang-format on
     }
 
-    void ItemFactory::makeCustom(ItemVec_t & items) const
+    void ItemFactory::makeCustom(ItemVec_t & t_items) const
     {
         // weapons
 
@@ -111,7 +111,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Weapon>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 WeaponMaterial::Obsidian,
                 std::string(toString(type)).append(" of Night"),
@@ -122,7 +122,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Weapon>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 WeaponMaterial::Obsidian,
                 std::string("Dark ").append(toString(type)),
@@ -133,81 +133,82 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Weapon>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 WeaponMaterial::Steel,
                 std::string("Savage ").append(toString(type)),
                 EquipEffect{ .acc = 1, .dmg = 4, .str = 2 });
         }
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Dagger, WeaponMaterial::Steel, "Backstabber Dagger", { .acc = 2, .dmg = 7 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Shortsword, WeaponMaterial::Gold, "Lucky Shortsword", { .acc = 4, .lck = 10 }));
 
-        items.push_back(Item(Weapon::Dagger, WeaponMaterial::Bronze, "Hobo Dagger", { .lck = 2 }));
+        t_items.push_back(
+            Item(Weapon::Dagger, WeaponMaterial::Bronze, "Hobo Dagger", { .lck = 2 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Scythe,
             WeaponMaterial::Gold,
             "Sythe of the Lich",
             { .acc = 3, .arc = 7, .dmg = 7 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
 
-        items.push_back(Item(Weapon::Mace, WeaponMaterial::Steel, "Brute Mace", { .dmg = 4 }));
+        t_items.push_back(Item(Weapon::Mace, WeaponMaterial::Steel, "Brute Mace", { .dmg = 4 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Warhammer, WeaponMaterial::Silver, "Requiem Warhammer", { .dmg = 6 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Longsword,
             WeaponMaterial::Silver,
             "Knightly Longsword",
             { .acc = 3, .dmg = 6 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Waraxe, WeaponMaterial::Bronze, "Orcish Waraxe", { .dmg = 3 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Claymore, WeaponMaterial::Obsidian, "Macabre Waraxe", { .arc = 2, .dmg = 4 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Shortsword,
             WeaponMaterial::Steel,
             "Scoundrel Shortsword",
             { .dmg = 6, .lck = 3 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Waraxe, WeaponMaterial::Steel, "Wicked Waraxe", { .dmg = 5, .lck = 1 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Dagger, WeaponMaterial::Obsidian, "Diabolic Dagger", { .dmg = 10 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Longsword,
             WeaponMaterial::Silver,
             "Dancing Longsword",
             { .acc = 4, .dmg = 8 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Longsword, WeaponMaterial::Steel, "Samurai Longsword", { .acc = 2, .dmg = 2 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Claymore, WeaponMaterial::Obsidian, "Gloom Claymore", { .dmg = 4 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Dagger, WeaponMaterial::Silver, "Pirate Dagger", { .dmg = 2, .lck = 2 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Longsword, WeaponMaterial::Silver, "Pirate Longsword", { .dmg = 2, .lck = 2 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Weapon::Dagger, WeaponMaterial::Steel, "Bone Dagger", { .arc = 1, .dmg = 2 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Weapon::Handaxe, WeaponMaterial::Bronze, "Villan's Handaxe", { .dmg = 1, .str = 1 }));
 
         // armor
@@ -216,7 +217,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Armor>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 ArmorMaterial::DragonScale,
                 std::string("Dragon Slayer ").append(toString(type)),
@@ -227,7 +228,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Armor>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 ArmorMaterial::Silver,
                 std::string(toString(type)).append(" of Nobility"),
@@ -238,7 +239,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Armor>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 ArmorMaterial::Steel,
                 std::string("Gladiator ").append(toString(type)),
@@ -249,7 +250,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Armor>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 ArmorMaterial::Gold,
                 std::string("Kingly ").append(toString(type)),
@@ -260,7 +261,7 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Armor>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 ArmorMaterial::Leather,
                 std::string("Druid ").append(toString(type)),
@@ -271,70 +272,71 @@ namespace castlecrawl::item
         {
             const auto type = static_cast<Armor>(i);
 
-            items.emplace_back(
+            t_items.emplace_back(
                 type,
                 ArmorMaterial::Leather,
                 std::string("Ranger ").append(toString(type)),
                 EquipEffect{ .acc = 2, .lck = 1, .str = 3 });
         }
 
-        items.push_back(Item(Armor::Boots, ArmorMaterial::Leather, "Nimble Boots", { .dex = 5 }));
+        t_items.push_back(Item(Armor::Boots, ArmorMaterial::Leather, "Nimble Boots", { .dex = 5 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Bracers, ArmorMaterial::Leather, "Swift Bracers", { .dex = 7 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Gauntlets, ArmorMaterial::Leather, "Mongoose Gauntlets", { .dex = 9 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Gauntlets, ArmorMaterial::Gold, "Glory Gauntlets", { .acc = 3, .str = 5 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Cuirass, ArmorMaterial::Silver, "Cuirass of Last Rites", { .arc = 7 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Greaves, ArmorMaterial::Leather, "Burglar Greaves", { .lck = 7 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Boots, ArmorMaterial::Leather, "Sorcerer Boots", { .arc = 5, .lck = 1 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Armor::Cuirass, ArmorMaterial::Silver, "Sorcerer Cuirass", { .arc = 5, .lck = 1 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Armor::Greaves, ArmorMaterial::Silver, "Sorcerer Greaves", { .arc = 5, .lck = 1 }));
 
-        items.push_back(Item(Armor::Boots, ArmorMaterial::Leather, "Shaman Boots", { .arc = 2 }));
+        t_items.push_back(Item(Armor::Boots, ArmorMaterial::Leather, "Shaman Boots", { .arc = 2 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Cuirass, ArmorMaterial::Leather, "Shaman Cuirass", { .arc = 2 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Greaves, ArmorMaterial::Leather, "Shaman Greaves", { .arc = 2 }));
 
-        items.push_back(Item(Armor::Helm, ArmorMaterial::Leather, "Monster Helm", { .str = 8 }));
+        t_items.push_back(Item(Armor::Helm, ArmorMaterial::Leather, "Monster Helm", { .str = 8 }));
 
-        items.push_back(Item(Armor::Boots, ArmorMaterial::Leather, "Bearskin Boots", { .str = 1 }));
+        t_items.push_back(
+            Item(Armor::Boots, ArmorMaterial::Leather, "Bearskin Boots", { .str = 1 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Bracers, ArmorMaterial::Leather, "Bearskin Bracers", { .str = 1 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Cuirass, ArmorMaterial::Leather, "Bearskin Cuirass", { .str = 1 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Greaves, ArmorMaterial::Leather, "Bearskin Greaves", { .str = 1 }));
 
-        items.push_back(
+        t_items.push_back(
             Item(Armor::Boots, ArmorMaterial::Leather, "Beastcall Boots", { .arc = 1, .str = 3 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Armor::Bracers, ArmorMaterial::Leather, "Beastcall Bracers", { .arc = 1, .str = 3 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Armor::Cuirass, ArmorMaterial::Leather, "Beastcall Cuirass", { .arc = 1, .str = 3 }));
 
-        items.push_back(Item(
+        t_items.push_back(Item(
             Armor::Greaves, ArmorMaterial::Leather, "Beastcall Greaves", { .arc = 1, .str = 3 }));
     }
 
@@ -356,7 +358,7 @@ namespace castlecrawl::item
         }
     }
 
-    const TextExtent ItemFactory::findTextExtents() const
+    TextExtent ItemFactory::findTextExtents() const
     {
         TextExtent extents;
 
@@ -380,16 +382,15 @@ namespace castlecrawl::item
     {
         makeAll();
 
-        // sorting by value allows for various optimizations
-        std::sort(std::begin(m_allItems), std::end(m_allItems), [](const Item & A, const Item & B) {
-            return (A.value() < B.value());
-        });
+        // sorting by value allows for various optimizations, see randomTreasureFind()
+        std::ranges::sort(
+            m_allItems, [](const Item & A, const Item & B) { return (A.value() < B.value()); });
 
         m_textExtent = findTextExtents();
         validate();
     }
 
-    void ItemFactory::dumpInfo(const sf::Font & font) const
+    void ItemFactory::dumpInfo(const sf::Font & t_font) const
     {
         // write all items to a spreadsheet
         {
@@ -567,12 +568,12 @@ namespace castlecrawl::item
         }
         std::sort(std::begin(nameLengths), std::end(nameLengths));
         std::sort(std::begin(descLengths), std::end(descLengths));
-        util::StatsDisplay<int>::makeAndSavePNG("all-item-values", font, allValues);
-        util::StatsDisplay<int>::makeAndSavePNG("weapon-item-values", font, weaponValues);
-        util::StatsDisplay<int>::makeAndSavePNG("armor-item-values", font, armorValues);
-        util::StatsDisplay<int>::makeAndSavePNG("misc-item-values", font, miscValues);
-        util::StatsDisplay<std::size_t>::makeAndSavePNG("item-name-lengths", font, nameLengths);
-        util::StatsDisplay<std::size_t>::makeAndSavePNG("item-desc-lengths", font, descLengths);
+        util::StatsDisplay<int>::makeAndSavePNG("all-item-values", t_font, allValues);
+        util::StatsDisplay<int>::makeAndSavePNG("weapon-item-values", t_font, weaponValues);
+        util::StatsDisplay<int>::makeAndSavePNG("armor-item-values", t_font, armorValues);
+        util::StatsDisplay<int>::makeAndSavePNG("misc-item-values", t_font, miscValues);
+        util::StatsDisplay<std::size_t>::makeAndSavePNG("item-name-lengths", t_font, nameLengths);
+        util::StatsDisplay<std::size_t>::makeAndSavePNG("item-desc-lengths", t_font, descLengths);
 
         std::cout << std::endl;
         std::cout << "item count    = " << m_allItems.size() << std::endl;
@@ -585,21 +586,21 @@ namespace castlecrawl::item
         std::cout << std::endl;
     }
 
-    void ItemFactory::throwIfInvalid(const Item & item) const
+    void ItemFactory::throwIfInvalid(const Item & t_item) const
     {
         const std::size_t typeCount = [&]() {
             std::size_t count{ 0 };
-            if (item.isArmor())
+            if (t_item.isArmor())
             {
                 ++count;
             }
 
-            if (item.isWeapon())
+            if (t_item.isWeapon())
             {
                 ++count;
             }
 
-            if (item.isMisc())
+            if (t_item.isMisc())
             {
                 ++count;
             }
@@ -610,134 +611,139 @@ namespace castlecrawl::item
         M_CHECK(
             (typeCount == 1),
             "Item's basic type count of Weapon/Armor/Misc is "
-                << typeCount << " (mutually exclusive so the count must always be 1): " << item);
+                << typeCount << " (mutually exclusive so the count must always be 1): " << t_item);
 
-        M_CHECK(!item.name().empty(), "Item has no name: " << item);
+        M_CHECK(!t_item.name().empty(), "Item has no name: " << t_item);
 
-        if (item.isUseable())
+        if (t_item.isUseable())
         {
             M_CHECK(
-                !item.isEquipable(),
-                "Item is Useable AND Equipable (both should never be true): " << item);
+                !t_item.isEquipable(),
+                "Item is Useable AND Equipable (both should never be true): " << t_item);
 
-            M_CHECK(item.isMisc(), "Item is Useable but not misc: " << item);
+            M_CHECK(t_item.isMisc(), "Item is Useable but not misc: " << t_item);
         }
 
-        if (item.isEquipable())
+        if (t_item.isEquipable())
         {
             M_CHECK(
-                !item.isUseable(),
-                "Item is Equipable AND Useable (both should never be true): " << item);
+                !t_item.isUseable(),
+                "Item is Equipable AND Useable (both should never be true): " << t_item);
         }
 
-        if (MiscMaterial::Magic == item.miscMaterial())
+        if (MiscMaterial::Magic == t_item.miscMaterial())
         {
-            M_CHECK((item.isMagical()), "Item with MiscMaterial::Magical is not magical: " << item);
+            M_CHECK(
+                (t_item.isMagical()), "Item with MiscMaterial::Magical is not magical: " << t_item);
         }
 
-        if (item.isArmor())
+        if (t_item.isArmor())
         {
-            M_CHECK((item.armorRating() >= 1_armor), "Armor item's amor_rating invalid: " << item);
+            M_CHECK(
+                (t_item.armorRating() >= 1_armor), "Armor item's amor_rating invalid: " << t_item);
 
             M_CHECK(
-                (item.armorMaterial() != ArmorMaterial::Count),
-                "Armor item has no material: " << item);
+                (t_item.armorMaterial() != ArmorMaterial::Count),
+                "Armor item has no material: " << t_item);
 
-            M_CHECK(item.isEquipable(), "Armor item SHOULD be Equipable but is not: " << item);
+            M_CHECK(t_item.isEquipable(), "Armor item SHOULD be Equipable but is not: " << t_item);
 
-            if (item.isMagical())
+            if (t_item.isMagical())
             {
                 M_CHECK(
-                    (item.name() != toString(item.armorType())),
-                    "Magical armor has a default name:" << item);
+                    (t_item.name() != toString(t_item.armorType())),
+                    "Magical armor has a default name:" << t_item);
 
                 M_CHECK(
-                    (item.equipEffect().total() > 0), "Magical armor has no equip effect:" << item);
+                    (t_item.equipEffect().total() > 0),
+                    "Magical armor has no equip effect:" << t_item);
             }
         }
         else
         {
-            M_CHECK((item.armorRating() == 0_armor), "Non-Armor item had an amor_rating: " << item);
+            M_CHECK(
+                (t_item.armorRating() == 0_armor), "Non-Armor item had an amor_rating: " << t_item);
 
             M_CHECK(
-                (item.armorMaterial() == ArmorMaterial::Count),
-                "Non-Armor item has armor material: " << item);
+                (t_item.armorMaterial() == ArmorMaterial::Count),
+                "Non-Armor item has armor material: " << t_item);
         }
 
-        if (item.isWeapon())
+        if (t_item.isWeapon())
         {
-            M_CHECK((item.damageMin() > 0), "Weapon item's damage_min invalid: " << item);
+            M_CHECK((t_item.damageMin() > 0), "Weapon item's damage_min invalid: " << t_item);
 
             M_CHECK(
-                (item.damageMax() >= item.damageMin()),
-                "Weapon item's damage_max is not >= than the min: " << item);
+                (t_item.damageMax() >= t_item.damageMin()),
+                "Weapon item's damage_max is not >= than the min: " << t_item);
 
             M_CHECK(
-                (item.weaponMaterial() != WeaponMaterial::Count),
-                "Weapon item has no weapon material: " << item);
+                (t_item.weaponMaterial() != WeaponMaterial::Count),
+                "Weapon item has no weapon material: " << t_item);
 
-            M_CHECK(item.isEquipable(), "Weapon item SHOULD be Equipable but is not: " << item);
+            M_CHECK(t_item.isEquipable(), "Weapon item SHOULD be Equipable but is not: " << t_item);
 
-            if (item.isMagical())
+            if (t_item.isMagical())
             {
                 M_CHECK(
-                    (item.name() != toString(item.weaponType())),
-                    "Magical weapon has a default name:" << item);
+                    (t_item.name() != toString(t_item.weaponType())),
+                    "Magical weapon has a default name:" << t_item);
 
                 M_CHECK(
-                    (item.equipEffect().total() > 0),
-                    "Magical weapon has no equip effect:" << item);
+                    (t_item.equipEffect().total() > 0),
+                    "Magical weapon has no equip effect:" << t_item);
             }
         }
         else
         {
-            M_CHECK((item.damageMin() == 0), "Non-Weapon item has a damage_min: " << item);
-            M_CHECK((item.damageMax() == 0), "Non-Weapon item has a damage_max: " << item);
+            M_CHECK((t_item.damageMin() == 0), "Non-Weapon item has a damage_min: " << t_item);
+            M_CHECK((t_item.damageMax() == 0), "Non-Weapon item has a damage_max: " << t_item);
 
             M_CHECK(
-                (item.weaponMaterial() == WeaponMaterial::Count),
-                "Non-Weapon item has weapon material: " << item);
+                (t_item.weaponMaterial() == WeaponMaterial::Count),
+                "Non-Weapon item has weapon material: " << t_item);
         }
 
-        if (item.isMisc())
+        if (t_item.isMisc())
         {
-            if (item.isUseable())
+            if (t_item.isUseable())
             {
                 M_CHECK(
-                    (item.useEffect().total() > 0), "Useable item has no use effects: " << item);
+                    (t_item.useEffect().total() > 0),
+                    "Useable item has no use effects: " << t_item);
 
                 M_CHECK(
-                    (item.miscMaterial() == MiscMaterial::Magic),
-                    "Misc item Potions and Herbs MUST have the material 'Magic': " << item);
+                    (t_item.miscMaterial() == MiscMaterial::Magic),
+                    "Misc item Potions and Herbs MUST have the material 'Magic': " << t_item);
             }
             else
             {
                 M_CHECK(
-                    (item.miscMaterial() != MiscMaterial::Magic),
-                    "This Misc item must NOT have the material 'Magic': " << item);
+                    (t_item.miscMaterial() != MiscMaterial::Magic),
+                    "This Misc item must NOT have the material 'Magic': " << t_item);
             }
         }
         else
         {
             M_CHECK(
-                (item.miscMaterial() == MiscMaterial::Count),
-                "Non-Misc item has misc material: " << item);
+                (t_item.miscMaterial() == MiscMaterial::Count),
+                "Non-Misc item has misc material: " << t_item);
         }
 
-        M_CHECK((item.value() > 0), "Item's Value is zero or less: " << item);
+        M_CHECK((t_item.value() > 0), "Item's Value is zero or less: " << t_item);
     }
 
-    const Treasure ItemFactory::randomTreasureFind(const Context & context) const
+    Treasure ItemFactory::randomTreasureFind(const Context & t_context) const
     {
         // establish how much value this random find is worth
         const int valuePerLevel{ 100 };
-        int valueRemaining = context.player.level() * valuePerLevel;
-        valueRemaining += context.random.fromTo(0, valuePerLevel);
-        valueRemaining = context.random.fromTo(0, valueRemaining);
+        int valueRemaining = t_context.player.level() * valuePerLevel;
+        valueRemaining += t_context.random.fromTo(0, valuePerLevel);
+        valueRemaining = t_context.random.fromTo(0, valueRemaining);
 
         // determine how much will be gold
         Treasure treasure;
-        const int valueOfGold = context.random.fromTo(0, valueRemaining);
+        const int valueOfGold = t_context.random.fromTo(0, valueRemaining);
         treasure.gold         = (valueOfGold / 5);
         valueRemaining -= valueOfGold;
 
@@ -776,14 +782,14 @@ namespace castlecrawl::item
                 break;
             }
 
-            const Item & item = treasure.items.emplace_back(context.random.from(items));
+            const Item & item = treasure.items.emplace_back(t_context.random.from(items));
             valueRemaining -= item.value();
         }
 
         return treasure;
     }
 
-    const Treasure ItemFactory::randomHerbFind(const Context & context) const
+    Treasure ItemFactory::randomHerbFind(const Context & t_context) const
     {
         ItemVec_t miscItems;
         miscItems.reserve(100);
@@ -797,7 +803,7 @@ namespace castlecrawl::item
             std::end(miscItems));
 
         Treasure treasure;
-        treasure.items.push_back(context.random.from(miscItems));
+        treasure.items.push_back(t_context.random.from(miscItems));
         return treasure;
     }
 

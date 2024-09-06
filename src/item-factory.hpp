@@ -17,9 +17,11 @@ namespace castlecrawl::item
 
     struct TextExtent
     {
-        std::size_t longest_name = 0;
-        std::size_t longest_desc = 0;
+        std::size_t longest_name{ 0 };
+        std::size_t longest_desc{ 0 };
     };
+
+    //
 
     class ItemFactory
     {
@@ -27,22 +29,24 @@ namespace castlecrawl::item
         ItemFactory();
 
         void setup();
-        const TextExtent textExtents() const { return m_textExtent; }
-        const Treasure randomTreasureFind(const Context & context) const;
-        const Treasure randomHerbFind(const Context & context) const;
+
+        [[nodiscard]] TextExtent textExtents() const { return m_textExtent; }
+        [[nodiscard]] Treasure randomTreasureFind(const Context & t_context) const;
+        [[nodiscard]] Treasure randomHerbFind(const Context & t_context) const;
+
         const ItemVec_t & allItems() const { return m_allItems; }
-        void dumpInfo(const sf::Font & font) const;
+        void dumpInfo(const sf::Font & t_font) const;
 
       private:
         void makeAll();
-        void makeWeapons(ItemVec_t & items) const;
-        void makeArmor(ItemVec_t & items) const;
-        void makeMisc(ItemVec_t & items) const;
-        void makeCustom(ItemVec_t & items) const;
+        void makeWeapons(ItemVec_t & t_items) const;
+        void makeArmor(ItemVec_t & t_items) const;
+        void makeMisc(ItemVec_t & t_items) const;
+        void makeCustom(ItemVec_t & t_items) const;
 
-        const TextExtent findTextExtents() const;
+        TextExtent findTextExtents() const;
         void validate() const;
-        void throwIfInvalid(const Item & item) const;
+        void throwIfInvalid(const Item & t_item) const;
 
       private:
         TextExtent m_textExtent;
