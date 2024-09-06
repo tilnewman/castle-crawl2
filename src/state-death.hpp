@@ -22,16 +22,16 @@ namespace castlecrawl
         StateDeath();
         virtual ~StateDeath() final {}
 
-        virtual void onEnter(const Context & context) final;
+        virtual void onEnter(const Context & t_context) final;
         virtual State which() const final { return State::Death; }
-        virtual void update(const Context & context, const float frameTimeSec) final;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
-            const Context & context,
-            sf::RenderTarget & target,
-            sf::RenderStates states) const final;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) final;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
         sf::RectangleShape m_fadeRedRectangle;

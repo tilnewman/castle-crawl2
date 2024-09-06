@@ -26,17 +26,17 @@
 namespace castlecrawl
 {
     StateDeath::StateDeath()
-        : m_fadeRedRectangle()
-        , m_fadeBlackRectangle()
-        , m_titleText()
+        : m_fadeRedRectangle{}
+        , m_fadeBlackRectangle{}
+        , m_titleText{}
     {}
 
-    void StateDeath::onEnter(const Context & context)
+    void StateDeath::onEnter(const Context & t_context)
     {
-        context.music.stopAll();
-        context.sfx.play("game-over.ogg");
+        t_context.music.stopAll();
+        t_context.sfx.play("game-over.ogg");
 
-        const sf::FloatRect screenRect = context.layout.screenRect();
+        const sf::FloatRect screenRect = t_context.layout.screenRect();
 
         m_fadeRedRectangle.setFillColor(sf::Color(255, 0, 0, 0));
         m_fadeRedRectangle.setSize(util::size(screenRect));
@@ -44,11 +44,11 @@ namespace castlecrawl
         m_fadeBlackRectangle.setFillColor(sf::Color(0, 0, 0, 0));
         m_fadeBlackRectangle.setSize(util::size(screenRect));
 
-        m_titleText = context.fonts.makeText(FontSize::Huge, "You Died!", sf::Color::Red);
+        m_titleText = t_context.fonts.makeText(FontSize::Huge, "You Died!", sf::Color::Red);
         util::centerInside(m_titleText, screenRect);
     }
 
-    void StateDeath::update(const Context & context, const float)
+    void StateDeath::update(const Context & t_context, const float)
     {
         if (m_fadeRedRectangle.getFillColor().a < 255)
         {
@@ -64,37 +64,37 @@ namespace castlecrawl
         }
         else
         {
-            context.state.change(context, State::Credits);
+            t_context.state.change(t_context, State::Credits);
         }
     }
 
     void StateDeath::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        context.map_display.draw(context, target, states);
-        context.enemies.draw(context, target, states);
-        context.player_display.draw(context, target, states);
-        target.draw(context.top_panel, states);
-        target.draw(m_fadeRedRectangle, states);
-        target.draw(m_fadeBlackRectangle, states);
+        t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.enemies.draw(t_context, t_target, t_states);
+        t_context.player_display.draw(t_context, t_target, t_states);
+        t_target.draw(t_context.top_panel, t_states);
+        t_target.draw(m_fadeRedRectangle, t_states);
+        t_target.draw(m_fadeBlackRectangle, t_states);
 
         if (m_fadeRedRectangle.getFillColor().a < 255)
         {
-            target.draw(m_titleText, states);
+            t_target.draw(m_titleText, t_states);
         }
     }
 
-    void StateDeath::handleEvent(const Context & context, const sf::Event & event)
+    void StateDeath::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         // all other handlers are key released events
-        if (event.type != sf::Event::KeyPressed)
+        if (t_event.type != sf::Event::KeyPressed)
         {
             return;
         }
 
-        if (event.key.code == sf::Keyboard::Escape)
+        if (t_event.key.code == sf::Keyboard::Escape)
         {
-            context.state.change(context, State::Credits);
+            t_context.state.change(t_context, State::Credits);
             return;
         }
     }
