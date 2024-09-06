@@ -50,10 +50,10 @@ namespace castlecrawl
         Level_1_LavaHiddenPath
     };
 
-    inline constexpr std::string_view toString(const MapName name) noexcept
+    inline constexpr std::string_view toString(const MapName t_name) noexcept
     {
         // clang-format off
-        switch (name)
+        switch (t_name)
         {
             case MapName::Level_1_Cell:             { return "Level_1_Cell"; }
             case MapName::Level_1_CellBlock:        { return "Level_1_CellBlock"; }
@@ -72,10 +72,10 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline std::ostream & operator<<(std::ostream & os, const MapName mapName)
+    inline std::ostream & operator<<(std::ostream & t_os, const MapName t_mapName)
     {
-        os << toString(mapName);
-        return os;
+        t_os << toString(t_mapName);
+        return t_os;
     }
 
     struct MapTransition

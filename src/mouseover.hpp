@@ -20,15 +20,15 @@ namespace castlecrawl
 
         void reset();
 
-        void update(const Context & context, const float frameTimeSec);
+        void update(const Context & t_context, const float t_frameTimeSec);
 
-        void handleMouseMovedEvent(const sf::Vector2i & newPos);
+        void handleMouseMovedEvent(const sf::Vector2i & t_newPos);
 
-        void
-            draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
+            const;
 
       private:
-        void setupDisplay(const Context & context);
+        void setupDisplay(const Context & t_context);
 
       private:
         sf::Clock m_clock;

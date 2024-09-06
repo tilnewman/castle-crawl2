@@ -15,10 +15,10 @@ namespace castlecrawl
 {
 
     Mouseover::Mouseover()
-        : m_clock()
-        , m_willDisplay(false)
-        , m_mousePos(0, 0)
-        , m_text()
+        : m_clock{}
+        , m_willDisplay{ false }
+        , m_mousePos{ 0, 0 }
+        , m_text{}
     {}
 
     void Mouseover::reset()
@@ -27,7 +27,7 @@ namespace castlecrawl
         m_willDisplay = false;
     }
 
-    void Mouseover::update(const Context & context, const float)
+    void Mouseover::update(const Context & t_context, const float)
     {
         const float elapsedTimeSec = m_clock.getElapsedTime().asSeconds();
         if (elapsedTimeSec >= 2.0f)
@@ -37,37 +37,38 @@ namespace castlecrawl
             if (m_willDisplay == false)
             {
                 m_willDisplay = true;
-                setupDisplay(context);
+                setupDisplay(t_context);
             }
         }
     }
 
-    void Mouseover::handleMouseMovedEvent(const sf::Vector2i & newPos)
+    void Mouseover::handleMouseMovedEvent(const sf::Vector2i & t_newPos)
     {
         reset();
-        m_mousePos = newPos;
+        m_mousePos = t_newPos;
     }
 
-    void Mouseover::draw(const Context &, sf::RenderTarget & target, sf::RenderStates states) const
+    void Mouseover::draw(
+        const Context &, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         if (!m_willDisplay)
         {
             return;
         }
 
-        target.draw(m_text, states);
+        t_target.draw(m_text, t_states);
     }
 
-    void Mouseover::setupDisplay(const Context & context)
+    void Mouseover::setupDisplay(const Context & t_context)
     {
         const sf::Vector2f mousePos{ m_mousePos };
 
-        const MapPos_t mapPos = context.maps.current().screenPosToMapPos(context, mousePos);
-        const MapCell mapCell = context.maps.current().cell(mapPos);
+        const MapPos_t mapPos = t_context.maps.current().screenPosToMapPos(t_context, mousePos);
+        const MapCell mapCell = t_context.maps.current().cell(mapPos);
 
         std::string message;
 
-        if (context.player_display.position() == mapPos)
+        if (t_context.player_display.position() == mapPos)
         {
             message = "you";
         }
@@ -150,9 +151,9 @@ namespace castlecrawl
         }
 
         const FontSize fontSize     = FontSize::Small;
-        const FontExtent fontExtent = context.fonts.extent(fontSize);
+        const FontExtent fontExtent = t_context.fonts.extent(fontSize);
 
-        m_text = context.fonts.makeText(fontSize, message);
+        m_text = t_context.fonts.makeText(fontSize, message);
 
         m_text.setPosition(
             (mousePos.x + fontExtent.letter_size.x), (mousePos.y - fontExtent.letter_size.y));
