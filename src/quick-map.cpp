@@ -12,21 +12,21 @@
 namespace castlecrawl
 {
 
-    QuickMap::QuickMap(const GameConfig & config, const MapChars_t & mapChars)
-        : m_mapChars(mapChars)
+    QuickMap::QuickMap(const GameConfig & t_config, const MapChars_t & t_mapChars)
+        : m_mapChars{ t_mapChars }
     {
-        convertQuickMapToRealMap(config);
+        convertQuickMapToRealMap(t_config);
     }
 
-    char QuickMap::getChar(const int x, const int y) const
+    char QuickMap::getChar(const int t_x, const int t_y) const
     {
-        if (empty() || !isPosValid({ x, y }))
+        if (empty() || !isPosValid({ t_x, t_y }))
         {
             return '.';
         }
         else
         {
-            return m_mapChars.at(static_cast<std::size_t>(y)).at(static_cast<std::size_t>(x));
+            return m_mapChars.at(static_cast<std::size_t>(t_y)).at(static_cast<std::size_t>(t_x));
         }
     }
 
@@ -38,9 +38,9 @@ namespace castlecrawl
         }
     }
 
-    void QuickMap::convertQuickMapToRealMap(const GameConfig & config)
+    void QuickMap::convertQuickMapToRealMap(const GameConfig & t_config)
     {
-        convertQuickMapToRealMap_VerifySize(config);
+        convertQuickMapToRealMap_VerifySize(t_config);
         convertQuickMapToRealMap_Walls();
         convertQuickMapToRealMap_WallCorners();
     }

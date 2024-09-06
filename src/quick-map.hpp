@@ -15,36 +15,36 @@ namespace castlecrawl
     class QuickMap
     {
       public:
-        QuickMap(const GameConfig & config, const MapChars_t & mapChars);
+        QuickMap(const GameConfig & t_config, const MapChars_t & t_mapChars);
 
-        bool empty() const { return m_mapChars.empty(); }
+        [[nodiscard]] bool empty() const { return m_mapChars.empty(); }
 
         // assumes all rows are the same length, see convertQuickMapToRealMap_VerifySize()
-        const sf::Vector2i size() const
+        sf::Vector2i size() const
         {
             return sf::Vector2i{ static_cast<int>(m_mapChars.front().size()),
                                  static_cast<int>(m_mapChars.size()) };
         }
 
-        bool isPosValid(const MapPos_t & pos) const
+        [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const
         {
             return (
-                (pos.x >= 0) && (pos.y >= 0) && (pos.x < static_cast<int>(size().x)) &&
-                (pos.y < static_cast<int>(size().y)));
+                (t_pos.x >= 0) && (t_pos.y >= 0) && (t_pos.x < static_cast<int>(size().x)) &&
+                (t_pos.y < static_cast<int>(size().y)));
         }
 
-        char getChar(const int x, const int y) const;
+        [[nodiscard]] char getChar(const int t_x, const int t_y) const;
 
-        void setChar(const int x, const int y, const char ch)
+        void setChar(const int t_x, const int t_y, const char t_ch)
         {
-            m_mapChars.at(static_cast<std::size_t>(y)).at(static_cast<std::size_t>(x)) = ch;
+            m_mapChars.at(static_cast<std::size_t>(t_y)).at(static_cast<std::size_t>(t_x)) = t_ch;
         }
 
         void dumpToConsole() const;
 
       private:
-        void convertQuickMapToRealMap(const GameConfig & config);
-        void convertQuickMapToRealMap_VerifySize(const GameConfig & config) const;
+        void convertQuickMapToRealMap(const GameConfig & t_config);
+        void convertQuickMapToRealMap_VerifySize(const GameConfig & t_config) const;
         void convertQuickMapToRealMap_Walls();
         void convertQuickMapToRealMap_WallCorners();
 
