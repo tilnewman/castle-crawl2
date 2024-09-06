@@ -31,7 +31,7 @@ namespace castlecrawl
     class LoopCoordinator
     {
       public:
-        LoopCoordinator(const GameConfig & config);
+        LoopCoordinator(const GameConfig & t_config);
 
         void playGame();
 
@@ -40,10 +40,10 @@ namespace castlecrawl
         void teardown();
         void runLoop();
         void handleEvents();
-        void handleEvent(const sf::Event & event);
+        void handleEvent(const sf::Event & t_event);
         void draw();
-        void update(const float frameTimeSec);
-        void setupRenderWindow(sf::VideoMode & videoMode);
+        void update(const float t_frameTimeSec);
+        void setupRenderWindow(sf::VideoMode & t_videoMode);
 
       private:
         sf::RenderWindow m_renderWindow;

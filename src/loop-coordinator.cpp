@@ -18,41 +18,28 @@ namespace castlecrawl
 {
 
     LoopCoordinator::LoopCoordinator(const GameConfig & config)
-        : m_renderWindow()
-        , m_renderStates()
-        , m_config(config)
-        , m_tileImages()
-        , m_layout()
-        , m_maps()
-        , m_mapDisplay()
-        , m_stateManager()
-        , m_player()
-        , m_playerDisplay()
-        , m_random()
-        , m_sfx(m_random)
-        , m_music()
-        , m_fonts()
-        , m_enemies()
-        , m_framerate()
-        , m_topPanel()
-        , m_itemFactory()
-        , m_context(
-              m_config,
-              m_tileImages,
-              m_layout,
-              m_maps,
-              m_mapDisplay,
-              m_stateManager,
-              m_player,
-              m_playerDisplay,
-              m_random,
-              m_sfx,
-              m_music,
-              m_fonts,
-              m_enemies,
-              m_framerate,
-              m_topPanel,
-              m_itemFactory)
+        : m_renderWindow{}
+        , m_renderStates{}
+        , m_config{ config }
+        , m_tileImages{}
+        , m_layout{}
+        , m_maps{}
+        , m_mapDisplay{}
+        , m_stateManager{}
+        , m_player{}
+        , m_playerDisplay{}
+        , m_random{}
+        , m_sfx{ m_random }
+        , m_music{}
+        , m_fonts{}
+        , m_enemies{}
+        , m_framerate{}
+        , m_topPanel{}
+        , m_itemFactory{}
+        , m_context{ m_config,     m_tileImages,   m_layout,   m_maps,
+                     m_mapDisplay, m_stateManager, m_player,   m_playerDisplay,
+                     m_random,     m_sfx,          m_music,    m_fonts,
+                     m_enemies,    m_framerate,    m_topPanel, m_itemFactory }
     {}
 
     void LoopCoordinator::playGame()
@@ -120,15 +107,15 @@ namespace castlecrawl
         }
     }
 
-    void LoopCoordinator::handleEvent(const sf::Event & event)
+    void LoopCoordinator::handleEvent(const sf::Event & t_event)
     {
-        if (event.type == sf::Event::Closed)
+        if (t_event.type == sf::Event::Closed)
         {
             m_stateManager.change(m_context, State::Quit);
         }
         else
         {
-            m_stateManager.current().handleEvent(m_context, event);
+            m_stateManager.current().handleEvent(m_context, t_event);
         }
     }
 
@@ -139,14 +126,14 @@ namespace castlecrawl
         m_renderWindow.display();
     }
 
-    void LoopCoordinator::update(const float frameTimeSec)
+    void LoopCoordinator::update(const float t_frameTimeSec)
     {
-        m_stateManager.current().update(m_context, frameTimeSec);
+        m_stateManager.current().update(m_context, t_frameTimeSec);
     }
 
-    void LoopCoordinator::setupRenderWindow(sf::VideoMode & videoMode)
+    void LoopCoordinator::setupRenderWindow(sf::VideoMode & t_videoMode)
     {
-        std::cout << "Attempting video mode " << videoMode << "...";
+        std::cout << "Attempting video mode " << t_videoMode << "...";
 
         if (!m_config.video_mode.isValid())
         {
@@ -154,12 +141,12 @@ namespace castlecrawl
                       << sf::VideoMode::getDesktopMode().bitsPerPixel << "bpp:" << std::endl
                       << util::makeSupportedVideoModesString(true) << std::endl;
 
-            videoMode = util::findVideoModeClosestTo(videoMode);
-            setupRenderWindow(videoMode);
+            t_videoMode = util::findVideoModeClosestTo(t_videoMode);
+            setupRenderWindow(t_videoMode);
             return;
         }
 
-        m_renderWindow.create(videoMode, "CastleCrawl2", sf::Style::Fullscreen);
+        m_renderWindow.create(t_videoMode, "CastleCrawl2", sf::Style::Fullscreen);
 
         // sometimes the resolution of the window created does not match what was specified
         const unsigned actualWidth  = m_renderWindow.getSize().x;
