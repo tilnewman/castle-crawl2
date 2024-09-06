@@ -22,71 +22,74 @@ namespace castlecrawl::item
         Item();
 
         // normal weapon constructor
-        Item(const Weapon weapon, const WeaponMaterial material);
+        Item(const Weapon t_weapon, const WeaponMaterial t_material);
 
         // magical weapon constructor
         Item(
-            const Weapon weapon,
-            const WeaponMaterial material,
-            const std::string & uniqueName,
-            const EquipEffect & effect);
+            const Weapon t_weapon,
+            const WeaponMaterial t_material,
+            const std::string & t_uniqueName,
+            const EquipEffect & t_effect);
 
         // normal armor constructor
-        Item(const Armor armor, const ArmorMaterial material);
+        Item(const Armor t_armor, const ArmorMaterial t_material);
 
         // magical armor constructor
         Item(
-            const Armor armor,
-            const ArmorMaterial material,
-            const std::string & uniqueName,
-            const EquipEffect & effect);
+            const Armor t_armor,
+            const ArmorMaterial t_material,
+            const std::string & t_uniqueName,
+            const EquipEffect & t_effect);
 
         // misc item constructor (all misc items are magical)
         Item(
-            const Misc misc,
-            const MiscMaterial material,
-            const UseStrength strength,
-            const UseEffect & useEffect,
-            const EquipEffect & equipEffect);
+            const Misc t_misc,
+            const MiscMaterial t_material,
+            const UseStrength t_strength,
+            const UseEffect & t_useEffect,
+            const EquipEffect & t_equipEffect);
 
-        const std::string name() const { return m_fullName; }
+        [[nodiscard]] inline std::string name() const { return m_fullName; }
 
-        Weapon weaponType() const { return m_weapon; }
-        Armor armorType() const { return m_armor; }
-        Misc miscType() const { return m_misc; }
+        [[nodiscard]] inline Weapon weaponType() const { return m_weapon; }
+        [[nodiscard]] inline Armor armorType() const { return m_armor; }
+        [[nodiscard]] inline Misc miscType() const { return m_misc; }
 
-        Armor_t armorRating() const { return m_armorRating; }
-        int damageMin() const { return m_damageMin; }
-        int damageMax() const { return m_damageMax; }
-        int value() const { return m_value; }
+        [[nodiscard]] inline Armor_t armorRating() const { return m_armorRating; }
+        [[nodiscard]] inline int damageMin() const { return m_damageMin; }
+        [[nodiscard]] inline int damageMax() const { return m_damageMax; }
+        [[nodiscard]] inline int value() const { return m_value; }
 
-        ArmorMaterial armorMaterial() const { return m_armorMaterial; }
-        WeaponMaterial weaponMaterial() const { return m_weaponMaterial; }
-        MiscMaterial miscMaterial() const { return m_miscMaterial; }
+        [[nodiscard]] inline ArmorMaterial armorMaterial() const { return m_armorMaterial; }
+        [[nodiscard]] inline WeaponMaterial weaponMaterial() const { return m_weaponMaterial; }
+        [[nodiscard]] inline MiscMaterial miscMaterial() const { return m_miscMaterial; }
 
-        // these three are mutually exclusive but one must return true
-        bool isWeapon() const { return (m_weapon != Weapon::Count); }
-        bool isArmor() const { return (m_armor != Armor::Count); }
-        bool isMisc() const { return ((m_misc != Misc::Count)); }
+        // these three are mutually exclusive but one of them must return true
+        [[nodiscard]] inline bool isWeapon() const { return (m_weapon != Weapon::Count); }
+        [[nodiscard]] inline bool isArmor() const { return (m_armor != Armor::Count); }
+        [[nodiscard]] inline bool isMisc() const { return ((m_misc != Misc::Count)); }
 
-        bool isUseable() const { return isMiscUseable(m_misc); }
-        std::size_t equipCount() const { return miscEquipCount(m_misc); }
-        bool isEquipable() const { return isMiscEquipable(m_misc); }
+        [[nodiscard]] inline bool isUseable() const { return isMiscUseable(m_misc); }
+        [[nodiscard]] inline std::size_t equipCount() const { return miscEquipCount(m_misc); }
+        [[nodiscard]] inline bool isEquipable() const { return isMiscEquipable(m_misc); }
 
-        const UseEffect & useEffect() const { return m_useEffect; }
-        const EquipEffect & equipEffect() const { return m_equipEffect; }
+        [[nodiscard]] inline UseEffect useEffect() const { return m_useEffect; }
+        [[nodiscard]] inline EquipEffect equipEffect() const { return m_equipEffect; }
 
-        bool isMagical() const { return (!m_useEffect.empty() || !m_equipEffect.empty()); }
+        [[nodiscard]] inline bool isMagical() const
+        {
+            return (!m_useEffect.empty() || !m_equipEffect.empty());
+        }
 
-        const std::string description() const { return m_description; }
+        [[nodiscard]] inline std::string description() const { return m_description; }
 
         auto operator<=>(const Item &) const = default;
-        friend std::ostream & operator<<(std::ostream & os, const Item & item);
+        friend std::ostream & operator<<(std::ostream & t_os, const Item & t_item);
 
       private:
-        int calcValue() const;
-        const std::string makeFullName() const;
-        const std::string makeDescription() const;
+        [[nodiscard]] int calcValue() const;
+        [[nodiscard]] std::string makeFullName() const;
+        [[nodiscard]] std::string makeDescription() const;
         void setup();
 
       private:
@@ -115,19 +118,19 @@ namespace castlecrawl::item
 
     using ItemVec_t = std::vector<Item>;
 
-    std::ostream & operator<<(std::ostream & os, const Item & item);
+    std::ostream & operator<<(std::ostream & t_os, const Item & t_item);
 
-    inline const std::string toString(const item::Item & item) { return item.name(); }
+    [[nodiscard]] inline std::string toString(const item::Item & t_item) { return t_item.name(); }
 
     //
 
     struct Treasure
     {
-        int gold = 0;
+        int gold{ 0 };
         ItemVec_t items;
 
-        bool empty() const { return ((0 == gold) && items.empty()); }
-        const std::string description() const;
+        [[nodiscard]] inline bool empty() const { return ((0 == gold) && items.empty()); }
+        std::string description() const;
     };
 
 } // namespace castlecrawl::item

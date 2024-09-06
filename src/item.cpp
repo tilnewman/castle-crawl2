@@ -10,7 +10,7 @@
 namespace castlecrawl::item
 {
 
-    const std::string Treasure::description() const
+    std::string Treasure::description() const
     {
         std::string str;
         str.reserve(200);
@@ -57,140 +57,140 @@ namespace castlecrawl::item
     //
 
     Item::Item()
-        : m_baseName()
-        , m_fullName()
-        , m_description()
-        , m_weapon(Weapon::Count)
-        , m_armor(Armor::Count)
-        , m_misc(Misc::Count)
-        , m_armorMaterial(ArmorMaterial::Count)
-        , m_weaponMaterial(WeaponMaterial::Count)
-        , m_miscMaterial(MiscMaterial::Count)
-        , m_useStrength(UseStrength::Normal)
-        , m_armorRating(0)
-        , m_value(0)
-        , m_damageMin(0)
-        , m_damageMax(0)
-        , m_useEffect()
-        , m_equipEffect()
+        : m_baseName{}
+        , m_fullName{}
+        , m_description{}
+        , m_weapon{ Weapon::Count }
+        , m_armor{ Armor::Count }
+        , m_misc{ Misc::Count }
+        , m_armorMaterial{ ArmorMaterial::Count }
+        , m_weaponMaterial{ WeaponMaterial::Count }
+        , m_miscMaterial{ MiscMaterial::Count }
+        , m_useStrength{ UseStrength::Normal }
+        , m_armorRating{ 0 }
+        , m_value{ 0 }
+        , m_damageMin{ 0 }
+        , m_damageMax{ 0 }
+        , m_useEffect{}
+        , m_equipEffect{}
     {
         setup();
     }
 
-    Item::Item(const Weapon weapon, const WeaponMaterial material)
-        : m_baseName(toString(weapon))
-        , m_fullName()
-        , m_description()
-        , m_weapon(weapon)
-        , m_armor(Armor::Count)
-        , m_misc(Misc::Count)
-        , m_armorMaterial(ArmorMaterial::Count)
-        , m_weaponMaterial(material)
-        , m_miscMaterial(MiscMaterial::Count)
-        , m_useStrength(UseStrength::Normal)
-        , m_armorRating(0)
-        , m_value(0)
-        , m_damageMin(baseWeaponDamage(weapon).x + weaponMaterialDamage(material))
-        , m_damageMax(baseWeaponDamage(weapon).y + weaponMaterialDamage(material))
-        , m_useEffect()
-        , m_equipEffect()
-    {
-        setup();
-    }
-
-    Item::Item(
-        const Weapon weapon,
-        const WeaponMaterial material,
-        const std::string & uniqueName,
-        const EquipEffect & effect)
-        : m_baseName(uniqueName)
-        , m_fullName()
-        , m_description()
-        , m_weapon(weapon)
-        , m_armor(Armor::Count)
-        , m_misc(Misc::Count)
-        , m_armorMaterial(ArmorMaterial::Count)
-        , m_weaponMaterial(material)
-        , m_miscMaterial(MiscMaterial::Count)
-        , m_useStrength(UseStrength::Normal)
-        , m_armorRating(0)
-        , m_value(0)
-        , m_damageMin(baseWeaponDamage(weapon).x + weaponMaterialDamage(material))
-        , m_damageMax(baseWeaponDamage(weapon).y + weaponMaterialDamage(material))
-        , m_useEffect()
-        , m_equipEffect(effect)
-    {
-        setup();
-    }
-
-    Item::Item(const Armor armor, const ArmorMaterial material)
-        : m_baseName(toString(armor))
-        , m_fullName()
-        , m_description()
-        , m_weapon(Weapon::Count)
-        , m_armor(armor)
-        , m_misc(Misc::Count)
-        , m_armorMaterial(material)
-        , m_weaponMaterial(WeaponMaterial::Count)
-        , m_miscMaterial(MiscMaterial::Count)
-        , m_useStrength(UseStrength::Normal)
-        , m_armorRating(baseArmorRating(armor) + armorMaterialRating(material))
-        , m_value(0)
-        , m_damageMin(0)
-        , m_damageMax(0)
-        , m_useEffect()
-        , m_equipEffect()
+    Item::Item(const Weapon t_weapon, const WeaponMaterial t_material)
+        : m_baseName{ toString(t_weapon) }
+        , m_fullName{}
+        , m_description{}
+        , m_weapon{ t_weapon }
+        , m_armor{ Armor::Count }
+        , m_misc{ Misc::Count }
+        , m_armorMaterial{ ArmorMaterial::Count }
+        , m_weaponMaterial{ t_material }
+        , m_miscMaterial{ MiscMaterial::Count }
+        , m_useStrength{ UseStrength::Normal }
+        , m_armorRating{ 0 }
+        , m_value{ 0 }
+        , m_damageMin{ baseWeaponDamage(t_weapon).x + weaponMaterialDamage(t_material) }
+        , m_damageMax{ baseWeaponDamage(t_weapon).y + weaponMaterialDamage(t_material) }
+        , m_useEffect{}
+        , m_equipEffect{}
     {
         setup();
     }
 
     Item::Item(
-        const Armor armor,
-        const ArmorMaterial material,
-        const std::string & uniqueName,
-        const EquipEffect & effect)
-        : m_baseName(uniqueName)
-        , m_fullName()
-        , m_description()
-        , m_weapon(Weapon::Count)
-        , m_armor(armor)
-        , m_misc(Misc::Count)
-        , m_armorMaterial(material)
-        , m_weaponMaterial(WeaponMaterial::Count)
-        , m_miscMaterial(MiscMaterial::Count)
-        , m_useStrength(UseStrength::Normal)
-        , m_armorRating(baseArmorRating(armor) + armorMaterialRating(material))
-        , m_value(0)
-        , m_damageMin(0)
-        , m_damageMax(0)
-        , m_useEffect()
-        , m_equipEffect(effect)
+        const Weapon t_weapon,
+        const WeaponMaterial t_material,
+        const std::string & t_uniqueName,
+        const EquipEffect & t_effect)
+        : m_baseName{ t_uniqueName }
+        , m_fullName{}
+        , m_description{}
+        , m_weapon{ t_weapon }
+        , m_armor{ Armor::Count }
+        , m_misc{ Misc::Count }
+        , m_armorMaterial{ ArmorMaterial::Count }
+        , m_weaponMaterial{ t_material }
+        , m_miscMaterial{ MiscMaterial::Count }
+        , m_useStrength{ UseStrength::Normal }
+        , m_armorRating{ 0 }
+        , m_value{ 0 }
+        , m_damageMin{ baseWeaponDamage(t_weapon).x + weaponMaterialDamage(t_material) }
+        , m_damageMax{ baseWeaponDamage(t_weapon).y + weaponMaterialDamage(t_material) }
+        , m_useEffect{}
+        , m_equipEffect{ t_effect }
+    {
+        setup();
+    }
+
+    Item::Item(const Armor t_armor, const ArmorMaterial t_material)
+        : m_baseName{ toString(t_armor) }
+        , m_fullName{}
+        , m_description{}
+        , m_weapon{ Weapon::Count }
+        , m_armor{ t_armor }
+        , m_misc{ Misc::Count }
+        , m_armorMaterial{ t_material }
+        , m_weaponMaterial{ WeaponMaterial::Count }
+        , m_miscMaterial{ MiscMaterial::Count }
+        , m_useStrength{ UseStrength::Normal }
+        , m_armorRating{ baseArmorRating(t_armor) + armorMaterialRating(t_material) }
+        , m_value{ 0 }
+        , m_damageMin{ 0 }
+        , m_damageMax{ 0 }
+        , m_useEffect{}
+        , m_equipEffect{}
     {
         setup();
     }
 
     Item::Item(
-        const Misc misc,
-        const MiscMaterial material,
-        const UseStrength strength,
-        const UseEffect & useEffect,
-        const EquipEffect & equipEffect)
-        : m_baseName(toString(misc))
-        , m_fullName()
-        , m_description()
-        , m_weapon(Weapon::Count)
-        , m_armor(Armor::Count)
-        , m_misc(misc)
-        , m_armorMaterial(ArmorMaterial::Count)
-        , m_weaponMaterial(WeaponMaterial::Count)
-        , m_miscMaterial(material)
-        , m_useStrength(strength)
-        , m_armorRating(0)
-        , m_value(0)
-        , m_damageMin(0)
-        , m_damageMax(0)
-        , m_useEffect(useEffect)
-        , m_equipEffect(equipEffect)
+        const Armor t_armor,
+        const ArmorMaterial t_material,
+        const std::string & t_uniqueName,
+        const EquipEffect & t_effect)
+        : m_baseName{ t_uniqueName }
+        , m_fullName{}
+        , m_description{}
+        , m_weapon{ Weapon::Count }
+        , m_armor{ t_armor }
+        , m_misc{ Misc::Count }
+        , m_armorMaterial{ t_material }
+        , m_weaponMaterial{ WeaponMaterial::Count }
+        , m_miscMaterial{ MiscMaterial::Count }
+        , m_useStrength{ UseStrength::Normal }
+        , m_armorRating{ baseArmorRating(t_armor) + armorMaterialRating(t_material) }
+        , m_value{ 0 }
+        , m_damageMin{ 0 }
+        , m_damageMax{ 0 }
+        , m_useEffect{}
+        , m_equipEffect{ t_effect }
+    {
+        setup();
+    }
+
+    Item::Item(
+        const Misc t_misc,
+        const MiscMaterial t_material,
+        const UseStrength t_strength,
+        const UseEffect & t_useEffect,
+        const EquipEffect & t_equipEffect)
+        : m_baseName{ toString(t_misc) }
+        , m_fullName{}
+        , m_description{}
+        , m_weapon{ Weapon::Count }
+        , m_armor{ Armor::Count }
+        , m_misc{ t_misc }
+        , m_armorMaterial{ ArmorMaterial::Count }
+        , m_weaponMaterial{ WeaponMaterial::Count }
+        , m_miscMaterial{ t_material }
+        , m_useStrength{ t_strength }
+        , m_armorRating{ 0 }
+        , m_value{ 0 }
+        , m_damageMin{ 0 }
+        , m_damageMax{ 0 }
+        , m_useEffect{ t_useEffect }
+        , m_equipEffect{ t_equipEffect }
     {
         setup();
     }
@@ -202,7 +202,7 @@ namespace castlecrawl::item
         m_description = makeDescription();
     }
 
-    const std::string Item::makeFullName() const
+    std::string Item::makeFullName() const
     {
         std::string str;
         str.reserve(32); // longest is 25 as of 2024-7-28
@@ -253,7 +253,7 @@ namespace castlecrawl::item
         return str;
     }
 
-    const std::string Item::makeDescription() const
+    std::string Item::makeDescription() const
     {
         std::string str;
 
@@ -375,64 +375,64 @@ namespace castlecrawl::item
         return value;
     }
 
-    std::ostream & operator<<(std::ostream & os, const Item & item)
+    std::ostream & operator<<(std::ostream & t_os, const Item & t_item)
     {
-        os << '[' << item.name();
+        t_os << '[' << t_item.name();
 
-        if (item.isArmor())
+        if (t_item.isArmor())
         {
-            os << ",Armor";
+            t_os << ",Armor";
         }
 
-        if (item.isWeapon())
+        if (t_item.isWeapon())
         {
-            os << ",Weapon";
+            t_os << ",Weapon";
         }
 
-        if (item.isMisc())
+        if (t_item.isMisc())
         {
-            os << ",Misc";
+            t_os << ",Misc";
         }
 
-        if (item.armorRating() != 0_armor)
+        if (t_item.armorRating() != 0_armor)
         {
-            os << ",armorRating=" << item.armorRating();
+            t_os << ",armorRating=" << t_item.armorRating();
         }
 
-        if ((item.damageMin() != 0) || (item.damageMax() != 0))
+        if ((t_item.damageMin() != 0) || (t_item.damageMax() != 0))
         {
-            os << ",damage=" << item.damageMin() << '-' << item.damageMax();
+            t_os << ",damage=" << t_item.damageMin() << '-' << t_item.damageMax();
         }
 
-        if (item.isUseable())
+        if (t_item.isUseable())
         {
-            os << ",useable";
+            t_os << ",useable";
         }
 
-        if (item.isMisc() && item.equipCount() > 0)
+        if (t_item.isMisc() && t_item.equipCount() > 0)
         {
-            os << ",equipMax=" << item.equipCount();
+            t_os << ",equipMax=" << t_item.equipCount();
         }
 
-        const EquipEffect & ef = item.equipEffect();
-        const UseEffect & uf   = item.useEffect();
+        const EquipEffect ef = t_item.equipEffect();
+        const UseEffect uf   = t_item.useEffect();
 
         // clang-format off
-        if (ef.acc > 0) { os << ",+" << ef.acc << "acc"; }
-        if (ef.arc > 0) { os << ",+" << ef.arc << "arc"; }
-        if (ef.dex > 0) { os << ",+" << ef.dex << "dex"; }
-        if (ef.dmg > 0) { os << ",+" << ef.dmg << "dmg"; }
-        if (ef.lck > 0) { os << ",+" << ef.lck << "lck"; }
-        if (ef.str > 0) { os << ",+" << ef.str << "str"; }
+        if (ef.acc > 0) { t_os << ",+" << ef.acc << "acc"; }
+        if (ef.arc > 0) { t_os << ",+" << ef.arc << "arc"; }
+        if (ef.dex > 0) { t_os << ",+" << ef.dex << "dex"; }
+        if (ef.dmg > 0) { t_os << ",+" << ef.dmg << "dmg"; }
+        if (ef.lck > 0) { t_os << ",+" << ef.lck << "lck"; }
+        if (ef.str > 0) { t_os << ",+" << ef.str << "str"; }
         //
-        if (uf.health > 0) { os << ",+" << uf.health << "health"; }
-        if (uf.mana > 0)   { os << ",+" << uf.mana << "mana";     }
+        if (uf.health > 0) { t_os << ",+" << uf.health << "health"; }
+        if (uf.mana > 0)   { t_os << ",+" << uf.mana << "mana";     }
         // clang-format on
 
-        os << ",value=" << item.value();
+        t_os << ",value=" << t_item.value();
 
-        os << ']';
-        return os;
+        t_os << ']';
+        return t_os;
     }
 
 } // namespace castlecrawl::item
