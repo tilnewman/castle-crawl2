@@ -21,29 +21,29 @@ namespace castlecrawl
       public:
         Map();
 
-        Map(const MapName name,
-            const Context & context,
-            const Floor floor,
-            const MapChars_t & mapChars,
-            const MapTransitions_t & transVec);
+        Map(const MapName t_name,
+            const Context & t_context,
+            const Floor t_floor,
+            const MapChars_t & t_mapChars,
+            const MapTransitions_t & t_transVec);
 
-        MapName name() const { return m_name; }
-        Floor floor() const { return m_floor; }
-        const MapTransitions_t transitions() const { return m_transitions; }
-        bool isEmpty() const { return m_map.empty(); }
-        const sf::Vector2i size() const;
-        bool isPosValid(const MapPos_t & pos) const;
-        const MapCell cell(const MapPos_t & pos) const;
-        void setObjectChar(const MapPos_t & pos, const char newChar);
+        [[nodiscard]] MapName name() const { return m_name; }
+        [[nodiscard]] Floor floor() const { return m_floor; }
+        [[nodiscard]] MapTransitions_t transitions() const { return m_transitions; }
+        [[nodiscard]] bool isEmpty() const { return m_map.empty(); }
+        [[nodiscard]] sf::Vector2i size() const;
+        [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
+        [[nodiscard]] MapCell cell(const MapPos_t & t_pos) const;
+        void setObjectChar(const MapPos_t & t_pos, const char t_newChar);
 
-        const MapPos_t
-            screenPosToMapPos(const Context & context, const sf::Vector2f & screenPos) const;
+        [[nodiscard]] MapPos_t
+            screenPosToMapPos(const Context & t_context, const sf::Vector2f & t_screenPos) const;
 
-        const sf::Vector2f
-            mapPosToScreenPos(const Context & context, const MapPos_t & mapPos) const;
+        [[nodiscard]] sf::Vector2f
+            mapPosToScreenPos(const Context & t_context, const MapPos_t & t_mapPos) const;
 
-        const std::vector<MapCell> surroundingCellsHorizVert(const MapPos_t & pos) const;
-        const std::vector<MapCell> surroundingCellsAll(const MapPos_t & pos) const;
+        [[nodiscard]] std::vector<MapCell> surroundingCellsHorizVert(const MapPos_t & t_pos) const;
+        [[nodiscard]] std::vector<MapCell> surroundingCellsAll(const MapPos_t & t_pos) const;
 
         void dumpToConsole() const;
 

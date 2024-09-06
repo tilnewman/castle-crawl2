@@ -17,24 +17,24 @@ namespace castlecrawl
 {
 
     Map::Map()
-        : m_name(MapName::Level_1_BoilerRoom) // anything works here
-        , m_map()
-        , m_floor(Floor::Dirt) // anything works here
-        , m_transitions()
+        : m_name{ MapName::Level_1_BoilerRoom } // anything works here
+        , m_map{}
+        , m_floor{ Floor::Dirt } // anything works here too
+        , m_transitions{}
     {}
 
     Map::Map(
-        const MapName name,
-        const Context & context,
-        const Floor floor,
-        const MapChars_t & mapChars,
-        const MapTransitions_t & transVec)
-        : m_name(name)
-        , m_map()
-        , m_floor(floor)
-        , m_transitions(transVec)
+        const MapName t_name,
+        const Context & t_context,
+        const Floor t_floor,
+        const MapChars_t & t_mapChars,
+        const MapTransitions_t & t_transVec)
+        : m_name{ t_name }
+        , m_map{}
+        , m_floor{ t_floor }
+        , m_transitions{ t_transVec }
     {
-        const QuickMap quickMap(context.config, mapChars);
+        const QuickMap quickMap(t_context.config, t_mapChars);
 
         const sf::Vector2i size = quickMap.size();
 
@@ -54,17 +54,17 @@ namespace castlecrawl
                     if (Floor::Stone == m_floor)
                     {
                         cell.floor_char = '\x6';
-                        cell.floor_char += context.random.fromTo<char>(0, 5);
+                        cell.floor_char += t_context.random.fromTo<char>(0, 5);
                     }
                     else if (Floor::Wood == m_floor)
                     {
                         cell.floor_char = '\x0';
-                        cell.floor_char += context.random.fromTo<char>(0, 5);
+                        cell.floor_char += t_context.random.fromTo<char>(0, 5);
                     }
                     else // dirt
                     {
                         cell.floor_char = '\xC';
-                        cell.floor_char += context.random.fromTo<char>(0, 4);
+                        cell.floor_char += t_context.random.fromTo<char>(0, 4);
                     }
                 }
 
@@ -73,7 +73,7 @@ namespace castlecrawl
         }
     }
 
-    const sf::Vector2i Map::size() const
+    sf::Vector2i Map::size() const
     {
         if (isEmpty())
         {
@@ -86,7 +86,7 @@ namespace castlecrawl
         }
     }
 
-    bool Map::isPosValid(const MapPos_t & pos) const
+    bool Map::isPosValid(const MapPos_t & t_pos) const
     {
         if (isEmpty())
         {
@@ -95,36 +95,36 @@ namespace castlecrawl
         else
         {
             const sf::Vector2i sizes = size();
-            return ((pos.x >= 0) && (pos.y >= 0) && (pos.x < sizes.x) && (pos.y < sizes.y));
+            return ((t_pos.x >= 0) && (t_pos.y >= 0) && (t_pos.x < sizes.x) && (t_pos.y < sizes.y));
         }
     }
 
-    const MapCell Map::cell(const MapPos_t & posParam) const
+    MapCell Map::cell(const MapPos_t & t_posParam) const
     {
-        if (!isPosValid(posParam))
+        if (!isPosValid(t_posParam))
         {
             return {}; // MapCell default values are both safe and invalid
         }
 
-        const sf::Vector2s pos{ posParam };
+        const sf::Vector2s pos{ t_posParam };
         return m_map[pos.y][pos.x];
     }
 
-    void Map::setObjectChar(const MapPos_t & posParam, const char newChar)
+    void Map::setObjectChar(const MapPos_t & t_posParam, const char t_newChar)
     {
-        if (!isPosValid(posParam))
+        if (!isPosValid(t_posParam))
         {
             return;
         }
 
-        const sf::Vector2s pos{ posParam };
-        m_map[pos.y][pos.x].object_char = newChar;
+        const sf::Vector2s pos{ t_posParam };
+        m_map[pos.y][pos.x].object_char = t_newChar;
     }
 
-    const MapPos_t
-        Map::screenPosToMapPos(const Context & context, const sf::Vector2f & screenPos) const
+    MapPos_t
+        Map::screenPosToMapPos(const Context & t_context, const sf::Vector2f & t_screenPos) const
     {
-        const sf::FloatRect mapRect = context.layout.mapRect();
+        const sf::FloatRect mapRect = t_context.layout.mapRect();
         sf::Vector2f pos            = util::position(mapRect);
 
         const sf::Vector2i mapSize = size();
@@ -132,50 +132,50 @@ namespace castlecrawl
         {
             for (int x(0); x < mapSize.x; ++x)
             {
-                const sf::FloatRect cellRect(pos, context.layout.cellSize());
-                if (cellRect.contains(screenPos))
+                const sf::FloatRect cellRect(pos, t_context.layout.cellSize());
+                if (cellRect.contains(t_screenPos))
                 {
                     return { x, y };
                 }
 
-                pos.x += context.layout.cellSize().x;
+                pos.x += t_context.layout.cellSize().x;
             }
 
             pos.x = mapRect.left;
-            pos.y += context.layout.cellSize().y;
+            pos.y += t_context.layout.cellSize().y;
         }
 
         return { -1, -1 }; // any negative values work here
     }
 
-    const sf::Vector2f
-        Map::mapPosToScreenPos(const Context & context, const MapPos_t & mapPos) const
+    sf::Vector2f Map::mapPosToScreenPos(const Context & t_context, const MapPos_t & t_mapPos) const
     {
         return (
-            util::position(context.layout.mapRect()) +
-            (context.layout.cellSize() * sf::Vector2f{ mapPos }));
+            util::position(t_context.layout.mapRect()) +
+            (t_context.layout.cellSize() * sf::Vector2f{ t_mapPos }));
     }
 
-    const std::vector<MapCell> Map::surroundingCellsHorizVert(const MapPos_t & pos) const
+    std::vector<MapCell> Map::surroundingCellsHorizVert(const MapPos_t & t_pos) const
     {
         std::vector<MapCell> cells;
+        cells.reserve(4);
 
-        if (const MapPos_t posAbove(pos.x, (pos.y - 1)); isPosValid(posAbove))
+        if (const MapPos_t posAbove(t_pos.x, (t_pos.y - 1)); isPosValid(posAbove))
         {
             cells.push_back(cell(posAbove));
         }
 
-        if (const MapPos_t posBelow(pos.x, (pos.y + 1)); isPosValid(posBelow))
+        if (const MapPos_t posBelow(t_pos.x, (t_pos.y + 1)); isPosValid(posBelow))
         {
             cells.push_back(cell(posBelow));
         }
 
-        if (const MapPos_t posRight((pos.x + 1), pos.y); isPosValid(posRight))
+        if (const MapPos_t posRight((t_pos.x + 1), t_pos.y); isPosValid(posRight))
         {
             cells.push_back(cell(posRight));
         }
 
-        if (const MapPos_t posLeft((pos.x - 1), pos.y); isPosValid(posLeft))
+        if (const MapPos_t posLeft((t_pos.x - 1), t_pos.y); isPosValid(posLeft))
         {
             cells.push_back(cell(posLeft));
         }
@@ -183,16 +183,17 @@ namespace castlecrawl
         return cells;
     }
 
-    const std::vector<MapCell> Map::surroundingCellsAll(const MapPos_t & pos) const
+    std::vector<MapCell> Map::surroundingCellsAll(const MapPos_t & t_pos) const
     {
         std::vector<MapCell> cells;
+        cells.reserve(8);
 
-        for (int y(pos.y - 1); y <= (pos.y + 1); ++y)
+        for (int y(t_pos.y - 1); y <= (t_pos.y + 1); ++y)
         {
-            for (int x(pos.x - 1); x <= (pos.x + 1); ++x)
+            for (int x(t_pos.x - 1); x <= (t_pos.x + 1); ++x)
             {
                 const MapPos_t position(x, y);
-                if (position == pos)
+                if (position == t_pos)
                 {
                     continue;
                 }
