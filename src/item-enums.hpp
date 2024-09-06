@@ -13,47 +13,47 @@ namespace castlecrawl::item
 
     struct UseEffect
     {
-        int health = 0;
-        int mana   = 0;
+        int health{ 0 };
+        int mana{ 0 };
 
         constexpr int total() const noexcept { return (health + mana); }
         constexpr bool empty() const noexcept { return (total() == 0); }
-        auto operator<=>(const UseEffect &) const = default;
+        auto operator<=>(const UseEffect &) const noexcept = default;
     };
 
     //
 
     struct EquipEffect
     {
-        int acc = 0;
-        int arc = 0;
-        int dex = 0;
-        int dmg = 0;
-        int lck = 0;
-        int str = 0;
+        int acc{ 0 };
+        int arc{ 0 };
+        int dex{ 0 };
+        int dmg{ 0 };
+        int lck{ 0 };
+        int str{ 0 };
 
         constexpr int total() const noexcept { return (acc + arc + dex + dmg + lck + str); }
         constexpr bool empty() const noexcept { return (total() == 0); }
 
-        constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
+        constexpr inline EquipEffect & operator+=(const EquipEffect & t_right) noexcept
         {
-            acc += right.acc;
-            arc += right.arc;
-            dex += right.dex;
-            dmg += right.dmg;
-            lck += right.lck;
-            str += right.str;
+            acc += t_right.acc;
+            arc += t_right.arc;
+            dex += t_right.dex;
+            dmg += t_right.dmg;
+            lck += t_right.lck;
+            str += t_right.str;
             return *this;
         }
 
         friend constexpr inline EquipEffect
-            operator+(EquipEffect left, const EquipEffect & right) noexcept
+            operator+(EquipEffect t_left, const EquipEffect & t_right) noexcept
         {
-            left += right;
-            return left;
+            t_left += t_right;
+            return t_left;
         }
 
-        auto operator<=>(const EquipEffect &) const = default;
+        auto operator<=>(const EquipEffect &) const noexcept = default;
     };
 
     //
@@ -74,10 +74,10 @@ namespace castlecrawl::item
         Count
     };
 
-    inline constexpr std::string_view toString(const Weapon weapon) noexcept
+    inline constexpr std::string_view toString(const Weapon t_weapon) noexcept
     {
         // clang-format off
-        switch (weapon)
+        switch (t_weapon)
         {
             case Weapon::Dagger:        { return "Dagger"; }
             case Weapon::Handaxe:       { return "Handaxe"; }
@@ -96,10 +96,10 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline const sf::Vector2i baseWeaponDamage(const Weapon weapon) noexcept
+    inline const sf::Vector2i baseWeaponDamage(const Weapon t_weapon) noexcept
     {
         // clang-format off
-        switch (weapon)
+        switch (t_weapon)
         {
             case Weapon::Dagger:     { return {  2,  4 }; }
             case Weapon::Handaxe:    { return {  3,  6 }; }
@@ -130,10 +130,10 @@ namespace castlecrawl::item
         Count
     };
 
-    inline constexpr std::string_view toString(const WeaponMaterial material) noexcept
+    inline constexpr std::string_view toString(const WeaponMaterial t_material) noexcept
     {
         // clang-format off
-        switch (material)
+        switch (t_material)
         {
             case WeaponMaterial::Bronze:    { return "Bronze"; }
             case WeaponMaterial::Steel:     { return "Steel"; }
@@ -148,10 +148,10 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline constexpr int weaponMaterialDamage(const WeaponMaterial material) noexcept
+    inline constexpr int weaponMaterialDamage(const WeaponMaterial t_material) noexcept
     {
         // clang-format off
-        switch (material)
+        switch (t_material)
         {
             case WeaponMaterial::Bronze:    { return 0; }
             case WeaponMaterial::Steel:     { return 1; }
@@ -177,10 +177,10 @@ namespace castlecrawl::item
         Count
     };
 
-    inline constexpr std::string_view toString(const Armor armor) noexcept
+    inline constexpr std::string_view toString(const Armor t_armor) noexcept
     {
         // clang-format off
-        switch (armor)
+        switch (t_armor)
         {
             case Armor::Helm:       { return "Helm"; }
             case Armor::Cuirass:    { return "Cuirass"; }
@@ -194,10 +194,10 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline constexpr int baseArmorRating(const Armor armor) noexcept
+    inline constexpr int baseArmorRating(const Armor t_armor) noexcept
     {
         // clang-format off
-        switch (armor)
+        switch (t_armor)
         {
             case Armor::Helm:       { return 5; }
             case Armor::Cuirass:    { return 9; }
@@ -223,10 +223,10 @@ namespace castlecrawl::item
         Count
     };
 
-    inline constexpr std::string_view toString(const ArmorMaterial material) noexcept
+    inline constexpr std::string_view toString(const ArmorMaterial t_material) noexcept
     {
         // clang-format off
-        switch (material)
+        switch (t_material)
         {
             case ArmorMaterial::Leather:    { return "Leather"; }
             case ArmorMaterial::Bronze:     { return "Bronze"; }
@@ -241,10 +241,10 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline constexpr int armorMaterialRating(const ArmorMaterial material) noexcept
+    inline constexpr int armorMaterialRating(const ArmorMaterial t_material) noexcept
     {
         // clang-format off
-        switch (material)
+        switch (t_material)
         {
             case ArmorMaterial::Leather:    { return 0; }
             case ArmorMaterial::Bronze:     { return 1; }
@@ -310,10 +310,10 @@ namespace castlecrawl::item
         Count
     };
 
-    inline constexpr int miscBaseValue(const Misc misc) noexcept
+    inline constexpr int miscBaseValue(const Misc t_misc) noexcept
     {
         // clang-format off
-        switch (misc)
+        switch (t_misc)
         {
             case Misc::Feather:         { return 1;  }
             case Misc::Tooth:           { return 2;  }
@@ -366,10 +366,10 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline constexpr std::string_view toString(const Misc misc) noexcept
+    inline constexpr std::string_view toString(const Misc t_misc) noexcept
     {
         // clang-format off
-        switch (misc)
+        switch (t_misc)
         {
             case Misc::Amulet:          { return "Amulet"; }
             case Misc::Ankh:            { return "Ankh"; }
@@ -423,10 +423,10 @@ namespace castlecrawl::item
     }
 
     // if not misc, then it's either weapon/armor which can only equip one of
-    inline constexpr std::size_t miscEquipCount(const Misc misc) noexcept
+    inline constexpr std::size_t miscEquipCount(const Misc t_misc) noexcept
     {
         // clang-format off
-        switch (misc)
+        switch (t_misc)
         {
             case Misc::Ring:       
             case Misc::Armband:  { return 2; }
@@ -481,13 +481,16 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline constexpr bool isMiscEquipable(const Misc misc) noexcept
+    inline constexpr bool isMiscEquipable(const Misc t_misc) noexcept
     {
-        return (miscEquipCount(misc) > 0);
+        return (miscEquipCount(t_misc) > 0);
     }
 
     // misc items are either Useable or Equipable but never both and never neither
-    inline constexpr bool isMiscUseable(const Misc misc) noexcept { return !isMiscEquipable(misc); }
+    inline constexpr bool isMiscUseable(const Misc t_misc) noexcept
+    {
+        return !isMiscEquipable(t_misc);
+    }
 
     enum class MiscMaterial : unsigned char
     {
@@ -510,10 +513,10 @@ namespace castlecrawl::item
         Count
     };
 
-    inline constexpr std::string_view toString(const MiscMaterial material) noexcept
+    inline constexpr std::string_view toString(const MiscMaterial t_material) noexcept
     {
         // clang-format off
-        switch (material)
+        switch (t_material)
         {
             case MiscMaterial::Iron:     { return "Iron"; }
             case MiscMaterial::Pewter:   { return "Pewter"; }
@@ -537,10 +540,10 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline constexpr EquipEffect miscMaterialEquipEffect(const MiscMaterial material) noexcept
+    inline constexpr EquipEffect miscMaterialEquipEffect(const MiscMaterial t_material) noexcept
     {
         // clang-format off
-        switch (material)
+        switch (t_material)
         {
             case MiscMaterial::Iron:     { return { .str=2 }; }
             case MiscMaterial::Pewter:   { return { .str=1 }; }
@@ -565,11 +568,11 @@ namespace castlecrawl::item
     }
 
     // useable misc items (potions & herbs) can only have the "Magic" material
-    inline constexpr MiscMaterial requiredMiscMaterial(const Misc misc) noexcept
+    inline constexpr MiscMaterial requiredMiscMaterial(const Misc t_misc) noexcept
     {
         MiscMaterial material = MiscMaterial::Count;
 
-        if (isMiscUseable(misc))
+        if (isMiscUseable(t_misc))
         {
             material = MiscMaterial::Magic;
         }
@@ -584,10 +587,10 @@ namespace castlecrawl::item
         Strong
     };
 
-    inline constexpr std::string_view toString(const UseStrength strength) noexcept
+    inline constexpr std::string_view toString(const UseStrength t_strength) noexcept
     {
         // clang-format off
-        switch (strength)
+        switch (t_strength)
         {
             case UseStrength::Weak:     { return "Weak"; }
             case UseStrength::Strong:   { return "Strong"; }
