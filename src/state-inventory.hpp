@@ -24,14 +24,19 @@ namespace castlecrawl
         StateInventory();
 
         virtual State which() const final { return State::Inventory; }
-        virtual void onEnter(const Context &) final;
-        virtual void update(const Context &, const float) final;
-        virtual void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const final;
-        virtual void handleEvent(const Context &, const sf::Event &) final;
+        virtual void onEnter(const Context & t_context) final;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
+
+        virtual void draw(
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
+
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void updateItemDescText(const Context & context);
-        void updateStatText(const Context & context);
+        void updateItemDescText(const Context & t_context);
+        void updateStatText(const Context & t_context);
 
       private:
         sf::RectangleShape m_fadeRectangle;

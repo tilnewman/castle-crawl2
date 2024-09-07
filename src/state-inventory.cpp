@@ -23,51 +23,51 @@ namespace castlecrawl
 {
 
     StateInventory::StateInventory()
-        : m_fadeRectangle()
-        , m_unTitleText()
-        , m_unListboxUPtr()
-        , m_eqTitleText()
-        , m_eqListboxUPtr()
-        , m_itemDescText()
-        , m_errorText()
-        , m_strTitleText()
-        , m_dexTitleText()
-        , m_accTitleText()
-        , m_lckTitleText()
-        , m_arcTitleText()
-        , m_strValueText()
-        , m_dexValueText()
-        , m_accValueText()
-        , m_lckValueText()
-        , m_arcValueText()
-        , m_goldText()
-        , m_armorText()
-        , m_statRectangle()
+        : m_fadeRectangle{}
+        , m_unTitleText{}
+        , m_unListboxUPtr{}
+        , m_eqTitleText{}
+        , m_eqListboxUPtr{}
+        , m_itemDescText{}
+        , m_errorText{}
+        , m_strTitleText{}
+        , m_dexTitleText{}
+        , m_accTitleText{}
+        , m_lckTitleText{}
+        , m_arcTitleText{}
+        , m_strValueText{}
+        , m_dexValueText{}
+        , m_accValueText{}
+        , m_lckValueText{}
+        , m_arcValueText{}
+        , m_goldText{}
+        , m_armorText{}
+        , m_statRectangle{}
     {}
 
-    void StateInventory::onEnter(const Context & context)
+    void StateInventory::onEnter(const Context & t_context)
     {
-        m_unListboxUPtr = std::make_unique<Listbox>(context.player.inventory().unItems());
-        m_eqListboxUPtr = std::make_unique<Listbox>(context.player.inventory().eqItems());
+        m_unListboxUPtr = std::make_unique<Listbox>(t_context.player.inventory().unItems());
+        m_eqListboxUPtr = std::make_unique<Listbox>(t_context.player.inventory().eqItems());
 
         //
 
-        const sf::FloatRect screenRect = context.layout.screenRect();
+        const sf::FloatRect screenRect = t_context.layout.screenRect();
         const float pad{ screenRect.width * 0.0025f };
         const float padLarge{ pad * 10.0f };
-        const sf::FloatRect botRect = context.layout.botRect();
+        const sf::FloatRect botRect = t_context.layout.botRect();
 
         //
 
-        m_strTitleText = context.fonts.makeText(FontSize::Medium, "Strength");
-        m_dexTitleText = context.fonts.makeText(FontSize::Medium, "Dexterity");
-        m_accTitleText = context.fonts.makeText(FontSize::Medium, "Accuracy");
-        m_lckTitleText = context.fonts.makeText(FontSize::Medium, "Luck");
-        m_arcTitleText = context.fonts.makeText(FontSize::Medium, "Arcane");
+        m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Strength");
+        m_dexTitleText = t_context.fonts.makeText(FontSize::Medium, "Dexterity");
+        m_accTitleText = t_context.fonts.makeText(FontSize::Medium, "Accuracy");
+        m_lckTitleText = t_context.fonts.makeText(FontSize::Medium, "Luck");
+        m_arcTitleText = t_context.fonts.makeText(FontSize::Medium, "Arcane");
 
         m_strTitleText.setPosition((screenRect.width * 0.25f), (botRect.top + padLarge));
 
-        const float statTextVertPad = 5.0f; //TODO make this based on m_strTitleText height
+        const float statTextVertPad = 5.0f; // TODO make this based on m_strTitleText height
 
         m_dexTitleText.setPosition(
             m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad));
@@ -83,11 +83,11 @@ namespace castlecrawl
 
         //
 
-        m_strValueText = context.fonts.makeText(FontSize::Medium, "");
-        m_dexValueText = context.fonts.makeText(FontSize::Medium, "");
-        m_accValueText = context.fonts.makeText(FontSize::Medium, "");
-        m_lckValueText = context.fonts.makeText(FontSize::Medium, "");
-        m_arcValueText = context.fonts.makeText(FontSize::Medium, "");
+        m_strValueText = t_context.fonts.makeText(FontSize::Medium, "");
+        m_dexValueText = t_context.fonts.makeText(FontSize::Medium, "");
+        m_accValueText = t_context.fonts.makeText(FontSize::Medium, "");
+        m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "");
+        m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "");
 
         const float valueTextHorizPos = (util::right(m_dexTitleText) + padLarge);
 
@@ -97,7 +97,7 @@ namespace castlecrawl
         m_lckValueText.setPosition(valueTextHorizPos, m_lckTitleText.getGlobalBounds().top - 7.0f);
         m_arcValueText.setPosition(valueTextHorizPos, m_arcTitleText.getGlobalBounds().top - 7.0f);
 
-        updateStatText(context);
+        updateStatText(t_context);
 
         //
 
@@ -115,8 +115,8 @@ namespace castlecrawl
         //
 
         std::string goldStr{ "Gold: " };
-        goldStr += std::to_string(context.player.gold());
-        m_goldText = context.fonts.makeText(FontSize::Medium, goldStr, sf::Color(255, 200, 100));
+        goldStr += std::to_string(t_context.player.gold());
+        m_goldText = t_context.fonts.makeText(FontSize::Medium, goldStr, sf::Color(255, 200, 100));
         util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
         m_goldText.move(0.0f, -m_goldText.getGlobalBounds().height);
         m_goldText.move(0.0f, -pad);
@@ -124,17 +124,17 @@ namespace castlecrawl
         //
 
         std::string armorStr{ "Armor: " };
-        armorStr += std::to_string(context.player.armor().get());
-        m_armorText = context.fonts.makeText(FontSize::Medium, armorStr);
+        armorStr += std::to_string(t_context.player.armor().get());
+        m_armorText = t_context.fonts.makeText(FontSize::Medium, armorStr);
         m_armorText.setPosition(m_goldText.getPosition().x, (util::bottom(m_goldText) + pad));
 
         //
 
         m_unListboxUPtr->setup(
-            context, FontSize::Medium, context.items.textExtents().longest_name, 16);
+            t_context, FontSize::Medium, t_context.items.textExtents().longest_name, 16);
 
         m_eqListboxUPtr->setup(
-            context, FontSize::Medium, context.items.textExtents().longest_name, 16);
+            t_context, FontSize::Medium, t_context.items.textExtents().longest_name, 16);
 
         m_unListboxUPtr->setPosition(
             { ((screenRect.width * 0.5f) - m_unListboxUPtr->getGlobalBounds().width) - pad,
@@ -146,17 +146,17 @@ namespace castlecrawl
         m_unListboxUPtr->setFocus(true);
         m_eqListboxUPtr->setFocus(false);
 
-        m_itemDescText = context.fonts.makeText(FontSize::Small, "");
-        updateItemDescText(context);
+        m_itemDescText = t_context.fonts.makeText(FontSize::Small, "");
+        updateItemDescText(t_context);
 
-        m_unTitleText = context.fonts.makeText(
+        m_unTitleText = t_context.fonts.makeText(
             FontSize::Small, "Unequipped Items:", sf::Color(255, 255, 255, 160));
 
         m_unTitleText.setPosition(
             m_unListboxUPtr->getGlobalBounds().left,
             (m_unListboxUPtr->getGlobalBounds().top - m_unTitleText.getGlobalBounds().height));
 
-        m_eqTitleText = context.fonts.makeText(
+        m_eqTitleText = t_context.fonts.makeText(
             FontSize::Small, "Equipped Items:", sf::Color(255, 255, 255, 160));
 
         m_eqTitleText.setPosition(
@@ -169,12 +169,12 @@ namespace castlecrawl
 
         //
 
-        m_errorText = context.fonts.makeText(FontSize::Medium, "");
+        m_errorText = t_context.fonts.makeText(FontSize::Medium, "");
     }
 
-    void StateInventory::update(const Context & context, const float)
+    void StateInventory::update(const Context & t_context, const float)
     {
-        context.framerate.update();
+        t_context.framerate.update();
 
         if (m_errorText.getFillColor().a > 0)
         {
@@ -185,67 +185,67 @@ namespace castlecrawl
     }
 
     void StateInventory::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        context.map_display.draw(context, target, states);
-        context.enemies.draw(context, target, states);
-        context.player_display.draw(context, target, states);
-        context.framerate.draw(target, states);
-        target.draw(m_fadeRectangle, states);
-        target.draw(context.top_panel, states);
-        target.draw(*m_unListboxUPtr, states);
-        target.draw(*m_eqListboxUPtr, states);
-        target.draw(m_itemDescText, states);
-        target.draw(m_errorText, states);
-        target.draw(m_unTitleText, states);
-        target.draw(m_eqTitleText, states);
+        t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.enemies.draw(t_context, t_target, t_states);
+        t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.framerate.draw(t_target, t_states);
+        t_target.draw(m_fadeRectangle, t_states);
+        t_target.draw(t_context.top_panel, t_states);
+        t_target.draw(*m_unListboxUPtr, t_states);
+        t_target.draw(*m_eqListboxUPtr, t_states);
+        t_target.draw(m_itemDescText, t_states);
+        t_target.draw(m_errorText, t_states);
+        t_target.draw(m_unTitleText, t_states);
+        t_target.draw(m_eqTitleText, t_states);
 
-        target.draw(m_statRectangle, states);
+        t_target.draw(m_statRectangle, t_states);
 
-        target.draw(m_goldText, states);
-        target.draw(m_armorText, states);
+        t_target.draw(m_goldText, t_states);
+        t_target.draw(m_armorText, t_states);
 
-        target.draw(m_strTitleText, states);
-        target.draw(m_dexTitleText, states);
-        target.draw(m_accTitleText, states);
-        target.draw(m_lckTitleText, states);
-        target.draw(m_arcTitleText, states);
+        t_target.draw(m_strTitleText, t_states);
+        t_target.draw(m_dexTitleText, t_states);
+        t_target.draw(m_accTitleText, t_states);
+        t_target.draw(m_lckTitleText, t_states);
+        t_target.draw(m_arcTitleText, t_states);
 
-        target.draw(m_strValueText, states);
-        target.draw(m_dexValueText, states);
-        target.draw(m_accValueText, states);
-        target.draw(m_lckValueText, states);
-        target.draw(m_arcValueText, states);
+        t_target.draw(m_strValueText, t_states);
+        t_target.draw(m_dexValueText, t_states);
+        t_target.draw(m_accValueText, t_states);
+        t_target.draw(m_lckValueText, t_states);
+        t_target.draw(m_arcValueText, t_states);
     }
 
-    void StateInventory::handleEvent(const Context & context, const sf::Event & event)
+    void StateInventory::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         // all other handlers are key pressed events
-        if (event.type != sf::Event::KeyPressed)
+        if (t_event.type != sf::Event::KeyPressed)
         {
             return;
         }
 
-        if (event.key.code == sf::Keyboard::Escape)
+        if (t_event.key.code == sf::Keyboard::Escape)
         {
-            context.state.change(context, State::Play);
+            t_context.state.change(t_context, State::Play);
             return;
         }
-        else if (event.key.code == sf::Keyboard::E)
+        else if (t_event.key.code == sf::Keyboard::E)
         {
             if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
             {
                 const std::string resultStr =
-                    context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
+                    t_context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
 
                 if (resultStr.empty())
                 {
-                    context.player.updateEquipEffects();
+                    t_context.player.updateEquipEffects();
                     m_unListboxUPtr->redraw();
                     m_eqListboxUPtr->redraw();
-                    updateStatText(context);
-                    updateItemDescText(context);
-                    context.sfx.play("equip.ogg");
+                    updateStatText(t_context);
+                    updateItemDescText(t_context);
+                    t_context.sfx.play("equip.ogg");
                     return;
                 }
                 else
@@ -254,62 +254,62 @@ namespace castlecrawl
                     m_errorText.setFillColor(sf::Color::Red);
 
                     m_errorText.setPosition(
-                        ((context.layout.screenRect().width * 0.5f) -
+                        ((t_context.layout.screenRect().width * 0.5f) -
                          (m_errorText.getGlobalBounds().width * 0.5f)),
                         (util::bottom(m_itemDescText) + 20.0f));
 
-                    context.sfx.play("error-1.ogg");
+                    t_context.sfx.play("error-1.ogg");
                     return;
                 }
             }
             else
             {
-                context.sfx.play("error-1.ogg");
+                t_context.sfx.play("error-1.ogg");
                 return;
             }
         }
-        else if (event.key.code == sf::Keyboard::U)
+        else if (t_event.key.code == sf::Keyboard::U)
         {
             if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
             {
-                context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
-                context.player.updateEquipEffects();
+                t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
+                t_context.player.updateEquipEffects();
                 m_unListboxUPtr->redraw();
                 m_eqListboxUPtr->redraw();
-                updateStatText(context);
-                updateItemDescText(context);
-                context.sfx.play("cloth.ogg");
+                updateStatText(t_context);
+                updateItemDescText(t_context);
+                t_context.sfx.play("cloth.ogg");
                 return;
             }
 
-            context.sfx.play("error-1.ogg");
+            t_context.sfx.play("error-1.ogg");
             return;
         }
-        else if (event.key.code == sf::Keyboard::Left)
+        else if (t_event.key.code == sf::Keyboard::Left)
         {
             if (!m_unListboxUPtr->getFocus())
             {
                 m_unListboxUPtr->setFocus(true);
                 m_eqListboxUPtr->setFocus(false);
-                updateItemDescText(context);
-                context.sfx.play("tick-on");
+                updateItemDescText(t_context);
+                t_context.sfx.play("tick-on");
             }
 
             return;
         }
-        else if (event.key.code == sf::Keyboard::Right)
+        else if (t_event.key.code == sf::Keyboard::Right)
         {
             if (!m_eqListboxUPtr->getFocus())
             {
                 m_unListboxUPtr->setFocus(false);
                 m_eqListboxUPtr->setFocus(true);
-                updateItemDescText(context);
-                context.sfx.play("tick-on");
+                updateItemDescText(t_context);
+                t_context.sfx.play("tick-on");
             }
 
             return;
         }
-        else if (event.key.code == sf::Keyboard::Up)
+        else if (t_event.key.code == sf::Keyboard::Up)
         {
             if (m_unListboxUPtr->getFocus())
             {
@@ -320,11 +320,11 @@ namespace castlecrawl
                 m_eqListboxUPtr->selectPrev();
             }
 
-            updateItemDescText(context);
-            context.sfx.play("tick-on");
+            updateItemDescText(t_context);
+            t_context.sfx.play("tick-on");
             return;
         }
-        else if (event.key.code == sf::Keyboard::Down)
+        else if (t_event.key.code == sf::Keyboard::Down)
         {
             if (m_unListboxUPtr->getFocus())
             {
@@ -335,8 +335,8 @@ namespace castlecrawl
                 m_eqListboxUPtr->selectNext();
             }
 
-            updateItemDescText(context);
-            context.sfx.play("tick-on");
+            updateItemDescText(t_context);
+            t_context.sfx.play("tick-on");
             return;
         }
     }
