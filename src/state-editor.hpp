@@ -18,11 +18,15 @@ namespace castlecrawl
 {
     struct Context;
 
+    //
+
     struct MapEntry_t
     {
         MapPos_t pos;
         sf::FloatRect rect;
     };
+
+    //
 
     class StateEditor : public StateBase
     {
@@ -31,33 +35,33 @@ namespace castlecrawl
         virtual ~StateEditor() final {}
 
         virtual State which() const final { return State::Editor; }
-        virtual void onEnter(const Context & context) final;
-        virtual void update(const Context & context, const float frameTimeSec) final;
+        virtual void onEnter(const Context & t_context) final;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
-            const Context & context,
-            sf::RenderTarget & target,
-            sf::RenderStates states) const final;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) final;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void updateHelpText(const Context & context);
+        void updateHelpText(const Context & t_context);
         void updateFadeText();
-        void resetMap(const Context & context);
-        void placeEditCursor(const Context & context);
-        void setMapChar(const char ch);
-        void editMap(const Context & context, const char upper, const char lower);
-        void fadeText(const Context & context, const std::string & text);
+        void resetMap(const Context & t_context);
+        void placeEditCursor(const Context & t_context);
+        void setMapChar(const char t_ch);
+        void editMap(const Context & t_context, const char t_upper, const char t_lower);
+        void fadeText(const Context & t_context, const std::string & t_text);
         void save() const;
-        void load(const Context & context);
-        const std::string mapCharToName(const char ch) noexcept;
+        void load(const Context & t_context);
+        const std::string mapCharToName(const char t_ch) noexcept;
 
-        void startDragging(const Context & context, const sf::Vector2f & pos);
-        void stopDragging(const Context & context, const sf::Vector2f & pos);
-        void updateDragging(const Context & context, const sf::Vector2f & pos);
+        void startDragging(const Context & t_context, const sf::Vector2f & t_pos);
+        void stopDragging(const Context & t_context, const sf::Vector2f & t_pos);
+        void updateDragging(const Context & t_context, const sf::Vector2f & t_pos);
         void updateDragRect();
-        void updateDragSelectedMapCells(const Context & context);
+        void updateDragSelectedMapCells(const Context & t_context);
 
       private:
         MapChars_t m_mapChars;
