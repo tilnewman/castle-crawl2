@@ -13,26 +13,28 @@ namespace castlecrawl
 {
     struct Context;
 
+    //
+
     class StateFight : public StateBase
     {
       public:
         StateFight();
         virtual ~StateFight() final {}
 
-        virtual void onEnter(const Context & context) final;
+        virtual void onEnter(const Context & t_context) final;
         virtual State which() const final { return State::Fight; }
-        virtual void update(const Context & context, const float frameTimeSec) final;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
-            const Context & context,
-            sf::RenderTarget & target,
-            sf::RenderStates states) const final;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) final;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void handleSelectDirection(const Context & context, const sf::Keyboard::Key key);
-        void fight(const Context & context, const MapPos_t & pos);
+        void handleSelectDirection(const Context & t_context, const sf::Keyboard::Key t_key);
+        void fight(const Context & t_context, const MapPos_t & t_pos);
 
       private:
         bool m_isDirectionSelected;

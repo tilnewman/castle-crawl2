@@ -24,122 +24,128 @@ namespace castlecrawl
 {
 
     StateFight::StateFight()
-        : m_isDirectionSelected(false)
-        , m_directionSelectDisplay()
+        : m_isDirectionSelected{ false }
+        , m_directionSelectDisplay{}
     {}
 
-    void StateFight::onEnter(const Context & context) { m_directionSelectDisplay.setup(context); }
+    void StateFight::onEnter(const Context & t_context)
+    {
+        m_directionSelectDisplay.setup(t_context);
+    }
 
-    void StateFight::update(const Context & context, const float) { context.framerate.update(); }
+    void StateFight::update(const Context & t_context, const float)
+    {
+        t_context.framerate.update();
+    }
 
     void StateFight::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        context.map_display.draw(context, target, states);
-        context.enemies.draw(context, target, states);
-        context.player_display.draw(context, target, states);
-        context.framerate.draw(target, states);
-        target.draw(context.top_panel, states);
+        t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.enemies.draw(t_context, t_target, t_states);
+        t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.framerate.draw(t_target, t_states);
+        t_target.draw(t_context.top_panel, t_states);
 
         if (!m_isDirectionSelected)
         {
-            target.draw(m_directionSelectDisplay, states);
+            t_target.draw(m_directionSelectDisplay, t_states);
         }
     }
 
-    void StateFight::handleEvent(const Context & context, const sf::Event & event)
+    void StateFight::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         // all other handlers are key released events
-        if (event.type != sf::Event::KeyPressed)
+        if (t_event.type != sf::Event::KeyPressed)
         {
             return;
         }
 
-        if (event.key.code == sf::Keyboard::Escape)
+        if (t_event.key.code == sf::Keyboard::Escape)
         {
-            context.state.change(context, State::Play);
+            t_context.state.change(t_context, State::Play);
             return;
         }
 
         if (!m_isDirectionSelected &&
-            ((event.key.code == sf::Keyboard::Up) || (event.key.code == sf::Keyboard::Down) ||
-             (event.key.code == sf::Keyboard::Left) || (event.key.code == sf::Keyboard::Right)))
+            ((t_event.key.code == sf::Keyboard::Up) || (t_event.key.code == sf::Keyboard::Down) ||
+             (t_event.key.code == sf::Keyboard::Left) || (t_event.key.code == sf::Keyboard::Right)))
         {
-            handleSelectDirection(context, event.key.code);
+            handleSelectDirection(t_context, t_event.key.code);
             return;
         }
     }
 
-    void StateFight::handleSelectDirection(const Context & context, const sf::Keyboard::Key key)
+    void StateFight::handleSelectDirection(const Context & t_context, const sf::Keyboard::Key t_key)
     {
-        const MapPos_t mapPos = context.player_display.position();
+        const MapPos_t mapPos = t_context.player_display.position();
 
         const MapPos_t upPos{ mapPos.x, (mapPos.y - 1) };
         const MapPos_t downPos{ mapPos.x, (mapPos.y + 1) };
         const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
         const MapPos_t rightPos{ (mapPos.x + 1), mapPos.y };
 
-        if ((key == sf::Keyboard::Up) && (context.maps.current().isPosValid(upPos)))
+        if ((t_key == sf::Keyboard::Up) && (t_context.maps.current().isPosValid(upPos)))
         {
             m_isDirectionSelected = true;
-            fight(context, upPos);
+            fight(t_context, upPos);
         }
-        else if ((key == sf::Keyboard::Down) && (context.maps.current().isPosValid(downPos)))
+        else if ((t_key == sf::Keyboard::Down) && (t_context.maps.current().isPosValid(downPos)))
         {
             m_isDirectionSelected = true;
-            fight(context, downPos);
+            fight(t_context, downPos);
         }
-        else if ((key == sf::Keyboard::Left) && (context.maps.current().isPosValid(leftPos)))
+        else if ((t_key == sf::Keyboard::Left) && (t_context.maps.current().isPosValid(leftPos)))
         {
             m_isDirectionSelected = true;
-            fight(context, leftPos);
+            fight(t_context, leftPos);
         }
-        else if ((key == sf::Keyboard::Right) && (context.maps.current().isPosValid(rightPos)))
+        else if ((t_key == sf::Keyboard::Right) && (t_context.maps.current().isPosValid(rightPos)))
         {
             m_isDirectionSelected = true;
-            fight(context, rightPos);
+            fight(t_context, rightPos);
         }
         else
         {
-            context.sfx.play("error-1.ogg");
+            t_context.sfx.play("error-1.ogg");
         }
     }
 
-    void StateFight::fight(const Context & context, const MapPos_t & pos)
+    void StateFight::fight(const Context & t_context, const MapPos_t & t_pos)
     {
-        const char objectChar = context.maps.current().cell(pos).object_char;
+        const char objectChar = t_context.maps.current().cell(t_pos).object_char;
 
         // TODO lots more needed here, like checking for enemies etc.
         if (objectChar == ' ')
         {
-            context.sfx.play("miss.ogg");
-            context.state.change(context, State::Play);
+            t_context.sfx.play("miss.ogg");
+            t_context.state.change(t_context, State::Play);
             return;
         }
         else if (objectChar == 'b')
         {
-            context.sfx.play("barrel-break.ogg");
+            t_context.sfx.play("barrel-break.ogg");
 
-            context.maps.current().setObjectChar(pos, ' ');
-            context.map_display.load(context);
+            t_context.maps.current().setObjectChar(t_pos, ' ');
+            t_context.map_display.load(t_context);
 
-            const item::Treasure treasure = context.items.randomTreasureFind(context);
+            const item::Treasure treasure = t_context.items.randomTreasureFind(t_context);
             if (treasure.empty())
             {
-                context.state.change(context, State::Play);
+                t_context.state.change(t_context, State::Play);
             }
             else
             {
                 StateTreasure::setTreasure(treasure);
-                context.state.change(context, State::Treasure);
+                t_context.state.change(t_context, State::Treasure);
             }
 
             return;
         }
         else
         {
-            context.sfx.play("hit.ogg");
-            context.state.change(context, State::Play);
+            t_context.sfx.play("hit.ogg");
+            t_context.state.change(t_context, State::Play);
             return;
         }
     }
