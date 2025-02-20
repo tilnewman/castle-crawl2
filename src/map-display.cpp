@@ -20,9 +20,9 @@ namespace castlecrawl
         : m_objectVerts{}
         , m_floorVerts{}
         , m_borderVerts{}
-        , m_objectBuffer{ sf::Quads, sf::VertexBuffer::Static }
-        , m_floorBuffer{ sf::Quads, sf::VertexBuffer::Static }
-        , m_borderBuffer{ sf::Quads, sf::VertexBuffer::Static }
+        , m_objectBuffer{ sf::Triangles, sf::VertexBuffer::Static }
+        , m_floorBuffer{ sf::Triangles, sf::VertexBuffer::Static }
+        , m_borderBuffer{ sf::Triangles, sf::VertexBuffer::Static }
     {}
 
     void MapDisplay::load(const Context & t_context)
@@ -89,7 +89,7 @@ namespace castlecrawl
                     edgeSprite.setPosition(screenPos);
                     edgeSprite.move(-overlapDimm, -overlapDimm);
 
-                    util::appendQuadVerts(
+                    util::appendTriangleVerts(
                         edgeSprite.getGlobalBounds(),
                         m_borderVerts,
                         t_context.config.background_color);
@@ -234,7 +234,7 @@ namespace castlecrawl
         const sf::Vector2f & t_pos,
         VertVec_t & t_verts) const
     {
-        util::appendQuadVerts(t_context.tile_images.sprite(t_context, t_image, t_pos), t_verts);
+        util::appendTriangleVerts(t_context.tile_images.sprite(t_context, t_image, t_pos), t_verts);
     }
 
     bool MapDisplay::isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const
