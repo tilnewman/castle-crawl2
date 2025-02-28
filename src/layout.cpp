@@ -18,29 +18,29 @@ namespace castlecrawl
 {
 
     Layout::Layout()
-        : m_screenRect{ 0.0f, 0.0f, 0.0f, 0.0f }
-        , m_topRect{ 0.0f, 0.0f, 0.0f, 0.0f }
-        , m_botRect{ 0.0f, 0.0f, 0.0f, 0.0f }
-        , m_mapRect{ 0.0f, 0.0f, 0.0f, 0.0f }
+        : m_screenRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
+        , m_topRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
+        , m_botRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
+        , m_mapRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
         , m_cellSize{ 0.0f, 0.0f }
         , m_cellCount{ 0, 0 }
     {}
 
     void Layout::setup(const GameConfig & t_config)
     {
-        m_screenRect.width  = static_cast<float>(t_config.video_mode.width);
-        m_screenRect.height = static_cast<float>(t_config.video_mode.height);
+        m_screenRect.size.x = static_cast<float>(t_config.video_mode.size.x);
+        m_screenRect.size.y = static_cast<float>(t_config.video_mode.size.y);
 
         m_topRect        = m_screenRect;
-        m_topRect.height = std::floor(m_screenRect.height * t_config.top_panel_height_ratio);
+        m_topRect.size.y = std::floor(m_screenRect.size.y * t_config.top_panel_height_ratio);
 
-        m_botRect     = m_screenRect;
-        m_botRect.top = m_topRect.height;
-        m_botRect.height -= m_botRect.top;
+        m_botRect            = m_screenRect;
+        m_botRect.position.y = m_topRect.size.y;
+        m_botRect.size.y -= m_botRect.position.y;
 
         m_cellSize.x = std::min(
-            std::floor(m_botRect.width / static_cast<float>(t_config.map_size_max.x)),
-            std::floor(m_botRect.height / static_cast<float>(t_config.map_size_max.y)));
+            std::floor(m_botRect.size.x / static_cast<float>(t_config.map_size_max.x)),
+            std::floor(m_botRect.size.y / static_cast<float>(t_config.map_size_max.y)));
 
         m_cellSize.y = m_cellSize.x;
     }

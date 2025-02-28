@@ -15,26 +15,29 @@ namespace castlecrawl
       public:
         Player();
 
-        [[nodiscard]] Stat & strength() { return m_strength; }
-        [[nodiscard]] Stat & dexterity() { return m_dexterity; }
-        [[nodiscard]] Stat & accuracy() { return m_accuracy; }
-        [[nodiscard]] Stat & luck() { return m_luck; }
-        [[nodiscard]] Stat & arcane() { return m_arcane; }
-        [[nodiscard]] Stat & health() { return m_health; }
-        [[nodiscard]] Stat & mana() { return m_mana; }
+        [[nodiscard]] inline Stat & strength() noexcept { return m_strength; }
+        [[nodiscard]] inline Stat & dexterity() noexcept { return m_dexterity; }
+        [[nodiscard]] inline Stat & accuracy() noexcept { return m_accuracy; }
+        [[nodiscard]] inline Stat & luck() noexcept { return m_luck; }
+        [[nodiscard]] inline Stat & arcane() noexcept { return m_arcane; }
+        [[nodiscard]] inline Stat & health() noexcept { return m_health; }
+        [[nodiscard]] inline Stat & mana() noexcept { return m_mana; }
 
-        [[nodiscard]] int level() const { return m_level; }
-        [[nodiscard]] int gold() const { return m_gold; }
+        [[nodiscard]] inline int level() const noexcept { return m_level; }
+        [[nodiscard]] inline int gold() const noexcept { return m_gold; }
 
-        [[nodiscard]] Armor_t armor() const { return m_inventory.armorRating(); }
+        [[nodiscard]] inline Armor_t armor() const noexcept { return m_inventory.armorRating(); }
 
-        void levelAdj(const int t_adj) { m_level += t_adj; }
-        void goldAdj(const int t_adj) { m_gold += t_adj; }
+        inline void levelAdj(const int t_adj) { m_level += t_adj; }
+        inline void goldAdj(const int t_adj) { m_gold += t_adj; }
 
-        [[nodiscard]] item::Inventory & inventory() { return m_inventory; }
+        [[nodiscard]] inline item::Inventory & inventory() noexcept { return m_inventory; }
 
         void updateEquipEffects();
-        [[nodiscard]] item::EquipEffect equipEffects() const { return m_equipEffects; }
+        [[nodiscard]] inline item::EquipEffect equipEffects() const noexcept
+        {
+            return m_equipEffects;
+        }
 
       private:
         constexpr static int statMin     = 1;

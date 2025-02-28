@@ -5,6 +5,7 @@
 //
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 namespace castlecrawl
 {
@@ -43,11 +44,11 @@ namespace castlecrawl
             // clang-format off
             switch (t_size)
             {
-                case FontSize::Huge:    { return m_fontExtentHuge; }
-                case FontSize::Large:   { return m_fontExtentLarge; }
+                case FontSize::Huge:    { return m_fontExtentHuge;   }
+                case FontSize::Large:   { return m_fontExtentLarge;  }
                 case FontSize::Medium:  { return m_fontExtentMedium; }
                 case FontSize::Small:  
-                default:                { return m_fontExtentSmall; }
+                default:                { return m_fontExtentSmall;  }
             }
             // clang-format on
         }

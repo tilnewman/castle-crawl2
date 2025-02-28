@@ -15,6 +15,7 @@
 #include "maps.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
+#include "sfml-defaults.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -24,24 +25,24 @@ namespace castlecrawl
 
     StateInventory::StateInventory()
         : m_fadeRectangle{}
-        , m_unTitleText{}
+        , m_unTitleText{ util::SfmlDefaults::instance().font() }
         , m_unListboxUPtr{}
-        , m_eqTitleText{}
+        , m_eqTitleText{ util::SfmlDefaults::instance().font() }
         , m_eqListboxUPtr{}
-        , m_itemDescText{}
-        , m_errorText{}
-        , m_strTitleText{}
-        , m_dexTitleText{}
-        , m_accTitleText{}
-        , m_lckTitleText{}
-        , m_arcTitleText{}
-        , m_strValueText{}
-        , m_dexValueText{}
-        , m_accValueText{}
-        , m_lckValueText{}
-        , m_arcValueText{}
-        , m_goldText{}
-        , m_armorText{}
+        , m_itemDescText{ util::SfmlDefaults::instance().font() }
+        , m_errorText{ util::SfmlDefaults::instance().font() }
+        , m_strTitleText{ util::SfmlDefaults::instance().font() }
+        , m_dexTitleText{ util::SfmlDefaults::instance().font() }
+        , m_accTitleText{ util::SfmlDefaults::instance().font() }
+        , m_lckTitleText{ util::SfmlDefaults::instance().font() }
+        , m_arcTitleText{ util::SfmlDefaults::instance().font() }
+        , m_strValueText{ util::SfmlDefaults::instance().font() }
+        , m_dexValueText{ util::SfmlDefaults::instance().font() }
+        , m_accValueText{ util::SfmlDefaults::instance().font() }
+        , m_lckValueText{ util::SfmlDefaults::instance().font() }
+        , m_arcValueText{ util::SfmlDefaults::instance().font() }
+        , m_goldText{ util::SfmlDefaults::instance().font() }
+        , m_armorText{ util::SfmlDefaults::instance().font() }
         , m_statRectangle{}
     {}
 
@@ -53,7 +54,7 @@ namespace castlecrawl
         //
 
         const sf::FloatRect screenRect = t_context.layout.screenRect();
-        const float pad{ screenRect.width * 0.0025f };
+        const float pad{ screenRect.size.x * 0.0025f };
         const float padLarge{ pad * 10.0f };
         const sf::FloatRect botRect = t_context.layout.botRect();
 
@@ -65,21 +66,22 @@ namespace castlecrawl
         m_lckTitleText = t_context.fonts.makeText(FontSize::Medium, "Luck");
         m_arcTitleText = t_context.fonts.makeText(FontSize::Medium, "Arcane");
 
-        m_strTitleText.setPosition((screenRect.width * 0.25f), (botRect.top + padLarge));
+        m_strTitleText.setPosition(
+            { (screenRect.size.x * 0.25f), (botRect.position.y + padLarge) });
 
         const float statTextVertPad = 5.0f; // TODO make this based on m_strTitleText height
 
         m_dexTitleText.setPosition(
-            m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad));
+            { m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad) });
 
         m_accTitleText.setPosition(
-            m_strTitleText.getPosition().x, (util::bottom(m_dexTitleText) + statTextVertPad));
+            { m_strTitleText.getPosition().x, (util::bottom(m_dexTitleText) + statTextVertPad) });
 
         m_lckTitleText.setPosition(
-            m_strTitleText.getPosition().x, (util::bottom(m_accTitleText) + statTextVertPad));
+            { m_strTitleText.getPosition().x, (util::bottom(m_accTitleText) + statTextVertPad) });
 
         m_arcTitleText.setPosition(
-            m_strTitleText.getPosition().x, (util::bottom(m_lckTitleText) + statTextVertPad));
+            { m_strTitleText.getPosition().x, (util::bottom(m_lckTitleText) + statTextVertPad) });
 
         //
 
@@ -91,11 +93,20 @@ namespace castlecrawl
 
         const float valueTextHorizPos = (util::right(m_dexTitleText) + padLarge);
 
-        m_strValueText.setPosition(valueTextHorizPos, m_strTitleText.getGlobalBounds().top - 7.0f);
-        m_dexValueText.setPosition(valueTextHorizPos, m_dexTitleText.getGlobalBounds().top - 7.0f);
-        m_accValueText.setPosition(valueTextHorizPos, m_accTitleText.getGlobalBounds().top - 7.0f);
-        m_lckValueText.setPosition(valueTextHorizPos, m_lckTitleText.getGlobalBounds().top - 7.0f);
-        m_arcValueText.setPosition(valueTextHorizPos, m_arcTitleText.getGlobalBounds().top - 7.0f);
+        m_strValueText.setPosition(
+            { valueTextHorizPos, m_strTitleText.getGlobalBounds().position.y - 7.0f });
+
+        m_dexValueText.setPosition(
+            { valueTextHorizPos, m_dexTitleText.getGlobalBounds().position.y - 7.0f });
+
+        m_accValueText.setPosition(
+            { valueTextHorizPos, m_accTitleText.getGlobalBounds().position.y - 7.0f });
+
+        m_lckValueText.setPosition(
+            { valueTextHorizPos, m_lckTitleText.getGlobalBounds().position.y - 7.0f });
+
+        m_arcValueText.setPosition(
+            { valueTextHorizPos, m_arcTitleText.getGlobalBounds().position.y - 7.0f });
 
         updateStatText(t_context);
 
@@ -106,10 +117,10 @@ namespace castlecrawl
         m_statRectangle.setOutlineThickness(2.0f);
 
         m_statRectangle.setPosition(
-            (m_strTitleText.getPosition().x - pad), (m_strTitleText.getPosition().y - pad));
+            { (m_strTitleText.getPosition().x - pad), (m_strTitleText.getPosition().y - pad) });
 
         m_statRectangle.setSize(
-            { (screenRect.width - (m_statRectangle.getPosition().x * 2.0f)),
+            { (screenRect.size.x - (m_statRectangle.getPosition().x * 2.0f)),
               (util::bottom(m_arcValueText) - m_strTitleText.getPosition().y) + pad });
 
         //
@@ -118,15 +129,15 @@ namespace castlecrawl
         goldStr += std::to_string(t_context.player.gold());
         m_goldText = t_context.fonts.makeText(FontSize::Medium, goldStr, sf::Color(255, 200, 100));
         util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
-        m_goldText.move(0.0f, -m_goldText.getGlobalBounds().height);
-        m_goldText.move(0.0f, -pad);
+        m_goldText.move({ 0.0f, -m_goldText.getGlobalBounds().size.y });
+        m_goldText.move({ 0.0f, -pad });
 
         //
 
         std::string armorStr{ "Armor: " };
         armorStr += std::to_string(t_context.player.armor().get());
         m_armorText = t_context.fonts.makeText(FontSize::Medium, armorStr);
-        m_armorText.setPosition(m_goldText.getPosition().x, (util::bottom(m_goldText) + pad));
+        m_armorText.setPosition({ m_goldText.getPosition().x, (util::bottom(m_goldText) + pad) });
 
         //
 
@@ -137,11 +148,11 @@ namespace castlecrawl
             t_context, FontSize::Medium, t_context.items.textExtents().longest_name, 16);
 
         m_unListboxUPtr->setPosition(
-            { ((screenRect.width * 0.5f) - m_unListboxUPtr->getGlobalBounds().width) - pad,
+            { ((screenRect.size.x * 0.5f) - m_unListboxUPtr->getGlobalBounds().size.x) - pad,
               (util::bottom(m_statRectangle) + (padLarge * 2.0f)) });
 
         m_eqListboxUPtr->setPosition(
-            { ((screenRect.width * 0.5f) + pad), m_unListboxUPtr->getGlobalBounds().top });
+            { ((screenRect.size.x * 0.5f) + pad), m_unListboxUPtr->getGlobalBounds().position.y });
 
         m_unListboxUPtr->setFocus(true);
         m_eqListboxUPtr->setFocus(false);
@@ -152,20 +163,20 @@ namespace castlecrawl
         m_unTitleText = t_context.fonts.makeText(
             FontSize::Small, "Unequipped Items:", sf::Color(255, 255, 255, 160));
 
-        m_unTitleText.setPosition(
-            m_unListboxUPtr->getGlobalBounds().left,
-            (m_unListboxUPtr->getGlobalBounds().top - m_unTitleText.getGlobalBounds().height));
+        m_unTitleText.setPosition({ m_unListboxUPtr->getGlobalBounds().position.x,
+                                    (m_unListboxUPtr->getGlobalBounds().position.y -
+                                     m_unTitleText.getGlobalBounds().size.y) });
 
         m_eqTitleText = t_context.fonts.makeText(
             FontSize::Small, "Equipped Items:", sf::Color(255, 255, 255, 160));
 
-        m_eqTitleText.setPosition(
-            m_eqListboxUPtr->getGlobalBounds().left, m_unTitleText.getGlobalBounds().top);
+        m_eqTitleText.setPosition({ m_eqListboxUPtr->getGlobalBounds().position.x,
+                                    m_unTitleText.getGlobalBounds().position.y });
 
         //
 
         m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
-        m_fadeRectangle.setSize(util::size(screenRect));
+        m_fadeRectangle.setSize(screenRect.size);
 
         //
 
@@ -221,123 +232,110 @@ namespace castlecrawl
     void StateInventory::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         // all other handlers are key pressed events
-        if (t_event.type != sf::Event::KeyPressed)
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            return;
-        }
-
-        if (t_event.key.code == sf::Keyboard::Escape)
-        {
-            t_context.state.change(t_context, State::Play);
-            return;
-        }
-        else if (t_event.key.code == sf::Keyboard::E)
-        {
-            if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                const std::string resultStr =
-                    t_context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
-
-                if (resultStr.empty())
+                t_context.state.change(t_context, State::Play);
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
+            {
+                if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
                 {
+                    const std::string resultStr =
+                        t_context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
+
+                    if (resultStr.empty())
+                    {
+                        t_context.player.updateEquipEffects();
+                        m_unListboxUPtr->redraw();
+                        m_eqListboxUPtr->redraw();
+                        updateStatText(t_context);
+                        updateItemDescText(t_context);
+                        t_context.sfx.play("equip.ogg");
+                    }
+                    else
+                    {
+                        m_errorText.setString(resultStr);
+                        m_errorText.setFillColor(sf::Color::Red);
+
+                        m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+                                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
+                                                  (util::bottom(m_itemDescText) + 20.0f) });
+
+                        t_context.sfx.play("error-1.ogg");
+                    }
+                }
+                else
+                {
+                    t_context.sfx.play("error-1.ogg");
+                }
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::U)
+            {
+                if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
+                {
+                    t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
                     t_context.player.updateEquipEffects();
                     m_unListboxUPtr->redraw();
                     m_eqListboxUPtr->redraw();
                     updateStatText(t_context);
                     updateItemDescText(t_context);
-                    t_context.sfx.play("equip.ogg");
-                    return;
+                    t_context.sfx.play("cloth.ogg");
                 }
                 else
                 {
-                    m_errorText.setString(resultStr);
-                    m_errorText.setFillColor(sf::Color::Red);
-
-                    m_errorText.setPosition(
-                        ((t_context.layout.screenRect().width * 0.5f) -
-                         (m_errorText.getGlobalBounds().width * 0.5f)),
-                        (util::bottom(m_itemDescText) + 20.0f));
-
                     t_context.sfx.play("error-1.ogg");
-                    return;
                 }
             }
-            else
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
             {
-                t_context.sfx.play("error-1.ogg");
-                return;
+                if (!m_unListboxUPtr->getFocus())
+                {
+                    m_unListboxUPtr->setFocus(true);
+                    m_eqListboxUPtr->setFocus(false);
+                    updateItemDescText(t_context);
+                    t_context.sfx.play("tick-on");
+                }
             }
-        }
-        else if (t_event.key.code == sf::Keyboard::U)
-        {
-            if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
             {
-                t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
-                t_context.player.updateEquipEffects();
-                m_unListboxUPtr->redraw();
-                m_eqListboxUPtr->redraw();
-                updateStatText(t_context);
-                updateItemDescText(t_context);
-                t_context.sfx.play("cloth.ogg");
-                return;
+                if (!m_eqListboxUPtr->getFocus())
+                {
+                    m_unListboxUPtr->setFocus(false);
+                    m_eqListboxUPtr->setFocus(true);
+                    updateItemDescText(t_context);
+                    t_context.sfx.play("tick-on");
+                }
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
+            {
+                if (m_unListboxUPtr->getFocus())
+                {
+                    m_unListboxUPtr->selectPrev();
+                }
+                else
+                {
+                    m_eqListboxUPtr->selectPrev();
+                }
 
-            t_context.sfx.play("error-1.ogg");
-            return;
-        }
-        else if (t_event.key.code == sf::Keyboard::Left)
-        {
-            if (!m_unListboxUPtr->getFocus())
-            {
-                m_unListboxUPtr->setFocus(true);
-                m_eqListboxUPtr->setFocus(false);
-                updateItemDescText(t_context);
-                t_context.sfx.play("tick-on");
-            }
-
-            return;
-        }
-        else if (t_event.key.code == sf::Keyboard::Right)
-        {
-            if (!m_eqListboxUPtr->getFocus())
-            {
-                m_unListboxUPtr->setFocus(false);
-                m_eqListboxUPtr->setFocus(true);
                 updateItemDescText(t_context);
                 t_context.sfx.play("tick-on");
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+            {
+                if (m_unListboxUPtr->getFocus())
+                {
+                    m_unListboxUPtr->selectNext();
+                }
+                else
+                {
+                    m_eqListboxUPtr->selectNext();
+                }
 
-            return;
-        }
-        else if (t_event.key.code == sf::Keyboard::Up)
-        {
-            if (m_unListboxUPtr->getFocus())
-            {
-                m_unListboxUPtr->selectPrev();
+                updateItemDescText(t_context);
+                t_context.sfx.play("tick-on");
             }
-            else
-            {
-                m_eqListboxUPtr->selectPrev();
-            }
-
-            updateItemDescText(t_context);
-            t_context.sfx.play("tick-on");
-            return;
-        }
-        else if (t_event.key.code == sf::Keyboard::Down)
-        {
-            if (m_unListboxUPtr->getFocus())
-            {
-                m_unListboxUPtr->selectNext();
-            }
-            else
-            {
-                m_eqListboxUPtr->selectNext();
-            }
-
-            updateItemDescText(t_context);
-            t_context.sfx.play("tick-on");
-            return;
         }
     }
 
@@ -364,10 +362,9 @@ namespace castlecrawl
             }
         }
 
-        m_itemDescText.setPosition(
-            ((context.layout.screenRect().width * 0.5f) -
-             (m_itemDescText.getGlobalBounds().width * 0.5f)),
-            util::bottom(*m_unListboxUPtr));
+        m_itemDescText.setPosition({ ((context.layout.screenRect().size.x * 0.5f) -
+                                      (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
+                                     util::bottom(*m_unListboxUPtr) });
     }
 
     void StateInventory::updateStatText(const Context & context)

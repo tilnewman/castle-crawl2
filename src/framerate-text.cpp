@@ -8,13 +8,16 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "layout.hpp"
+#include "sfml-defaults.hpp"
+
+#include <SFML/System/Time.hpp>
 
 #include <string>
 
 namespace castlecrawl
 {
     FramerateText::FramerateText()
-        : m_text{}
+        : m_text{ util::SfmlDefaults::instance().font() }
         , m_frameCounter{ 0.0f }
         , m_secondClock{}
     {}
@@ -28,7 +31,9 @@ namespace castlecrawl
         m_text.setFillColor(sf::Color::White);
 
         m_text.setPosition(
-            0.0f, (t_context.layout.botRect().top + t_context.layout.botRect().height) - 50.0f);
+            { 0.0f,
+              (t_context.layout.botRect().position.y + t_context.layout.botRect().size.y) -
+                  50.0f });
     }
 
     void FramerateText::update()

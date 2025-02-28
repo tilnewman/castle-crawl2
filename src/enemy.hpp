@@ -314,71 +314,71 @@ namespace castlecrawl
         // clang-format off
         switch (t_enemyImage)
         {
-            case EnemyImage::SnakeBag:      { return {   0,   0, 64, 64}; }
-            case EnemyImage::Snake1:        { return {  64,   0, 64, 64}; }
-            case EnemyImage::Snake2:        { return { 128,   0, 64, 64}; }
-            case EnemyImage::Snake3:        { return { 192,   0, 64, 64}; }
-            case EnemyImage::Snake4:        { return { 256,   0, 64, 64}; }
-            case EnemyImage::Snake5:        { return { 320,   0, 64, 64}; }
-            case EnemyImage::Snake6:        { return { 384,   0, 64, 64}; }
-            case EnemyImage::Spiderweb:     { return {   0,  64, 64, 64}; }
-            case EnemyImage::Spider1:       { return {  64,  64, 64, 64}; }
-            case EnemyImage::Spider2:       { return { 128,  64, 64, 64}; }
-            case EnemyImage::Spider3:       { return { 192,  64, 64, 64}; }
-            case EnemyImage::Spider4:       { return { 256,  64, 64, 64}; }
-            case EnemyImage::Spider5:       { return { 320,  64, 64, 64}; }
-            case EnemyImage::Spider6:       { return { 384,  64, 64, 64}; }
-            case EnemyImage::GoblinBarrel:  { return {   0, 128, 64, 64}; }
-            case EnemyImage::Goblin1:       { return {  64, 128, 64, 64}; }
-            case EnemyImage::Goblin2:       { return { 128, 128, 64, 64}; }
-            case EnemyImage::Goblin3:       { return { 192, 128, 64, 64}; }
-            case EnemyImage::Goblin4:       { return { 256, 128, 64, 64}; }
-            case EnemyImage::Goblin5:       { return { 320, 128, 64, 64}; }
-            case EnemyImage::Goblin6:       { return { 384, 128, 64, 64}; }
-            case EnemyImage::BatMask:       { return {   0, 192, 64, 64}; }
-            case EnemyImage::Bat1:          { return {  64, 192, 64, 64}; }
-            case EnemyImage::Bat2:          { return { 128, 192, 64, 64}; }
-            case EnemyImage::Bat3:          { return { 192, 192, 64, 64}; }
-            case EnemyImage::Bat4:          { return { 256, 192, 64, 64}; }
-            case EnemyImage::Bat5:          { return { 320, 192, 64, 64}; }
-            case EnemyImage::Bat6:          { return { 384, 192, 64, 64}; }
-            case EnemyImage::PixieCup:      { return {   0, 256, 64, 64}; }
-            case EnemyImage::Pixie1:        { return {  64, 256, 64, 64}; }
-            case EnemyImage::Pixie2:        { return { 128, 256, 64, 64}; }
-            case EnemyImage::Pixie3:        { return { 192, 256, 64, 64}; }
-            case EnemyImage::Pixie4:        { return { 256, 256, 64, 64}; }
-            case EnemyImage::Pixie5:        { return { 320, 256, 64, 64}; }
-            case EnemyImage::Pixie6:        { return { 384, 256, 64, 64}; }
-            case EnemyImage::SkeletonGrave: { return {   0, 320, 64, 64}; }
-            case EnemyImage::Skeleton1:     { return {  64, 320, 64, 64}; }
-            case EnemyImage::Skeleton2:     { return { 128, 320, 64, 64}; }
-            case EnemyImage::Skeleton3:     { return { 192, 320, 64, 64}; }
-            case EnemyImage::Skeleton4:     { return { 256, 320, 64, 64}; }
-            case EnemyImage::Skeleton5:     { return { 320, 320, 64, 64}; }
-            case EnemyImage::Skeleton6:     { return { 384, 320, 64, 64}; }
-            case EnemyImage::DemonDoor:     { return {   0, 384, 64, 64}; }
-            case EnemyImage::Demon1:        { return {  64, 384, 64, 64}; }
-            case EnemyImage::Demon2:        { return { 128, 384, 64, 64}; }
-            case EnemyImage::Demon3:        { return { 192, 384, 64, 64}; }
-            case EnemyImage::Demon4:        { return { 256, 384, 64, 64}; }
-            case EnemyImage::Demon5:        { return { 320, 384, 64, 64}; }
-            case EnemyImage::Demon6:        { return { 384, 384, 64, 64}; }
-            case EnemyImage::DragonInferno: { return {   0, 448, 64, 64}; }
-            case EnemyImage::Dragon1:       { return {  64, 448, 64, 64}; }
-            case EnemyImage::Dragon2:       { return { 128, 448, 64, 64}; }
-            case EnemyImage::Dragon3:       { return { 192, 448, 64, 64}; }
-            case EnemyImage::Dragon4:       { return { 256, 448, 64, 64}; }
-            case EnemyImage::Dragon5:       { return { 320, 448, 64, 64}; }
-            case EnemyImage::Dragon6:       { return { 384, 448, 64, 64}; }
-            case EnemyImage::WizardTomb:    { return { 448,   0, 64, 64}; }
-            case EnemyImage::Wizard1:       { return { 448,  64, 64, 64}; }
-            case EnemyImage::Wizard2:       { return { 448, 128, 64, 64}; }
-            case EnemyImage::Wizard3:       { return { 448, 192, 64, 64}; }
-            case EnemyImage::Wizard4:       { return { 448, 256, 64, 64}; }
-            case EnemyImage::Wizard5:       { return { 448, 320, 64, 64}; }
-            case EnemyImage::Wizard6:       { return { 448, 384, 64, 64}; }
+            case EnemyImage::SnakeBag:      { return { {   0,   0}, { 64, 64 } }; }
+            case EnemyImage::Snake1:        { return { {  64,   0}, { 64, 64 } }; }
+            case EnemyImage::Snake2:        { return { { 128,   0}, { 64, 64 } }; }
+            case EnemyImage::Snake3:        { return { { 192,   0}, { 64, 64 } }; }
+            case EnemyImage::Snake4:        { return { { 256,   0}, { 64, 64 } }; }
+            case EnemyImage::Snake5:        { return { { 320,   0}, { 64, 64 } }; }
+            case EnemyImage::Snake6:        { return { { 384,   0}, { 64, 64 } }; }
+            case EnemyImage::Spiderweb:     { return { {   0,  64}, { 64, 64 } }; }
+            case EnemyImage::Spider1:       { return { {  64,  64}, { 64, 64 } }; }
+            case EnemyImage::Spider2:       { return { { 128,  64}, { 64, 64 } }; }
+            case EnemyImage::Spider3:       { return { { 192,  64}, { 64, 64 } }; }
+            case EnemyImage::Spider4:       { return { { 256,  64}, { 64, 64 } }; }
+            case EnemyImage::Spider5:       { return { { 320,  64}, { 64, 64 } }; }
+            case EnemyImage::Spider6:       { return { { 384,  64}, { 64, 64 } }; }
+            case EnemyImage::GoblinBarrel:  { return { {   0, 128}, { 64, 64 } }; }
+            case EnemyImage::Goblin1:       { return { {  64, 128}, { 64, 64 } }; }
+            case EnemyImage::Goblin2:       { return { { 128, 128}, { 64, 64 } }; }
+            case EnemyImage::Goblin3:       { return { { 192, 128}, { 64, 64 } }; }
+            case EnemyImage::Goblin4:       { return { { 256, 128}, { 64, 64 } }; }
+            case EnemyImage::Goblin5:       { return { { 320, 128}, { 64, 64 } }; }
+            case EnemyImage::Goblin6:       { return { { 384, 128}, { 64, 64 } }; }
+            case EnemyImage::BatMask:       { return { {   0, 192}, { 64, 64 } }; }
+            case EnemyImage::Bat1:          { return { {  64, 192}, { 64, 64 } }; }
+            case EnemyImage::Bat2:          { return { { 128, 192}, { 64, 64 } }; }
+            case EnemyImage::Bat3:          { return { { 192, 192}, { 64, 64 } }; }
+            case EnemyImage::Bat4:          { return { { 256, 192}, { 64, 64 } }; }
+            case EnemyImage::Bat5:          { return { { 320, 192}, { 64, 64 } }; }
+            case EnemyImage::Bat6:          { return { { 384, 192}, { 64, 64 } }; }
+            case EnemyImage::PixieCup:      { return { {   0, 256}, { 64, 64 } }; }
+            case EnemyImage::Pixie1:        { return { {  64, 256}, { 64, 64 } }; }
+            case EnemyImage::Pixie2:        { return { { 128, 256}, { 64, 64 } }; }
+            case EnemyImage::Pixie3:        { return { { 192, 256}, { 64, 64 } }; }
+            case EnemyImage::Pixie4:        { return { { 256, 256}, { 64, 64 } }; }
+            case EnemyImage::Pixie5:        { return { { 320, 256}, { 64, 64 } }; }
+            case EnemyImage::Pixie6:        { return { { 384, 256}, { 64, 64 } }; }
+            case EnemyImage::SkeletonGrave: { return { {   0, 320}, { 64, 64 } }; }
+            case EnemyImage::Skeleton1:     { return { {  64, 320}, { 64, 64 } }; }
+            case EnemyImage::Skeleton2:     { return { { 128, 320}, { 64, 64 } }; }
+            case EnemyImage::Skeleton3:     { return { { 192, 320}, { 64, 64 } }; }
+            case EnemyImage::Skeleton4:     { return { { 256, 320}, { 64, 64 } }; }
+            case EnemyImage::Skeleton5:     { return { { 320, 320}, { 64, 64 } }; }
+            case EnemyImage::Skeleton6:     { return { { 384, 320}, { 64, 64 } }; }
+            case EnemyImage::DemonDoor:     { return { {   0, 384}, { 64, 64 } }; }
+            case EnemyImage::Demon1:        { return { {  64, 384}, { 64, 64 } }; }
+            case EnemyImage::Demon2:        { return { { 128, 384}, { 64, 64 } }; }
+            case EnemyImage::Demon3:        { return { { 192, 384}, { 64, 64 } }; }
+            case EnemyImage::Demon4:        { return { { 256, 384}, { 64, 64 } }; }
+            case EnemyImage::Demon5:        { return { { 320, 384}, { 64, 64 } }; }
+            case EnemyImage::Demon6:        { return { { 384, 384}, { 64, 64 } }; }
+            case EnemyImage::DragonInferno: { return { {   0, 448}, { 64, 64 } }; }
+            case EnemyImage::Dragon1:       { return { {  64, 448}, { 64, 64 } }; }
+            case EnemyImage::Dragon2:       { return { { 128, 448}, { 64, 64 } }; }
+            case EnemyImage::Dragon3:       { return { { 192, 448}, { 64, 64 } }; }
+            case EnemyImage::Dragon4:       { return { { 256, 448}, { 64, 64 } }; }
+            case EnemyImage::Dragon5:       { return { { 320, 448}, { 64, 64 } }; }
+            case EnemyImage::Dragon6:       { return { { 384, 448}, { 64, 64 } }; }
+            case EnemyImage::WizardTomb:    { return { { 448,   0}, { 64, 64 } }; }
+            case EnemyImage::Wizard1:       { return { { 448,  64}, { 64, 64 } }; }
+            case EnemyImage::Wizard2:       { return { { 448, 128}, { 64, 64 } }; }
+            case EnemyImage::Wizard3:       { return { { 448, 192}, { 64, 64 } }; }
+            case EnemyImage::Wizard4:       { return { { 448, 256}, { 64, 64 } }; }
+            case EnemyImage::Wizard5:       { return { { 448, 320}, { 64, 64 } }; }
+            case EnemyImage::Wizard6:       { return { { 448, 384}, { 64, 64 } }; }
             case EnemyImage::FireLord:
-            default:                        { return { 224, 224, 64, 64}; }
+            default:                        { return { { 224, 224}, { 64, 64 } }; }
         }
         // clang-format on
     }

@@ -17,6 +17,7 @@
 #include "music-player.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
+#include "sfml-defaults.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -28,7 +29,7 @@ namespace castlecrawl
     StateDeath::StateDeath()
         : m_fadeRedRectangle{}
         , m_fadeBlackRectangle{}
-        , m_titleText{}
+        , m_titleText{ util::SfmlDefaults::instance().font() }
     {}
 
     void StateDeath::onEnter(const Context & t_context)
@@ -39,10 +40,10 @@ namespace castlecrawl
         const sf::FloatRect screenRect = t_context.layout.screenRect();
 
         m_fadeRedRectangle.setFillColor(sf::Color(255, 0, 0, 0));
-        m_fadeRedRectangle.setSize(util::size(screenRect));
+        m_fadeRedRectangle.setSize(screenRect.size);
 
         m_fadeBlackRectangle.setFillColor(sf::Color(0, 0, 0, 0));
-        m_fadeBlackRectangle.setSize(util::size(screenRect));
+        m_fadeBlackRectangle.setSize(screenRect.size);
 
         m_titleText = t_context.fonts.makeText(FontSize::Huge, "You Died!", sf::Color::Red);
         util::centerInside(m_titleText, screenRect);
@@ -86,16 +87,12 @@ namespace castlecrawl
 
     void StateDeath::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        // all other handlers are key released events
-        if (t_event.type != sf::Event::KeyPressed)
+        if (const auto keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            return;
-        }
-
-        if (t_event.key.code == sf::Keyboard::Escape)
-        {
-            t_context.state.change(t_context, State::Credits);
-            return;
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            {
+                t_context.state.change(t_context, State::Credits);
+            }
         }
     }
 

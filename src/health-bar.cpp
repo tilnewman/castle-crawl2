@@ -21,10 +21,10 @@ namespace castlecrawl
         const sf::FloatRect topRect = t_context.layout.topRect();
 
         sf::FloatRect healthBarRect;
-        healthBarRect.height = (topRect.height * 0.1f);
-        healthBarRect.top    = ((topRect.height - healthBarRect.height) - 3.0f);
-        healthBarRect.width  = (topRect.width * 0.25f);
-        healthBarRect.left   = ((topRect.width * 0.5f) - (healthBarRect.width * 0.5f));
+        healthBarRect.size.y     = (topRect.size.y * 0.1f);
+        healthBarRect.position.y = ((topRect.size.y - healthBarRect.size.y) - 3.0f);
+        healthBarRect.size.x     = (topRect.size.x * 0.25f);
+        healthBarRect.position.x = ((topRect.size.x * 0.5f) - (healthBarRect.size.x * 0.5f));
 
         m_statBar.setup(
             t_context, healthBarRect, sf::Color(160, 0, 0), t_context.player.health().max());

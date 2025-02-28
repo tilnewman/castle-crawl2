@@ -41,8 +41,8 @@ int main(const int argc, const char * const argv[])
 
         config.video_mode = sf::VideoMode::getDesktopMode();
 
-        config.video_mode.width  = 1920;
-        config.video_mode.height = 1200;
+        config.video_mode.size.x  = 1920;
+        config.video_mode.size.y = 1200;
 
         // sometimes the bpp is detected as zero and I don't know why but this forces a valid value
         if (0 == config.video_mode.bitsPerPixel)

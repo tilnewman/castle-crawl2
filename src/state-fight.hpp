@@ -33,7 +33,7 @@ namespace castlecrawl
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void handleSelectDirection(const Context & t_context, const sf::Keyboard::Key t_key);
+        void handleSelectDirection(const Context & t_context, const sf::Keyboard::Scancode t_key);
         void fight(const Context & t_context, const MapPos_t & t_pos);
 
       private:

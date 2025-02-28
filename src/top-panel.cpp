@@ -9,34 +9,31 @@
 #include "context.hpp"
 #include "layout.hpp"
 #include "sfml-util.hpp"
+#include "texture-loader.hpp"
 
 namespace castlecrawl
 {
 
     TopPanel::TopPanel()
         : m_titleTexture()
-        , m_titleSprite()
+        , m_titleSprite(m_titleTexture)
         , m_healthBar()
         , m_manaBar()
     {}
 
     void TopPanel::setup(const Context & context)
     {
-        const bool loadResult = m_titleTexture.loadFromFile(
-            (context.config.media_path / "image" / "title.png").string());
+        util::TextureLoader::load(
+            m_titleTexture, (context.config.media_path / "image/title.png"), true);
 
-        M_CHECK(loadResult, "Failed to load top panel title.png");
-
-        m_titleTexture.setSmooth(true);
-
-        m_titleSprite.setTexture(m_titleTexture);
+        m_titleSprite.setTexture(m_titleTexture, true);
 
         const sf::FloatRect topRect = context.layout.topRect();
 
-        util::fit(m_titleSprite, { (topRect.width * 0.3f), topRect.height });
+        util::fit(m_titleSprite, { (topRect.size.x * 0.3f), topRect.size.y });
 
         m_titleSprite.setPosition(
-            ((topRect.width * 0.5f) - (m_titleSprite.getGlobalBounds().width * 0.5f)), 0.0f);
+            { ((topRect.size.x * 0.5f) - (m_titleSprite.getGlobalBounds().size.x * 0.5f)), 0.0f });
 
         m_healthBar.setup(context);
         m_manaBar.setup(context);

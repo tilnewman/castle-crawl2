@@ -145,64 +145,64 @@ namespace castlecrawl
         // clang-format off
         switch (tileImage)
         {
-            case TileImage::Rock:               { return sf::IntRect(0, 192,32,32); }
-            case TileImage::Lava:               { return sf::IntRect(32,192,32,32); }
-            case TileImage::Water:              { return sf::IntRect(64,192,32,32); }
-            case TileImage::Stair_Up:           { return sf::IntRect(128, 0,32,32); }
-            case TileImage::Stair_Down:         { return sf::IntRect(128,32,32,32); }
-            case TileImage::Barrel:             { return sf::IntRect( 96, 0,32,32); }
-            case TileImage::Door:               { return sf::IntRect( 96,96,32,32); }
-            case TileImage::DoorLocked:         { return sf::IntRect( 96,96,32,32); }
-            case TileImage::Chest:              { return sf::IntRect( 96,64,32,32); }
-            case TileImage::Coffin:             { return sf::IntRect(160,64,32,32); }
-            case TileImage::Wall_TopLeft:       { return sf::IntRect(  0, 0,32,32); }
-            case TileImage::Wall_Horiz:         { return sf::IntRect( 32, 0,32,32); }
-            case TileImage::Wall_Top:           { return sf::IntRect( 64, 0,32,32); }
-            case TileImage::Wall_Vert:          { return sf::IntRect(  0,32,32,32); }
-            case TileImage::Wall_Block:         { return sf::IntRect( 64,32,32,32); }
-            case TileImage::Avatar:             { return sf::IntRect( 96,32,32,32); }
-            case TileImage::Snake:              { return sf::IntRect(224,64,32,32); }
-            case TileImage::SnakeBag:           { return sf::IntRect(192,64,32,32); }
-            case TileImage::Spider:             { return sf::IntRect(224,96,32,32); }
-            case TileImage::Spiderweb:          { return sf::IntRect(192,96,32,32); }
-            case TileImage::Goblin:             { return sf::IntRect(224,128,32,32);}
-            case TileImage::GoblinBarrel:       { return sf::IntRect(192,128,32,32);}
-            case TileImage::Bat:                { return sf::IntRect(224,160,32,32);}
-            case TileImage::BatMask:            { return sf::IntRect(192,160,32,32);}
-            case TileImage::Skeleton:           { return sf::IntRect(224,192,32,32);}
-            case TileImage::SkeletonGrave:      { return sf::IntRect(192,192,32,32);}
-            case TileImage::Demon:              { return sf::IntRect(224,224,32,32);}
-            case TileImage::DemonDoor:          { return sf::IntRect(192,224,32,32);}
-            case TileImage::Dragon:             { return sf::IntRect(160,224,32,32);}
-            case TileImage::DragonInferno:      { return sf::IntRect(128,224,32,32);}
-            case TileImage::Floor_Wood1:        { return sf::IntRect( 0, 64,32,32); }
-            case TileImage::Floor_Wood2:        { return sf::IntRect(32, 64,32,32); }
-            case TileImage::Floor_Wood3:        { return sf::IntRect(64, 64,32,32); }
-            case TileImage::Floor_Wood4:        { return sf::IntRect( 0, 96,32,32); }
-            case TileImage::Floor_Wood5:        { return sf::IntRect(32, 96,32,32); }
-            case TileImage::Floor_Wood6:        { return sf::IntRect(64, 96,32,32); }
-            case TileImage::Floor_Stone1:       { return sf::IntRect( 0,128,32,32); }
-            case TileImage::Floor_Stone2:       { return sf::IntRect(32,128,32,32); }
-            case TileImage::Floor_Stone3:       { return sf::IntRect(64,128,32,32); }
-            case TileImage::Floor_Stone4:       { return sf::IntRect( 0,160,32,32); }
-            case TileImage::Floor_Stone5:       { return sf::IntRect(32,160,32,32); }
-            case TileImage::Floor_Stone6:       { return sf::IntRect(64,160,32,32); }
-            case TileImage::Floor_Dirt1:        { return sf::IntRect(160, 0,32,32); }
-            case TileImage::Floor_Dirt2:        { return sf::IntRect(192, 0,32,32); }
-            case TileImage::Floor_Dirt3:        { return sf::IntRect(160,32,32,32); }
-            case TileImage::Floor_Dirt4:        { return sf::IntRect(192,32,32,32); }
-            case TileImage::Floor_Dirt5:        { return sf::IntRect(224,32,32,32); }
-            case TileImage::LiquidRim_TopLeft:  { return sf::IntRect( 96,128,32,32); }
-            case TileImage::LiquidRim_Top:      { return sf::IntRect(128,128,32,32); }
-            case TileImage::LiquidRim_TopRight: { return sf::IntRect(160,128,32,32); }
-            case TileImage::LiquidRim_Left:     { return sf::IntRect( 96,160,32,32); }
-            case TileImage::LiquidRim_Right:    { return sf::IntRect(160,160,32,32); }
-            case TileImage::LiquidRim_BotLeft:  { return sf::IntRect( 96,192,32,32); }
-            case TileImage::LiquidRim_Bot:      { return sf::IntRect(128,192,32,32); }
-            case TileImage::LiquidRim_BotRight: { return sf::IntRect(160,192,32,32); }
-            case TileImage::Wall_Shadow:        { return sf::IntRect( 32,32,32,32); }
-            case TileImage::Empty:              
-            default:                            { return sf::IntRect(224, 0,32,32); }
+            case TileImage::Rock:               { return sf::IntRect( {  0,192},{32,32}); }
+            case TileImage::Lava:               { return sf::IntRect( { 32,192},{32,32}); }
+            case TileImage::Water:              { return sf::IntRect( { 64,192},{32,32}); }
+            case TileImage::Stair_Up:           { return sf::IntRect( {128,  0},{32,32}); }
+            case TileImage::Stair_Down:         { return sf::IntRect( {128, 32},{32,32}); }
+            case TileImage::Barrel:             { return sf::IntRect( { 96,  0},{32,32}); }
+            case TileImage::Door:               { return sf::IntRect( { 96, 96},{32,32}); }
+            case TileImage::DoorLocked:         { return sf::IntRect( { 96, 96},{32,32}); }
+            case TileImage::Chest:              { return sf::IntRect( { 96, 64},{32,32}); }
+            case TileImage::Coffin:             { return sf::IntRect( {160, 64},{32,32}); }
+            case TileImage::Wall_TopLeft:       { return sf::IntRect( {  0,  0},{32,32}); }
+            case TileImage::Wall_Horiz:         { return sf::IntRect( { 32,  0},{32,32}); }
+            case TileImage::Wall_Top:           { return sf::IntRect( { 64,  0},{32,32}); }
+            case TileImage::Wall_Vert:          { return sf::IntRect( {  0, 32},{32,32}); }
+            case TileImage::Wall_Block:         { return sf::IntRect( { 64, 32},{32,32}); }
+            case TileImage::Avatar:             { return sf::IntRect( { 96, 32},{32,32}); }
+            case TileImage::Snake:              { return sf::IntRect( {224, 64},{32,32}); }
+            case TileImage::SnakeBag:           { return sf::IntRect( {192, 64},{32,32}); }
+            case TileImage::Spider:             { return sf::IntRect( {224, 96},{32,32}); }
+            case TileImage::Spiderweb:          { return sf::IntRect( {192, 96},{32,32}); }
+            case TileImage::Goblin:             { return sf::IntRect( {224,128},{32,32}); }
+            case TileImage::GoblinBarrel:       { return sf::IntRect( {192,128},{32,32}); }
+            case TileImage::Bat:                { return sf::IntRect( {224,160},{32,32}); }
+            case TileImage::BatMask:            { return sf::IntRect( {192,160},{32,32}); }
+            case TileImage::Skeleton:           { return sf::IntRect( {224,192},{32,32}); }
+            case TileImage::SkeletonGrave:      { return sf::IntRect( {192,192},{32,32}); }
+            case TileImage::Demon:              { return sf::IntRect( {224,224},{32,32}); }
+            case TileImage::DemonDoor:          { return sf::IntRect( {192,224},{32,32}); }
+            case TileImage::Dragon:             { return sf::IntRect( {160,224},{32,32}); }
+            case TileImage::DragonInferno:      { return sf::IntRect( {128,224},{32,32}); }
+            case TileImage::Floor_Wood1:        { return sf::IntRect( {  0, 64},{32,32}); }
+            case TileImage::Floor_Wood2:        { return sf::IntRect( { 32, 64},{32,32}); }
+            case TileImage::Floor_Wood3:        { return sf::IntRect( { 64, 64},{32,32}); }
+            case TileImage::Floor_Wood4:        { return sf::IntRect( {  0, 96},{32,32}); }
+            case TileImage::Floor_Wood5:        { return sf::IntRect( { 32, 96},{32,32}); }
+            case TileImage::Floor_Wood6:        { return sf::IntRect( { 64, 96},{32,32}); }
+            case TileImage::Floor_Stone1:       { return sf::IntRect( {  0,128},{32,32}); }
+            case TileImage::Floor_Stone2:       { return sf::IntRect( { 32,128},{32,32}); }
+            case TileImage::Floor_Stone3:       { return sf::IntRect( { 64,128},{32,32}); }
+            case TileImage::Floor_Stone4:       { return sf::IntRect( {  0,160},{32,32}); }
+            case TileImage::Floor_Stone5:       { return sf::IntRect( { 32,160},{32,32}); }
+            case TileImage::Floor_Stone6:       { return sf::IntRect( { 64,160},{32,32}); }
+            case TileImage::Floor_Dirt1:        { return sf::IntRect( {160,  0},{32,32}); }
+            case TileImage::Floor_Dirt2:        { return sf::IntRect( {192,  0},{32,32}); }
+            case TileImage::Floor_Dirt3:        { return sf::IntRect( {160, 32},{32,32}); }
+            case TileImage::Floor_Dirt4:        { return sf::IntRect( {192, 32},{32,32}); }
+            case TileImage::Floor_Dirt5:        { return sf::IntRect( {224, 32},{32,32}); }
+            case TileImage::LiquidRim_TopLeft:  { return sf::IntRect( { 96,128},{32,32}); }
+            case TileImage::LiquidRim_Top:      { return sf::IntRect( {128,128},{32,32}); }
+            case TileImage::LiquidRim_TopRight: { return sf::IntRect( {160,128},{32,32}); }
+            case TileImage::LiquidRim_Left:     { return sf::IntRect( { 96,160},{32,32}); }
+            case TileImage::LiquidRim_Right:    { return sf::IntRect( {160,160},{32,32}); }
+            case TileImage::LiquidRim_BotLeft:  { return sf::IntRect( { 96,192},{32,32}); }
+            case TileImage::LiquidRim_Bot:      { return sf::IntRect( {128,192},{32,32}); }
+            case TileImage::LiquidRim_BotRight: { return sf::IntRect( {160,192},{32,32}); }
+            case TileImage::Wall_Shadow:        { return sf::IntRect( { 32, 32},{32,32}); }
+            case TileImage::Empty:
+            default:                            { return sf::IntRect( {224,  0},{32,32}); }
         }
         // clang-format on
     }

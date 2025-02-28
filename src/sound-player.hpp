@@ -54,9 +54,9 @@ namespace util
         {
             std::string toString() const;
 
-            std::string filename;
-            sf::Sound sound;
-            sf::SoundBuffer buffer;
+            std::string filename{};
+            sf::SoundBuffer buffer{};
+            sf::Sound sound{ buffer };
         };
 
       private:

@@ -56,17 +56,17 @@ namespace castlecrawl
         MapDisplay m_mapDisplay;
         StateManager m_stateManager;
         Player m_player;
-        PlayerDisplay m_playerDisplay;
+        std::unique_ptr<PlayerDisplay> m_playerDisplayUPtr;
         util::Random m_random;
         util::SoundPlayer m_sfx;
         util::MusicPlayer m_music;
         FontManager m_fonts;
         Enemies m_enemies;
-        FramerateText m_framerate;
-        TopPanel m_topPanel;
+        std::unique_ptr<FramerateText> m_framerateUPtr;
+        std::unique_ptr<TopPanel> m_topPanelUPtr;
         item::ItemFactory m_itemFactory;
 
-        Context m_context;
+        std::unique_ptr<Context> m_contextUPtr;
     };
 
 } // namespace castlecrawl

@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "layout.hpp"
 #include "maps.hpp"
+#include "sfml-defaults.hpp"
 #include "tile-images.hpp"
 
 namespace castlecrawl
@@ -17,7 +18,7 @@ namespace castlecrawl
     PlayerDisplay::PlayerDisplay()
         : m_mapPos{ 0, 0 }
         , m_screenPos{ 0.0f, 0.0f }
-        , m_sprite{}
+        , m_sprite{ util::SfmlDefaults::instance().texture() }
         , m_isShaking{ false }
         , m_shakeTimeSec{ 0.0f }
         , m_shaker{}
@@ -31,7 +32,7 @@ namespace castlecrawl
 
     void PlayerDisplay::position(const Context & t_context, const MapPos_t & t_newPosition)
     {
-        // assert player in a valid position? -no, because map transitions are invalid
+        // assert player in a valid position? -no, because map transitions are invalid positions
 
         m_isShaking = false;
         m_mapPos    = t_newPosition;
@@ -54,7 +55,7 @@ namespace castlecrawl
             }
         }
 
-        m_sprite.setPosition((m_screenPos.x + m_shaker.adjustment()), m_screenPos.y);
+        m_sprite.setPosition({ (m_screenPos.x + m_shaker.adjustment()), m_screenPos.y });
     }
 
     void PlayerDisplay::draw(

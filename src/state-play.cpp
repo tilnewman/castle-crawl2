@@ -51,48 +51,43 @@ namespace castlecrawl
         target.draw(context.top_panel, states);
     }
 
-    void StatePlay::handleEvent(const Context & context, const sf::Event & event)
+    void StatePlay::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (event.type == sf::Event::MouseMoved)
+        if (const auto * movePtr = t_event.getIf<sf::Event::MouseMoved>())
         {
-            m_mouseover.handleMouseMovedEvent({ event.mouseMove.x, event.mouseMove.y });
+            m_mouseover.handleMouseMovedEvent(movePtr->position);
             return;
         }
 
-        // all other handlers are key pressed events
-        if (event.type != sf::Event::KeyPressed)
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            return;
-        }
-
-        if (event.key.code == sf::Keyboard::Escape)
-        {
-            context.state.change(context, State::Quit);
-            return;
-        }
-        else if (
-            (event.key.code == sf::Keyboard::Up) || (event.key.code == sf::Keyboard::Down) ||
-            (event.key.code == sf::Keyboard::Left) || (event.key.code == sf::Keyboard::Right))
-        {
-            handlePlayerMove(context, event.key.code);
-            return;
-        }
-        else if (event.key.code == sf::Keyboard::I)
-        {
-            context.state.change(context, State::Inventory);
-            return;
-        }
-        else if (event.key.code == sf::Keyboard::F)
-        {
-            context.state.change(context, State::Fight);
-            return;
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            {
+                t_context.state.change(t_context, State::Quit);
+            }
+            else if (
+                (keyPtr->scancode == sf::Keyboard::Scancode::Up) ||
+                (keyPtr->scancode == sf::Keyboard::Scancode::Down) ||
+                (keyPtr->scancode == sf::Keyboard::Scancode::Left) ||
+                (keyPtr->scancode == sf::Keyboard::Scancode::Right))
+            {
+                handlePlayerMove(t_context, keyPtr->scancode);
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::I)
+            {
+                t_context.state.change(t_context, State::Inventory);
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::F)
+            {
+                t_context.state.change(t_context, State::Fight);
+            }
         }
     }
 
-    void StatePlay::handlePlayerMove(const Context & context, const sf::Keyboard::Key key)
+    void StatePlay::handlePlayerMove(const Context & context, const sf::Keyboard::Scancode key)
     {
         const MapPos_t mapPosBefore    = context.player_display.position();
-        const MapPos_t mapPosAttempted = keys::moveIfDir(mapPosBefore, key);
+        const MapPos_t mapPosAttempted = util::keys::moveIfDir(mapPosBefore, key);
         const bool isEnemyInTheWay     = context.enemies.isAnyAtMapPos(mapPosAttempted);
         const char mapCharAttempted    = context.maps.current().cell(mapPosAttempted).object_char;
 

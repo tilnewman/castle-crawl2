@@ -1,5 +1,5 @@
-#ifndef SFMLUTIL_HPP_INCLUDED
-#define SFMLUTIL_HPP_INCLUDED
+#ifndef SFML_UTIL_HPP_INCLUDED
+#define SFML_UTIL_HPP_INCLUDED
 //
 // sfml-util.hpp
 //
@@ -26,6 +26,7 @@ namespace sf
 namespace util
 {
 
+    // two triangles with three verts each, see setupTriangleVerts() below
     constexpr std::size_t verts_per_quad{ 6 };
 
     [[nodiscard]] inline std::string colorToString(const sf::Color & C)
@@ -136,8 +137,8 @@ namespace sf
     [[nodiscard]] bool operator<(const sf::Rect<T> & r1, const sf::Rect<T> & r2)
     {
         return (
-            std::tie(r1.top, r1.left, r1.width, r1.height) <
-            std::tie(r2.top, r2.left, r2.width, r2.height));
+            std::tie(r1.position.y, r1.position.x, r1.size.x, r1.size.y) <
+            std::tie(r2.position.y, r2.position.x, r2.size.x, r2.size.y));
     }
 
     //
@@ -152,13 +153,14 @@ namespace sf
     template <typename T>
     std::ostream & operator<<(std::ostream & os, const sf::Rect<T> & rect)
     {
-        os << '(' << rect.left << ',' << rect.top << '/' << rect.width << 'x' << rect.height << ')';
+        os << '(' << rect.position.x << ',' << rect.position.y << '/' << rect.size.x << 'x'
+           << rect.size.y << ')';
         return os;
     }
 
     inline std::ostream & operator<<(std::ostream & os, const sf::VideoMode & vm)
     {
-        os << "(" << vm.width << "x" << vm.height << ":" << vm.bitsPerPixel << "bpp";
+        os << "(" << vm.size.x << "x" << vm.size.y << ":" << vm.bitsPerPixel << "bpp";
 
         if (!vm.isValid())
         {
@@ -182,10 +184,10 @@ namespace util
     template <typename T>
     void floor(sf::Rect<T> & rect)
     {
-        rect.left   = std::floor(rect.left);
-        rect.top    = std::floor(rect.top);
-        rect.width  = std::floor(rect.width);
-        rect.height = std::floor(rect.height);
+        rect.position.x = std::floor(rect.position.x);
+        rect.position.y = std::floor(rect.position.y);
+        rect.size.x = std::floor(rect.size.x);
+        rect.size.y = std::floor(rect.size.y);
     }
 
     template <typename T>
@@ -214,27 +216,21 @@ namespace util
     // position, size, and center
 
     template <typename T>
-    [[nodiscard]] const sf::Vector2<T> position(const sf::Rect<T> & rect)
-    {
-        return { rect.left, rect.top };
-    }
-
-    template <typename T>
     [[nodiscard]] const sf::Vector2f position(const T & thing)
     {
-        return position(thing.getGlobalBounds());
+        return thing.getGlobalBounds().position;
     }
 
     template <typename T>
     [[nodiscard]] const sf::Vector2f positionLocal(const T & thing)
     {
-        return position(thing.getLocalBounds());
+        return thing.getLocalBounds().position;
     }
 
     template <typename T>
     [[nodiscard]] T right(const sf::Rect<T> & rect)
     {
-        return (rect.left + rect.width);
+        return (rect.position.x + rect.size.x);
     }
 
     template <typename T>
@@ -246,7 +242,7 @@ namespace util
     template <typename T>
     [[nodiscard]] T bottom(const sf::Rect<T> & rect)
     {
-        return (rect.top + rect.height);
+        return (rect.position.y + rect.size.y);
     }
 
     template <typename T>
@@ -256,27 +252,21 @@ namespace util
     }
 
     template <typename T>
-    [[nodiscard]] const sf::Vector2<T> size(const sf::Rect<T> & rect)
-    {
-        return { rect.width, rect.height };
-    }
-
-    template <typename T>
     [[nodiscard]] const sf::Vector2f size(const T & thing)
     {
-        return size(thing.getGlobalBounds());
+        return thing.getGlobalBounds().size;
     }
 
     template <typename T>
     [[nodiscard]] const sf::Vector2f sizeLocal(const T & thing)
     {
-        return size(thing.getLocalBounds());
+        return thing.getLocalBounds().size;
     }
 
     template <typename T>
     [[nodiscard]] const sf::Vector2<T> center(const sf::Rect<T> & rect)
     {
-        return (position(rect) + (size(rect) / T(2)));
+        return (rect.position + (rect.size / T(2)));
     }
 
     template <typename T>
@@ -424,13 +414,13 @@ namespace util
     // sfml utils to re-size (scale) any sf::FloatRect without moving it
     inline void scaleRectInPlace(sf::FloatRect & rect, const sf::Vector2f & scale) noexcept
     {
-        const auto widthChange((rect.width * scale.x) - rect.width);
-        rect.width += widthChange;
-        rect.left -= (widthChange * 0.5f);
+        const auto widthChange((rect.size.x * scale.x) - rect.size.x);
+        rect.size.x += widthChange;
+        rect.position.x -= (widthChange * 0.5f);
 
-        const float heightChange((rect.height * scale.y) - rect.height);
-        rect.height += heightChange;
-        rect.top -= (heightChange * 0.5f);
+        const float heightChange((rect.size.y * scale.y) - rect.size.y);
+        rect.size.y += heightChange;
+        rect.position.y -= (heightChange * 0.5f);
     }
 
     [[nodiscard]] inline const sf::FloatRect
@@ -456,10 +446,10 @@ namespace util
 
     inline void adjRectInPlace(sf::FloatRect & rect, const float amount) noexcept
     {
-        rect.left += amount;
-        rect.top += amount;
-        rect.width -= (amount * 2.0f);
-        rect.height -= (amount * 2.0f);
+        rect.position.x += amount;
+        rect.position.y += amount;
+        rect.size.x -= (amount * 2.0f);
+        rect.size.y -= (amount * 2.0f);
     }
 
     [[nodiscard]] inline const sf::FloatRect
@@ -484,14 +474,14 @@ namespace util
     {
         // skip if source size is zero (or close enough) to avoid dividing by zero below
         const sf::FloatRect localBounds{ thing.getLocalBounds() };
-        if ((localBounds.width < 1.0f) || (localBounds.height < 1.0f))
+        if ((localBounds.size.x < 1.0f) || (localBounds.size.y < 1.0f))
         {
             return;
         }
 
-        const float scaleHoriz{ size.x / localBounds.width };
-        const float scaleVert{ size.y / localBounds.height };
-        thing.setScale(scaleHoriz, scaleVert);
+        const float scaleHoriz{ size.x / localBounds.size.x };
+        const float scaleVert{ size.y / localBounds.size.y };
+        thing.setScale({ scaleHoriz, scaleVert });
 
         if constexpr (std::is_same_v<std::remove_cv_t<T>, sf::Text>)
         {
@@ -502,7 +492,7 @@ namespace util
     template <typename T>
     void scale(T & thing, const sf::FloatRect & rect)
     {
-        scale(thing, { rect.width, rect.height });
+        scale(thing, { rect.size.x, rect.size.y });
     }
 
     template <typename T>
@@ -524,18 +514,18 @@ namespace util
     {
         // skip if source size is zero (or close enough) to avoid dividing by zero below
         const sf::FloatRect localBounds{ thing.getLocalBounds() };
-        if ((localBounds.width < 1.0f) || (localBounds.height < 1.0f))
+        if ((localBounds.size.x < 1.0f) || (localBounds.size.y < 1.0f))
         {
             return;
         }
 
-        const float scaleHoriz{ size.x / localBounds.width };
-        thing.setScale(scaleHoriz, scaleHoriz);
+        const float scaleHoriz{ size.x / localBounds.size.x };
+        thing.setScale({ scaleHoriz, scaleHoriz });
 
-        if (thing.getGlobalBounds().height > size.y)
+        if (thing.getGlobalBounds().size.y > size.y)
         {
-            const float scaleVert{ size.y / localBounds.height };
-            thing.setScale(scaleVert, scaleVert);
+            const float scaleVert{ size.y / localBounds.size.y };
+            thing.setScale({ scaleVert, scaleVert });
         }
 
         if constexpr (std::is_same_v<std::remove_cv_t<T>, sf::Text>)
@@ -547,7 +537,7 @@ namespace util
     template <typename T>
     void fit(T & thing, const sf::FloatRect & rect)
     {
-        fit(thing, { rect.width, rect.height });
+        fit(thing, { rect.size.x, rect.size.y });
     }
 
     template <typename T>
@@ -569,18 +559,18 @@ namespace util
     {
         // skip if source size is zero (or close enough) to avoid dividing by zero below
         const sf::FloatRect localBounds{ thing.getLocalBounds() };
-        if ((localBounds.width < 1.0f) || (localBounds.height < 1.0f))
+        if ((localBounds.size.x < 1.0f) || (localBounds.size.y < 1.0f))
         {
             return;
         }
 
-        const float scaleHoriz{ size.x / localBounds.width };
-        thing.setScale(scaleHoriz, scaleHoriz);
+        const float scaleHoriz{ size.x / localBounds.size.x };
+        thing.setScale({ scaleHoriz, scaleHoriz });
 
-        if (size.y > thing.getGlobalBounds().height)
+        if (size.y > thing.getGlobalBounds().size.y)
         {
-            const float scaleVert{ size.y / localBounds.height };
-            thing.setScale(scaleVert, scaleVert);
+            const float scaleVert{ size.y / localBounds.size.y };
+            thing.setScale({ scaleVert, scaleVert });
         }
 
         if constexpr (std::is_same_v<std::remove_cv_t<T>, sf::Text>)
@@ -592,7 +582,7 @@ namespace util
     template <typename T>
     void grow(T & thing, const sf::FloatRect & rect)
     {
-        grow(thing, { rect.width, rect.height });
+        grow(thing, { rect.size.x, rect.size.y });
     }
 
     template <typename T>
@@ -607,6 +597,7 @@ namespace util
         grow(thing, rect);
         centerInside(thing, rect);
     }
+
     // quad making and appending
 
     // colors not changed if color given is transparent
@@ -646,7 +637,7 @@ namespace util
         Container_t & verts,
         const sf::Color & color = sf::Color::Transparent)
     {
-        setupTriangleVerts(position(rect), size(rect), index, verts, color);
+        setupTriangleVerts(rect.position, rect.size, index, verts, color);
     }
 
     // colors not changed if color given is transparent
@@ -679,7 +670,7 @@ namespace util
         Container_t & verts,
         const sf::Color & color = sf::Color::Transparent)
     {
-        appendTriangleVerts(position(rect), size(rect), verts, color);
+        appendTriangleVerts(rect.position, rect.size, verts, color);
     }
 
     template <typename Container_t>
@@ -700,9 +691,10 @@ namespace util
 
         index -= verts_per_quad;
 
-        const sf::Vector2f pos{ util::position(textureCoordinates) };
-        const sf::Vector2f size{ util::size(textureCoordinates) };
+        const sf::Vector2f pos{ textureCoordinates.position };
+        const sf::Vector2f size{ textureCoordinates.size };
 
+        // keep these offsets in sync with those in setupTriangleVerts() above
         // clang-format off
         verts[index + 0].texCoords = pos;
         verts[index + 1].texCoords = sf::Vector2f((pos.x + size.x),  pos.y          );
@@ -722,19 +714,17 @@ namespace util
     inline void appendLineVerts(
         const sf::FloatRect & rect, std::vector<sf::Vertex> & verts, const sf::Color & color)
     {
-        const sf::Vector2f pos{ util::position(rect) };
-        const sf::Vector2f size{ util::size(rect) };
-        verts.emplace_back(pos + sf::Vector2f(0.0f, 0.0f), color);
-        verts.emplace_back(pos + sf::Vector2f(size.x, 0.0f), color);
+        verts.emplace_back(rect.position + sf::Vector2f(0.0f, 0.0f), color);
+        verts.emplace_back(rect.position + sf::Vector2f(rect.size.x, 0.0f), color);
 
-        verts.emplace_back(pos + sf::Vector2f(size.x, 0.0f), color);
-        verts.emplace_back(pos + sf::Vector2f(size.x, size.y), color);
+        verts.emplace_back(rect.position + sf::Vector2f(rect.size.x, 0.0f), color);
+        verts.emplace_back(rect.position + sf::Vector2f(rect.size.x, rect.size.y), color);
 
-        verts.emplace_back(pos + sf::Vector2f(size.x, size.y), color);
-        verts.emplace_back(pos + sf::Vector2f(0.0f, size.y), color);
+        verts.emplace_back(rect.position + sf::Vector2f(rect.size.x, rect.size.y), color);
+        verts.emplace_back(rect.position + sf::Vector2f(0.0f, rect.size.y), color);
 
-        verts.emplace_back(pos + sf::Vector2f(0.0f, size.y), color);
-        verts.emplace_back(pos + sf::Vector2f(0.0f, 0.0f), color);
+        verts.emplace_back(rect.position + sf::Vector2f(0.0f, rect.size.y), color);
+        verts.emplace_back(rect.position + sf::Vector2f(0.0f, 0.0f), color);
     }
 
     // slow running but handy debugging shapes
@@ -742,8 +732,8 @@ namespace util
     [[nodiscard]] inline const sf::VertexArray
         makeRectangleVerts(const sf::FloatRect & rect, const sf::Color & color = sf::Color::White)
     {
-        sf::VertexArray verts(sf::Triangles, verts_per_quad);
-        setupTriangleVerts(position(rect), size(rect), 0, verts, color);
+        sf::VertexArray verts(sf::PrimitiveType::Triangles, verts_per_quad);
+        setupTriangleVerts(rect.position, rect.size, 0, verts, color);
         return verts;
     }
 
@@ -758,7 +748,7 @@ namespace util
     [[nodiscard]] inline sf::RectangleShape makeRectangleShape(
         const sf::FloatRect & rect,
         const bool willColorFill = false,
-        const sf::Color & color  = sf::Color::White)
+        const sf::Color & color = sf::Color::White)
     {
         sf::RectangleShape rs;
 
@@ -774,8 +764,8 @@ namespace util
             rs.setFillColor(sf::Color::Transparent);
         }
 
-        rs.setPosition(position(rect));
-        rs.setSize(size(rect));
+        rs.setPosition(rect.position);
+        rs.setSize(rect.size);
         return rs;
     }
 
@@ -783,7 +773,7 @@ namespace util
         sf::RenderTarget & target,
         const sf::FloatRect & rect,
         const bool willColorFill = false,
-        const sf::Color & color  = sf::Color::White)
+        const sf::Color & color = sf::Color::White)
     {
         target.draw(makeRectangleShape(rect, willColorFill, color));
     }
@@ -791,7 +781,7 @@ namespace util
     [[nodiscard]] inline const sf::CircleShape makeCircleShape(
         const sf::Vector2f & position,
         const float radius,
-        const sf::Color & color      = sf::Color::White,
+        const sf::Color & color = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         sf::CircleShape cs;
@@ -807,7 +797,7 @@ namespace util
         sf::RenderTarget & target,
         const sf::Vector2f & position,
         const float radius,
-        const sf::Color & color      = sf::Color::White,
+        const sf::Color & color = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         target.draw(makeCircleShape(position, radius, color, pointCount));
@@ -815,11 +805,11 @@ namespace util
 
     [[nodiscard]] inline const sf::CircleShape makeCircleShape(
         const sf::FloatRect & rect,
-        const sf::Color & color      = sf::Color::White,
+        const sf::Color & color = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         return makeCircleShape(
-            center(rect), (std::min(rect.width, rect.height) * 0.5f), color, pointCount);
+            center(rect), (std::min(rect.size.x, rect.size.y) * 0.5f), color, pointCount);
     }
 
     inline void drawCircle(
@@ -833,7 +823,7 @@ namespace util
     inline const sf::VertexArray makeLines(
         const std::vector<sf::Vector2f> & points, const sf::Color & color = sf::Color::White)
     {
-        sf::VertexArray va(sf::Lines);
+        sf::VertexArray va(sf::PrimitiveType::Lines);
 
         for (const sf::Vector2f & point : points)
         {
@@ -877,10 +867,10 @@ namespace util
             return toColor;
         }
 
-        auto calcColorValue = [ratio](const sf::Uint8 fromVal, const sf::Uint8 toVal) {
+        auto calcColorValue = [ratio](const std::uint8_t fromVal, const std::uint8_t toVal) {
             const float diff{ static_cast<float>(toVal) - static_cast<float>(fromVal) };
             const float finalValue{ static_cast<float>(fromVal) + (diff * ratio) };
-            return static_cast<sf::Uint8>(finalValue);
+            return static_cast<std::uint8_t>(finalValue);
         };
 
         sf::Color color{ toColor };
@@ -897,7 +887,7 @@ namespace util
     }
 
     inline const sf::Color colorStepToward(
-        const sf::Uint8 stepSize,
+        const std::uint8_t stepSize,
         const sf::Color & fromColor,
         const sf::Color & toColor,
         const bool willIgnoreAlpha = false)
@@ -912,7 +902,7 @@ namespace util
             return toColor;
         }
 
-        auto calcColorValue = [stepSize](const sf::Uint8 fromVal, const sf::Uint8 toVal) {
+        auto calcColorValue = [stepSize](const std::uint8_t fromVal, const std::uint8_t toVal) {
             if (fromVal == toVal)
             {
                 return fromVal;
@@ -933,7 +923,7 @@ namespace util
                 finalValue -= diff;
             }
 
-            return static_cast<sf::Uint8>(std::clamp(finalValue, 0, 255));
+            return static_cast<std::uint8_t>(std::clamp(finalValue, 0, 255));
         };
 
         sf::Color color{ toColor };
@@ -971,12 +961,12 @@ namespace util
             std::end(videoModes),
             [&](const sf::VideoMode A, const sf::VideoMode B) {
                 const unsigned int diffA{ (
-                    util::abs(A.width - targetMode.width) +
-                    util::abs(A.height - targetMode.height)) };
+                    util::abs(A.size.x - targetMode.size.x) +
+                    util::abs(A.size.y - targetMode.size.y)) };
 
                 const unsigned int diffB{ (
-                    util::abs(B.width - targetMode.width) +
-                    util::abs(B.height - targetMode.height)) };
+                    util::abs(B.size.x - targetMode.size.x) +
+                    util::abs(B.size.y - targetMode.size.y)) };
 
                 return (diffA < diffB);
             });
@@ -1022,4 +1012,4 @@ namespace util
 
 } // namespace util
 
-#endif // SFMLUTIL_HPP_INCLUDED
+#endif // SFML_UTIL_HPP_INCLUDED

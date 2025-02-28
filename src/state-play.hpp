@@ -32,7 +32,7 @@ namespace castlecrawl
         virtual void handleEvent(const Context & context, const sf::Event & event) final;
 
       private:
-        void handlePlayerMove(const Context & context, const sf::Keyboard::Key key);
+        void handlePlayerMove(const Context & context, const sf::Keyboard::Scancode key);
 
         void playMoveSfx(
             const Context & context, const bool didMove, const char mapCharAttempted) const;

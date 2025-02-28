@@ -17,9 +17,11 @@
 #include "music-player.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
+#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
+#include "texture-loader.hpp"
 #include "top-panel.hpp"
 
 #include <string>
@@ -35,45 +37,45 @@ namespace castlecrawl
         const std::string & t_desc,
         const std::string & t_license,
         const std::string & t_extra)
-        : m_nameText{}
-        , m_descText{}
-        , m_licenseText{}
-        , m_extraText{}
+        : m_nameText{ util::SfmlDefaults::instance().font() }
+        , m_descText{ util::SfmlDefaults::instance().font() }
+        , m_licenseText{ util::SfmlDefaults::instance().font() }
+        , m_extraText{ util::SfmlDefaults::instance().font() }
     {
         const sf::FloatRect screenRect = t_context.layout.screenRect();
         m_nameText                     = t_context.fonts.makeText(FontSize::Large, t_name);
 
         m_nameText.setPosition(
-            ((screenRect.width * 0.5f) - (m_nameText.getGlobalBounds().width * 0.5f)),
-            screenRect.height);
+            { ((screenRect.size.x * 0.5f) - (m_nameText.getGlobalBounds().size.x * 0.5f)),
+              screenRect.size.y });
 
         m_descText = t_context.fonts.makeText(FontSize::Medium, t_desc, sf::Color(220, 220, 220));
 
         m_descText.setPosition(
-            ((screenRect.width * 0.5f) - (m_descText.getGlobalBounds().width * 0.5f)),
-            util::bottom(m_nameText) + m_vertPad);
+            { ((screenRect.size.x * 0.5f) - (m_descText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(m_nameText) + m_vertPad });
 
         m_licenseText =
             t_context.fonts.makeText(FontSize::Small, t_license, sf::Color(220, 220, 220));
 
         m_licenseText.setPosition(
-            ((screenRect.width * 0.5f) - (m_licenseText.getGlobalBounds().width * 0.5f)),
-            util::bottom(m_descText) + m_vertPad);
+            { ((screenRect.size.x * 0.5f) - (m_licenseText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(m_descText) + m_vertPad });
 
         m_extraText = t_context.fonts.makeText(FontSize::Small, t_extra, sf::Color(220, 220, 220));
 
         m_extraText.setPosition(
-            ((screenRect.width * 0.5f) - (m_extraText.getGlobalBounds().width * 0.5f)),
-            util::bottom(m_licenseText) + m_vertPad);
+            { ((screenRect.size.x * 0.5f) - (m_extraText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(m_licenseText) + m_vertPad });
     }
 
     void Credit::update(const float t_frameTimeSec)
     {
         const float scrollSpeed = 30.0f;
-        m_nameText.move(0.0f, -(t_frameTimeSec * scrollSpeed));
-        m_descText.move(0.0f, -(t_frameTimeSec * scrollSpeed));
-        m_licenseText.move(0.0f, -(t_frameTimeSec * scrollSpeed));
-        m_extraText.move(0.0f, -(t_frameTimeSec * scrollSpeed));
+        m_nameText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
+        m_descText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
+        m_licenseText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
+        m_extraText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
     }
 
     void Credit::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -86,23 +88,23 @@ namespace castlecrawl
 
     void Credit::vertPosition(const float t_pos)
     {
-        m_nameText.setPosition(m_nameText.getGlobalBounds().left, t_pos);
+        m_nameText.setPosition({ m_nameText.getGlobalBounds().position.x, t_pos });
 
         m_descText.setPosition(
-            m_descText.getGlobalBounds().left, util::bottom(m_nameText) + m_vertPad);
+            { m_descText.getGlobalBounds().position.x, util::bottom(m_nameText) + m_vertPad });
 
         m_licenseText.setPosition(
-            m_licenseText.getGlobalBounds().left, util::bottom(m_descText) + m_vertPad);
+            { m_licenseText.getGlobalBounds().position.x, util::bottom(m_descText) + m_vertPad });
 
         m_extraText.setPosition(
-            m_extraText.getGlobalBounds().left, util::bottom(m_licenseText) + m_vertPad);
+            { m_extraText.getGlobalBounds().position.x, util::bottom(m_licenseText) + m_vertPad });
     }
 
     float Credit::bottom() const { return util::bottom(m_licenseText); }
 
     StateCredits::StateCredits()
         : m_castleTexture{}
-        , m_castleSprite{}
+        , m_castleSprite{ m_castleTexture }
         , m_credits{}
     {}
 
@@ -110,19 +112,19 @@ namespace castlecrawl
     {
         const sf::FloatRect screenRect = t_context.layout.screenRect();
 
-        m_castleTexture.loadFromFile(
-            (t_context.config.media_path / "image" / "splash.png").string());
+        util::TextureLoader::load(
+            m_castleTexture, (t_context.config.media_path / "image/splash.png"), true);
 
-        m_castleTexture.setSmooth(true);
-
-        m_castleSprite.setTexture(m_castleTexture);
+        m_castleSprite.setTexture(m_castleTexture, true);
         m_castleSprite.setColor(sf::Color(255, 255, 255, 32));
 
-        util::fit(m_castleSprite, { (screenRect.width * 0.2f), screenRect.width });
+        util::fit(m_castleSprite, { (screenRect.size.x * 0.2f), screenRect.size.x });
 
         m_castleSprite.setPosition(
-            ((screenRect.width * 0.5f) - (m_castleSprite.getGlobalBounds().width * 0.5f)),
-            ((screenRect.height * 0.5f) - (m_castleSprite.getGlobalBounds().height * 0.5f)));
+            { ((screenRect.size.x * 0.5f) - (m_castleSprite.getGlobalBounds().size.x * 0.5f)),
+              ((screenRect.size.y * 0.5f) - (m_castleSprite.getGlobalBounds().size.y * 0.5f)) });
+
+        m_credits.reserve(16);
 
         Credit & softwareCredit =
             m_credits.emplace_back(t_context, "Ziesche Til Newman", "Software");
@@ -130,7 +132,7 @@ namespace castlecrawl
         Credit & fontCredit = m_credits.emplace_back(
             t_context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
 
-        const float vertSpacer = (screenRect.height * 0.125f);
+        const float vertSpacer = (screenRect.size.y * 0.125f);
         fontCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
 
         Credit & tileCredit = m_credits.emplace_back(
@@ -211,16 +213,12 @@ namespace castlecrawl
 
     void StateCredits::handleEvent(const Context & context, const sf::Event & event)
     {
-        // all other handlers are key released events
-        if (event.type != sf::Event::KeyPressed)
+        if (const auto * keyPtr = event.getIf<sf::Event::KeyPressed>())
         {
-            return;
-        }
-
-        if (event.key.code == sf::Keyboard::Escape)
-        {
-            context.state.change(context, State::Quit);
-            return;
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            {
+                context.state.change(context, State::Quit);
+            }
         }
     }
 

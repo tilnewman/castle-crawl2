@@ -56,27 +56,25 @@ namespace castlecrawl
     void StateFight::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         // all other handlers are key released events
-        if (t_event.type != sf::Event::KeyPressed)
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            return;
-        }
-
-        if (t_event.key.code == sf::Keyboard::Escape)
-        {
-            t_context.state.change(t_context, State::Play);
-            return;
-        }
-
-        if (!m_isDirectionSelected &&
-            ((t_event.key.code == sf::Keyboard::Up) || (t_event.key.code == sf::Keyboard::Down) ||
-             (t_event.key.code == sf::Keyboard::Left) || (t_event.key.code == sf::Keyboard::Right)))
-        {
-            handleSelectDirection(t_context, t_event.key.code);
-            return;
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            {
+                t_context.state.change(t_context, State::Play);
+            }
+            else if (
+                !m_isDirectionSelected && ((keyPtr->scancode == sf::Keyboard::Scancode::Up) ||
+                                           (keyPtr->scancode == sf::Keyboard::Scancode::Down) ||
+                                           (keyPtr->scancode == sf::Keyboard::Scancode::Left) ||
+                                           (keyPtr->scancode == sf::Keyboard::Scancode::Right)))
+            {
+                handleSelectDirection(t_context, keyPtr->scancode);
+            }
         }
     }
 
-    void StateFight::handleSelectDirection(const Context & t_context, const sf::Keyboard::Key t_key)
+    void StateFight::handleSelectDirection(
+        const Context & t_context, const sf::Keyboard::Scancode t_key)
     {
         const MapPos_t mapPos = t_context.player_display.position();
 
@@ -85,22 +83,28 @@ namespace castlecrawl
         const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
         const MapPos_t rightPos{ (mapPos.x + 1), mapPos.y };
 
-        if ((t_key == sf::Keyboard::Up) && (t_context.maps.current().isPosValid(upPos)))
+        if ((t_key == sf::Keyboard::Scancode::Up) && (t_context.maps.current().isPosValid(upPos)))
         {
             m_isDirectionSelected = true;
             fight(t_context, upPos);
         }
-        else if ((t_key == sf::Keyboard::Down) && (t_context.maps.current().isPosValid(downPos)))
+        else if (
+            (t_key == sf::Keyboard::Scancode::Down) &&
+            (t_context.maps.current().isPosValid(downPos)))
         {
             m_isDirectionSelected = true;
             fight(t_context, downPos);
         }
-        else if ((t_key == sf::Keyboard::Left) && (t_context.maps.current().isPosValid(leftPos)))
+        else if (
+            (t_key == sf::Keyboard::Scancode::Left) &&
+            (t_context.maps.current().isPosValid(leftPos)))
         {
             m_isDirectionSelected = true;
             fight(t_context, leftPos);
         }
-        else if ((t_key == sf::Keyboard::Right) && (t_context.maps.current().isPosValid(rightPos)))
+        else if (
+            (t_key == sf::Keyboard::Scancode::Right) &&
+            (t_context.maps.current().isPosValid(rightPos)))
         {
             m_isDirectionSelected = true;
             fight(t_context, rightPos);

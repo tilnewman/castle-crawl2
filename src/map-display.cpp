@@ -5,6 +5,7 @@
 //
 #include "map-display.hpp"
 
+#include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
 #include "maps.hpp"
@@ -20,9 +21,9 @@ namespace castlecrawl
         : m_objectVerts{}
         , m_floorVerts{}
         , m_borderVerts{}
-        , m_objectBuffer{ sf::Triangles, sf::VertexBuffer::Static }
-        , m_floorBuffer{ sf::Triangles, sf::VertexBuffer::Static }
-        , m_borderBuffer{ sf::Triangles, sf::VertexBuffer::Static }
+        , m_objectBuffer{ sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static }
+        , m_floorBuffer{ sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static }
+        , m_borderBuffer{ sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static }
     {}
 
     void MapDisplay::load(const Context & t_context)
@@ -72,11 +73,11 @@ namespace castlecrawl
         const float overlapDimm{ static_cast<float>(t_context.layout.cellSize().x) *
                                  (growScale * 0.5f) };
 
-        edgeSprite.scale((1.0f + growScale), (1.0f + growScale));
+        edgeSprite.scale({ (1.0f + growScale), (1.0f + growScale) });
 
         // loop over map chars and for each map tile/object/shadow/etc append quad verts
         const sf::Vector2i mapSize = t_context.maps.current().size();
-        sf::Vector2f screenPos     = util::position(t_context.layout.mapRect());
+        sf::Vector2f screenPos     = t_context.layout.mapRect().position;
         for (int y(0); y < mapSize.y; ++y)
         {
             for (int x(0); x < mapSize.x; ++x)
@@ -87,7 +88,7 @@ namespace castlecrawl
                 if (('.' == cell.object_char) && isFloorAdjacent(t_context, cell.position))
                 {
                     edgeSprite.setPosition(screenPos);
-                    edgeSprite.move(-overlapDimm, -overlapDimm);
+                    edgeSprite.move({ -overlapDimm, -overlapDimm });
 
                     util::appendTriangleVerts(
                         edgeSprite.getGlobalBounds(),
@@ -120,7 +121,7 @@ namespace castlecrawl
                 screenPos.x += t_context.layout.cellSize().x;
             }
 
-            screenPos.x = t_context.layout.mapRect().left;
+            screenPos.x = t_context.layout.mapRect().position.x;
             screenPos.y += t_context.layout.cellSize().y;
         }
     }
@@ -138,7 +139,7 @@ namespace castlecrawl
         };
 
         const sf::Vector2i mapSize = t_context.maps.current().size();
-        sf::Vector2f screenPos     = util::position(t_context.layout.mapRect());
+        sf::Vector2f screenPos     = t_context.layout.mapRect().position;
         for (int y(0); y < mapSize.y; ++y)
         {
             for (int x(0); x < mapSize.x; ++x)
@@ -211,21 +212,21 @@ namespace castlecrawl
                 screenPos.x += t_context.layout.cellSize().x;
             }
 
-            screenPos.x = t_context.layout.mapRect().left;
+            screenPos.x = t_context.layout.mapRect().position.x;
             screenPos.y += t_context.layout.cellSize().x;
         }
     }
 
     void MapDisplay::resetVertexBuffers()
     {
-        m_objectBuffer.create(m_objectVerts.size());
-        m_objectBuffer.update(&m_objectVerts[0]);
+        M_CHECK(m_objectBuffer.create(m_objectVerts.size()), "m_objectBuffer.create() failed");
+        M_CHECK(m_objectBuffer.update(&m_objectVerts[0]), "m_objectBuffer.update() failed");
 
-        m_floorBuffer.create(m_floorVerts.size());
-        m_floorBuffer.update(&m_floorVerts[0]);
+        M_CHECK(m_floorBuffer.create(m_floorVerts.size()), "m_floorBuffer.create() failed");
+        M_CHECK(m_floorBuffer.update(&m_floorVerts[0]), "m_floorBuffer.update() failed");
 
-        m_borderBuffer.create(m_borderVerts.size());
-        m_borderBuffer.update(&m_borderVerts[0]);
+        M_CHECK(m_borderBuffer.create(m_borderVerts.size()), "m_borderBuffer.create() failed");
+        M_CHECK(m_borderBuffer.update(&m_borderVerts[0]), "m_borderBuffer.update() failed");
     }
 
     void MapDisplay::appendTileVerts(

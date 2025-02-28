@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "layout.hpp"
+#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 
 #include <string>
@@ -16,7 +17,7 @@ namespace castlecrawl
 {
 
     StatBar::StatBar()
-        : m_text()
+        : m_text(util::SfmlDefaults::instance().font())
         , m_color()
         , m_max(0)
         , m_current(0)
@@ -35,14 +36,14 @@ namespace castlecrawl
         m_outerRectangle.setFillColor(sf::Color::Transparent);
         m_outerRectangle.setOutlineThickness(2.0f);
         m_outerRectangle.setOutlineColor(t_color);
-        m_outerRectangle.setSize(util::size(t_region));
-        m_outerRectangle.setPosition(util::position(t_region));
+        m_outerRectangle.setSize(t_region.size);
+        m_outerRectangle.setPosition(t_region.position);
 
         m_innerRectangle.setFillColor(t_color - sf::Color(60, 60, 60, 0));
         m_innerRectangle.setOutlineColor(sf::Color::Transparent);
         m_innerRectangle.setOutlineThickness(0.0f);
-        m_innerRectangle.setPosition(util::position(t_region) + sf::Vector2f{ 1.0f, 1.0f });
-        m_innerRectangle.setSize(util::size(t_region) - sf::Vector2f{ 2.0f, 2.0f });
+        m_innerRectangle.setPosition(t_region.position + sf::Vector2f{ 1.0f, 1.0f });
+        m_innerRectangle.setSize(t_region.size - sf::Vector2f{ 2.0f, 2.0f });
 
         m_color = t_color;
         setCurrentValue(t_context, t_maxValue);

@@ -21,13 +21,13 @@ namespace castlecrawl
         const sf::FloatRect topRect = t_context.layout.topRect();
 
         sf::FloatRect rect;
-        rect.height = (topRect.height * 0.1f);
-        rect.top    = ((topRect.height - rect.height) - 3.0f);
-        rect.width  = (topRect.width * 0.25f);
-        rect.left   = ((topRect.width * 0.5f) - (rect.width * 0.5f));
+        rect.size.y     = (topRect.size.y * 0.1f);
+        rect.position.y = ((topRect.size.y - rect.size.y) - 3.0f);
+        rect.size.x     = (topRect.size.x * 0.25f);
+        rect.position.x = ((topRect.size.x * 0.5f) - (rect.size.x * 0.5f));
 
-        rect.top -= rect.height;
-        rect.top -= 5.0f;
+        rect.position.y -= rect.size.y;
+        rect.position.y -= 5.0f;
 
         m_statBar.setup(t_context, rect, sf::Color(100, 0, 220), t_context.player.mana().max());
     }

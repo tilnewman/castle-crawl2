@@ -21,7 +21,7 @@ namespace castlecrawl
         unsigned int framerate_limit = 0;
         float top_panel_height_ratio = 0.1f;
 
-        // DON'T CHANGE UNLESS YOU ALSO CHECK ALL MAPS IN THE GAME
+        // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
         sf::Vector2i map_size_max = { 41, 23 };
     };
 

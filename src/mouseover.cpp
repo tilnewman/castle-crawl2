@@ -10,6 +10,9 @@
 #include "layout.hpp"
 #include "maps.hpp"
 #include "player-display.hpp"
+#include "sfml-defaults.hpp"
+
+#include <SFML/System/Time.hpp>
 
 namespace castlecrawl
 {
@@ -18,7 +21,7 @@ namespace castlecrawl
         : m_clock{}
         , m_willDisplay{ false }
         , m_mousePos{ 0, 0 }
-        , m_text{}
+        , m_text{ util::SfmlDefaults::instance().font() }
     {}
 
     void Mouseover::reset()
@@ -156,7 +159,7 @@ namespace castlecrawl
         m_text = t_context.fonts.makeText(fontSize, message);
 
         m_text.setPosition(
-            (mousePos.x + fontExtent.letter_size.x), (mousePos.y - fontExtent.letter_size.y));
+            { (mousePos.x + fontExtent.letter_size.x), (mousePos.y - fontExtent.letter_size.y) });
     }
 
 } // namespace castlecrawl

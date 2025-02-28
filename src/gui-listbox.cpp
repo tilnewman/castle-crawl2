@@ -38,16 +38,16 @@ namespace castlecrawl
         m_bgRectangle.setOutlineThickness(1.0f);
 
         m_rowRects.clear();
-        float posTop = m_bgRectangle.getGlobalBounds().top;
+        float posTop = m_bgRectangle.getGlobalBounds().position.y;
         for (std::size_t i = 0; i < t_heightRows; ++i)
         {
             sf::FloatRect rect{ m_bgRectangle.getGlobalBounds() };
 
-            rect.height =
-                (m_bgRectangle.getGlobalBounds().height / static_cast<float>(t_heightRows));
+            rect.size.y =
+                (m_bgRectangle.getGlobalBounds().size.y / static_cast<float>(t_heightRows));
 
-            rect.top = posTop;
-            posTop += rect.height;
+            rect.position.y = posTop;
+            posTop += rect.size.y;
             m_rowRects.push_back(rect);
         }
 
@@ -62,11 +62,12 @@ namespace castlecrawl
             // use this only to vertically center
             util::centerInside(text, m_rowRects[i]);
 
-            text.setPosition((util::position(m_rowRects[i]).x + 1.0f), text.getGlobalBounds().top);
+            text.setPosition(
+                { (m_rowRects[i].position.x + 1.0f), text.getGlobalBounds().position.y });
         }
 
         m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 40));
-        m_selectionRectangle.setSize(util::size(m_rowRects[0]));
+        m_selectionRectangle.setSize(m_rowRects[0].size);
 
         m_guideRectangle.setFillColor(sf::Color(255, 255, 255, 127));
 
@@ -80,8 +81,8 @@ namespace castlecrawl
 
         for (sf::FloatRect & rect : m_rowRects)
         {
-            rect.left += move.x;
-            rect.top += move.y;
+            rect.position.x += move.x;
+            rect.position.y += move.y;
         }
 
         for (sf::Text & text : m_rowTexts)
@@ -208,7 +209,7 @@ namespace castlecrawl
             m_rowTexts[offset].setString(rowString);
         }
 
-        m_selectionRectangle.setPosition(util::position(m_rowRects[m_indexes.offset]));
+        m_selectionRectangle.setPosition(m_rowRects[m_indexes.offset].position);
 
         float fillRatio = 0.0f;
         if (m_items.size() >= m_rowCount)
@@ -216,7 +217,7 @@ namespace castlecrawl
             fillRatio = (static_cast<float>(m_rowCount) / static_cast<float>(m_items.size()));
         }
 
-        m_guideRectangle.setSize({ 1.0f, (fillRatio * m_bgRectangle.getGlobalBounds().height) });
+        m_guideRectangle.setSize({ 1.0f, (fillRatio * m_bgRectangle.getGlobalBounds().size.y) });
 
         float scrollRatio = 0.0f;
         if ((m_items.size() > m_rowCount) && (m_items.size() > m_indexes.display))
@@ -227,11 +228,12 @@ namespace castlecrawl
         }
 
         const float guideVertPos =
-            (m_bgRectangle.getGlobalBounds().top +
-             (scrollRatio * (m_bgRectangle.getGlobalBounds().height -
-                             m_guideRectangle.getGlobalBounds().height)));
+            (m_bgRectangle.getGlobalBounds().position.y +
+             (scrollRatio * (m_bgRectangle.getGlobalBounds().size.y -
+                             m_guideRectangle.getGlobalBounds().size.y)));
 
-        m_guideRectangle.setPosition((m_bgRectangle.getGlobalBounds().left - 3.0f), guideVertPos);
+        m_guideRectangle.setPosition(
+            { (m_bgRectangle.getGlobalBounds().position.x - 3.0f), guideVertPos });
     }
 
 } // namespace castlecrawl

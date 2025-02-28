@@ -15,6 +15,7 @@
 #include "map.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
+#include "sfml-defaults.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -28,10 +29,10 @@ namespace castlecrawl
     StateTreasure::StateTreasure()
         : m_fadeRectangle()
         , m_itemListboxUPtr()
-        , m_titleText()
-        , m_descText()
-        , m_itemDescText()
-        , m_helpText()
+        , m_titleText(util::SfmlDefaults::instance().font())
+        , m_descText(util::SfmlDefaults::instance().font())
+        , m_itemDescText(util::SfmlDefaults::instance().font())
+        , m_helpText(util::SfmlDefaults::instance().font())
     {}
 
     void StateTreasure::onEnter(const Context & context)
@@ -44,19 +45,19 @@ namespace castlecrawl
         //
 
         const sf::FloatRect boardRect = context.layout.botRect();
-        const float pad               = (boardRect.height * 0.015f);
+        const float pad               = (boardRect.size.y * 0.015f);
 
         m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
-        m_fadeRectangle.setPosition(util::position(boardRect));
-        m_fadeRectangle.setSize(util::size(boardRect));
+        m_fadeRectangle.setPosition(boardRect.position);
+        m_fadeRectangle.setSize(boardRect.size);
 
         //
 
         m_titleText = context.fonts.makeText(FontSize::Huge, "Treasure!", sf::Color(255, 200, 100));
 
         m_titleText.setPosition(
-            ((boardRect.width * 0.5f) - (m_titleText.getGlobalBounds().width * 0.5f)),
-            (boardRect.top + (pad * 10.0f)));
+            { ((boardRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
+              (boardRect.position.y + (pad * 10.0f)) });
 
         //
 
@@ -83,8 +84,8 @@ namespace castlecrawl
         m_descText = context.fonts.makeText(FontSize::Large, descStr);
 
         m_descText.setPosition(
-            ((boardRect.width * 0.5f) - (m_descText.getGlobalBounds().width * 0.5f)),
-            (util::bottom(m_titleText) + pad));
+            { ((boardRect.size.x * 0.5f) - (m_descText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_titleText) + pad) });
 
         //
 
@@ -96,13 +97,13 @@ namespace castlecrawl
         m_helpText.setStyle(sf::Text::Italic);
 
         m_helpText.setPosition(
-            ((boardRect.width * 0.5f) - (m_helpText.getGlobalBounds().width * 0.5f)),
-            util::bottom(m_descText));
+            { ((boardRect.size.x * 0.5f) - (m_helpText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(m_descText) });
 
         //
 
         m_itemListboxUPtr->setPosition(
-            { ((boardRect.width * 0.5f) - (m_itemListboxUPtr->getGlobalBounds().width * 0.5f)),
+            { ((boardRect.size.x * 0.5f) - (m_itemListboxUPtr->getGlobalBounds().size.x * 0.5f)),
               (util::bottom(m_helpText) + (pad * 2.0f)) });
 
         m_itemListboxUPtr->setFocus(true);
@@ -138,63 +139,58 @@ namespace castlecrawl
 
     void StateTreasure::handleEvent(const Context & context, const sf::Event & event)
     {
-        // all other handlers are key released events
-        if (event.type != sf::Event::KeyPressed)
+        if (const auto * keyPtr = event.getIf<sf::Event::KeyPressed>())
         {
-            return;
-        }
-
-        if ((event.key.code == sf::Keyboard::Enter) || (event.key.code == sf::Keyboard::Escape))
-        {
-            context.state.change(context, State::Play);
-            return;
-        }
-        else if (event.key.code == sf::Keyboard::Up)
-        {
-            if (m_itemListboxUPtr->selectPrev())
+            if ((keyPtr->scancode == sf::Keyboard::Scancode::Enter) ||
+                (keyPtr->scancode == sf::Keyboard::Scancode::Escape))
             {
-                context.sfx.play("tick-on");
+                context.state.change(context, State::Play);
             }
-
-            updateItemDescText(context);
-        }
-        else if (event.key.code == sf::Keyboard::Down)
-        {
-            if (m_itemListboxUPtr->selectNext())
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
             {
-                context.sfx.play("tick-on");
-            }
-
-            updateItemDescText(context);
-        }
-        else if (event.key.code == sf::Keyboard::T)
-        {
-            if (m_itemListboxUPtr->empty())
-            {
-                context.sfx.play("error-1.ogg");
-            }
-            else
-            {
-                const std::size_t index = m_itemListboxUPtr->selectedIndex();
-                if (index < m_treasure.items.size())
+                if (m_itemListboxUPtr->selectPrev())
                 {
-                    context.player.inventory().add(m_treasure.items.at(index));
+                    context.sfx.play("tick-on");
+                }
 
-                    m_treasure.items.erase(
-                        std::begin(m_treasure.items) + static_cast<std::ptrdiff_t>(index));
+                updateItemDescText(context);
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+            {
+                if (m_itemListboxUPtr->selectNext())
+                {
+                    context.sfx.play("tick-on");
+                }
 
-                    m_itemListboxUPtr->redraw();
-                    updateItemDescText(context);
-                    context.sfx.play("equip.ogg");
-
-                    if (m_treasure.items.empty())
+                updateItemDescText(context);
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::T)
+            {
+                if (m_itemListboxUPtr->empty())
+                {
+                    context.sfx.play("error-1.ogg");
+                }
+                else
+                {
+                    const std::size_t index = m_itemListboxUPtr->selectedIndex();
+                    if (index < m_treasure.items.size())
                     {
-                        context.state.change(context, State::Play);
+                        context.player.inventory().add(m_treasure.items.at(index));
+
+                        m_treasure.items.erase(
+                            std::begin(m_treasure.items) + static_cast<std::ptrdiff_t>(index));
+
+                        m_itemListboxUPtr->redraw();
+                        updateItemDescText(context);
+                        context.sfx.play("equip.ogg");
+
+                        if (m_treasure.items.empty())
+                        {
+                            context.state.change(context, State::Play);
+                        }
                     }
                 }
             }
-
-            return;
         }
     }
 
@@ -211,10 +207,9 @@ namespace castlecrawl
             }
         }
 
-        m_itemDescText.setPosition(
-            ((context.layout.screenRect().width * 0.5f) -
-             (m_itemDescText.getGlobalBounds().width * 0.5f)),
-            util::bottom(*m_itemListboxUPtr));
+        m_itemDescText.setPosition({ ((context.layout.screenRect().size.x * 0.5f) -
+                                      (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
+                                     util::bottom(*m_itemListboxUPtr) });
     }
 
 } // namespace castlecrawl

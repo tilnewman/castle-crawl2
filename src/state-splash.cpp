@@ -8,17 +8,18 @@
 #include "context.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
-#include "state-manager.hpp"
 #include "sfml-util.hpp"
+#include "state-manager.hpp"
+#include "texture-loader.hpp"
 
 namespace castlecrawl
 {
 
     StateSplash::StateSplash()
         : m_castleTexture()
-        , m_castleSprite()
+        , m_castleSprite(m_castleTexture)
         , m_lightningTexture()
-        , m_lightningSprite()
+        , m_lightningSprite(m_lightningTexture)
         , m_willShowLightning(false)
         , m_timerSec(0.0f)
     {}
@@ -27,33 +28,30 @@ namespace castlecrawl
     {
         const sf::FloatRect screenRect = context.layout.screenRect();
 
-        m_castleTexture.loadFromFile((context.config.media_path / "image" / "splash.png").string());
-        m_castleTexture.setSmooth(true);
+        util::TextureLoader::load(
+            m_castleTexture, (context.config.media_path / "image/splash.png"), true);
 
-        m_castleSprite.setTexture(m_castleTexture);
+        m_castleSprite.setTexture(m_castleTexture, true);
 
-        util::fit(m_castleSprite, { (screenRect.width * 0.2f), screenRect.width });
+        util::fit(m_castleSprite, { (screenRect.size.x * 0.2f), screenRect.size.x });
 
         m_castleSprite.setPosition(
-            ((screenRect.width * 0.5f) - (m_castleSprite.getGlobalBounds().width * 0.5f)),
-            ((screenRect.height * 0.5f) - (m_castleSprite.getGlobalBounds().height * 0.5f)));
+            { ((screenRect.size.x * 0.5f) - (m_castleSprite.getGlobalBounds().size.x * 0.5f)),
+              ((screenRect.size.y * 0.5f) - (m_castleSprite.getGlobalBounds().size.y * 0.5f)) });
 
         //
 
-        m_lightningTexture.loadFromFile(
-            (context.config.media_path / "image" / "lightning.png").string());
+        util::TextureLoader::load(
+            m_lightningTexture, (context.config.media_path / "image/lightning.png"), true);
 
-        m_lightningTexture.setSmooth(true);
+        m_lightningSprite.setTexture(m_lightningTexture, true);
 
-        m_lightningSprite.setTexture(m_lightningTexture);
+        util::fit(m_lightningSprite, { (screenRect.size.x * 0.1f), screenRect.size.x });
 
-        util::fit(m_lightningSprite, { (screenRect.width * 0.1f), screenRect.width });
-
-        m_lightningSprite.setPosition(
-            (m_castleSprite.getGlobalBounds().left -
-             (m_lightningSprite.getGlobalBounds().width * 0.45f)),
-            (m_castleSprite.getGlobalBounds().top -
-             (m_lightningSprite.getGlobalBounds().height * 0.15f)));
+        m_lightningSprite.setPosition({ (m_castleSprite.getGlobalBounds().position.x -
+                                         (m_lightningSprite.getGlobalBounds().size.x * 0.45f)),
+                                        (m_castleSprite.getGlobalBounds().position.y -
+                                         (m_lightningSprite.getGlobalBounds().size.y * 0.15f)) });
 
         //
 
@@ -103,21 +101,23 @@ namespace castlecrawl
         m_fader.draw(target, states);
     }
 
-    void StateSplash::handleEvent(const Context & context, const sf::Event & event)
+    void StateSplash::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         if (m_fader.isFading())
         {
             return;
         }
 
-        if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::E))
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            context.state.change(context, State::Editor);
+            if (keyPtr->scancode == sf::Keyboard::Scancode::E)
+            {
+                t_context.state.change(t_context, State::Editor);
+            }
         }
-        else if (
-            (event.type == sf::Event::KeyPressed) || (event.type == sf::Event::MouseButtonPressed))
+        else if (t_event.is<sf::Event::KeyPressed>() || t_event.is<sf::Event::MouseButtonPressed>())
         {
-            context.state.change(context, State::Play);
+            t_context.state.change(t_context, State::Play);
         }
     }
 

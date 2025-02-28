@@ -17,16 +17,16 @@ namespace castlecrawl
       public:
         QuickMap(const GameConfig & t_config, const MapChars_t & t_mapChars);
 
-        [[nodiscard]] bool empty() const { return m_mapChars.empty(); }
+        [[nodiscard]] inline bool empty() const { return m_mapChars.empty(); }
 
         // assumes all rows are the same length, see convertQuickMapToRealMap_VerifySize()
-        sf::Vector2i size() const
+        [[nodiscard]] inline sf::Vector2i size() const
         {
             return sf::Vector2i{ static_cast<int>(m_mapChars.front().size()),
                                  static_cast<int>(m_mapChars.size()) };
         }
 
-        [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const
+        [[nodiscard]] inline bool isPosValid(const MapPos_t & t_pos) const
         {
             return (
                 (t_pos.x >= 0) && (t_pos.y >= 0) && (t_pos.x < static_cast<int>(size().x)) &&
@@ -35,7 +35,7 @@ namespace castlecrawl
 
         [[nodiscard]] char getChar(const int t_x, const int t_y) const;
 
-        void setChar(const int t_x, const int t_y, const char t_ch)
+        inline void setChar(const int t_x, const int t_y, const char t_ch)
         {
             m_mapChars.at(static_cast<std::size_t>(t_y)).at(static_cast<std::size_t>(t_x)) = t_ch;
         }

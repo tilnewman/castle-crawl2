@@ -51,8 +51,8 @@ namespace castlecrawl
 
         m_rectangle.setOutlineColor(sf::Color::Transparent);
         m_rectangle.setOutlineThickness(0.0f);
-        m_rectangle.setPosition(util::position(t_rect));
-        m_rectangle.setSize(util::size(t_rect));
+        m_rectangle.setPosition(t_rect.position);
+        m_rectangle.setSize(t_rect.size);
     }
 
     bool Fader::update(const float t_frameTimeSec)

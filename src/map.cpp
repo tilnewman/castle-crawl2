@@ -125,7 +125,7 @@ namespace castlecrawl
         Map::screenPosToMapPos(const Context & t_context, const sf::Vector2f & t_screenPos) const
     {
         const sf::FloatRect mapRect = t_context.layout.mapRect();
-        sf::Vector2f pos            = util::position(mapRect);
+        sf::Vector2f pos            = mapRect.position;
 
         const sf::Vector2i mapSize = size();
         for (int y(0); y < mapSize.y; ++y)
@@ -141,7 +141,7 @@ namespace castlecrawl
                 pos.x += t_context.layout.cellSize().x;
             }
 
-            pos.x = mapRect.left;
+            pos.x = mapRect.position.x;
             pos.y += t_context.layout.cellSize().y;
         }
 
@@ -151,7 +151,7 @@ namespace castlecrawl
     sf::Vector2f Map::mapPosToScreenPos(const Context & t_context, const MapPos_t & t_mapPos) const
     {
         return (
-            util::position(t_context.layout.mapRect()) +
+            t_context.layout.mapRect().position +
             (t_context.layout.cellSize() * sf::Vector2f{ t_mapPos }));
     }
 
