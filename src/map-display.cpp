@@ -219,14 +219,28 @@ namespace castlecrawl
 
     void MapDisplay::resetVertexBuffers()
     {
+
         M_CHECK(m_objectBuffer.create(m_objectVerts.size()), "m_objectBuffer.create() failed");
-        M_CHECK(m_objectBuffer.update(&m_objectVerts[0]), "m_objectBuffer.update() failed");
+        if (!m_objectVerts.empty())
+        {   
+            M_CHECK(m_objectBuffer.update(&m_objectVerts[0]), "m_objectBuffer.update() failed");
+        }
+
+        //
 
         M_CHECK(m_floorBuffer.create(m_floorVerts.size()), "m_floorBuffer.create() failed");
-        M_CHECK(m_floorBuffer.update(&m_floorVerts[0]), "m_floorBuffer.update() failed");
+        if (!m_floorVerts.empty())
+        {   
+            M_CHECK(m_floorBuffer.update(&m_floorVerts[0]), "m_floorBuffer.update() failed");
+        }
+
+        //
 
         M_CHECK(m_borderBuffer.create(m_borderVerts.size()), "m_borderBuffer.create() failed");
-        M_CHECK(m_borderBuffer.update(&m_borderVerts[0]), "m_borderBuffer.update() failed");
+        if (!m_borderVerts.empty())
+        {
+            M_CHECK(m_borderBuffer.update(&m_borderVerts[0]), "m_borderBuffer.update() failed");
+        }
     }
 
     void MapDisplay::appendTileVerts(
