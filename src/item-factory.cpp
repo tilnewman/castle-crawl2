@@ -152,8 +152,7 @@ namespace castlecrawl::item
         t_items.push_back(Item(
             Weapon::Scythe,
             WeaponMaterial::Gold,
-            "Sythe of the Lich",
-            { .acc = 3, .arc = 7, .dmg = 7 }));
+            "Sythe of the Lich", { .arc = 4, .dmg = 4 }));
 
         t_items.push_back(
             Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
@@ -453,7 +452,7 @@ namespace castlecrawl::item
             if (item.isMisc())
             {
                 ++miscCount;
-                miscValue = static_cast<std::size_t>(item.value());
+                miscValue += static_cast<std::size_t>(item.value());
             }
         }
         std::cout << "\tWeapons Count " << weaponCount << " with total value " << weaponValue
@@ -537,7 +536,7 @@ namespace castlecrawl::item
                 continue;
             }
 
-            ++avgDamageCountMap[item.damageMin() + (item.damageMax() - item.damageMin())];
+            ++avgDamageCountMap[item.damageMin() + ((item.damageMax() - item.damageMin()) / 2)];
         }
         for (const auto pair : avgDamageCountMap)
         {
