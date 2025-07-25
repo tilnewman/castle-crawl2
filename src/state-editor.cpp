@@ -256,6 +256,7 @@ namespace castlecrawl
         else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'r', 'r'); }
         else if (keyScancode == sf::Keyboard::Scancode::L)         { editMap(t_context, 'l', 'l'); }
         else if (keyScancode == sf::Keyboard::Scancode::W)         { editMap(t_context, 'w', 'w'); }
+        else if (keyScancode == sf::Keyboard::Scancode::G)         { editMap(t_context, 'g', 'g'); }
         else if (keyScancode == sf::Keyboard::Scancode::B)         { editMap(t_context, 'b', 'b'); }
         else if (keyScancode == sf::Keyboard::Scancode::C)         { editMap(t_context, 'c', 'c'); }
         else if (keyScancode == sf::Keyboard::Scancode::K)         { editMap(t_context, 'k', 'k'); }
@@ -364,9 +365,10 @@ namespace castlecrawl
         m_fadeText.setString(t_text);
         m_fadeText.setFillColor(sf::Color::White);
 
-        m_fadeText.setPosition({ ((t_context.layout.topRect().size.x * 0.5f) -
-                                  (m_fadeText.getGlobalBounds().size.x * 0.5f)),
-                                 0.0f });
+        m_fadeText.setPosition(
+            { ((t_context.layout.topRect().size.x * 0.5f) -
+               (m_fadeText.getGlobalBounds().size.x * 0.5f)),
+              (m_borderRectangle.getPosition().y - (m_fadeText.getGlobalBounds().size.y * 2.0f)) });
     }
 
     void StateEditor::save() const
@@ -443,6 +445,7 @@ namespace castlecrawl
             case 'r': { return "Rock"; }
             case 'l': { return "Lava"; }
             case 'w': { return "Water"; }
+            case 'g': { return "Slime"; }
             case 'b': { return "Barrel"; }
             case 'c': { return "Chest"; }
             case 'k': { return "Coffin"; }

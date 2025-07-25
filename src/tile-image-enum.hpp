@@ -17,6 +17,7 @@ namespace castlecrawl
         Rock,
         Lava,
         Water,
+        Slime,
         Stair_Up,
         Stair_Down,
         Avatar,
@@ -67,6 +68,7 @@ namespace castlecrawl
             case 'r':    { return TileImage::Rock;               }
             case 'l':    { return TileImage::Lava;               }
             case 'w':    { return TileImage::Water;              }
+            case 'g':    { return TileImage::Slime;              }
             case 'S':    { return TileImage::Stair_Up;           }
             case 's':    { return TileImage::Stair_Down;         }
             case 'b':    { return TileImage::Barrel;             }
@@ -120,6 +122,7 @@ namespace castlecrawl
             case TileImage::Rock:               { return sf::IntRect( {  0,192},{32,32}); }
             case TileImage::Lava:               { return sf::IntRect( { 32,192},{32,32}); }
             case TileImage::Water:              { return sf::IntRect( { 64,192},{32,32}); }
+            case TileImage::Slime:              { return sf::IntRect( {128,160},{32,32}); }
             case TileImage::Stair_Up:           { return sf::IntRect( {128,  0},{32,32}); }
             case TileImage::Stair_Down:         { return sf::IntRect( {128, 32},{32,32}); }
             case TileImage::Barrel:             { return sf::IntRect( { 96,  0},{32,32}); }

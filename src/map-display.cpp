@@ -128,7 +128,7 @@ namespace castlecrawl
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
-        auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w')); };
+        auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w') && (ch != 'g')); };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
             return (notLiq(ch) && t_context.maps.current().isPosValid(pos));
@@ -222,7 +222,7 @@ namespace castlecrawl
 
         M_CHECK(m_objectBuffer.create(m_objectVerts.size()), "m_objectBuffer.create() failed");
         if (!m_objectVerts.empty())
-        {   
+        {
             M_CHECK(m_objectBuffer.update(&m_objectVerts[0]), "m_objectBuffer.update() failed");
         }
 
@@ -230,7 +230,7 @@ namespace castlecrawl
 
         M_CHECK(m_floorBuffer.create(m_floorVerts.size()), "m_floorBuffer.create() failed");
         if (!m_floorVerts.empty())
-        {   
+        {
             M_CHECK(m_floorBuffer.update(&m_floorVerts[0]), "m_floorBuffer.update() failed");
         }
 
