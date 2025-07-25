@@ -37,6 +37,8 @@ namespace castlecrawl
         sf::RectangleShape m_fadeRedRectangle;
         sf::RectangleShape m_fadeBlackRectangle;
         sf::Text m_titleText;
+        float m_fadeRedTimeSec;
+        float m_fadeBlackTimeSec;
     };
 
 } // namespace castlecrawl

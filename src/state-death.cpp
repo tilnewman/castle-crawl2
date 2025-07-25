@@ -30,6 +30,8 @@ namespace castlecrawl
         : m_fadeRedRectangle{}
         , m_fadeBlackRectangle{}
         , m_titleText{ util::SfmlDefaults::instance().font() }
+        , m_fadeRedTimeSec{ 0.0f }
+        , m_fadeBlackTimeSec{ 0.0f }
     {}
 
     void StateDeath::onEnter(const Context & t_context)
@@ -49,19 +51,29 @@ namespace castlecrawl
         util::centerInside(m_titleText, screenRect);
     }
 
-    void StateDeath::update(const Context & t_context, const float)
+    void StateDeath::update(const Context & t_context, const float t_elapsedTimeSec)
     {
         if (m_fadeRedRectangle.getFillColor().a < 255)
         {
-            sf::Color color = m_fadeRedRectangle.getFillColor();
-            ++color.a;
-            m_fadeRedRectangle.setFillColor(color);
+            m_fadeRedTimeSec += t_elapsedTimeSec;
+            if (m_fadeRedTimeSec > 0.035f)
+            {
+                m_fadeRedTimeSec = 0.0f;
+                sf::Color color = m_fadeRedRectangle.getFillColor();
+                ++color.a;
+                m_fadeRedRectangle.setFillColor(color);
+            }
         }
         else if (m_fadeBlackRectangle.getFillColor().a < 255)
         {
-            sf::Color color = m_fadeBlackRectangle.getFillColor();
-            ++color.a;
-            m_fadeBlackRectangle.setFillColor(color);
+            m_fadeBlackTimeSec += t_elapsedTimeSec;
+            if (m_fadeBlackTimeSec > 0.005f)
+            {
+                m_fadeBlackTimeSec = 0.0f;
+                sf::Color color  = m_fadeBlackRectangle.getFillColor();
+                ++color.a;
+                m_fadeBlackRectangle.setFillColor(color);
+            }
         }
         else
         {
