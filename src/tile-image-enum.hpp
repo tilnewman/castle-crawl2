@@ -25,20 +25,6 @@ namespace castlecrawl
         DoorLocked,
         Chest,
         Coffin,
-        Snake,
-        SnakeBag,
-        Spider,
-        Spiderweb,
-        Goblin,
-        GoblinBarrel,
-        Bat,
-        BatMask,
-        Skeleton,
-        SkeletonGrave,
-        Demon,
-        DemonDoor,
-        Dragon,
-        DragonInferno,
         Wall_TopLeft,
         Wall_Horiz,
         Wall_Top,
@@ -94,20 +80,6 @@ namespace castlecrawl
             case '|':    { return TileImage::Wall_Vert;          }
             case 'B':    { return TileImage::Wall_Block;         }
             case 'p':    { return TileImage::Avatar;             }
-            case '0':    { return TileImage::Snake;              }
-            case '1':    { return TileImage::SnakeBag;           }
-            case '2':    { return TileImage::Spider;             }
-            case '3':    { return TileImage::Spiderweb;          }
-            case '4':    { return TileImage::Goblin;             }
-            case '5':    { return TileImage::GoblinBarrel;       }
-            case '6':    { return TileImage::Bat;                }
-            case '7':    { return TileImage::BatMask;            }
-            case '8':    { return TileImage::Skeleton;           }
-            case '9':    { return TileImage::SkeletonGrave;      }
-            case ':':    { return TileImage::Demon;              }
-            case ';':    { return TileImage::DemonDoor;          }
-            case '[':    { return TileImage::Dragon;             }
-            case ']':    { return TileImage::DragonInferno;      }
             case '\x0':  { return TileImage::Floor_Wood1;        }
             case '\x1':  { return TileImage::Floor_Wood2;        }
             case '\x2':  { return TileImage::Floor_Wood3;        }
@@ -161,20 +133,6 @@ namespace castlecrawl
             case TileImage::Wall_Vert:          { return sf::IntRect( {  0, 32},{32,32}); }
             case TileImage::Wall_Block:         { return sf::IntRect( { 64, 32},{32,32}); }
             case TileImage::Avatar:             { return sf::IntRect( { 96, 32},{32,32}); }
-            case TileImage::Snake:              { return sf::IntRect( {224, 64},{32,32}); }
-            case TileImage::SnakeBag:           { return sf::IntRect( {192, 64},{32,32}); }
-            case TileImage::Spider:             { return sf::IntRect( {224, 96},{32,32}); }
-            case TileImage::Spiderweb:          { return sf::IntRect( {192, 96},{32,32}); }
-            case TileImage::Goblin:             { return sf::IntRect( {224,128},{32,32}); }
-            case TileImage::GoblinBarrel:       { return sf::IntRect( {192,128},{32,32}); }
-            case TileImage::Bat:                { return sf::IntRect( {224,160},{32,32}); }
-            case TileImage::BatMask:            { return sf::IntRect( {192,160},{32,32}); }
-            case TileImage::Skeleton:           { return sf::IntRect( {224,192},{32,32}); }
-            case TileImage::SkeletonGrave:      { return sf::IntRect( {192,192},{32,32}); }
-            case TileImage::Demon:              { return sf::IntRect( {224,224},{32,32}); }
-            case TileImage::DemonDoor:          { return sf::IntRect( {192,224},{32,32}); }
-            case TileImage::Dragon:             { return sf::IntRect( {160,224},{32,32}); }
-            case TileImage::DragonInferno:      { return sf::IntRect( {128,224},{32,32}); }
             case TileImage::Floor_Wood1:        { return sf::IntRect( {  0, 64},{32,32}); }
             case TileImage::Floor_Wood2:        { return sf::IntRect( { 32, 64},{32,32}); }
             case TileImage::Floor_Wood3:        { return sf::IntRect( { 64, 64},{32,32}); }
