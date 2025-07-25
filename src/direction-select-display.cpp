@@ -6,10 +6,13 @@
 #include "direction-select-display.hpp"
 
 #include "context.hpp"
+#include "game-config.hpp"
 #include "layout.hpp"
 #include "maps.hpp"
 #include "player-display.hpp"
+#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
+#include "texture-loader.hpp"
 
 namespace castlecrawl
 {
@@ -19,6 +22,11 @@ namespace castlecrawl
         , m_botRectangle{}
         , m_leftRectangle{}
         , m_rightRectangle{}
+        , m_arrowTexture{ util::SfmlDefaults::instance().texture() }
+        , m_arrowSpriteUp{ m_arrowTexture }
+        , m_arrowSpriteDown{ m_arrowTexture }
+        , m_arrowSpriteLeft{ m_arrowTexture }
+        , m_arrowSpriteRight{ m_arrowTexture }
     {}
 
     void DirectionSelectDisplay::setup(const Context & t_context)
@@ -32,6 +40,33 @@ namespace castlecrawl
 
         const sf::Color fillColor{ 0, 255, 255, 64 };
         const sf::Color outlineColor{ 0, 255, 255 };
+        const sf::Color arrowColor{ 100, 255, 255, 92 };
+
+        const sf::Vector2f cellSize = t_context.layout.cellSize();
+
+        util::TextureLoader::load(
+            m_arrowTexture, (t_context.config.media_path / "image" / "arrow.png"), true);
+
+        m_arrowSpriteUp.setTexture(m_arrowTexture, true);
+        m_arrowSpriteDown.setTexture(m_arrowTexture, true);
+        m_arrowSpriteLeft.setTexture(m_arrowTexture, true);
+        m_arrowSpriteRight.setTexture(m_arrowTexture, true);
+
+        m_arrowSpriteUp.setColor(arrowColor);
+        m_arrowSpriteDown.setColor(arrowColor);
+        m_arrowSpriteLeft.setColor(arrowColor);
+        m_arrowSpriteRight.setColor(arrowColor);
+
+        // put all arrows offscreen unless they are in valid map positions
+        const sf::Vector2f offScreenPos{ -1000.0f, -1000.0f };
+        m_arrowSpriteUp.setPosition(offScreenPos);
+        m_arrowSpriteDown.setPosition(offScreenPos);
+        m_arrowSpriteLeft.setPosition(offScreenPos);
+        m_arrowSpriteRight.setPosition(offScreenPos);
+
+        const float arrowSpriteShrinkScale{ 0.75f };
+
+        //
 
         if (t_context.maps.current().isPosValid(topPos))
         {
@@ -41,8 +76,18 @@ namespace castlecrawl
 
             m_topRectangle.setPosition(
                 t_context.maps.current().mapPosToScreenPos(t_context, topPos));
-            
-            m_topRectangle.setSize(t_context.layout.cellSize());
+
+            m_topRectangle.setSize(cellSize);
+
+            util::setOriginToCenter(m_arrowSpriteUp);
+            m_arrowSpriteUp.rotate(sf::degrees(-90));
+
+            util::scale(
+                m_arrowSpriteUp,
+                util::scaleRectInPlaceCopy(
+                    m_topRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
+
+            m_arrowSpriteUp.setPosition(util::center(m_topRectangle.getGlobalBounds()));
         }
 
         if (t_context.maps.current().isPosValid(botPos))
@@ -53,8 +98,18 @@ namespace castlecrawl
 
             m_botRectangle.setPosition(
                 t_context.maps.current().mapPosToScreenPos(t_context, botPos));
-            
-            m_botRectangle.setSize(t_context.layout.cellSize());
+
+            m_botRectangle.setSize(cellSize);
+
+            util::setOriginToCenter(m_arrowSpriteDown);
+            m_arrowSpriteDown.rotate(sf::degrees(90));
+
+            util::scale(
+                m_arrowSpriteDown,
+                util::scaleRectInPlaceCopy(
+                    m_botRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
+
+            m_arrowSpriteDown.setPosition(util::center(m_botRectangle.getGlobalBounds()));
         }
 
         if (t_context.maps.current().isPosValid(leftPos))
@@ -66,7 +121,17 @@ namespace castlecrawl
             m_leftRectangle.setPosition(
                 t_context.maps.current().mapPosToScreenPos(t_context, leftPos));
 
-            m_leftRectangle.setSize(t_context.layout.cellSize());
+            m_leftRectangle.setSize(cellSize);
+
+            util::setOriginToCenter(m_arrowSpriteLeft);
+            m_arrowSpriteLeft.rotate(sf::degrees(180));
+
+            util::scale(
+                m_arrowSpriteLeft,
+                util::scaleRectInPlaceCopy(
+                    m_leftRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
+
+            m_arrowSpriteLeft.setPosition(util::center(m_leftRectangle.getGlobalBounds()));
         }
 
         if (t_context.maps.current().isPosValid(rightPos))
@@ -78,7 +143,12 @@ namespace castlecrawl
             m_rightRectangle.setPosition(
                 t_context.maps.current().mapPosToScreenPos(t_context, rightPos));
 
-            m_rightRectangle.setSize(t_context.layout.cellSize());
+            m_rightRectangle.setSize(cellSize);
+
+            util::fitAndCenterInside(
+                m_arrowSpriteRight,
+                util::scaleRectInPlaceCopy(
+                    m_rightRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
         }
     }
 
@@ -88,6 +158,11 @@ namespace castlecrawl
         t_target.draw(m_botRectangle, t_states);
         t_target.draw(m_leftRectangle, t_states);
         t_target.draw(m_rightRectangle, t_states);
+
+        t_target.draw(m_arrowSpriteUp, t_states);
+        t_target.draw(m_arrowSpriteDown, t_states);
+        t_target.draw(m_arrowSpriteLeft, t_states);
+        t_target.draw(m_arrowSpriteRight, t_states);
     }
 
 } // namespace castlecrawl

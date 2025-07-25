@@ -7,6 +7,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace castlecrawl
 {
@@ -25,6 +27,11 @@ namespace castlecrawl
         sf::RectangleShape m_botRectangle;
         sf::RectangleShape m_leftRectangle;
         sf::RectangleShape m_rightRectangle;
+        sf::Texture m_arrowTexture;
+        sf::Sprite m_arrowSpriteUp;
+        sf::Sprite m_arrowSpriteDown;
+        sf::Sprite m_arrowSpriteLeft;
+        sf::Sprite m_arrowSpriteRight;
     };
 
 } // namespace castlecrawl
