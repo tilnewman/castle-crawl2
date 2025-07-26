@@ -114,10 +114,10 @@ namespace castlecrawl
             {
                 t_context.state.change(t_context, State::Editor);
             }
-        }
-        else if (t_event.is<sf::Event::KeyPressed>() || t_event.is<sf::Event::MouseButtonPressed>())
-        {
-            t_context.state.change(t_context, State::Play);
+            else
+            {
+                t_context.state.change(t_context, State::Play);
+            }
         }
     }
 
