@@ -15,6 +15,7 @@ namespace castlecrawl
 {
     struct GameConfig;
     class TileImages;
+    class SplatImages;
     class Layout;
     class Maps;
     class MapDisplay;
@@ -36,6 +37,7 @@ namespace castlecrawl
         Context(
             const GameConfig & configParam,
             const TileImages & tileImagesParam,
+            const SplatImages & splatImagesParam,
             Layout & layoutParam,
             Maps & mapsParam,
             MapDisplay & mapDisplayParam,
@@ -52,6 +54,7 @@ namespace castlecrawl
             item::ItemFactory & itemFactoryParam)
             : config(configParam)
             , tile_images(tileImagesParam)
+            , splat_images(splatImagesParam)
             , layout(layoutParam)
             , maps(mapsParam)
             , map_display(mapDisplayParam)
@@ -70,6 +73,7 @@ namespace castlecrawl
 
         const GameConfig & config;
         const TileImages & tile_images;
+        const SplatImages & splat_images;
         Layout & layout;
         Maps & maps;
         MapDisplay & map_display;

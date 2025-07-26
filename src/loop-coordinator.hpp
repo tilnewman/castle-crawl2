@@ -17,6 +17,7 @@
 #include "player.hpp"
 #include "random.hpp"
 #include "sound-player.hpp"
+#include "splat-images.hpp"
 #include "state-manager.hpp"
 #include "tile-images.hpp"
 #include "top-panel.hpp"
@@ -51,6 +52,7 @@ namespace castlecrawl
 
         GameConfig m_config;
         TileImages m_tileImages;
+        SplatImages m_splatImages;
         Layout m_layout;
         Maps m_maps;
         MapDisplay m_mapDisplay;

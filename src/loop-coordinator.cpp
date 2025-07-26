@@ -23,6 +23,7 @@ namespace castlecrawl
         , m_renderStates{}
         , m_config{ config }
         , m_tileImages{}
+        , m_splatImages{}
         , m_layout{}
         , m_maps{}
         , m_mapDisplay{}
@@ -61,12 +62,13 @@ namespace castlecrawl
         m_sfx.loadAll();
 
         m_playerDisplayUPtr = std::make_unique<PlayerDisplay>();
-        m_framerateUPtr = std::make_unique<FramerateText>();
+        m_framerateUPtr     = std::make_unique<FramerateText>();
         m_topPanelUPtr      = std::make_unique<TopPanel>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
             m_tileImages,
+            m_splatImages,
             m_layout,
             m_maps,
             m_mapDisplay,
@@ -87,6 +89,7 @@ namespace castlecrawl
         m_fonts.setup(m_config);
         m_enemies.setup(m_config);
         m_tileImages.setup(m_config);
+        m_splatImages.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(*m_contextUPtr);
         m_maps.change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });
