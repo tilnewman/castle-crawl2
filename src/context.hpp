@@ -35,40 +35,40 @@ namespace castlecrawl
     struct Context
     {
         Context(
-            const GameConfig & configParam,
-            const TileImages & tileImagesParam,
-            const SplatImages & splatImagesParam,
-            Layout & layoutParam,
-            Maps & mapsParam,
-            MapDisplay & mapDisplayParam,
-            StateManager & stateManagerParam,
-            Player & playerParam,
-            PlayerDisplay & playerDisplayParam,
-            const util::Random & randomParam,
-            util::SoundPlayer & sfxParam,
-            util::MusicPlayer & musicParam,
-            FontManager & fontManagerParam,
-            Enemies & enemiesParam,
-            FramerateText & framerateTextParam,
-            TopPanel & topPanelParam,
-            item::ItemFactory & itemFactoryParam)
-            : config(configParam)
-            , tile_images(tileImagesParam)
-            , splat_images(splatImagesParam)
-            , layout(layoutParam)
-            , maps(mapsParam)
-            , map_display(mapDisplayParam)
-            , state(stateManagerParam)
-            , player(playerParam)
-            , player_display(playerDisplayParam)
-            , random(randomParam)
-            , sfx(sfxParam)
-            , music(musicParam)
-            , fonts(fontManagerParam)
-            , enemies(enemiesParam)
-            , framerate(framerateTextParam)
-            , top_panel(topPanelParam)
-            , items(itemFactoryParam)
+            const GameConfig & t_config,
+            const TileImages & t_tileImages,
+            const SplatImages & t_splatImages,
+            Layout & t_layout,
+            Maps & t_maps,
+            MapDisplay & t_mapDisplay,
+            StateManager & t_stateManager,
+            Player & t_player,
+            PlayerDisplay & t_playerDisplay,
+            const util::Random & t_random,
+            util::SoundPlayer & t_sfx,
+            util::MusicPlayer & t_music,
+            FontManager & t_fontManager,
+            Enemies & t_enemies,
+            FramerateText & t_framerateText,
+            TopPanel & t_topPanel,
+            item::ItemFactory & t_itemFactory)
+            : config(t_config)
+            , tile_images(t_tileImages)
+            , splat_images(t_splatImages)
+            , layout(t_layout)
+            , maps(t_maps)
+            , map_display(t_mapDisplay)
+            , state(t_stateManager)
+            , player(t_player)
+            , player_display(t_playerDisplay)
+            , random(t_random)
+            , sfx(t_sfx)
+            , music(t_music)
+            , fonts(t_fontManager)
+            , enemies(t_enemies)
+            , framerate(t_framerateText)
+            , top_panel(t_topPanel)
+            , items(t_itemFactory)
         {}
 
         const GameConfig & config;
