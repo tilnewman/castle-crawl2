@@ -267,15 +267,11 @@ namespace castlecrawl
             M_CHECK(m_objectBuffer.update(&m_objectVerts[0]), "m_objectBuffer.update() failed");
         }
 
-        //
-
         M_CHECK(m_floorBuffer.create(m_floorVerts.size()), "m_floorBuffer.create() failed");
         if (!m_floorVerts.empty())
         {
             M_CHECK(m_floorBuffer.update(&m_floorVerts[0]), "m_floorBuffer.update() failed");
         }
-
-        //
 
         M_CHECK(m_borderBuffer.create(m_borderVerts.size()), "m_borderBuffer.create() failed");
         if (!m_borderVerts.empty())
