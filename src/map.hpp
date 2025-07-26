@@ -27,9 +27,9 @@ namespace castlecrawl
             const MapChars_t & t_mapChars,
             const MapTransitions_t & t_transVec);
 
-        [[nodiscard]] MapName name() const { return m_name; }
-        [[nodiscard]] Floor floor() const { return m_floor; }
-        [[nodiscard]] MapTransitions_t transitions() const { return m_transitions; }
+        [[nodiscard]] inline MapName name() const { return m_name; }
+        [[nodiscard]] inline Floor floor() const { return m_floor; }
+        [[nodiscard]] inline MapTransitions_t transitions() const { return m_transitions; }
         [[nodiscard]] bool isEmpty() const { return m_map.empty(); }
         [[nodiscard]] sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
