@@ -130,7 +130,7 @@ namespace castlecrawl::item
         ItemVec_t items;
 
         [[nodiscard]] inline bool empty() const { return ((0 == gold) && items.empty()); }
-        std::string description() const;
+        [[nodiscard]] std::string description() const;
     };
 
 } // namespace castlecrawl::item

@@ -16,8 +16,8 @@ namespace castlecrawl::item
         int health{ 0 };
         int mana{ 0 };
 
-        constexpr int total() const noexcept { return (health + mana); }
-        constexpr bool empty() const noexcept { return (total() == 0); }
+        [[nodiscard]] constexpr int total() const noexcept { return (health + mana); }
+        [[nodiscard]] constexpr bool empty() const noexcept { return (total() == 0); }
         auto operator<=>(const UseEffect &) const noexcept = default;
     };
 
@@ -32,8 +32,12 @@ namespace castlecrawl::item
         int lck{ 0 };
         int str{ 0 };
 
-        constexpr int total() const noexcept { return (acc + arc + dex + dmg + lck + str); }
-        constexpr bool empty() const noexcept { return (total() == 0); }
+        [[nodiscard]] constexpr int total() const noexcept
+        {
+            return (acc + arc + dex + dmg + lck + str);
+        }
+
+        [[nodiscard]] constexpr bool empty() const noexcept { return (total() == 0); }
 
         constexpr inline EquipEffect & operator+=(const EquipEffect & t_right) noexcept
         {

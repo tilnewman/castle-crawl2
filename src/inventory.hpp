@@ -16,17 +16,17 @@ namespace castlecrawl::item
       public:
         Inventory();
 
-        void add(const Item & t_item) { m_items.push_back(t_item); }
+        inline void add(const Item & t_item) { m_items.push_back(t_item); }
         void add(const ItemVec_t & t_items);
         void remove(const std::size_t t_index);
 
         // returns an error message if fails
-        std::string equip(const std::size_t t_index);
+        [[nodiscard]] std::string equip(const std::size_t t_index);
 
         void unequip(const std::size_t t_index);
 
-        [[nodiscard]] const ItemVec_t & unItems() const { return m_items; }
-        [[nodiscard]] const ItemVec_t & eqItems() const { return m_eqItems; }
+        [[nodiscard]] inline const ItemVec_t & unItems() const { return m_items; }
+        [[nodiscard]] inline const ItemVec_t & eqItems() const { return m_eqItems; }
 
         [[nodiscard]] EquipEffect totalEquipEffects() const;
         [[nodiscard]] Armor_t armorRating() const;

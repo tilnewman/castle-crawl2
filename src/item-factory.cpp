@@ -357,7 +357,7 @@ namespace castlecrawl::item
         }
     }
 
-    TextExtent ItemFactory::findTextExtents() const
+    const TextExtent ItemFactory::findTextExtents() const
     {
         TextExtent extents;
 
@@ -732,7 +732,7 @@ namespace castlecrawl::item
         M_CHECK((t_item.value() > 0), "Item's Value is zero or less: " << t_item);
     }
 
-    Treasure ItemFactory::randomTreasureFind(const Context & t_context) const
+    const Treasure ItemFactory::randomTreasureFind(const Context & t_context) const
     {
         // establish how much value this random find is worth
         const int valuePerLevel{ 100 };
@@ -788,7 +788,7 @@ namespace castlecrawl::item
         return treasure;
     }
 
-    Treasure ItemFactory::randomHerbFind(const Context & t_context) const
+    const Treasure ItemFactory::randomHerbFind(const Context & t_context) const
     {
         ItemVec_t miscItems;
         miscItems.reserve(100);

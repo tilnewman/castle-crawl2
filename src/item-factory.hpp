@@ -30,11 +30,11 @@ namespace castlecrawl::item
 
         void setup();
 
-        [[nodiscard]] TextExtent textExtents() const { return m_textExtent; }
-        [[nodiscard]] Treasure randomTreasureFind(const Context & t_context) const;
-        [[nodiscard]] Treasure randomHerbFind(const Context & t_context) const;
+        [[nodiscard]] inline const TextExtent textExtents() const { return m_textExtent; }
+        [[nodiscard]] const Treasure randomTreasureFind(const Context & t_context) const;
+        [[nodiscard]] const Treasure randomHerbFind(const Context & t_context) const;
 
-        const ItemVec_t & allItems() const { return m_allItems; }
+        [[nodiscard]] const ItemVec_t & allItems() const { return m_allItems; }
         void dumpInfo(const sf::Font & t_font) const;
 
       private:
@@ -44,7 +44,7 @@ namespace castlecrawl::item
         void makeMisc(ItemVec_t & t_items) const;
         void makeCustom(ItemVec_t & t_items) const;
 
-        TextExtent findTextExtents() const;
+        [[nodiscard]] const TextExtent findTextExtents() const;
         void validate() const;
         void throwIfInvalid(const Item & t_item) const;
 
