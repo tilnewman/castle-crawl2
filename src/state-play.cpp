@@ -112,16 +112,15 @@ namespace castlecrawl
 
         playMoveSfx(context, didMove, mapCharAttempted);
 
-        // handle walking into lava health drop
-        if (!didMove && (mapCharAttempted == 'l'))
+        // handle walking into lava or slime health drop
+        if (!didMove && ((mapCharAttempted == 'l') || (mapCharAttempted == 'g')))
         {
             context.player_display.shake();
-            if (context.player.health().current() > 1)
-            {
-                context.player.health().adjCurrent(-1);
-                context.top_panel.update(context);
-            }
-            else
+
+            context.player.health().adjCurrent(-1);
+            context.top_panel.update(context);
+
+            if (context.player.health().current() == 0)
             {
                 context.state.change(context, State::Death);
             }
