@@ -144,15 +144,8 @@ namespace castlecrawl
         {
             for (int x(0); x < mapSize.x; ++x)
             {
-                const char ch{ getChar(x, y) };
-
-                if (!isLiquid(ch))
-                {
-                    screenPos.x += t_context.layout.cellSize().x;
-                    continue;
-                }
-
                 // chars in all directions
+                const char ch{ getChar(x, y) };
                 const char upChar{ getChar(x, y - 1) };
                 const char downChar{ getChar(x, y + 1) };
                 const char leftChar{ getChar(x - 1, y) };
@@ -165,50 +158,97 @@ namespace castlecrawl
                 const MapPos_t rightPos{ x + 1, y };
 
                 // liquid rim corners
-                if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
+                if (isLiquid(ch))
                 {
-                    appendTileVerts(
-                        t_context, TileImage::LiquidRim_TopLeft, screenPos, m_objectVerts);
-                }
+                    if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_TopLeft, screenPos, m_objectVerts);
+                    }
 
-                if (validNotLiquid(upChar, upPos) && validNotLiquid(rightChar, rightPos))
-                {
-                    appendTileVerts(
-                        t_context, TileImage::LiquidRim_TopRight, screenPos, m_objectVerts);
-                }
+                    if (validNotLiquid(upChar, upPos) && validNotLiquid(rightChar, rightPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_TopRight, screenPos, m_objectVerts);
+                    }
 
-                if (validNotLiquid(downChar, downPos) && validNotLiquid(leftChar, leftPos))
-                {
-                    appendTileVerts(
-                        t_context, TileImage::LiquidRim_BotLeft, screenPos, m_objectVerts);
-                }
+                    if (validNotLiquid(downChar, downPos) && validNotLiquid(leftChar, leftPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_BotLeft, screenPos, m_objectVerts);
+                    }
 
-                if (validNotLiquid(downChar, downPos) && validNotLiquid(rightChar, rightPos))
-                {
-                    appendTileVerts(
-                        t_context, TileImage::LiquidRim_BotRight, screenPos, m_objectVerts);
-                }
+                    if (validNotLiquid(downChar, downPos) && validNotLiquid(rightChar, rightPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_BotRight, screenPos, m_objectVerts);
+                    }
 
-                // liquid rim sides
-                if (validNotLiquid(upChar, upPos))
-                {
-                    appendTileVerts(t_context, TileImage::LiquidRim_Top, screenPos, m_objectVerts);
-                }
+                    // liquid rim sides
+                    if (validNotLiquid(upChar, upPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_Top, screenPos, m_objectVerts);
+                    }
 
-                if (validNotLiquid(downChar, downPos))
-                {
-                    appendTileVerts(t_context, TileImage::LiquidRim_Bot, screenPos, m_objectVerts);
-                }
+                    if (validNotLiquid(downChar, downPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_Bot, screenPos, m_objectVerts);
+                    }
 
-                if (validNotLiquid(leftChar, leftPos))
-                {
-                    appendTileVerts(t_context, TileImage::LiquidRim_Left, screenPos, m_objectVerts);
-                }
+                    if (validNotLiquid(leftChar, leftPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_Left, screenPos, m_objectVerts);
+                    }
 
-                if (validNotLiquid(rightChar, rightPos))
+                    if (validNotLiquid(rightChar, rightPos))
+                    {
+                        appendTileVerts(
+                            t_context, TileImage::LiquidRim_Right, screenPos, m_objectVerts);
+                    }
+                }
+                else
                 {
-                    appendTileVerts(
-                        t_context, TileImage::LiquidRim_Right, screenPos, m_objectVerts);
+                    const sf::Vector2f cellSize = t_context.layout.cellSize();
+
+                    // liquid rim corners
+                    if (isLiquid(getChar(x - 1, y - 1)) && isLiquid(upChar) && isLiquid(leftChar))
+                    {
+                        appendTileVerts(
+                            t_context,
+                            TileImage::LiquidCor_TopLeft,
+                            (screenPos - cellSize),
+                            m_objectVerts);
+                    }
+
+                    if (isLiquid(getChar(x + 1, y - 1)) && isLiquid(upChar) && isLiquid(rightChar))
+                    {
+                        appendTileVerts(
+                            t_context,
+                            TileImage::LiquidCor_TopRight,
+                            { (screenPos.x + cellSize.x ), (screenPos.y - cellSize.y) },
+                            m_objectVerts);
+                    }
+
+                    if (isLiquid(getChar(x - 1, y + 1)) && isLiquid(downChar) && isLiquid(leftChar))
+                    {
+                        appendTileVerts(
+                            t_context,
+                            TileImage::LiquidCor_BotLeft,
+                            { (screenPos.x - cellSize.x), (screenPos.y + cellSize.y) },
+                            m_objectVerts);
+                    }
+
+                    if (isLiquid(getChar(x + 1, y + 1)) && isLiquid(downChar) && isLiquid(rightChar))
+                    {
+                        appendTileVerts(
+                            t_context,
+                            TileImage::LiquidCor_BotRight,
+                            { (screenPos.x + cellSize.x), (screenPos.y + cellSize.y) },
+                            m_objectVerts);
+                    }
                 }
 
                 screenPos.x += t_context.layout.cellSize().x;
@@ -221,7 +261,6 @@ namespace castlecrawl
 
     void MapDisplay::resetVertexBuffers()
     {
-
         M_CHECK(m_objectBuffer.create(m_objectVerts.size()), "m_objectBuffer.create() failed");
         if (!m_objectVerts.empty())
         {

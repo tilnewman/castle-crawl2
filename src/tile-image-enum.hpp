@@ -49,6 +49,10 @@ namespace castlecrawl
         Floor_Dirt3,
         Floor_Dirt4,
         Floor_Dirt5,
+        LiquidCor_TopLeft,
+        LiquidCor_TopRight,
+        LiquidCor_BotLeft,
+        LiquidCor_BotRight,
         LiquidRim_TopLeft,
         LiquidRim_Top,
         LiquidRim_TopRight,
@@ -99,6 +103,10 @@ namespace castlecrawl
             case '\xE':  { return TileImage::Floor_Dirt3;        }
             case '\xF':  { return TileImage::Floor_Dirt4;        }
             case '\x10': { return TileImage::Floor_Dirt5;        }
+            case '\x80': { return TileImage::LiquidCor_TopLeft;  }
+            case '\x81': { return TileImage::LiquidCor_TopRight; }
+            case '\x82': { return TileImage::LiquidCor_BotLeft;  }
+            case '\x83': { return TileImage::LiquidCor_BotRight; }
             case '\x90': { return TileImage::LiquidRim_TopLeft;  }
             case '\x91': { return TileImage::LiquidRim_Top;      }
             case '\x92': { return TileImage::LiquidRim_TopRight; }
@@ -153,6 +161,10 @@ namespace castlecrawl
             case TileImage::Floor_Dirt3:        { return sf::IntRect( {160, 32},{32,32}); }
             case TileImage::Floor_Dirt4:        { return sf::IntRect( {192, 32},{32,32}); }
             case TileImage::Floor_Dirt5:        { return sf::IntRect( {224, 32},{32,32}); }
+            case TileImage::LiquidCor_TopLeft:  { return sf::IntRect( {192, 64},{32,32}); }
+            case TileImage::LiquidCor_TopRight: { return sf::IntRect( {224, 64},{32,32}); }
+            case TileImage::LiquidCor_BotLeft:  { return sf::IntRect( {192, 96},{32,32}); }
+            case TileImage::LiquidCor_BotRight: { return sf::IntRect( {224, 96},{32,32}); }
             case TileImage::LiquidRim_TopLeft:  { return sf::IntRect( { 96,128},{32,32}); }
             case TileImage::LiquidRim_Top:      { return sf::IntRect( {128,128},{32,32}); }
             case TileImage::LiquidRim_TopRight: { return sf::IntRect( {160,128},{32,32}); }
