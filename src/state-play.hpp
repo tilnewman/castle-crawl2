@@ -20,25 +20,25 @@ namespace castlecrawl
         StatePlay();
         virtual ~StatePlay() final {}
 
-        virtual void onEnter(const Context & context) final;
+        virtual void onEnter(const Context & t_context) final;
         virtual State which() const final { return State::Play; }
-        virtual void update(const Context & context, const float frameTimeSec) final;
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
-            const Context & context,
-            sf::RenderTarget & target,
-            sf::RenderStates states) const final;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) final;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void handlePlayerMove(const Context & context, const sf::Keyboard::Scancode key);
+        void handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key);
 
         void playMoveSfx(
-            const Context & context, const bool didMove, const char mapCharAttempted) const;
+            const Context & t_context, const bool t_didMove, const char t_mapCharAttempted) const;
 
-        void playMoveMusic(const Context & context) const;
-        bool handleMapTransition(const Context & context, const MapPos_t & mapPosAfter);
+        void playMoveMusic(const Context & t_context) const;
+        bool handleMapTransition(const Context & t_context, const MapPos_t & t_mapPosAfter);
 
       private:
         Mouseover m_mouseover;

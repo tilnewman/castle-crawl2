@@ -32,23 +32,23 @@ namespace castlecrawl
 
     void StatePlay::onEnter(const Context &) {}
 
-    void StatePlay::update(const Context & context, const float frameTimeSec)
+    void StatePlay::update(const Context & t_context, const float t_frameTimeSec)
     {
-        context.enemies.update(context, frameTimeSec);
-        m_mouseover.update(context, frameTimeSec);
-        context.player_display.update(context, frameTimeSec);
-        context.framerate.update();
+        t_context.enemies.update(t_context, t_frameTimeSec);
+        m_mouseover.update(t_context, t_frameTimeSec);
+        t_context.player_display.update(t_context, t_frameTimeSec);
+        t_context.framerate.update();
     }
 
     void StatePlay::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        context.map_display.draw(context, target, states);
-        context.enemies.draw(context, target, states);
-        context.player_display.draw(context, target, states);
-        m_mouseover.draw(context, target, states);
-        context.framerate.draw(target, states);
-        target.draw(context.top_panel, states);
+        t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.enemies.draw(t_context, t_target, t_states);
+        t_context.player_display.draw(t_context, t_target, t_states);
+        m_mouseover.draw(t_context, t_target, t_states);
+        t_context.framerate.draw(t_target, t_states);
+        t_target.draw(t_context.top_panel, t_states);
     }
 
     void StatePlay::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -84,12 +84,12 @@ namespace castlecrawl
         }
     }
 
-    void StatePlay::handlePlayerMove(const Context & context, const sf::Keyboard::Scancode key)
+    void StatePlay::handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key)
     {
-        const MapPos_t mapPosBefore    = context.player_display.position();
-        const MapPos_t mapPosAttempted = util::keys::moveIfDir(mapPosBefore, key);
-        const bool isEnemyInTheWay     = context.enemies.isAnyAtMapPos(mapPosAttempted);
-        const char mapCharAttempted    = context.maps.current().cell(mapPosAttempted).object_char;
+        const MapPos_t mapPosBefore    = t_context.player_display.position();
+        const MapPos_t mapPosAttempted = util::keys::moveIfDir(mapPosBefore, t_key);
+        const bool isEnemyInTheWay     = t_context.enemies.isAnyAtMapPos(mapPosAttempted);
+        const char mapCharAttempted    = t_context.maps.current().cell(mapPosAttempted).object_char;
 
         const MapPos_t mapPosAfter = [&]() {
             if (isEnemyInTheWay)
@@ -110,21 +110,21 @@ namespace castlecrawl
 
         const bool didMove = (mapPosBefore != mapPosAfter);
 
-        playMoveSfx(context, didMove, mapCharAttempted);
+        playMoveSfx(t_context, didMove, mapCharAttempted);
 
         // handle walking into lava or slime health drop
         if (!didMove && ((mapCharAttempted == 'l') || (mapCharAttempted == 'g')))
         {
-            context.player_display.shake();
-            context.player_display.bloodSplatStart(context);
+            t_context.player_display.shake();
+            t_context.player_display.bloodSplatStart(t_context);
 
-            context.player.health().adjCurrent(-1);
-            context.top_panel.update(context);
+            t_context.player.health().adjCurrent(-1);
+            t_context.top_panel.update(t_context);
 
-            if (context.player.health().current() == 0)
+            if (t_context.player.health().current() == 0)
             {
-                context.player_display.bloodSplatStop();
-                context.state.change(context, State::Death);
+                t_context.player_display.bloodSplatStop();
+                t_context.state.change(t_context, State::Death);
             }
 
             return;
@@ -132,55 +132,55 @@ namespace castlecrawl
 
         if (didMove)
         {
-            context.player_display.position(context, mapPosAfter);
-            handleMapTransition(context, mapPosAfter);
-            playMoveMusic(context);
+            t_context.player_display.position(t_context, mapPosAfter);
+            handleMapTransition(t_context, mapPosAfter);
+            playMoveMusic(t_context);
         }
     }
 
     void StatePlay::playMoveSfx(
-        const Context & context, const bool didMove, const char mapCharAttempted) const
+        const Context & t_context, const bool t_didMove, const char t_mapCharAttempted) const
     {
-        if (didMove)
+        if (t_didMove)
         {
-            if (mapCharAttempted == 'd')
+            if (t_mapCharAttempted == 'd')
             {
-                context.sfx.play("door-open");
+                t_context.sfx.play("door-open");
             }
-            else if ((mapCharAttempted == 's') || (mapCharAttempted == 'S'))
+            else if ((t_mapCharAttempted == 's') || (t_mapCharAttempted == 'S'))
             {
-                context.sfx.play("stairs");
+                t_context.sfx.play("stairs");
             }
             else
             {
-                context.sfx.play("tick-off-1");
+                t_context.sfx.play("tick-off-1");
             }
         }
         else
         {
-            if (mapCharAttempted == 'D')
+            if (t_mapCharAttempted == 'D')
             {
-                context.sfx.play("locked");
+                t_context.sfx.play("locked");
             }
-            else if (mapCharAttempted == 'w')
+            else if (t_mapCharAttempted == 'w')
             {
-                context.sfx.play("splash");
+                t_context.sfx.play("splash");
             }
-            else if (mapCharAttempted == 'l')
+            else if (t_mapCharAttempted == 'l')
             {
-                context.sfx.play("burn");
+                t_context.sfx.play("burn");
             }
             else
             {
-                context.sfx.play("tap-wood-low");
+                t_context.sfx.play("tap-wood-low");
             }
         }
     }
 
-    void StatePlay::playMoveMusic(const Context & context) const
+    void StatePlay::playMoveMusic(const Context & t_context) const
     {
         const auto surroundingCells =
-            context.maps.current().surroundingCellsAll(context.player_display.position());
+            t_context.maps.current().surroundingCellsAll(t_context.player_display.position());
 
         const auto foundLavaIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {
@@ -189,11 +189,11 @@ namespace castlecrawl
 
         if (foundLavaIter == std::end(surroundingCells))
         {
-            context.music.stop("lava.ogg");
+            t_context.music.stop("lava.ogg");
         }
         else
         {
-            context.music.start("lava.ogg");
+            t_context.music.start("lava.ogg");
         }
 
         const auto foundWaterIter = std::find_if(
@@ -203,21 +203,21 @@ namespace castlecrawl
 
         if (foundWaterIter == std::end(surroundingCells))
         {
-            context.music.stop("water-bubbles.ogg");
+            t_context.music.stop("water-bubbles.ogg");
         }
         else
         {
-            context.music.start("water-bubbles.ogg");
+            t_context.music.start("water-bubbles.ogg");
         }
     }
 
-    bool StatePlay::handleMapTransition(const Context & context, const MapPos_t & mapPosAfter)
+    bool StatePlay::handleMapTransition(const Context & t_context, const MapPos_t & t_mapPosAfter)
     {
-        for (const MapTransition & transition : context.maps.current().transitions())
+        for (const MapTransition & transition : t_context.maps.current().transitions())
         {
-            if (transition.from_pos == mapPosAfter)
+            if (transition.from_pos == t_mapPosAfter)
             {
-                context.maps.change(context, transition.to_name, transition.to_pos);
+                t_context.maps.change(t_context, transition.to_name, transition.to_pos);
                 m_mouseover.reset();
                 return true;
             }
