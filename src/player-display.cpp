@@ -10,6 +10,7 @@
 #include "layout.hpp"
 #include "maps.hpp"
 #include "sfml-defaults.hpp"
+#include "splat-images.hpp"
 #include "tile-images.hpp"
 
 namespace castlecrawl
@@ -22,6 +23,8 @@ namespace castlecrawl
         , m_isShaking{ false }
         , m_shakeTimeSec{ 0.0f }
         , m_shaker{}
+        , m_splatTimeSec{ 0.0f }
+        , m_splatSprite{ util::SfmlDefaults::instance().texture() }
     {}
 
     void PlayerDisplay::setup(const Context & t_context)
@@ -40,7 +43,7 @@ namespace castlecrawl
         m_sprite.setPosition(m_screenPos);
     }
 
-    void PlayerDisplay::update(const Context &, const float t_frameTimeSec)
+    void PlayerDisplay::update(const Context & t_context, const float t_frameTimeSec)
     {
         if (m_isShaking)
         {
@@ -56,12 +59,31 @@ namespace castlecrawl
         }
 
         m_sprite.setPosition({ (m_screenPos.x + m_shaker.adjustment()), m_screenPos.y });
+
+        m_splatTimeSec -= t_frameTimeSec;
+        if (m_splatTimeSec < 0.0f)
+        {
+            m_splatTimeSec = 0.0f;
+        }
+
+        util::fitAndCenterInside(m_splatSprite, { m_screenPos, t_context.layout.cellSize() });
     }
 
     void PlayerDisplay::draw(
         const Context &, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(m_sprite, t_states);
+
+        if (m_splatTimeSec > 0.0f)
+        {
+            t_target.draw(m_splatSprite, t_states);
+        }
+    }
+
+    void PlayerDisplay::bloodSplatStart(const Context & t_context)
+    {
+        m_splatTimeSec = 0.75f;
+        m_splatSprite  = t_context.splat_images.getRandom(t_context);
     }
 
 } // namespace castlecrawl

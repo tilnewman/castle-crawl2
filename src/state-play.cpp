@@ -116,12 +116,14 @@ namespace castlecrawl
         if (!didMove && ((mapCharAttempted == 'l') || (mapCharAttempted == 'g')))
         {
             context.player_display.shake();
+            context.player_display.bloodSplatStart(context);
 
             context.player.health().adjCurrent(-1);
             context.top_panel.update(context);
 
             if (context.player.health().current() == 0)
             {
+                context.player_display.bloodSplatStop();
                 context.state.change(context, State::Death);
             }
 

@@ -24,7 +24,9 @@ namespace castlecrawl
         [[nodiscard]] MapPos_t position() const { return m_mapPos; }
         void position(const Context & t_context, const MapPos_t & t_newPosition);
         void update(const Context & t_context, const float t_frameTimeSec);
-        void shake() { m_isShaking = true; }
+        inline void shake() { m_isShaking = true; }
+        void bloodSplatStart(const Context & t_context);
+        void bloodSplatStop() { m_splatTimeSec = 0.0f; }
 
         void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
             const;
@@ -33,9 +35,13 @@ namespace castlecrawl
         MapPos_t m_mapPos;
         sf::Vector2f m_screenPos;
         sf::Sprite m_sprite;
+
         bool m_isShaking;
         float m_shakeTimeSec;
         Shaker m_shaker;
+
+        float m_splatTimeSec;
+        sf::Sprite m_splatSprite;
     };
 
 } // namespace castlecrawl
