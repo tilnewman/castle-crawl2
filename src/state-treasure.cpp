@@ -131,10 +131,9 @@ namespace castlecrawl
         if (!m_itemListboxUPtr->empty())
         {
             target.draw(*m_itemListboxUPtr, states);
+            target.draw(m_itemDescText, states);
+            target.draw(m_helpText, states);
         }
-
-        target.draw(m_itemDescText, states);
-        target.draw(m_helpText, states);
     }
 
     void StateTreasure::handleEvent(const Context & context, const sf::Event & event)
