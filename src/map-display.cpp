@@ -128,10 +128,10 @@ namespace castlecrawl
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
-        auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w') && (ch != 'g')); };
+        auto isLiquid = [](const char ch) { return ((ch == 'l') || (ch == 'w') || (ch == 'g')); };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
-            return (notLiq(ch) && t_context.maps.current().isPosValid(pos));
+            return (!isLiquid(ch) && t_context.maps.current().isPosValid(pos));
         };
 
         auto getChar = [&](const int x, const int y) {
@@ -146,7 +146,7 @@ namespace castlecrawl
             {
                 const char ch{ getChar(x, y) };
 
-                if (notLiq(ch))
+                if (!isLiquid(ch))
                 {
                     screenPos.x += t_context.layout.cellSize().x;
                     continue;
@@ -164,6 +164,7 @@ namespace castlecrawl
                 const MapPos_t leftPos{ x - 1, y };
                 const MapPos_t rightPos{ x + 1, y };
 
+                // liquid rim corners
                 if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
                 {
                     appendTileVerts(
@@ -188,6 +189,7 @@ namespace castlecrawl
                         t_context, TileImage::LiquidRim_BotRight, screenPos, m_objectVerts);
                 }
 
+                // liquid rim sides
                 if (validNotLiquid(upChar, upPos))
                 {
                     appendTileVerts(t_context, TileImage::LiquidRim_Top, screenPos, m_objectVerts);
