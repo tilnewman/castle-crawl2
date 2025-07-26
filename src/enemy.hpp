@@ -429,7 +429,7 @@ namespace castlecrawl
     {
         EnemyInstance(const util::Random & t_random, const Enemy t_enemy, const MapPos_t & t_pos);
 
-        bool isSummoner() const { return isEnemySummoner(enemy); }
+        [[nodiscard]] inline bool isSummoner() const { return isEnemySummoner(enemy); }
 
         Enemy enemy;
         EnemyImage image;
@@ -448,12 +448,12 @@ namespace castlecrawl
         void update(const Context & t_context, const float t_frameTimeSec);
         void add(const EnemyInstance & t_enemy);
         void remove(const MapPos_t & t_position);
-        void removeAll() { m_enemies.clear(); }
+        inline void removeAll() { m_enemies.clear(); }
 
         void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
             const;
 
-        bool isAnyAtMapPos(const MapPos_t & t_pos) const;
+        [[nodiscard]] bool isAnyAtMapPos(const MapPos_t & t_pos) const;
 
       private:
         void act(const Context & t_context, EnemyInstance & t_enemy);

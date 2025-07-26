@@ -37,7 +37,7 @@ namespace castlecrawl
         FontManager();
 
         void setup(const GameConfig & t_config);
-       [[nodiscard]] const sf::Font & font() const { return m_font; }
+        [[nodiscard]] const sf::Font & font() const { return m_font; }
 
         [[nodiscard]] inline const FontExtent extent(const FontSize t_size) const noexcept
         {
