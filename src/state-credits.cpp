@@ -129,11 +129,20 @@ namespace castlecrawl
         Credit & softwareCredit =
             m_credits.emplace_back(t_context, "Ziesche Til Newman", "Software");
 
+        Credit & sfmlCredit = m_credits.emplace_back(
+            t_context,
+            "SFML",
+            "Simple Fast Multimedia Library",
+            "www.sfml-dev.org",
+            "zlib/png license");
+
+        const float vertSpacer = (screenRect.size.y * 0.12f);
+        sfmlCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
+
         Credit & fontCredit = m_credits.emplace_back(
             t_context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
 
-        const float vertSpacer = (screenRect.size.y * 0.125f);
-        fontCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
+        fontCredit.vertPosition(sfmlCredit.bottom() + vertSpacer);
 
         Credit & tileCredit = m_credits.emplace_back(
             t_context,
