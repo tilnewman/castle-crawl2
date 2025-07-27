@@ -21,7 +21,7 @@ namespace castlecrawl
         virtual ~StatePlay() final {}
 
         virtual void onEnter(const Context & t_context) final;
-        virtual State which() const final { return State::Play; }
+        [[nodiscard]] virtual State which() const final { return State::Play; }
         virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(

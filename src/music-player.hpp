@@ -18,20 +18,20 @@ namespace util
         MusicPlayer();
         ~MusicPlayer();
 
-        void setup(const std::filesystem::path & path);
+        void setup(const std::filesystem::path & t_path);
 
         void reset();
 
-        void start(const std::string & filename, const float volume = 100.0f);
+        void start(const std::string & t_filename, const float t_volume = 100.0f);
 
-        void pause(const std::string & filename);
+        void pause(const std::string & t_filename);
         void pauseAll();
 
-        void stop(const std::string & filename);
+        void stop(const std::string & t_filename);
         void stopAll();
 
-        float volume(const std::string & filename) const;
-        void volume(const std::string & filename, const float newVolume);
+        [[nodiscard]] float volume(const std::string & t_filename) const;
+        void volume(const std::string & t_filename, const float t_newVolume);
 
       private:
         struct Entry

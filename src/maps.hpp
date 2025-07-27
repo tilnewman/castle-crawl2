@@ -20,7 +20,7 @@ namespace castlecrawl
         void setup(const Context & t_context);
         void change(const Context & t_context, const MapName t_mapName, const MapPos_t & t_pos);
         void forceMapForEditting(const Map t_map);
-        [[nodiscard]] Map & current() { return *m_currentIter; }
+        [[nodiscard]] inline Map & current() { return *m_currentIter; }
 
       private:
         void load(const Context & t_context);

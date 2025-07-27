@@ -10,8 +10,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <memory>
-
 namespace castlecrawl
 {
     struct Context;
@@ -23,7 +21,7 @@ namespace castlecrawl
         virtual ~StateDeath() final {}
 
         virtual void onEnter(const Context & t_context) final;
-        virtual State which() const final { return State::Death; }
+        [[nodiscard]] virtual State which() const final { return State::Death; }
         virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(

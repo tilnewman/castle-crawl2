@@ -36,7 +36,7 @@ namespace castlecrawl
             const sf::Vector2f & t_pos,
             VertVec_t & t_verts) const;
 
-        bool isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const;
+        [[nodiscard]] bool isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const;
 
       private:
         VertVec_t m_objectVerts;

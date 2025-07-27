@@ -60,7 +60,7 @@ namespace castlecrawl
     {
         virtual ~IState() {}
 
-        virtual State which() const = 0;
+        [[nodiscard]] virtual State which() const = 0;
 
         virtual void onEnter(const Context & t_context)                            = 0;
         virtual void onExit(const Context & t_context)                             = 0;

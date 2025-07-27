@@ -157,9 +157,9 @@ namespace castlecrawl
                 const MapPos_t leftPos{ x - 1, y };
                 const MapPos_t rightPos{ x + 1, y };
 
-                // liquid rim corners
                 if (isLiquid(ch))
                 {
+                    // liquid rim corners
                     if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
                     {
                         appendTileVerts(

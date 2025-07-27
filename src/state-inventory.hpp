@@ -23,7 +23,7 @@ namespace castlecrawl
       public:
         StateInventory();
 
-        virtual State which() const final { return State::Inventory; }
+        [[nodiscard]] virtual State which() const final { return State::Inventory; }
         virtual void onEnter(const Context & t_context) final;
         virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 

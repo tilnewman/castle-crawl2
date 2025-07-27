@@ -21,7 +21,7 @@ namespace castlecrawl
         PlayerDisplay();
 
         void setup(const Context & t_context);
-        [[nodiscard]] MapPos_t position() const { return m_mapPos; }
+        [[nodiscard]] inline MapPos_t position() const { return m_mapPos; }
         void position(const Context & t_context, const MapPos_t & t_newPosition);
         void update(const Context & t_context, const float t_frameTimeSec);
         inline void shake() { m_isShaking = true; }

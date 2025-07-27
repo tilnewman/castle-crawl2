@@ -24,21 +24,21 @@ namespace castlecrawl
         StateTreasure();
         virtual ~StateTreasure() final {}
 
-        virtual void onEnter(const Context & context) final;
-        virtual State which() const final { return State::Treasure; }
-        virtual void update(const Context & context, const float frameTimeSec) final;
+        virtual void onEnter(const Context & t_context) final;
+        [[nodiscard]] virtual State which() const final { return State::Treasure; }
+        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
-            const Context & context,
-            sf::RenderTarget & target,
-            sf::RenderStates states) const final;
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const final;
 
-        virtual void handleEvent(const Context & context, const sf::Event & event) final;
+        virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
-        static void setTreasure(const item::Treasure & treasure) { m_treasure = treasure; }
+        static void setTreasure(const item::Treasure & t_treasure) { m_treasure = t_treasure; }
 
       private:
-        void updateItemDescText(const Context & context);
+        void updateItemDescText(const Context & t_context);
 
       private:
         static item::Treasure m_treasure;

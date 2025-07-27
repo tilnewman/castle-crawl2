@@ -17,7 +17,7 @@ namespace castlecrawl
         SplatImages();
 
         void setup(const GameConfig & t_config);
-        const sf::Sprite & getRandom(const Context & t_context) const;
+        [[nodiscard]] const sf::Sprite & getRandom(const Context & t_context) const;
 
       private:
         sf::Texture m_texture;

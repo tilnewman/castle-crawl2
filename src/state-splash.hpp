@@ -20,7 +20,7 @@ namespace castlecrawl
         StateSplash();
         virtual ~StateSplash() final {}
 
-        virtual State which() const final { return State::Splash; }
+        [[nodiscard]] virtual State which() const final { return State::Splash; }
         virtual void onEnter(const Context & context) final;
         virtual void update(const Context & context, const float frameTimeSec) final;
 

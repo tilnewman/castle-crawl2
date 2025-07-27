@@ -117,7 +117,7 @@ namespace util
             graphDisplay.saveToFile(t_filename);
         }
 
-        bool wasDatasetChanged() const noexcept { return m_wasDatasetChanged; }
+        [[nodiscard]] bool wasDatasetChanged() const noexcept { return m_wasDatasetChanged; }
 
         [[nodiscard]] const sf::Texture & texture() const noexcept
         {
@@ -344,10 +344,14 @@ namespace util
             m_renderTexture.display();
         }
 
-        [[nodiscard]] const sf::Texture & texture() const { return m_renderTexture.getTexture(); }
-        [[nodiscard]] const GraphDisplay<data_t> & graph() const { return m_graphDisplay; }
-        [[nodiscard]] const sf::Vector2f size() const noexcept { return m_size; }
-        [[nodiscard]] const std::vector<data_t> & data() const noexcept { return m_data; }
+        [[nodiscard]] inline const sf::Texture & texture() const
+        {
+            return m_renderTexture.getTexture();
+        }
+
+        [[nodiscard]] inline const GraphDisplay<data_t> & graph() const { return m_graphDisplay; }
+        [[nodiscard]] inline const sf::Vector2f size() const noexcept { return m_size; }
+        [[nodiscard]] inline const std::vector<data_t> & data() const noexcept { return m_data; }
 
         void saveToFile(const std::string & t_filename) const
         {

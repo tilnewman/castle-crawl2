@@ -22,7 +22,7 @@ namespace castlecrawl
         virtual ~StateFight() final {}
 
         virtual void onEnter(const Context & t_context) final;
-        virtual State which() const final { return State::Fight; }
+        [[nodiscard]] virtual State which() const final { return State::Fight; }
         virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(

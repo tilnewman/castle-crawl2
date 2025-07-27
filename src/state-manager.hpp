@@ -16,11 +16,11 @@ namespace castlecrawl
       public:
         StateManager();
 
-        IState & current() const { return *m_stateUPtr; }
-        void change(const Context & context, const State newState);
+        [[nodiscard]] inline IState & current() const { return *m_stateUPtr; }
+        void change(const Context & t_context, const State t_newState);
 
       private:
-        std::unique_ptr<IState> factory(const State state) const;
+        [[nodiscard]] std::unique_ptr<IState> factory(const State t_state) const;
 
       private:
         std::unique_ptr<IState> m_stateUPtr;

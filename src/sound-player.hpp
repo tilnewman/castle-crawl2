@@ -35,13 +35,14 @@ namespace util
         void volume(const float newVolume);
         void volumeUp();
         void volumeDown();
-        inline float volume() const { return m_volume; }
+        [[nodiscard]] inline float volume() const { return m_volume; }
 
         void muteButton();
-        inline bool isMuted() const { return m_isMuted; }
+        [[nodiscard]] inline bool isMuted() const { return m_isMuted; }
 
       private:
-        std::vector<std::size_t> findCacheIndexesByName(const std::string & name) const;
+        [[nodiscard]] std::vector<std::size_t>
+            findCacheIndexesByName(const std::string & name) const;
 
         bool loadFiles(const std::string & nameMustMatch = "");
 
@@ -52,7 +53,7 @@ namespace util
 
         struct SoundEffect
         {
-            std::string toString() const;
+            [[nodiscard]] std::string toString() const;
 
             std::string filename{};
             sf::SoundBuffer buffer{};

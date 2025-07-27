@@ -20,14 +20,14 @@ namespace castlecrawl
       public:
         TileImages();
 
-        void setup(const GameConfig & config);
+        void setup(const GameConfig & t_config);
 
-        const sf::Sprite sprite(
-            const Context & context,
-            const TileImage tileImage,
-            const sf::Vector2f & pos = {}) const;
+        [[nodiscard]] const sf::Sprite sprite(
+            const Context & t_context,
+            const TileImage t_tileImage,
+            const sf::Vector2f & t_pos = {}) const;
 
-        const sf::Texture & texture() const { return m_texture; }
+        [[nodiscard]] inline const sf::Texture & texture() const { return m_texture; }
 
       private:
         sf::Texture m_texture;

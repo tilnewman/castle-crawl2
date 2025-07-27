@@ -34,7 +34,7 @@ namespace castlecrawl
         StateEditor();
         virtual ~StateEditor() final {}
 
-        virtual State which() const final { return State::Editor; }
+        [[nodiscard]] virtual State which() const final { return State::Editor; }
         virtual void onEnter(const Context & t_context) final;
         virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
@@ -55,7 +55,7 @@ namespace castlecrawl
         void fadeText(const Context & t_context, const std::string & t_text);
         void save() const;
         void load(const Context & t_context);
-        const std::string mapCharToName(const char t_ch) noexcept;
+        [[nodiscard]] const std::string mapCharToName(const char t_ch) noexcept;
 
         void startDragging(const Context & t_context, const sf::Vector2f & t_pos);
         void stopDragging(const Context & t_context, const sf::Vector2f & t_pos);

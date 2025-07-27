@@ -32,7 +32,7 @@ namespace castlecrawl
         void update(const float t_frameTimeSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void vertPosition(const float t_pos);
-        float bottom() const;
+        [[nodiscard]] float bottom() const;
 
       private:
         sf::Text m_nameText;
@@ -51,7 +51,7 @@ namespace castlecrawl
         virtual ~StateCredits() final {}
 
         virtual void onEnter(const Context & t_context) final;
-        virtual State which() const final { return State::Credits; }
+        [[nodiscard]] virtual State which() const final { return State::Credits; }
         virtual void update(const Context & t_context, const float t_frameTimeSec) final;
 
         virtual void draw(
