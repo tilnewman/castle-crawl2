@@ -18,10 +18,10 @@ namespace castlecrawl
         : m_texture()
     {}
 
-    void TileImages::setup(const GameConfig & config)
+    void TileImages::setup(const GameConfig & t_config)
     {
         M_CHECK(
-            m_texture.loadFromFile((config.media_path / "image" / "tile.png").string()),
+            m_texture.loadFromFile((t_config.media_path / "image" / "tile.png").string()),
             "Failed to load tile.png");
 
         // Improves image quality BUT also causes mass tile edge artifacts.
@@ -30,11 +30,11 @@ namespace castlecrawl
     }
 
     const sf::Sprite TileImages::sprite(
-        const Context & context, const TileImage tileImage, const sf::Vector2f & pos) const
+        const Context & t_context, const TileImage t_tileImage, const sf::Vector2f & t_pos) const
     {
-        sf::Sprite sprite(m_texture, tileImageToRect(tileImage));
-        util::fit(sprite, context.layout.cellSize());
-        sprite.setPosition(pos);
+        sf::Sprite sprite(m_texture, tileImageToRect(t_tileImage));
+        util::fit(sprite, t_context.layout.cellSize());
+        sprite.setPosition(t_pos);
         return sprite;
     }
 

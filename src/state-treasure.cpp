@@ -35,16 +35,16 @@ namespace castlecrawl
         , m_helpText(util::SfmlDefaults::instance().font())
     {}
 
-    void StateTreasure::onEnter(const Context & context)
+    void StateTreasure::onEnter(const Context & t_context)
     {
         m_itemListboxUPtr = std::make_unique<Listbox>(m_treasure.items);
 
         m_itemListboxUPtr->setup(
-            context, FontSize::Medium, context.items.textExtents().longest_name, 8);
+            t_context, FontSize::Medium, t_context.items.textExtents().longest_name, 8);
 
         //
 
-        const sf::FloatRect boardRect = context.layout.botRect();
+        const sf::FloatRect boardRect = t_context.layout.botRect();
         const float pad               = (boardRect.size.y * 0.015f);
 
         m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
@@ -53,7 +53,8 @@ namespace castlecrawl
 
         //
 
-        m_titleText = context.fonts.makeText(FontSize::Huge, "Treasure!", sf::Color(255, 200, 100));
+        m_titleText =
+            t_context.fonts.makeText(FontSize::Huge, "Treasure!", sf::Color(255, 200, 100));
 
         m_titleText.setPosition(
             { ((boardRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
@@ -81,7 +82,7 @@ namespace castlecrawl
             descStr += ":";
         }
 
-        m_descText = context.fonts.makeText(FontSize::Large, descStr);
+        m_descText = t_context.fonts.makeText(FontSize::Large, descStr);
 
         m_descText.setPosition(
             { ((boardRect.size.x * 0.5f) - (m_descText.getGlobalBounds().size.x * 0.5f)),
@@ -89,7 +90,7 @@ namespace castlecrawl
 
         //
 
-        m_helpText = context.fonts.makeText(
+        m_helpText = t_context.fonts.makeText(
             FontSize::Small,
             "(Press 'T' to take items then 'Enter' when finished)",
             sf::Color(200, 200, 200));
@@ -110,82 +111,85 @@ namespace castlecrawl
 
         //
 
-        m_itemDescText = context.fonts.makeText(FontSize::Small, "");
-        updateItemDescText(context);
+        m_itemDescText = t_context.fonts.makeText(FontSize::Small, "");
+        updateItemDescText(t_context);
     }
 
-    void StateTreasure::update(const Context & context, const float) { context.framerate.update(); }
+    void StateTreasure::update(const Context & t_context, const float)
+    {
+        t_context.framerate.update();
+    }
 
     void StateTreasure::draw(
-        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        context.map_display.draw(context, target, states);
-        context.enemies.draw(context, target, states);
-        context.player_display.draw(context, target, states);
-        context.framerate.draw(target, states);
-        target.draw(context.top_panel, states);
-        target.draw(m_fadeRectangle, states);
-        target.draw(m_titleText, states);
-        target.draw(m_descText, states);
+        t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.enemies.draw(t_context, t_target, t_states);
+        t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.framerate.draw(t_target, t_states);
+        t_target.draw(t_context.top_panel, t_states);
+        t_target.draw(m_fadeRectangle, t_states);
+        t_target.draw(m_titleText, t_states);
+        t_target.draw(m_descText, t_states);
 
         if (!m_itemListboxUPtr->empty())
         {
-            target.draw(*m_itemListboxUPtr, states);
-            target.draw(m_itemDescText, states);
-            target.draw(m_helpText, states);
+            t_target.draw(*m_itemListboxUPtr, t_states);
+            t_target.draw(m_itemDescText, t_states);
+            t_target.draw(m_helpText, t_states);
         }
     }
 
-    void StateTreasure::handleEvent(const Context & context, const sf::Event & event)
+    void StateTreasure::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (const auto * keyPtr = event.getIf<sf::Event::KeyPressed>())
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if ((keyPtr->scancode == sf::Keyboard::Scancode::Enter) ||
                 (keyPtr->scancode == sf::Keyboard::Scancode::Escape))
             {
-                context.state.change(context, State::Play);
+                t_context.state.change(t_context, State::Play);
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
             {
                 if (m_itemListboxUPtr->selectPrev())
                 {
-                    context.sfx.play("tick-on");
+                    t_context.sfx.play("tick-on");
                 }
 
-                updateItemDescText(context);
+                updateItemDescText(t_context);
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
             {
                 if (m_itemListboxUPtr->selectNext())
                 {
-                    context.sfx.play("tick-on");
+                    t_context.sfx.play("tick-on");
                 }
 
-                updateItemDescText(context);
+                updateItemDescText(t_context);
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::T)
             {
                 if (m_itemListboxUPtr->empty())
                 {
-                    context.sfx.play("error-1.ogg");
+                    t_context.sfx.play("error-1.ogg");
                 }
                 else
                 {
                     const std::size_t index = m_itemListboxUPtr->selectedIndex();
                     if (index < m_treasure.items.size())
                     {
-                        context.player.inventory().add(m_treasure.items.at(index));
+                        t_context.player.inventory().add(m_treasure.items.at(index));
 
                         m_treasure.items.erase(
                             std::begin(m_treasure.items) + static_cast<std::ptrdiff_t>(index));
 
                         m_itemListboxUPtr->redraw();
-                        updateItemDescText(context);
-                        context.sfx.play("equip.ogg");
+                        updateItemDescText(t_context);
+                        t_context.sfx.play("equip.ogg");
 
                         if (m_treasure.items.empty())
                         {
-                            context.state.change(context, State::Play);
+                            t_context.state.change(t_context, State::Play);
                         }
                     }
                 }
@@ -193,7 +197,7 @@ namespace castlecrawl
         }
     }
 
-    void StateTreasure::updateItemDescText(const Context & context)
+    void StateTreasure::updateItemDescText(const Context & t_context)
     {
         m_itemDescText.setString("");
 
@@ -206,7 +210,7 @@ namespace castlecrawl
             }
         }
 
-        m_itemDescText.setPosition({ ((context.layout.screenRect().size.x * 0.5f) -
+        m_itemDescText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                       (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
                                      util::bottom(*m_itemListboxUPtr) });
     }

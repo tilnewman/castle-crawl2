@@ -339,65 +339,65 @@ namespace castlecrawl
         }
     }
 
-    void StateInventory::updateItemDescText(const Context & context)
+    void StateInventory::updateItemDescText(const Context & t_context)
     {
         m_itemDescText.setString("");
 
         if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
         {
             const std::size_t index = m_unListboxUPtr->selectedIndex();
-            if (index < context.player.inventory().unItems().size())
+            if (index < t_context.player.inventory().unItems().size())
             {
                 m_itemDescText.setString(
-                    context.player.inventory().unItems().at(index).description());
+                    t_context.player.inventory().unItems().at(index).description());
             }
         }
         else if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
         {
             const std::size_t index = m_eqListboxUPtr->selectedIndex();
-            if (index < context.player.inventory().eqItems().size())
+            if (index < t_context.player.inventory().eqItems().size())
             {
                 m_itemDescText.setString(
-                    context.player.inventory().eqItems().at(index).description());
+                    t_context.player.inventory().eqItems().at(index).description());
             }
         }
 
-        m_itemDescText.setPosition({ ((context.layout.screenRect().size.x * 0.5f) -
+        m_itemDescText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                       (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
                                      util::bottom(*m_unListboxUPtr) });
     }
 
-    void StateInventory::updateStatText(const Context & context)
+    void StateInventory::updateStatText(const Context & t_context)
     {
         std::string str;
 
-        str = std::to_string(context.player.strength().current());
+        str = std::to_string(t_context.player.strength().current());
         str += "/";
-        str += std::to_string(context.player.strength().max());
+        str += std::to_string(t_context.player.strength().max());
         m_strValueText.setString(str);
 
-        str = std::to_string(context.player.dexterity().current());
+        str = std::to_string(t_context.player.dexterity().current());
         str += "/";
-        str += std::to_string(context.player.dexterity().max());
+        str += std::to_string(t_context.player.dexterity().max());
         m_dexValueText.setString(str);
 
-        str = std::to_string(context.player.accuracy().current());
+        str = std::to_string(t_context.player.accuracy().current());
         str += "/";
-        str += std::to_string(context.player.accuracy().max());
+        str += std::to_string(t_context.player.accuracy().max());
         m_accValueText.setString(str);
 
-        str = std::to_string(context.player.luck().current());
+        str = std::to_string(t_context.player.luck().current());
         str += "/";
-        str += std::to_string(context.player.luck().max());
+        str += std::to_string(t_context.player.luck().max());
         m_lckValueText.setString(str);
 
-        str = std::to_string(context.player.arcane().current());
+        str = std::to_string(t_context.player.arcane().current());
         str += "/";
-        str += std::to_string(context.player.arcane().max());
+        str += std::to_string(t_context.player.arcane().max());
         m_arcValueText.setString(str);
 
         str = "Armor: ";
-        str += std::to_string(context.player.armor().get());
+        str += std::to_string(t_context.player.armor().get());
         m_armorText.setString(str);
     }
 

@@ -24,12 +24,12 @@ namespace castlecrawl
         , m_timerSec(0.0f)
     {}
 
-    void StateSplash::onEnter(const Context & context)
+    void StateSplash::onEnter(const Context & t_context)
     {
-        const sf::FloatRect screenRect = context.layout.screenRect();
+        const sf::FloatRect screenRect = t_context.layout.screenRect();
 
         util::TextureLoader::load(
-            m_castleTexture, (context.config.media_path / "image/splash.png"), true);
+            m_castleTexture, (t_context.config.media_path / "image/splash.png"), true);
 
         m_castleSprite.setTexture(m_castleTexture, true);
 
@@ -42,7 +42,7 @@ namespace castlecrawl
         //
 
         util::TextureLoader::load(
-            m_lightningTexture, (context.config.media_path / "image/lightning.png"), true);
+            m_lightningTexture, (t_context.config.media_path / "image/lightning.png"), true);
 
         m_lightningSprite.setTexture(m_lightningTexture, true);
 
@@ -58,13 +58,13 @@ namespace castlecrawl
         m_fader.setup(true, sf::Color::Black, 1.5f, screenRect);
     }
 
-    void StateSplash::update(const Context &, const float frameTimeSec)
+    void StateSplash::update(const Context &, const float t_frameTimeSec)
     {
-        m_fader.update(frameTimeSec);
+        m_fader.update(t_frameTimeSec);
 
         //
 
-        m_timerSec += frameTimeSec;
+        m_timerSec += t_frameTimeSec;
         if ((m_timerSec >= 3.5f) && (m_timerSec < 3.75f))
         {
             m_willShowLightning = true;
@@ -88,17 +88,17 @@ namespace castlecrawl
         m_willShowLightning = false;
     }
 
-    void
-        StateSplash::draw(const Context &, sf::RenderTarget & target, sf::RenderStates states) const
+    void StateSplash::draw(
+        const Context &, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(m_castleSprite, states);
+        t_target.draw(m_castleSprite, t_states);
 
         if (m_willShowLightning)
         {
-            target.draw(m_lightningSprite, states);
+            t_target.draw(m_lightningSprite, t_states);
         }
 
-        m_fader.draw(target, states);
+        m_fader.draw(t_target, t_states);
     }
 
     void StateSplash::handleEvent(const Context & t_context, const sf::Event & t_event)

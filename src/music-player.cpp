@@ -17,9 +17,9 @@ namespace util
 
     MusicPlayer::~MusicPlayer() { reset(); }
 
-    void MusicPlayer::setup(const std::filesystem::path & path)
+    void MusicPlayer::setup(const std::filesystem::path & t_path)
     {
-        m_path = path;
+        m_path = t_path;
 
         if (!std::filesystem::exists(m_path) || !std::filesystem::is_directory(m_path))
         {
@@ -34,12 +34,12 @@ namespace util
         m_entrys.clear();
     }
 
-    void MusicPlayer::start(const std::string & filename, const float volume)
+    void MusicPlayer::start(const std::string & t_filename, const float t_volume)
     {
-        const std::filesystem::path path = (m_path / filename);
+        const std::filesystem::path path = (m_path / t_filename);
         if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path))
         {
-            std::cerr << "MusicPlayer::start(\"" << filename << "\", " << volume
+            std::cerr << "MusicPlayer::start(\"" << t_filename << "\", " << t_volume
                       << ") -but that file does not exist!" << m_path << std::endl;
 
             return;
@@ -48,9 +48,9 @@ namespace util
         // start if already loaded
         for (auto & entryUPtr : m_entrys)
         {
-            if (entryUPtr->filename == filename)
+            if (entryUPtr->filename == t_filename)
             {
-                entryUPtr->music.setVolume(volume);
+                entryUPtr->music.setVolume(t_volume);
 
                 if (entryUPtr->music.getStatus() != sf::SoundSource::Status::Playing)
                 {
@@ -67,24 +67,24 @@ namespace util
 
         if (!entryUPtr->music.openFromFile(path.string()))
         {
-            std::cerr << "MusicPlayer::start(\"" << filename << "\", " << volume
+            std::cerr << "MusicPlayer::start(\"" << t_filename << "\", " << t_volume
                       << ") found the file but was unable to load it." << m_path << std::endl;
 
             m_entrys.pop_back();
             return;
         }
 
-        entryUPtr->filename = filename;
-        entryUPtr->music.setVolume(volume);
+        entryUPtr->filename = t_filename;
+        entryUPtr->music.setVolume(t_volume);
         entryUPtr->music.setLooping(true);
         entryUPtr->music.play();
     }
 
-    void MusicPlayer::pause(const std::string & filename)
+    void MusicPlayer::pause(const std::string & t_filename)
     {
         for (auto & entryUPtr : m_entrys)
         {
-            if (entryUPtr->filename == filename)
+            if (entryUPtr->filename == t_filename)
             {
                 if (entryUPtr->music.getStatus() == sf::SoundSource::Status::Paused)
                 {
@@ -115,11 +115,11 @@ namespace util
         }
     }
 
-    void MusicPlayer::stop(const std::string & filename)
+    void MusicPlayer::stop(const std::string & t_filename)
     {
         for (auto & entryUPtr : m_entrys)
         {
-            if (entryUPtr->filename == filename)
+            if (entryUPtr->filename == t_filename)
             {
                 entryUPtr->music.stop();
                 return;
@@ -135,34 +135,34 @@ namespace util
         }
     }
 
-    float MusicPlayer::volume(const std::string & filename) const
+    float MusicPlayer::volume(const std::string & t_filename) const
     {
         for (auto & entryUPtr : m_entrys)
         {
-            if (entryUPtr->filename == filename)
+            if (entryUPtr->filename == t_filename)
             {
                 return entryUPtr->music.getVolume();
             }
         }
 
-        std::cerr << "MusicPlayer::getVolume(\"" << filename
+        std::cerr << "MusicPlayer::getVolume(\"" << t_filename
                   << "\") -but there are none with that filename!" << m_path << std::endl;
 
         return 0.0f;
     }
 
-    void MusicPlayer::volume(const std::string & filename, const float newVolume)
+    void MusicPlayer::volume(const std::string & t_filename, const float t_newVolume)
     {
         for (auto & entryUPtr : m_entrys)
         {
-            if (entryUPtr->filename == filename)
+            if (entryUPtr->filename == t_filename)
             {
-                entryUPtr->music.setVolume(newVolume);
+                entryUPtr->music.setVolume(t_newVolume);
                 return;
             }
         }
 
-        std::cerr << "MusicPlayer::setVolume(\"" << filename << "\", " << newVolume
+        std::cerr << "MusicPlayer::setVolume(\"" << t_filename << "\", " << t_newVolume
                   << ") -but there are none with that filename!" << m_path << std::endl;
     }
 

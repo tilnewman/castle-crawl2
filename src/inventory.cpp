@@ -138,11 +138,11 @@ namespace castlecrawl::item
         return {};
     }
 
-    bool Inventory::hasEquipped(const Armor armor) const
+    bool Inventory::hasEquipped(const Armor t_armor) const
     {
         for (const Item & item : m_eqItems)
         {
-            if (item.armorType() == armor)
+            if (item.armorType() == t_armor)
             {
                 return true;
             }
@@ -151,13 +151,13 @@ namespace castlecrawl::item
         return false;
     }
 
-    std::size_t Inventory::countOfEquipped(const Misc misc) const
+    std::size_t Inventory::countOfEquipped(const Misc t_misc) const
     {
         std::size_t count = 0;
 
         for (const Item & item : m_eqItems)
         {
-            if (item.miscType() == misc)
+            if (item.miscType() == t_misc)
             {
                 ++count;
             }

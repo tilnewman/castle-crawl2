@@ -18,10 +18,10 @@
 namespace castlecrawl
 {
 
-    LoopCoordinator::LoopCoordinator(const GameConfig & config)
+    LoopCoordinator::LoopCoordinator(const GameConfig & t_config)
         : m_renderWindow{}
         , m_renderStates{}
-        , m_config{ config }
+        , m_config{ t_config }
         , m_tileImages{}
         , m_splatImages{}
         , m_layout{}

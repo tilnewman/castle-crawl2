@@ -210,23 +210,23 @@ namespace castlecrawl
     }
 
     void StateCredits::draw(
-        const Context &, sf::RenderTarget & target, sf::RenderStates states) const
+        const Context &, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        target.draw(m_castleSprite, states);
+        t_target.draw(m_castleSprite, t_states);
 
         for (const Credit & credit : m_credits)
         {
-            target.draw(credit, states);
+            t_target.draw(credit, t_states);
         }
     }
 
-    void StateCredits::handleEvent(const Context & context, const sf::Event & event)
+    void StateCredits::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (const auto * keyPtr = event.getIf<sf::Event::KeyPressed>())
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                context.state.change(context, State::Quit);
+                t_context.state.change(t_context, State::Quit);
             }
         }
     }
