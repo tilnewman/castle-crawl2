@@ -145,6 +145,10 @@ namespace castlecrawl
             {
                 message = "dragon inferno";
             }
+            else if (mapCell.object_char == 'g')
+            {
+                message = "slime";
+            }
         }
 
         if (message.empty())
