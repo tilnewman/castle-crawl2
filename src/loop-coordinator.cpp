@@ -162,7 +162,7 @@ namespace castlecrawl
 
         if (!m_config.video_mode.isValid())
         {
-            std::cout << "but that is an invalid mode.  Valid video modes at "
+            std::cout << "but that is not suported.  Valid video modes at "
                       << sf::VideoMode::getDesktopMode().bitsPerPixel << "bpp:" << std::endl
                       << util::makeSupportedVideoModesString(true) << std::endl;
 
