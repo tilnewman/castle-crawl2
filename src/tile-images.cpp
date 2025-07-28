@@ -22,7 +22,7 @@ namespace castlecrawl
     void TileImages::setup(const GameConfig & t_config)
     {
         // Note that texture smoothing is turned OFF.
-        //  it improves image quality BUT also causes mass tile edge artifacts.
+        // It improves image quality BUT also causes mass tile edge artifacts.
         // Texture smoothing really only works when the images have transparent edges.
         util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "tile.png"), false);
     }

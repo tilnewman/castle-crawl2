@@ -149,6 +149,28 @@ namespace castlecrawl
             {
                 message = "slime";
             }
+            else if (mapCell.object_char == '!')
+            {
+                message = "bag";
+            }
+            else if (mapCell.object_char == '@')
+            {
+                message = "altar";
+            }
+            else if (mapCell.object_char == '#')
+            {
+                message = "stone spire";
+            }
+            else if (mapCell.object_char == '$')
+            {
+                message = "key";
+            }
+            else if (
+                (mapCell.object_char == '%') || (mapCell.object_char == '^') ||
+                (mapCell.object_char == '&'))
+            {
+                message = "healing herbs";
+            }
         }
 
         if (message.empty())
