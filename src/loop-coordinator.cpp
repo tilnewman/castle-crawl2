@@ -8,6 +8,7 @@
 #include "check-macros.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
+#include "texture-loader.hpp"
 
 #include <SFML/Graphics/VertexBuffer.hpp>
 #include <SFML/System/Clock.hpp>
@@ -111,6 +112,7 @@ namespace castlecrawl
         m_sfx.stopAll();
         m_music.stopAll();
         m_renderWindow.close();
+        util::TextureLoader::dumpInfo();
     }
 
     void LoopCoordinator::runLoop()
