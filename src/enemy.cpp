@@ -12,6 +12,7 @@
 #include "player-display.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
+#include "texture-loader.hpp"
 #include "tile-images.hpp"
 
 #include <type_traits>
@@ -48,12 +49,7 @@ namespace castlecrawl
 
     void Enemies::setup(const GameConfig & t_config)
     {
-        const bool loadResult =
-            m_texture.loadFromFile((t_config.media_path / "image" / "enemy.png").string());
-
-        M_CHECK(loadResult, "Unable to load enemy texture file.");
-
-        m_texture.setSmooth(true);
+        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "enemy.png"), true);
     }
 
     void Enemies::update(const Context & t_context, const float t_frameTimeSec)

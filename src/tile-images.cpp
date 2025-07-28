@@ -10,6 +10,7 @@
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "sfml-util.hpp"
+#include "texture-loader.hpp"
 
 namespace castlecrawl
 {
@@ -20,13 +21,10 @@ namespace castlecrawl
 
     void TileImages::setup(const GameConfig & t_config)
     {
-        M_CHECK(
-            m_texture.loadFromFile((t_config.media_path / "image" / "tile.png").string()),
-            "Failed to load tile.png");
-
-        // Improves image quality BUT also causes mass tile edge artifacts.
+        // Note that texture smoothing is turned OFF.
+        //  it improves image quality BUT also causes mass tile edge artifacts.
         // Texture smoothing really only works when the images have transparent edges.
-        // m_texture.setSmooth(true);
+        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "tile.png"), false);
     }
 
     const sf::Sprite TileImages::sprite(
