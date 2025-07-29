@@ -64,18 +64,15 @@ namespace util
             ss.imbue(std::locale("")); // this is only to put commas in the big numbers
 
             std::size_t totalLoadCount  = 0;
-            std::size_t totalByteCount  = 0;
             std::size_t uniqueByteCount = 0;
             for (const auto & pathCountPair : m_pathCountMap)
             {
                 totalLoadCount += pathCountPair.second.loads;
-                totalByteCount += (pathCountPair.second.loads * pathCountPair.second.bytes);
                 uniqueByteCount += pathCountPair.second.bytes;
             }
 
-            ss << totalLoadCount << " loads of " << m_pathCountMap.size()
-               << " unqiue texture files, and " << totalByteCount << "bytes loaded with "
-               << uniqueByteCount << "bytes being unique.";
+            ss << m_pathCountMap.size() << " textures (" << uniqueByteCount << "bytes) were loaded "
+               << totalLoadCount << " times.";
 
             std::clog << ss.str() << '\n';
         }
