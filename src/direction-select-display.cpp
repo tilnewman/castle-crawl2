@@ -38,9 +38,9 @@ namespace castlecrawl
         const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
         const MapPos_t rightPos{ (mapPos.x + 1), mapPos.y };
 
-        const sf::Color fillColor{ 0, 255, 255, 64 };
-        const sf::Color outlineColor{ 0, 255, 255 };
-        const sf::Color arrowColor{ 100, 255, 255, 92 };
+        const sf::Color fillColor{ 0, 255, 255, 32 };
+        const sf::Color outlineColor{ 0, 255, 255, 127 };
+        const sf::Color arrowColor{ 100, 255, 255, 64 };
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
