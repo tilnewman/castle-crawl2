@@ -148,8 +148,8 @@ namespace castlecrawl
             case TileImage::Stair_Up:           { return sf::IntRect( {128,  0},{32,32}); }
             case TileImage::Stair_Down:         { return sf::IntRect( {128, 32},{32,32}); }
             case TileImage::Barrel:             { return sf::IntRect( { 96,  0},{32,32}); }
-            case TileImage::Door:               { return sf::IntRect( { 96, 96},{32,32}); }
-            case TileImage::DoorLocked:         { return sf::IntRect( { 96, 96},{32,32}); }
+            case TileImage::Door:               { return sf::IntRect( {  0,224},{32,32}); }
+            case TileImage::DoorLocked:         { return sf::IntRect( { 32,224},{32,32}); }
             case TileImage::Chest:              { return sf::IntRect( { 96, 64},{32,32}); }
             case TileImage::Coffin:             { return sf::IntRect( {160, 64},{32,32}); }
             case TileImage::Bag:                { return sf::IntRect( {224,  0},{32,32}); }
