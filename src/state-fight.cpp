@@ -146,6 +146,24 @@ namespace castlecrawl
 
             return;
         }
+        else if (objectChar == 'q')
+        {
+            t_context.sfx.play("wood-block-break.ogg");
+
+            t_context.maps.current().setObjectChar(t_pos, ' ');
+            t_context.map_display.load(t_context);
+
+            t_context.state.change(t_context, State::Play);
+        }
+        else if (objectChar == 'R')
+        {
+            t_context.sfx.play("rock-block-break.ogg");
+
+            t_context.maps.current().setObjectChar(t_pos, ' ');
+            t_context.map_display.load(t_context);
+
+            t_context.state.change(t_context, State::Play);
+        }
         else
         {
             t_context.sfx.play("hit.ogg");
