@@ -15,6 +15,7 @@ namespace castlecrawl
     {
         Empty = 0,
         Rock,
+        RockWeak,
         Lava,
         Water,
         Slime,
@@ -39,6 +40,7 @@ namespace castlecrawl
         Wall_Vert,
         Wall_Shadow,
         Wall_Block,
+        Wall_BlockWeak,
         Floor_Wood1,
         Floor_Wood2,
         Floor_Wood3,
@@ -77,6 +79,7 @@ namespace castlecrawl
         switch (ch)
         {
             case 'r':    { return TileImage::Rock;               }
+            case 'R':    { return TileImage::RockWeak;           }
             case 'l':    { return TileImage::Lava;               }
             case 'w':    { return TileImage::Water;              }
             case 'g':    { return TileImage::Slime;              }
@@ -99,6 +102,7 @@ namespace castlecrawl
             case 'T':    { return TileImage::Wall_Top;           }
             case '|':    { return TileImage::Wall_Vert;          }
             case 'B':    { return TileImage::Wall_Block;         }
+            case 'q':    { return TileImage::Wall_BlockWeak;     }
             case 'p':    { return TileImage::Avatar;             }
             case '\x0':  { return TileImage::Floor_Wood1;        }
             case '\x1':  { return TileImage::Floor_Wood2;        }
@@ -141,16 +145,17 @@ namespace castlecrawl
         // clang-format off
         switch (tileImage)
         {
-            case TileImage::Rock:               { return sf::IntRect( {  0,192},{32,32}); }
+            case TileImage::Rock:               { return sf::IntRect( { 96, 64},{32,32}); }
+            case TileImage::RockWeak:           { return sf::IntRect( { 96, 96},{32,32}); }
             case TileImage::Lava:               { return sf::IntRect( { 32,192},{32,32}); }
             case TileImage::Water:              { return sf::IntRect( { 64,192},{32,32}); }
-            case TileImage::Slime:              { return sf::IntRect( {128,160},{32,32}); }
+            case TileImage::Slime:              { return sf::IntRect( {  0,192},{32,32}); }
             case TileImage::Stair_Up:           { return sf::IntRect( {128,  0},{32,32}); }
             case TileImage::Stair_Down:         { return sf::IntRect( {128, 32},{32,32}); }
             case TileImage::Barrel:             { return sf::IntRect( { 96,  0},{32,32}); }
             case TileImage::Door:               { return sf::IntRect( {  0,224},{32,32}); }
             case TileImage::DoorLocked:         { return sf::IntRect( { 32,224},{32,32}); }
-            case TileImage::Chest:              { return sf::IntRect( { 96, 64},{32,32}); }
+            case TileImage::Chest:              { return sf::IntRect( {128, 64},{32,32}); }
             case TileImage::Coffin:             { return sf::IntRect( {160, 64},{32,32}); }
             case TileImage::Bag:                { return sf::IntRect( {224,  0},{32,32}); }
             case TileImage::Altar:              { return sf::IntRect( {128, 96},{32,32}); }
@@ -164,7 +169,8 @@ namespace castlecrawl
             case TileImage::Wall_Top:           { return sf::IntRect( { 64,  0},{32,32}); }
             case TileImage::Wall_Vert:          { return sf::IntRect( {  0, 32},{32,32}); }
             case TileImage::Wall_Block:         { return sf::IntRect( { 64, 32},{32,32}); }
-            case TileImage::Avatar:             { return sf::IntRect( { 96, 32},{32,32}); }
+            case TileImage::Wall_BlockWeak:     { return sf::IntRect( { 96, 32},{32,32}); }
+            case TileImage::Avatar:             { return sf::IntRect( {224,224},{32,32}); }
             case TileImage::Floor_Wood1:        { return sf::IntRect( {  0, 64},{32,32}); }
             case TileImage::Floor_Wood2:        { return sf::IntRect( { 32, 64},{32,32}); }
             case TileImage::Floor_Wood3:        { return sf::IntRect( { 64, 64},{32,32}); }
@@ -196,7 +202,7 @@ namespace castlecrawl
             case TileImage::LiquidRim_BotRight: { return sf::IntRect( {160,192},{32,32}); }
             case TileImage::Wall_Shadow:        { return sf::IntRect( { 32, 32},{32,32}); }
             case TileImage::Empty:
-            default:                            { return sf::IntRect( {224,  0},{32,32}); }
+            default:                            { return sf::IntRect( {128,160},{32,32}); }
         }
         // clang-format on
     }

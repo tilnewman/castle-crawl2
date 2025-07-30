@@ -253,13 +253,14 @@ namespace castlecrawl
         else if (keyScancode == sf::Keyboard::Scancode::Period)    { editMap(t_context, '.', '.'); }
         else if (keyScancode == sf::Keyboard::Scancode::D)         { editMap(t_context, 'D', 'd'); }
         else if (keyScancode == sf::Keyboard::Scancode::S)         { editMap(t_context, 'S', 's'); }
-        else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'r', 'r'); }
+        else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'R', 'r'); }
         else if (keyScancode == sf::Keyboard::Scancode::L)         { editMap(t_context, 'l', 'l'); }
         else if (keyScancode == sf::Keyboard::Scancode::W)         { editMap(t_context, 'w', 'w'); }
         else if (keyScancode == sf::Keyboard::Scancode::G)         { editMap(t_context, 'g', 'g'); }
         else if (keyScancode == sf::Keyboard::Scancode::B)         { editMap(t_context, 'b', 'b'); }
         else if (keyScancode == sf::Keyboard::Scancode::C)         { editMap(t_context, 'c', 'c'); }
         else if (keyScancode == sf::Keyboard::Scancode::K)         { editMap(t_context, 'k', 'k'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Q)         { editMap(t_context, 'q', 'q'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num0)      { editMap(t_context, '0', '0'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num1)      { editMap(t_context, '!', '1'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num2)      { editMap(t_context, '@', '2'); }
@@ -283,8 +284,8 @@ namespace castlecrawl
         {
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
-                "f-Change-Flooring\nr-Rock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
-                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\n%^&-Herbs\n"
+                "f-Change-Flooring\nr-Rock\nR-WeakRock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
+                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\n%^&-Herbs\nq-WeakWoodBlock\n"
                 "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\n"
                 "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
                 "6-Bat\n7-BatMask\n8-Skeleton\n9-SkeletonGrave\n:-Demon\n;-DemonDoor\n"
@@ -294,7 +295,7 @@ namespace castlecrawl
 
             m_keyText.setPosition({ ((t_context.layout.topRect().size.x * 0.5f) -
                                      (m_keyText.getGlobalBounds().size.x * 0.5f)),
-                                    (t_context.layout.topRect().size.y + 100.0f) });
+                                    (t_context.layout.topRect().size.y + 25.0f) });
         }
         else
         {
@@ -444,6 +445,7 @@ namespace castlecrawl
             case 'S': { return "Stairs Up"; }
             case 's': { return "Stairs Down"; }
             case 'r': { return "Rock"; }
+            case 'R': { return "Weak Rock"; }
             case 'l': { return "Lava"; }
             case 'w': { return "Water"; }
             case 'g': { return "Slime"; }
