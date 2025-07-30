@@ -39,6 +39,7 @@ namespace castlecrawl
         , m_framerateUPtr{}
         , m_topPanelUPtr{}
         , m_itemFactory{}
+        , m_dustParticleManager{}
         , m_contextUPtr{}
     {}
 
@@ -83,7 +84,8 @@ namespace castlecrawl
             m_enemies,
             *m_framerateUPtr,
             *m_topPanelUPtr,
-            m_itemFactory);
+            m_itemFactory,
+            m_dustParticleManager);
 
         m_itemFactory.setup();
 
@@ -91,6 +93,7 @@ namespace castlecrawl
         m_enemies.setup(m_config);
         m_tileImages.setup(m_config);
         m_splatImages.setup(m_config);
+        m_dustParticleManager.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(*m_contextUPtr);
         m_maps.change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });
@@ -150,12 +153,14 @@ namespace castlecrawl
     {
         m_renderWindow.clear(m_config.background_color);
         m_stateManager.current().draw(*m_contextUPtr, m_renderWindow, m_renderStates);
+        m_dustParticleManager.draw(m_renderWindow, m_renderStates);
         m_renderWindow.display();
     }
 
     void LoopCoordinator::update(const float t_frameTimeSec)
     {
         m_stateManager.current().update(*m_contextUPtr, t_frameTimeSec);
+        m_dustParticleManager.update(*m_contextUPtr, t_frameTimeSec);
     }
 
     void LoopCoordinator::setupRenderWindow(sf::VideoMode & t_videoMode)

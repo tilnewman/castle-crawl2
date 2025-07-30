@@ -26,6 +26,7 @@ namespace castlecrawl
     class Enemies;
     class FramerateText;
     class TopPanel;
+    class DustParticleManager;
 
     namespace item
     {
@@ -51,7 +52,8 @@ namespace castlecrawl
             Enemies & t_enemies,
             FramerateText & t_framerateText,
             TopPanel & t_topPanel,
-            item::ItemFactory & t_itemFactory)
+            item::ItemFactory & t_itemFactory,
+            DustParticleManager & t_dustParticleManager)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -69,6 +71,7 @@ namespace castlecrawl
             , framerate(t_framerateText)
             , top_panel(t_topPanel)
             , items(t_itemFactory)
+            , dust_particles(t_dustParticleManager)
         {}
 
         const GameConfig & config;
@@ -88,6 +91,7 @@ namespace castlecrawl
         FramerateText & framerate;
         TopPanel & top_panel;
         item::ItemFactory & items;
+        DustParticleManager & dust_particles;
     };
 
 } // namespace castlecrawl

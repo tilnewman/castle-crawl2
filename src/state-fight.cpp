@@ -7,6 +7,7 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "dust-particle.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "item-factory.hpp"
@@ -124,7 +125,6 @@ namespace castlecrawl
         {
             t_context.sfx.play("miss.ogg");
             t_context.state.change(t_context, State::Play);
-            return;
         }
         else if (objectChar == 'b')
         {
@@ -136,6 +136,7 @@ namespace castlecrawl
             const item::Treasure treasure = t_context.items.randomTreasureFind(t_context);
             if (treasure.empty())
             {
+                t_context.dust_particles.add(t_context, t_pos);
                 t_context.state.change(t_context, State::Play);
             }
             else
@@ -143,8 +144,6 @@ namespace castlecrawl
                 StateTreasure::setTreasure(treasure);
                 t_context.state.change(t_context, State::Treasure);
             }
-
-            return;
         }
         else if (objectChar == 'q')
         {
@@ -152,6 +151,8 @@ namespace castlecrawl
 
             t_context.maps.current().setObjectChar(t_pos, ' ');
             t_context.map_display.load(t_context);
+
+            t_context.dust_particles.add(t_context, t_pos);
 
             t_context.state.change(t_context, State::Play);
         }
@@ -162,13 +163,14 @@ namespace castlecrawl
             t_context.maps.current().setObjectChar(t_pos, ' ');
             t_context.map_display.load(t_context);
 
+            t_context.dust_particles.add(t_context, t_pos);
+
             t_context.state.change(t_context, State::Play);
         }
         else
         {
             t_context.sfx.play("hit.ogg");
             t_context.state.change(t_context, State::Play);
-            return;
         }
     }
 

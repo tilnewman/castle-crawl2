@@ -4,6 +4,7 @@
 // loop-coordinator.hpp
 //
 #include "context.hpp"
+#include "dust-particle.hpp"
 #include "enemy.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
@@ -67,6 +68,7 @@ namespace castlecrawl
         std::unique_ptr<FramerateText> m_framerateUPtr;
         std::unique_ptr<TopPanel> m_topPanelUPtr;
         item::ItemFactory m_itemFactory;
+        DustParticleManager m_dustParticleManager;
 
         std::unique_ptr<Context> m_contextUPtr;
     };
