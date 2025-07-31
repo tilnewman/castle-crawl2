@@ -6,6 +6,7 @@
 #include "state-inventory.hpp"
 
 #include "context.hpp"
+#include "dust-particle.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "inventory.hpp"
@@ -183,9 +184,10 @@ namespace castlecrawl
         m_errorText = t_context.fonts.makeText(FontSize::Medium, "");
     }
 
-    void StateInventory::update(const Context & t_context, const float)
+    void StateInventory::update(const Context & t_context, const float t_frameTimeSec)
     {
         t_context.framerate.update();
+        t_context.dust_particles.update(t_context, t_frameTimeSec);
 
         if (m_errorText.getFillColor().a > 0)
         {
@@ -201,6 +203,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.dust_particles.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
         t_target.draw(m_fadeRectangle, t_states);
         t_target.draw(t_context.top_panel, t_states);

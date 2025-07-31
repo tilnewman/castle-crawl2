@@ -7,6 +7,7 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "dust-particle.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "health-bar.hpp"
@@ -38,6 +39,7 @@ namespace castlecrawl
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.player_display.update(t_context, t_frameTimeSec);
         t_context.framerate.update();
+        t_context.dust_particles.update(t_context, t_frameTimeSec);
     }
 
     void StatePlay::draw(
@@ -46,6 +48,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.dust_particles.draw(t_target, t_states);
         m_mouseover.draw(t_context, t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
         t_target.draw(t_context.top_panel, t_states);

@@ -34,9 +34,10 @@ namespace castlecrawl
         m_directionSelectDisplay.setup(t_context);
     }
 
-    void StateFight::update(const Context & t_context, const float)
+    void StateFight::update(const Context & t_context, const float t_frameTimeSec)
     {
         t_context.framerate.update();
+        t_context.dust_particles.update(t_context, t_frameTimeSec);
     }
 
     void StateFight::draw(
@@ -45,6 +46,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.dust_particles.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
         t_target.draw(t_context.top_panel, t_states);
 
@@ -133,10 +135,11 @@ namespace castlecrawl
             t_context.maps.current().setObjectChar(t_pos, ' ');
             t_context.map_display.load(t_context);
 
+            t_context.dust_particles.add(t_context, t_pos);
+
             const item::Treasure treasure = t_context.items.randomTreasureFind(t_context);
             if (treasure.empty())
-            {
-                t_context.dust_particles.add(t_context, t_pos);
+            {   
                 t_context.state.change(t_context, State::Play);
             }
             else

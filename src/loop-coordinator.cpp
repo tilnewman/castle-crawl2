@@ -153,14 +153,12 @@ namespace castlecrawl
     {
         m_renderWindow.clear(m_config.background_color);
         m_stateManager.current().draw(*m_contextUPtr, m_renderWindow, m_renderStates);
-        m_dustParticleManager.draw(m_renderWindow, m_renderStates);
         m_renderWindow.display();
     }
 
     void LoopCoordinator::update(const float t_frameTimeSec)
     {
         m_stateManager.current().update(*m_contextUPtr, t_frameTimeSec);
-        m_dustParticleManager.update(*m_contextUPtr, t_frameTimeSec);
     }
 
     void LoopCoordinator::setupRenderWindow(sf::VideoMode & t_videoMode)

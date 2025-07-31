@@ -7,6 +7,7 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "dust-particle.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "item-factory.hpp"
@@ -115,9 +116,10 @@ namespace castlecrawl
         updateItemDescText(t_context);
     }
 
-    void StateTreasure::update(const Context & t_context, const float)
+    void StateTreasure::update(const Context & t_context, const float t_frameTimeSec)
     {
         t_context.framerate.update();
+        t_context.dust_particles.update(t_context, t_frameTimeSec);
     }
 
     void StateTreasure::draw(
@@ -126,6 +128,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.dust_particles.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRectangle, t_states);
