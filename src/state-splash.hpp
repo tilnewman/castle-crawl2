@@ -40,6 +40,7 @@ namespace castlecrawl
         sf::Clock m_clock;
         float m_timerSec;
         Fader m_fader;
+        bool m_isFadingOut;
     };
 
 } // namespace castlecrawl
