@@ -126,7 +126,7 @@ namespace castlecrawl
 
     void SparkleParticleManager::setup(const GameConfig & t_config)
     {
-        m_textures.resize(6);
+        m_textures.resize(5);
         for (std::size_t i{ 0 }; i < m_textures.size(); ++i)
         {
             std::string filename{ "star-" };
