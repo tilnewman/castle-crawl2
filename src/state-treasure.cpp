@@ -18,6 +18,7 @@
 #include "player.hpp"
 #include "sfml-defaults.hpp"
 #include "sound-player.hpp"
+#include "sparkle-particle.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
@@ -120,6 +121,7 @@ namespace castlecrawl
     {
         t_context.framerate.update();
         t_context.dust_particles.update(t_context, t_frameTimeSec);
+        t_context.sparkle_particles.update(t_context, t_frameTimeSec);
     }
 
     void StateTreasure::draw(
@@ -129,6 +131,7 @@ namespace castlecrawl
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);
+        t_context.sparkle_particles.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRectangle, t_states);

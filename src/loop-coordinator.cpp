@@ -40,6 +40,7 @@ namespace castlecrawl
         , m_topPanelUPtr{}
         , m_itemFactory{}
         , m_dustParticleManager{}
+        , m_sparkleParticleManager{}
         , m_contextUPtr{}
     {}
 
@@ -85,7 +86,8 @@ namespace castlecrawl
             *m_framerateUPtr,
             *m_topPanelUPtr,
             m_itemFactory,
-            m_dustParticleManager);
+            m_dustParticleManager,
+            m_sparkleParticleManager);
 
         m_itemFactory.setup();
 
@@ -94,6 +96,7 @@ namespace castlecrawl
         m_tileImages.setup(m_config);
         m_splatImages.setup(m_config);
         m_dustParticleManager.setup(m_config);
+        m_sparkleParticleManager.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(*m_contextUPtr);
         m_maps.change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });

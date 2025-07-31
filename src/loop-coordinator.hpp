@@ -18,6 +18,7 @@
 #include "player.hpp"
 #include "random.hpp"
 #include "sound-player.hpp"
+#include "sparkle-particle.hpp"
 #include "splat-images.hpp"
 #include "state-manager.hpp"
 #include "tile-images.hpp"
@@ -69,6 +70,7 @@ namespace castlecrawl
         std::unique_ptr<TopPanel> m_topPanelUPtr;
         item::ItemFactory m_itemFactory;
         DustParticleManager m_dustParticleManager;
+        SparkleParticleManager m_sparkleParticleManager;
 
         std::unique_ptr<Context> m_contextUPtr;
     };
