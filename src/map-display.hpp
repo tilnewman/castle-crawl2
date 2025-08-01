@@ -25,7 +25,7 @@ namespace castlecrawl
             const;
 
       private:
-        void resetVertexVectors(const Context & t_context);
+        void resetVertexVectors();
         void appendVerts(const Context & t_context);
         void appendLiquidEdgeVerts(const Context & t_context);
         void resetVertexBuffers();
@@ -39,6 +39,8 @@ namespace castlecrawl
         [[nodiscard]] bool isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const;
 
       private:
+        std::size_t vertReserveCount;
+
         VertVec_t m_objectVerts;
         VertVec_t m_floorVerts;
         VertVec_t m_borderVerts;

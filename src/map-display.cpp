@@ -18,7 +18,8 @@ namespace castlecrawl
 {
 
     MapDisplay::MapDisplay()
-        : m_objectVerts{}
+        : vertReserveCount{ 0 }
+        , m_objectVerts{}
         , m_floorVerts{}
         , m_borderVerts{}
         , m_objectBuffer{ sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static }
@@ -28,8 +29,11 @@ namespace castlecrawl
 
     void MapDisplay::load(const Context & t_context)
     {
-        t_context.layout.setupNewMap(t_context.maps.current().size());
-        resetVertexVectors(t_context);
+        const sf::Vector2i mapSize = t_context.maps.current().size();
+        vertReserveCount = (static_cast<std::size_t>(mapSize.x * mapSize.y) * util::verts_per_quad);
+
+        t_context.layout.setupNewMap(mapSize);
+        resetVertexVectors();
         appendVerts(t_context);
         appendLiquidEdgeVerts(t_context);
         resetVertexBuffers();
@@ -45,19 +49,15 @@ namespace castlecrawl
         t_target.draw(m_objectBuffer, t_states);
     }
 
-    void MapDisplay::resetVertexVectors(const Context & t_context)
+    void MapDisplay::resetVertexVectors()
     {
         m_objectVerts.clear();
         m_floorVerts.clear();
         m_borderVerts.clear();
 
-        const std::size_t reserveCount =
-            (static_cast<std::size_t>(t_context.layout.cellCount().x) *
-             static_cast<std::size_t>(t_context.layout.cellCount().y) * util::verts_per_quad);
-
-        m_objectVerts.reserve(reserveCount * 2); // there can be extra shadow and liquid edge verts
-        m_floorVerts.reserve(reserveCount);
-        m_borderVerts.reserve(reserveCount);
+        m_objectVerts.reserve(vertReserveCount * 2); // there can be extra object verts
+        m_floorVerts.reserve(vertReserveCount);
+        m_borderVerts.reserve(vertReserveCount);
     }
 
     void MapDisplay::appendVerts(const Context & t_context)
@@ -228,7 +228,7 @@ namespace castlecrawl
                         appendTileVerts(
                             t_context,
                             TileImage::LiquidCor_TopRight,
-                            { (screenPos.x + cellSize.x ), (screenPos.y - cellSize.y) },
+                            { (screenPos.x + cellSize.x), (screenPos.y - cellSize.y) },
                             m_objectVerts);
                     }
 
@@ -241,7 +241,8 @@ namespace castlecrawl
                             m_objectVerts);
                     }
 
-                    if (isLiquid(getChar(x + 1, y + 1)) && isLiquid(downChar) && isLiquid(rightChar))
+                    if (isLiquid(getChar(x + 1, y + 1)) && isLiquid(downChar) &&
+                        isLiquid(rightChar))
                     {
                         appendTileVerts(
                             t_context,
