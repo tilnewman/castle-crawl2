@@ -50,7 +50,7 @@ namespace castlecrawl
         void clear() { m_effects.clear(); }
 
       private:
-        std::vector<sf::Texture> m_textures;
+        sf::Texture m_texture;
         std::vector<DustParticleEffect> m_effects;
     };
 

@@ -60,22 +60,13 @@ namespace castlecrawl
     //
 
     DustParticleManager::DustParticleManager()
-        : m_textures{}
+        : m_texture{}
         , m_effects{}
     {}
 
     void DustParticleManager::setup(const GameConfig & t_config)
     {
-        m_textures.resize(3);
-
-        util::TextureLoader::load(
-            m_textures[0], (t_config.media_path / "image" / "smoke" / "smoke-1.png"), true);
-
-        util::TextureLoader::load(
-            m_textures[1], (t_config.media_path / "image" / "smoke" / "smoke-2.png"), true);
-
-        util::TextureLoader::load(
-            m_textures[2], (t_config.media_path / "image" / "smoke" / "smoke-3.png"), true);
+        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "smoke.png"), true);
     }
 
     void DustParticleManager::update(const Context & t_context, const float t_frameTimeSec)
@@ -106,7 +97,26 @@ namespace castlecrawl
         effect.scale_at_age_max = t_context.random.fromTo(1.25f, 2.25f);
         effect.rotate_speed     = t_context.random.fromTo(-50.0f, 50.0f);
 
-        effect.sprite.setTexture(t_context.random.from(m_textures), true);
+        effect.sprite.setTexture(m_texture);
+
+        const int randomImageIndex = t_context.random.fromTo(0, 3);
+        if (0 == randomImageIndex)
+        {
+            effect.sprite.setTextureRect({ { 0, 0 }, { 64, 64 } });
+        }
+        else if (1 == randomImageIndex)
+        {
+            effect.sprite.setTextureRect({ { 64, 0 }, { 64, 64 } });
+        }
+        else if (2 == randomImageIndex)
+        {
+            effect.sprite.setTextureRect({ { 0, 64 }, { 64, 64 } });
+        }
+        else
+        {
+            effect.sprite.setTextureRect({ { 64, 64 }, { 64, 64 } });
+        }
+
         util::setOriginToCenter(effect.sprite);
 
         effect.sprite.setRotation(sf::degrees(t_context.random.fromTo(0.0f, 360.0f)));
