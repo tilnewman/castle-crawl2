@@ -3,6 +3,7 @@
 //
 // loop-coordinator.hpp
 //
+#include "campfire.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
 #include "enemy.hpp"
@@ -71,6 +72,7 @@ namespace castlecrawl
         item::ItemFactory m_itemFactory;
         DustParticleManager m_dustParticleManager;
         SparkleParticleManager m_sparkleParticleManager;
+        CampfireAnimationManager m_campfireAnimationManager;
 
         std::unique_ptr<Context> m_contextUPtr;
     };

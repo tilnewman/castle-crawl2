@@ -5,6 +5,7 @@
 //
 #include "state-inventory.hpp"
 
+#include "campfire.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
 #include "enemy.hpp"
@@ -190,6 +191,7 @@ namespace castlecrawl
         t_context.framerate.update();
         t_context.dust_particles.update(t_context, t_frameTimeSec);
         t_context.sparkle_particles.update(t_context, t_frameTimeSec);
+        t_context.campfire_anims.update(t_context, t_frameTimeSec);
 
         if (m_errorText.getFillColor().a > 0)
         {
@@ -203,11 +205,13 @@ namespace castlecrawl
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.campfire_anims.draw(t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);
         t_context.sparkle_particles.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
+
         t_target.draw(m_fadeRectangle, t_states);
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(*m_unListboxUPtr, t_states);

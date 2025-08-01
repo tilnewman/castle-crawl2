@@ -5,6 +5,7 @@
 //
 #include "state-editor.hpp"
 
+#include "campfire.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "game-config.hpp"
@@ -14,6 +15,7 @@
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
+#include "sparkle-particle.hpp"
 #include "state-manager.hpp"
 
 #include <fstream>
@@ -61,6 +63,10 @@ namespace castlecrawl
 
         m_keyText  = t_context.fonts.makeText(FontSize::Small, "", sf::Color::White);
         m_fadeText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
+
+        // clear these in case there were any loaded with the first playable map
+        t_context.sparkle_particles.clear();
+        t_context.campfire_anims.clear();
     }
 
     void StateEditor::update(const Context & t_context, const float t_frameTimeSec)
@@ -68,12 +74,14 @@ namespace castlecrawl
         updateHelpText(t_context);
         updateFadeText();
         m_mouseover.update(t_context, t_frameTimeSec);
+        t_context.campfire_anims.update(t_context, t_frameTimeSec);
     }
 
     void StateEditor::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.campfire_anims.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
         {
@@ -251,6 +259,7 @@ namespace castlecrawl
         // clang-format off
         else if (keyScancode == sf::Keyboard::Scancode::Space)     { editMap(t_context, ' ', ' '); }
         else if (keyScancode == sf::Keyboard::Scancode::Period)    { editMap(t_context, '.', '.'); }
+        else if (keyScancode == sf::Keyboard::Scancode::A)         { editMap(t_context, 'a', 'a'); }
         else if (keyScancode == sf::Keyboard::Scancode::D)         { editMap(t_context, 'D', 'd'); }
         else if (keyScancode == sf::Keyboard::Scancode::S)         { editMap(t_context, 'S', 's'); }
         else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'R', 'r'); }

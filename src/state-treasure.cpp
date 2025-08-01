@@ -5,6 +5,7 @@
 //
 #include "state-treasure.hpp"
 
+#include "campfire.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
@@ -122,12 +123,14 @@ namespace castlecrawl
         t_context.framerate.update();
         t_context.dust_particles.update(t_context, t_frameTimeSec);
         t_context.sparkle_particles.update(t_context, t_frameTimeSec);
+        t_context.campfire_anims.update(t_context, t_frameTimeSec);
     }
 
     void StateTreasure::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.campfire_anims.draw(t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);

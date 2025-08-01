@@ -28,6 +28,7 @@ namespace castlecrawl
     class TopPanel;
     class DustParticleManager;
     class SparkleParticleManager;
+    class CampfireAnimationManager;
 
     namespace item
     {
@@ -55,7 +56,8 @@ namespace castlecrawl
             TopPanel & t_topPanel,
             item::ItemFactory & t_itemFactory,
             DustParticleManager & t_dustParticleManager,
-            SparkleParticleManager & t_sparkleParticleManager)
+            SparkleParticleManager & t_sparkleParticleManager,
+            CampfireAnimationManager & t_campfireAnimationManager)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -75,6 +77,7 @@ namespace castlecrawl
             , items(t_itemFactory)
             , dust_particles(t_dustParticleManager)
             , sparkle_particles(t_sparkleParticleManager)
+            , campfire_anims(t_campfireAnimationManager)
         {}
 
         const GameConfig & config;
@@ -96,6 +99,7 @@ namespace castlecrawl
         item::ItemFactory & items;
         DustParticleManager & dust_particles;
         SparkleParticleManager & sparkle_particles;
+        CampfireAnimationManager & campfire_anims;
     };
 
 } // namespace castlecrawl

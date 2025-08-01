@@ -5,6 +5,7 @@
 //
 #include "map-display.hpp"
 
+#include "campfire.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
@@ -29,7 +30,7 @@ namespace castlecrawl
     void MapDisplay::load(const Context & t_context)
     {
         const sf::Vector2i mapSize = t_context.maps.current().size();
-        
+
         t_context.layout.setupNewMap(mapSize);
         resetVertexVectors(mapSize);
         appendVerts(t_context);
@@ -104,11 +105,11 @@ namespace castlecrawl
                         t_context, charToTileImage(cell.floor_char), screenPos, m_floorVerts);
                 }
 
-                // various object tiles
-                if (const TileImage objectTileImage = charToTileImage(cell.object_char);
-                    objectTileImage != TileImage::Empty)
+                // other various object tiles
+                if (isDrawnByMapDisplay(cell.object_char))
                 {
-                    appendTileVerts(t_context, objectTileImage, screenPos, m_objectVerts);
+                    appendTileVerts(
+                        t_context, charToTileImage(cell.object_char), screenPos, m_objectVerts);
                 }
 
                 // wall shadow object tiles to the right of various wall blocks
@@ -116,6 +117,12 @@ namespace castlecrawl
                 if (('-' == cell.object_char) && ('-' != prevObjectChar))
                 {
                     appendTileVerts(t_context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
+                }
+
+                // campfires
+                if ('a' == cell.object_char)
+                {
+                    t_context.campfire_anims.add(t_context, cell.position);
                 }
 
                 prevObjectChar = cell.object_char;

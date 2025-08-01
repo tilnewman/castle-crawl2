@@ -14,6 +14,7 @@ namespace castlecrawl
     enum class TileImage : std::size_t
     {
         Empty = 0,
+        Campfire,
         Rock,
         RockWeak,
         Lava,
@@ -72,12 +73,17 @@ namespace castlecrawl
         LiquidRim_BotRight
     };
 
-    //
+    inline constexpr bool isDrawnByMapDisplay(const char ch) noexcept 
+    {
+        return ((ch != 'a') && (ch != ' '));
+    }
+
     inline constexpr TileImage charToTileImage(const char ch) noexcept
     {
         // clang-format off
         switch (ch)
         {
+            case 'a':    { return TileImage::Campfire;           }
             case 'r':    { return TileImage::Rock;               }
             case 'R':    { return TileImage::RockWeak;           }
             case 'l':    { return TileImage::Lava;               }
@@ -145,6 +151,7 @@ namespace castlecrawl
         // clang-format off
         switch (tileImage)
         {
+            case TileImage::Campfire:           { return sf::IntRect( { 64,224},{32,32}); }
             case TileImage::Rock:               { return sf::IntRect( { 96, 64},{32,32}); }
             case TileImage::RockWeak:           { return sf::IntRect( { 96, 96},{32,32}); }
             case TileImage::Lava:               { return sf::IntRect( { 32,192},{32,32}); }
