@@ -120,22 +120,13 @@ namespace castlecrawl
     //
 
     SparkleParticleManager::SparkleParticleManager()
-        : m_textures{}
+        : m_texture{}
         , m_effects{}
     {}
 
     void SparkleParticleManager::setup(const GameConfig & t_config)
     {
-        m_textures.resize(5);
-        for (std::size_t i{ 0 }; i < m_textures.size(); ++i)
-        {
-            std::string filename{ "star-" };
-            filename += std::to_string(i + 1);
-            filename += ".png";
-
-            util::TextureLoader::load(
-                m_textures.at(i), (t_config.media_path / "image" / "star" / filename), true);
-        }
+        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "star.png"), true);
     }
 
     void SparkleParticleManager::update(const Context & t_context, const float t_frameTimeSec)
@@ -164,7 +155,26 @@ namespace castlecrawl
         for (std::size_t i{ 0 }; i < sparkleParticleCount; ++i)
         {
             SparkleParticle particle;
-            particle.sprite.setTexture(t_context.random.from(m_textures), true);
+            particle.sprite.setTexture(m_texture);
+
+            const int randomImageIndex = t_context.random.fromTo(0, 3);
+            if (0 == randomImageIndex)
+            {
+                particle.sprite.setTextureRect({ { 0, 0 }, { 128, 128 } });
+            }
+            else if (1 == randomImageIndex)
+            {
+                particle.sprite.setTextureRect({ { 128, 0 }, { 128, 128 } });
+            }
+            else if (2 == randomImageIndex)
+            {
+                particle.sprite.setTextureRect({ { 0, 128 }, { 128, 128 } });
+            }
+            else
+            {
+                particle.sprite.setTextureRect({ { 128, 128 }, { 128, 128 } });
+            }
+
             util::setOriginToCenter(particle.sprite);
             particle.sprite.setColor(sf::Color(255, 220, 127));
 
