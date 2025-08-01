@@ -45,7 +45,7 @@ namespace castlecrawl
         t_states.texture = &t_context.tile_images.texture();
 
         t_target.draw(m_floorBuffer, t_states);
-        t_target.draw(m_borderBuffer); // avoid states because floor edge verts are solid black
+        t_target.draw(m_borderBuffer); // no states here because edge verts are solid black
         t_target.draw(m_objectBuffer, t_states);
     }
 
