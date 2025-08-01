@@ -18,8 +18,7 @@ namespace castlecrawl
 {
 
     MapDisplay::MapDisplay()
-        : vertReserveCount{ 0 }
-        , m_objectVerts{}
+        : m_objectVerts{}
         , m_floorVerts{}
         , m_borderVerts{}
         , m_objectBuffer{ sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static }
@@ -30,10 +29,9 @@ namespace castlecrawl
     void MapDisplay::load(const Context & t_context)
     {
         const sf::Vector2i mapSize = t_context.maps.current().size();
-        vertReserveCount = (static_cast<std::size_t>(mapSize.x * mapSize.y) * util::verts_per_quad);
-
+        
         t_context.layout.setupNewMap(mapSize);
-        resetVertexVectors();
+        resetVertexVectors(mapSize);
         appendVerts(t_context);
         appendLiquidEdgeVerts(t_context);
         resetVertexBuffers();
@@ -49,11 +47,14 @@ namespace castlecrawl
         t_target.draw(m_objectBuffer, t_states);
     }
 
-    void MapDisplay::resetVertexVectors()
+    void MapDisplay::resetVertexVectors(const sf::Vector2i & t_mapSize)
     {
         m_objectVerts.clear();
         m_floorVerts.clear();
         m_borderVerts.clear();
+
+        const std::size_t vertReserveCount =
+            (static_cast<std::size_t>(t_mapSize.x * t_mapSize.y) * util::verts_per_quad);
 
         m_objectVerts.reserve(vertReserveCount * 2); // there can be extra object verts
         m_floorVerts.reserve(vertReserveCount);
