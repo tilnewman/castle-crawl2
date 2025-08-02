@@ -11,6 +11,7 @@
 #include "maps.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
+#include "smoke.hpp"
 #include "texture-loader.hpp"
 
 #include <algorithm>
@@ -86,14 +87,18 @@ namespace castlecrawl
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
-        util::centerInside(animation.sprite, {screenPos, cellSize});
+        util::centerInside(animation.sprite, { screenPos, cellSize });
+
+        t_context.smoke_anims.add(t_context, t_mapPos);
     }
 
-    void CampfireAnimationManager::remove(const MapPos_t & t_mapPos)
+    void CampfireAnimationManager::remove(const Context & t_context, const MapPos_t & t_mapPos)
     {
         std::erase_if(m_animations, [&](const CampfireAnimation & animation) {
             return (t_mapPos == animation.map_pos);
         });
+
+        t_context.smoke_anims.remove(t_mapPos);
     }
 
     const sf::IntRect CampfireAnimationManager::frameRect(const std::size_t index) const

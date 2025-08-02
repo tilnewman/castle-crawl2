@@ -42,6 +42,7 @@ namespace castlecrawl
         , m_dustParticleManager{}
         , m_sparkleParticleManager{}
         , m_campfireAnimationManager{}
+        , m_smokeEffectManager{}
         , m_contextUPtr{}
     {}
 
@@ -89,7 +90,8 @@ namespace castlecrawl
             m_itemFactory,
             m_dustParticleManager,
             m_sparkleParticleManager,
-            m_campfireAnimationManager);
+            m_campfireAnimationManager,
+            m_smokeEffectManager);
 
         m_itemFactory.setup();
 
@@ -100,6 +102,7 @@ namespace castlecrawl
         m_dustParticleManager.setup(m_config);
         m_sparkleParticleManager.setup(m_config);
         m_campfireAnimationManager.setup(m_config);
+        m_smokeEffectManager.setup(m_config);
         m_layout.setup(m_config);
         m_maps.setup(*m_contextUPtr);
         m_maps.change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });

@@ -18,6 +18,7 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
+#include "smoke.hpp"
 #include "sound-player.hpp"
 #include "sparkle-particle.hpp"
 #include "splat-images.hpp"
@@ -73,6 +74,7 @@ namespace castlecrawl
         DustParticleManager m_dustParticleManager;
         SparkleParticleManager m_sparkleParticleManager;
         CampfireAnimationManager m_campfireAnimationManager;
+        SmokeEffectManager m_smokeEffectManager;
 
         std::unique_ptr<Context> m_contextUPtr;
     };

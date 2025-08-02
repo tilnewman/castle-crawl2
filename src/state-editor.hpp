@@ -50,7 +50,7 @@ namespace castlecrawl
         void updateFadeText();
         void resetMap(const Context & t_context);
         void placeEditCursor(const Context & t_context);
-        void setMapChar(const char t_ch);
+        void setMapChar(const Context & t_context, const char t_ch);
         void editMap(const Context & t_context, const char t_upper, const char t_lower);
         void fadeText(const Context & t_context, const std::string & t_text);
         void save() const;

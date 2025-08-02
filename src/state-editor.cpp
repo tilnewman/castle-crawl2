@@ -14,6 +14,7 @@
 #include "maps.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
+#include "smoke.hpp"
 #include "sound-player.hpp"
 #include "sparkle-particle.hpp"
 #include "state-manager.hpp"
@@ -67,6 +68,7 @@ namespace castlecrawl
         // clear these in case there were any loaded with the first playable map
         t_context.sparkle_particles.clear();
         t_context.campfire_anims.clear();
+        t_context.smoke_anims.clear();
     }
 
     void StateEditor::update(const Context & t_context, const float t_frameTimeSec)
@@ -75,6 +77,7 @@ namespace castlecrawl
         updateFadeText();
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
+        t_context.smoke_anims.update(t_context, t_frameTimeSec);
     }
 
     void StateEditor::draw(
@@ -82,6 +85,7 @@ namespace castlecrawl
     {
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.campfire_anims.draw(t_target, t_states);
+        t_context.smoke_anims.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
         {
@@ -336,10 +340,16 @@ namespace castlecrawl
             t_context.maps.current().mapPosToScreenPos(t_context, m_editPos));
     }
 
-    void StateEditor::setMapChar(const char t_ch)
+    void StateEditor::setMapChar(const Context & t_context, const char t_ch)
     {
         if (m_dragSelectedEntrys.empty())
         {
+            if (m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
+                    .at(static_cast<std::size_t>(m_editPos.x)) == 'a')
+            {
+                t_context.campfire_anims.remove(t_context, m_editPos);
+            }
+
             m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
                 .at(static_cast<std::size_t>(m_editPos.x)) = t_ch;
         }
@@ -347,6 +357,12 @@ namespace castlecrawl
         {
             for (const MapEntry_t & entry : m_dragSelectedEntrys)
             {
+                if (m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
+                        .at(static_cast<std::size_t>(entry.pos.x)) == 'a')
+                {
+                    t_context.campfire_anims.remove(t_context, entry.pos);
+                }
+
                 m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
                     .at(static_cast<std::size_t>(entry.pos.x)) = t_ch;
             }
@@ -358,12 +374,12 @@ namespace castlecrawl
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift) ||
             sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RShift))
         {
-            setMapChar(t_upper);
+            setMapChar(t_context, t_upper);
             fadeText(t_context, mapCharToName(t_upper));
         }
         else
         {
-            setMapChar(t_lower);
+            setMapChar(t_context, t_lower);
             fadeText(t_context, mapCharToName(t_lower));
         }
 
@@ -449,6 +465,7 @@ namespace castlecrawl
         {
             case ' ': { return "Bare Floor"; }
             case '.': { return "Erase"; }
+            case 'a': { return "Campfire"; }
             case 'D': { return "Door Locked"; }
             case 'd': { return "Door Unlocked"; }
             case 'S': { return "Stairs Up"; }

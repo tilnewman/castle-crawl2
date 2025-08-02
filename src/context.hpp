@@ -29,6 +29,7 @@ namespace castlecrawl
     class DustParticleManager;
     class SparkleParticleManager;
     class CampfireAnimationManager;
+    class SmokeEffectManager;
 
     namespace item
     {
@@ -57,7 +58,8 @@ namespace castlecrawl
             item::ItemFactory & t_itemFactory,
             DustParticleManager & t_dustParticleManager,
             SparkleParticleManager & t_sparkleParticleManager,
-            CampfireAnimationManager & t_campfireAnimationManager)
+            CampfireAnimationManager & t_campfireAnimationManager,
+            SmokeEffectManager & t_smokeEffectManager)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -78,6 +80,7 @@ namespace castlecrawl
             , dust_particles(t_dustParticleManager)
             , sparkle_particles(t_sparkleParticleManager)
             , campfire_anims(t_campfireAnimationManager)
+            , smoke_anims(t_smokeEffectManager)
         {}
 
         const GameConfig & config;
@@ -100,6 +103,7 @@ namespace castlecrawl
         DustParticleManager & dust_particles;
         SparkleParticleManager & sparkle_particles;
         CampfireAnimationManager & campfire_anims;
+        SmokeEffectManager & smoke_anims;
     };
 
 } // namespace castlecrawl
