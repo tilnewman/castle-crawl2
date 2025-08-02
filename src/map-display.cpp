@@ -136,7 +136,9 @@ namespace castlecrawl
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
-        auto isLiquid = [](const char ch) { return ((ch == 'l') || (ch == 'w') || (ch == 'g')); };
+        auto isLiquid = [](const char ch) {
+            return ((ch == 'l') || (ch == 'w') || (ch == 'g') || (ch == 'e'));
+        };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
             return (!isLiquid(ch) && t_context.maps.current().isPosValid(pos));

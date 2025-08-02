@@ -17,6 +17,7 @@ namespace castlecrawl
         Campfire,
         Rock,
         RockWeak,
+        Blood,
         Lava,
         Water,
         Slime,
@@ -86,6 +87,7 @@ namespace castlecrawl
             case 'a':    { return TileImage::Campfire;           }
             case 'r':    { return TileImage::Rock;               }
             case 'R':    { return TileImage::RockWeak;           }
+            case 'e':    { return TileImage::Blood;              }
             case 'l':    { return TileImage::Lava;               }
             case 'w':    { return TileImage::Water;              }
             case 'g':    { return TileImage::Slime;              }
@@ -154,6 +156,7 @@ namespace castlecrawl
             case TileImage::Campfire:           { return sf::IntRect( { 64,224},{32,32}); }
             case TileImage::Rock:               { return sf::IntRect( { 96, 64},{32,32}); }
             case TileImage::RockWeak:           { return sf::IntRect( { 96, 96},{32,32}); }
+            case TileImage::Blood:              { return sf::IntRect( { 96,224},{32,32}); }
             case TileImage::Lava:               { return sf::IntRect( { 32,192},{32,32}); }
             case TileImage::Water:              { return sf::IntRect( { 64,192},{32,32}); }
             case TileImage::Slime:              { return sf::IntRect( {  0,192},{32,32}); }

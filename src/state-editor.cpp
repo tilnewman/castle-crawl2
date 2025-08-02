@@ -265,6 +265,7 @@ namespace castlecrawl
         else if (keyScancode == sf::Keyboard::Scancode::Period)    { editMap(t_context, '.', '.'); }
         else if (keyScancode == sf::Keyboard::Scancode::A)         { editMap(t_context, 'a', 'a'); }
         else if (keyScancode == sf::Keyboard::Scancode::D)         { editMap(t_context, 'D', 'd'); }
+        else if (keyScancode == sf::Keyboard::Scancode::E)         { editMap(t_context, 'e', 'e'); }
         else if (keyScancode == sf::Keyboard::Scancode::S)         { editMap(t_context, 'S', 's'); }
         else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'R', 'r'); }
         else if (keyScancode == sf::Keyboard::Scancode::L)         { editMap(t_context, 'l', 'l'); }
@@ -472,6 +473,7 @@ namespace castlecrawl
             case 's': { return "Stairs Down"; }
             case 'r': { return "Rock"; }
             case 'R': { return "Weak Rock"; }
+            case 'e': { return "Blood"; }
             case 'l': { return "Lava"; }
             case 'w': { return "Water"; }
             case 'g': { return "Slime"; }
