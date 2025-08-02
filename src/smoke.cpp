@@ -14,7 +14,6 @@
 #include "texture-loader.hpp"
 
 #include <algorithm>
-#include <iostream>
 
 namespace castlecrawl
 {
