@@ -471,6 +471,7 @@ namespace castlecrawl
             case ' ': { return "Bare Floor"; }
             case '.': { return "Erase"; }
             case 'a': { return "Campfire"; }
+            case 'A': { return "Inferno"; }
             case 'D': { return "Door Locked"; }
             case 'd': { return "Door Unlocked"; }
             case 'S': { return "Stairs Up"; }
