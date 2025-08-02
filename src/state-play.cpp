@@ -12,6 +12,7 @@
 #include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "health-bar.hpp"
+#include "inferno.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
 #include "mana-bar.hpp"
@@ -46,6 +47,7 @@ namespace castlecrawl
         t_context.sparkle_particles.update(t_context, t_frameTimeSec);
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
         t_context.smoke_anims.update(t_context, t_frameTimeSec);
+        t_context.inferno_anims.update(t_context, t_frameTimeSec);
     }
 
     void StatePlay::draw(
@@ -55,6 +57,7 @@ namespace castlecrawl
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
+        t_context.inferno_anims.draw(t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);
         t_context.sparkle_particles.draw(t_target, t_states);
@@ -124,8 +127,8 @@ namespace castlecrawl
 
         playMoveSfx(t_context, didMove, mapCharAttempted);
 
-        // handle walking into lava or slime health drop
-        if (!didMove && ((mapCharAttempted == 'l') || (mapCharAttempted == 'g')))
+        // handle walking into damaging health drop
+        if (!didMove && ((mapCharAttempted == 'l') || (mapCharAttempted == 'A')))
         {
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);
@@ -229,9 +232,6 @@ namespace castlecrawl
         {
             if (transition.from_pos == t_mapPosAfter)
             {
-                t_context.sparkle_particles.clear();
-                t_context.campfire_anims.clear();
-                t_context.smoke_anims.clear();
                 t_context.maps.change(t_context, transition.to_name, transition.to_pos);
                 m_mouseover.reset();
                 return true;

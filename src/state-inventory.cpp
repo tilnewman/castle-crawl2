@@ -10,6 +10,7 @@
 #include "dust-particle.hpp"
 #include "enemy.hpp"
 #include "framerate-text.hpp"
+#include "inferno.hpp"
 #include "inventory.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
@@ -194,6 +195,7 @@ namespace castlecrawl
         t_context.sparkle_particles.update(t_context, t_frameTimeSec);
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
         t_context.smoke_anims.update(t_context, t_frameTimeSec);
+        t_context.inferno_anims.update(t_context, t_frameTimeSec);
 
         if (m_errorText.getFillColor().a > 0)
         {
@@ -209,6 +211,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
+        t_context.inferno_anims.draw(t_target, t_states);
         t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);

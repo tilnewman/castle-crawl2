@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "game-config.hpp"
+#include "inferno.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
@@ -69,6 +70,7 @@ namespace castlecrawl
         t_context.sparkle_particles.clear();
         t_context.campfire_anims.clear();
         t_context.smoke_anims.clear();
+        t_context.inferno_anims.clear();
     }
 
     void StateEditor::update(const Context & t_context, const float t_frameTimeSec)
@@ -78,6 +80,7 @@ namespace castlecrawl
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
         t_context.smoke_anims.update(t_context, t_frameTimeSec);
+        t_context.inferno_anims.update(t_context, t_frameTimeSec);
     }
 
     void StateEditor::draw(
@@ -86,6 +89,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
+        t_context.inferno_anims.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
         {
@@ -263,7 +267,7 @@ namespace castlecrawl
         // clang-format off
         else if (keyScancode == sf::Keyboard::Scancode::Space)     { editMap(t_context, ' ', ' '); }
         else if (keyScancode == sf::Keyboard::Scancode::Period)    { editMap(t_context, '.', '.'); }
-        else if (keyScancode == sf::Keyboard::Scancode::A)         { editMap(t_context, 'a', 'a'); }
+        else if (keyScancode == sf::Keyboard::Scancode::A)         { editMap(t_context, 'A', 'a'); }
         else if (keyScancode == sf::Keyboard::Scancode::D)         { editMap(t_context, 'D', 'd'); }
         else if (keyScancode == sf::Keyboard::Scancode::E)         { editMap(t_context, 'e', 'e'); }
         else if (keyScancode == sf::Keyboard::Scancode::S)         { editMap(t_context, 'S', 's'); }
@@ -299,8 +303,8 @@ namespace castlecrawl
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
                 "f-Change-Flooring\nr-Rock\nR-WeakRock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
-                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\n%^&-Herbs\nq-WeakWoodBlock\n"
-                "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\n"
+                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\n%^&-Herbs\nq-WeakWoodBlock\na-Campfire\n"
+                "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\nA-Inferno\n"
                 "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
                 "6-Bat\n7-BatMask\n8-Skeleton\n9-SkeletonGrave\n:-Demon\n;-DemonDoor\n"
                 "[-Dragon\n]-DragonInferno");

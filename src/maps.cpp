@@ -5,11 +5,15 @@
 //
 #include "maps.hpp"
 
+#include "campfire.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "enemy.hpp"
+#include "inferno.hpp"
 #include "map-display.hpp"
 #include "player-display.hpp"
+#include "smoke.hpp"
+#include "sparkle-particle.hpp"
 
 namespace castlecrawl
 {
@@ -26,6 +30,12 @@ namespace castlecrawl
 
     void Maps::change(const Context & t_context, MapName t_mapName, const MapPos_t & t_pos)
     {
+        // stop all the animations before changing the map
+        t_context.sparkle_particles.clear();
+        t_context.campfire_anims.clear();
+        t_context.smoke_anims.clear();
+        t_context.inferno_anims.clear();
+
         unloadEnemies(t_context);
 
         m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {

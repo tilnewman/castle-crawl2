@@ -15,6 +15,7 @@ namespace castlecrawl
     {
         Empty = 0,
         Campfire,
+        Inferno,
         Rock,
         RockWeak,
         Blood,
@@ -76,7 +77,7 @@ namespace castlecrawl
 
     inline constexpr bool isDrawnByMapDisplay(const char ch) noexcept 
     {
-        return ((ch != 'a') && (ch != ' '));
+        return ((ch != 'a') && (ch != 'A') && (ch != ' '));
     }
 
     inline constexpr TileImage charToTileImage(const char ch) noexcept
@@ -85,6 +86,7 @@ namespace castlecrawl
         switch (ch)
         {
             case 'a':    { return TileImage::Campfire;           }
+            case 'A':    { return TileImage::Inferno;            }
             case 'r':    { return TileImage::Rock;               }
             case 'R':    { return TileImage::RockWeak;           }
             case 'e':    { return TileImage::Blood;              }
@@ -212,6 +214,7 @@ namespace castlecrawl
             case TileImage::LiquidRim_BotRight: { return sf::IntRect( {160,192},{32,32}); }
             case TileImage::Wall_Shadow:        { return sf::IntRect( { 32, 32},{32,32}); }
             case TileImage::Empty:
+            case TileImage::Inferno:
             default:                            { return sf::IntRect( {128,160},{32,32}); }
         }
         // clang-format on

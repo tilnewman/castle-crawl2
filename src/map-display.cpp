@@ -8,6 +8,7 @@
 #include "campfire.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "inferno.hpp"
 #include "layout.hpp"
 #include "maps.hpp"
 #include "sfml-util.hpp"
@@ -119,10 +120,14 @@ namespace castlecrawl
                     appendTileVerts(t_context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
                 }
 
-                // campfires
+                // animations
                 if ('a' == cell.object_char)
                 {
                     t_context.campfire_anims.add(t_context, cell.position);
+                }
+                else if ('A' == cell.object_char)
+                {
+                    t_context.inferno_anims.add(t_context, cell.position);
                 }
 
                 prevObjectChar = cell.object_char;

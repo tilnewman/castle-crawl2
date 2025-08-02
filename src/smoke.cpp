@@ -37,7 +37,7 @@ namespace castlecrawl
     {
         sprite.move({ 0.0f, -(move_speed * t_elapsedTimeSec) });
 
-        const float scale{ 1.0f + (scale_speed * t_elapsedTimeSec) };
+        const float scale{ 1.0f + (scale_speed * std::min(t_elapsedTimeSec, (1.0f / 60.0f))) };
         sprite.scale({ scale, scale });
 
         alpha_reduction_timer_sec += t_elapsedTimeSec;
@@ -105,7 +105,7 @@ namespace castlecrawl
         const MapPos_t & t_mapPos)
         : particles{}
     {
-        for (std::size_t i{ 0 }; i < 20; ++i)
+        for (std::size_t i{ 0 }; i < 30; ++i)
         {
             particles.emplace_back(t_context, t_texture, t_textureRect, t_mapPos);
         }

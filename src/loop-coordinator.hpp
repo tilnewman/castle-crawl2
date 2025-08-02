@@ -10,6 +10,7 @@
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
+#include "inferno.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -75,6 +76,7 @@ namespace castlecrawl
         SparkleParticleManager m_sparkleParticleManager;
         CampfireAnimationManager m_campfireAnimationManager;
         SmokeEffectManager m_smokeEffectManager;
+        InfernoAnimationManager m_infernoAnimationManager;
 
         std::unique_ptr<Context> m_contextUPtr;
     };
