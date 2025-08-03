@@ -23,15 +23,13 @@ namespace castlecrawl
     struct InfernoAnimation
     {
         InfernoAnimation(
-            const Context & t_context, 
-            const sf::Texture & t_texture,
-            const MapPos_t & t_mapPos);
+            const Context & t_context, const sf::Texture & t_texture, const MapPos_t & t_mapPos);
 
         void update(const Context & t_context, const float t_elapsedTimeSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
         [[nodiscard]] const sf::IntRect frameRect(const std::size_t t_index) const;
 
-        static inline const std::size_t frame_count{64};
+        static inline const std::size_t frame_count{ 64 };
 
         bool is_horiz_flipped;
         MapPos_t map_pos;
