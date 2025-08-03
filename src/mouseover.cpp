@@ -165,6 +165,18 @@ namespace castlecrawl
             {
                 message = "key";
             }
+            else if (mapCell.object_char == 'a')
+            {
+                message = "campfire";
+            }
+            else if (mapCell.object_char == 'A')
+            {
+                message = "inferno";
+            }
+            else if (mapCell.object_char == 'e')
+            {
+                message = "blood";
+            }
             else if (
                 (mapCell.object_char == '%') || (mapCell.object_char == '^') ||
                 (mapCell.object_char == '&'))
