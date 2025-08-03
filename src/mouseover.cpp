@@ -177,6 +177,28 @@ namespace castlecrawl
             {
                 message = "blood";
             }
+            else if (mapCell.object_char == 'E')
+            {
+                message = "sign";
+            }
+            else if (mapCell.object_char == 'i')
+            {
+                message = "ice";
+            }
+            else if (
+                (mapCell.object_char == '%') || (mapCell.object_char == '^') ||
+                (mapCell.object_char == '&'))
+            {
+                message = "tree";
+            }
+            else if (mapCell.object_char == 'h')
+            {
+                message = "water fountain";
+            }
+            else if (mapCell.object_char == 'H')
+            {
+                message = "blood fountain";
+            }
         }
 
         if (message.empty())

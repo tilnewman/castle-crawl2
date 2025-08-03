@@ -14,10 +14,14 @@ namespace castlecrawl
     enum class TileImage : std::size_t
     {
         Empty = 0,
+        Sign,
+        FountainWater,
+        FountainBlood,
         Campfire,
         Inferno,
         Rock,
         RockWeak,
+        Ice,
         Blood,
         Lava,
         Water,
@@ -34,6 +38,9 @@ namespace castlecrawl
         Altar,
         StoneSpire,
         Key,
+        Tree1,
+        Tree2,
+        Tree3,
         Wall_TopLeft,
         Wall_Horiz,
         Wall_Top,
@@ -82,10 +89,14 @@ namespace castlecrawl
         // clang-format off
         switch (ch)
         {
+            case 'E':    { return TileImage::Sign;               }
+            case 'h':    { return TileImage::FountainWater;      }
+            case 'H':    { return TileImage::FountainBlood;      }
             case 'a':    { return TileImage::Campfire;           }
             case 'A':    { return TileImage::Inferno;            }
             case 'r':    { return TileImage::Rock;               }
             case 'R':    { return TileImage::RockWeak;           }
+            case 'i':    { return TileImage::Ice;                }
             case 'e':    { return TileImage::Blood;              }
             case 'l':    { return TileImage::Lava;               }
             case 'w':    { return TileImage::Water;              }
@@ -101,6 +112,9 @@ namespace castlecrawl
             case '@':    { return TileImage::Altar;              }
             case '#':    { return TileImage::StoneSpire;         }
             case '$':    { return TileImage::Key;                }
+            case '%':    { return TileImage::Tree1;              }
+            case '^':    { return TileImage::Tree2;              }
+            case '&':    { return TileImage::Tree3;              }
             case 'C':    { return TileImage::Wall_TopLeft;       }
             case '-':    { return TileImage::Wall_Horiz;         }
             case 'T':    { return TileImage::Wall_Top;           }
@@ -149,9 +163,13 @@ namespace castlecrawl
         // clang-format off
         switch (tileImage)
         {
+            case TileImage::Sign:               { return sf::IntRect( {224,128},{32,32}); }
+            case TileImage::FountainWater:      { return sf::IntRect( {192,192},{32,32}); }
+            case TileImage::FountainBlood:      { return sf::IntRect( {224,192},{32,32}); }
             case TileImage::Campfire:           { return sf::IntRect( { 64,224},{32,32}); }
             case TileImage::Rock:               { return sf::IntRect( { 96, 64},{32,32}); }
             case TileImage::RockWeak:           { return sf::IntRect( { 96, 96},{32,32}); }
+            case TileImage::Ice:                { return sf::IntRect( { 64,224},{32,32}); }
             case TileImage::Blood:              { return sf::IntRect( { 96,224},{32,32}); }
             case TileImage::Lava:               { return sf::IntRect( { 32,192},{32,32}); }
             case TileImage::Water:              { return sf::IntRect( { 64,192},{32,32}); }
@@ -167,6 +185,9 @@ namespace castlecrawl
             case TileImage::Altar:              { return sf::IntRect( {128, 96},{32,32}); }
             case TileImage::StoneSpire:         { return sf::IntRect( {160, 96},{32,32}); }
             case TileImage::Key:                { return sf::IntRect( {192,128},{32,32}); }
+            case TileImage::Tree1:              { return sf::IntRect( {128,224},{32,32}); }
+            case TileImage::Tree2:              { return sf::IntRect( {160,224},{32,32}); }
+            case TileImage::Tree3:              { return sf::IntRect( {192,224},{32,32}); }
             case TileImage::Wall_TopLeft:       { return sf::IntRect( {  0,  0},{32,32}); }
             case TileImage::Wall_Horiz:         { return sf::IntRect( { 32,  0},{32,32}); }
             case TileImage::Wall_Top:           { return sf::IntRect( { 64,  0},{32,32}); }

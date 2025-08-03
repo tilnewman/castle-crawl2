@@ -141,8 +141,9 @@ namespace castlecrawl
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
+        // liquid or ice anyway (anything that needs the liquid edges drawn around it)
         auto isLiquid = [](const char ch) {
-            return ((ch == 'l') || (ch == 'w') || (ch == 'g') || (ch == 'e'));
+            return ((ch == 'l') || (ch == 'w') || (ch == 'g') || (ch == 'e') || (ch == 'i'));
         };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {

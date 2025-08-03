@@ -269,7 +269,8 @@ namespace castlecrawl
         else if (keyScancode == sf::Keyboard::Scancode::Period)    { editMap(t_context, '.', '.'); }
         else if (keyScancode == sf::Keyboard::Scancode::A)         { editMap(t_context, 'A', 'a'); }
         else if (keyScancode == sf::Keyboard::Scancode::D)         { editMap(t_context, 'D', 'd'); }
-        else if (keyScancode == sf::Keyboard::Scancode::E)         { editMap(t_context, 'e', 'e'); }
+        else if (keyScancode == sf::Keyboard::Scancode::E)         { editMap(t_context, 'E', 'e'); }
+        else if (keyScancode == sf::Keyboard::Scancode::H)         { editMap(t_context, 'H', 'h'); }
         else if (keyScancode == sf::Keyboard::Scancode::S)         { editMap(t_context, 'S', 's'); }
         else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'R', 'r'); }
         else if (keyScancode == sf::Keyboard::Scancode::L)         { editMap(t_context, 'l', 'l'); }
@@ -284,9 +285,9 @@ namespace castlecrawl
         else if (keyScancode == sf::Keyboard::Scancode::Num2)      { editMap(t_context, '@', '2'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num3)      { editMap(t_context, '#', '3'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num4)      { editMap(t_context, '$', '4'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num5)      { editMap(t_context, '5', '5'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num6)      { editMap(t_context, '6', '6'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num7)      { editMap(t_context, '7', '7'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Num5)      { editMap(t_context, '%', '5'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Num6)      { editMap(t_context, '^', '6'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Num7)      { editMap(t_context, '&', '7'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num8)      { editMap(t_context, '8', '8'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num9)      { editMap(t_context, '9', '9'); }
         else if (keyScancode == sf::Keyboard::Scancode::Semicolon) { editMap(t_context, ';', ':'); }
@@ -297,14 +298,14 @@ namespace castlecrawl
 
     void StateEditor::updateHelpText(const Context & t_context)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::H) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Slash))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Slash))
         {
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
                 "f-Change-Flooring\nr-Rock\nR-WeakRock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
-                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\nq-WeakWoodBlock\na-Campfire\n"
+                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\nq-WeakWoodBlock\na-Campfire\n%^&-Trees\n"
                 "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\nA-Inferno\n"
+                "h-Water Fountain\nH-Blood Fountain\nE-Sign\n"
                 "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
                 "6-Bat\n7-BatMask\n8-Skeleton\n9-SkeletonGrave\n:-Demon\n;-DemonDoor\n"
                 "[-Dragon\n]-DragonInferno");
@@ -313,7 +314,7 @@ namespace castlecrawl
 
             m_keyText.setPosition({ ((t_context.layout.topRect().size.x * 0.5f) -
                                      (m_keyText.getGlobalBounds().size.x * 0.5f)),
-                                    (t_context.layout.topRect().size.y + 25.0f) });
+                                    (t_context.layout.topRect().size.y - 50.0f) });
         }
         else
         {
@@ -482,6 +483,8 @@ namespace castlecrawl
         {
             case ' ': { return "Bare Floor"; }
             case '.': { return "Erase"; }
+            case 'h': { return "Water Fountain"; }
+            case 'H': { return "Blood Fountain"; }
             case 'a': { return "Campfire"; }
             case 'A': { return "Inferno"; }
             case 'D': { return "Door Locked"; }
@@ -491,6 +494,7 @@ namespace castlecrawl
             case 'r': { return "Rock"; }
             case 'R': { return "Weak Rock"; }
             case 'e': { return "Blood"; }
+            case 'E': { return "Sign"; }
             case 'l': { return "Lava"; }
             case 'w': { return "Water"; }
             case 'g': { return "Slime"; }
@@ -501,6 +505,10 @@ namespace castlecrawl
             case '@': { return "Altar"; }
             case '#': { return "StoneSpire"; }
             case '$': { return "Key"; }
+            case '%': { return "Tree"; }
+            case '^': { return "Tree"; }
+            case '&': { return "Tree"; }
+            case 'i': { return "Ice"; }
             case '0': { return "Snake"; }
             case '1': { return "Snake Bag"; }
             case '2': { return "Spider"; }
