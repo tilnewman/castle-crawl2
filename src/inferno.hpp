@@ -33,6 +33,7 @@ namespace castlecrawl
 
         static inline const std::size_t frame_count{64};
 
+        bool is_horiz_flipped;
         MapPos_t map_pos;
         float frame_time_sec;
         float time_between_frames_sec;

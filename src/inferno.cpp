@@ -21,7 +21,8 @@ namespace castlecrawl
 
     InfernoAnimation::InfernoAnimation(
         const Context & t_context, const sf::Texture & t_texture, const MapPos_t & t_mapPos)
-        : map_pos{ t_mapPos }
+        : is_horiz_flipped{ t_context.random.boolean() }
+        , map_pos{ t_mapPos }
         , frame_time_sec{ 0.0f }
         , time_between_frames_sec{ t_context.random.fromTo(0.02f, 0.06f) }
         , frame_index{ t_context.random.zeroToOneLessThan(frame_count) }
@@ -33,6 +34,12 @@ namespace castlecrawl
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
         util::fitAndCenterInside(sprite, { cellScreenPos, cellSize });
+
+        if (is_horiz_flipped)
+        {
+            sprite.scale({ -1.0f, 1.0f });
+            sprite.move({ cellSize.x , 0.0f });
+        }
     }
 
     void InfernoAnimation::update(const Context &, const float t_elapsedTimeSec)
@@ -71,7 +78,8 @@ namespace castlecrawl
 
     void InfernoAnimationManager::setup(const GameConfig & t_config)
     {
-        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "inferno.png"), false);
+        util::TextureLoader::load(
+            m_texture, (t_config.media_path / "image" / "inferno.png"), false);
     }
 
     void InfernoAnimationManager::update(const Context & t_context, const float t_elapsedTimeSec)
