@@ -97,11 +97,13 @@ namespace castlecrawl
         t_context.smoke_anims.add(t_context, t_mapPos);
     }
 
-    void InfernoAnimationManager::remove(const MapPos_t & t_mapPos)
+    void InfernoAnimationManager::remove(const Context & t_context, const MapPos_t & t_mapPos)
     {
         std::erase_if(m_animations, [&](const InfernoAnimation & animation) {
             return (t_mapPos == animation.map_pos);
         });
+
+        t_context.smoke_anims.remove(t_mapPos);
     }
 
 } // namespace castlecrawl

@@ -349,10 +349,16 @@ namespace castlecrawl
     {
         if (m_dragSelectedEntrys.empty())
         {
-            if (m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
-                    .at(static_cast<std::size_t>(m_editPos.x)) == 'a')
+            const char currentMapChar = m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
+                                            .at(static_cast<std::size_t>(m_editPos.x));
+
+            if (currentMapChar == 'a')
             {
                 t_context.campfire_anims.remove(t_context, m_editPos);
+            }
+            else if (currentMapChar == 'A')
+            {
+                t_context.inferno_anims.remove(t_context, m_editPos);
             }
 
             m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
@@ -362,10 +368,16 @@ namespace castlecrawl
         {
             for (const MapEntry_t & entry : m_dragSelectedEntrys)
             {
-                if (m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
-                        .at(static_cast<std::size_t>(entry.pos.x)) == 'a')
+                const char currentMapChar = m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
+                                                .at(static_cast<std::size_t>(entry.pos.x));
+
+                if (currentMapChar == 'a')
                 {
                     t_context.campfire_anims.remove(t_context, entry.pos);
+                }
+                else if (currentMapChar == 'A')
+                {
+                    t_context.inferno_anims.remove(t_context, entry.pos);
                 }
 
                 m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
