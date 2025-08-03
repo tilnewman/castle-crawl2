@@ -284,9 +284,9 @@ namespace castlecrawl
         else if (keyScancode == sf::Keyboard::Scancode::Num2)      { editMap(t_context, '@', '2'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num3)      { editMap(t_context, '#', '3'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num4)      { editMap(t_context, '$', '4'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num5)      { editMap(t_context, '%', '5'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num6)      { editMap(t_context, '^', '6'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num7)      { editMap(t_context, '&', '7'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Num5)      { editMap(t_context, '5', '5'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Num6)      { editMap(t_context, '6', '6'); }
+        else if (keyScancode == sf::Keyboard::Scancode::Num7)      { editMap(t_context, '7', '7'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num8)      { editMap(t_context, '8', '8'); }
         else if (keyScancode == sf::Keyboard::Scancode::Num9)      { editMap(t_context, '9', '9'); }
         else if (keyScancode == sf::Keyboard::Scancode::Semicolon) { editMap(t_context, ';', ':'); }
@@ -303,7 +303,7 @@ namespace castlecrawl
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
                 "f-Change-Flooring\nr-Rock\nR-WeakRock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
-                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\n%^&-Herbs\nq-WeakWoodBlock\na-Campfire\n"
+                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\nq-WeakWoodBlock\na-Campfire\n"
                 "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\nA-Inferno\n"
                 "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
                 "6-Bat\n7-BatMask\n8-Skeleton\n9-SkeletonGrave\n:-Demon\n;-DemonDoor\n"
@@ -501,9 +501,6 @@ namespace castlecrawl
             case '@': { return "Altar"; }
             case '#': { return "StoneSpire"; }
             case '$': { return "Key"; }
-            case '%': { return "Weak Herb"; }
-            case '^': { return "Normal Herb"; }
-            case '&': { return "Strong Herb"; }
             case '0': { return "Snake"; }
             case '1': { return "Snake Bag"; }
             case '2': { return "Spider"; }

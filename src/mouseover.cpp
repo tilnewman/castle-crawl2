@@ -177,12 +177,6 @@ namespace castlecrawl
             {
                 message = "blood";
             }
-            else if (
-                (mapCell.object_char == '%') || (mapCell.object_char == '^') ||
-                (mapCell.object_char == '&'))
-            {
-                message = "healing herbs";
-            }
         }
 
         if (message.empty())

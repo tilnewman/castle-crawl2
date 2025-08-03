@@ -34,9 +34,6 @@ namespace castlecrawl
         Altar,
         StoneSpire,
         Key,
-        HerbWeak,
-        HerbNormal,
-        HerbStrong,
         Wall_TopLeft,
         Wall_Horiz,
         Wall_Top,
@@ -75,7 +72,7 @@ namespace castlecrawl
         LiquidRim_BotRight
     };
 
-    inline constexpr bool isDrawnByMapDisplay(const char ch) noexcept 
+    inline constexpr bool isDrawnByMapDisplay(const char ch) noexcept
     {
         return ((ch != 'a') && (ch != 'A') && (ch != ' '));
     }
@@ -104,9 +101,6 @@ namespace castlecrawl
             case '@':    { return TileImage::Altar;              }
             case '#':    { return TileImage::StoneSpire;         }
             case '$':    { return TileImage::Key;                }
-            case '%':    { return TileImage::HerbWeak;           }
-            case '^':    { return TileImage::HerbNormal;         }
-            case '&':    { return TileImage::HerbStrong;         }
             case 'C':    { return TileImage::Wall_TopLeft;       }
             case '-':    { return TileImage::Wall_Horiz;         }
             case 'T':    { return TileImage::Wall_Top;           }
@@ -173,9 +167,6 @@ namespace castlecrawl
             case TileImage::Altar:              { return sf::IntRect( {128, 96},{32,32}); }
             case TileImage::StoneSpire:         { return sf::IntRect( {160, 96},{32,32}); }
             case TileImage::Key:                { return sf::IntRect( {192,128},{32,32}); }
-            case TileImage::HerbWeak:           { return sf::IntRect( {224,128},{32,32}); }
-            case TileImage::HerbNormal:         { return sf::IntRect( {192,160},{32,32}); }
-            case TileImage::HerbStrong:         { return sf::IntRect( {224,160},{32,32}); }
             case TileImage::Wall_TopLeft:       { return sf::IntRect( {  0,  0},{32,32}); }
             case TileImage::Wall_Horiz:         { return sf::IntRect( { 32,  0},{32,32}); }
             case TileImage::Wall_Top:           { return sf::IntRect( { 64,  0},{32,32}); }
