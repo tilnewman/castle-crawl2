@@ -16,6 +16,7 @@ namespace castlecrawl
     struct GameConfig;
     class TileImages;
     class SplatImages;
+    class AltarImages;
     class Layout;
     class Maps;
     class MapDisplay;
@@ -43,6 +44,7 @@ namespace castlecrawl
             const GameConfig & t_config,
             const TileImages & t_tileImages,
             const SplatImages & t_splatImages,
+            const AltarImages & t_altarImages,
             Layout & t_layout,
             Maps & t_maps,
             MapDisplay & t_mapDisplay,
@@ -65,6 +67,7 @@ namespace castlecrawl
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
+            , altar_images(t_altarImages)
             , layout(t_layout)
             , maps(t_maps)
             , map_display(t_mapDisplay)
@@ -89,6 +92,7 @@ namespace castlecrawl
         const GameConfig & config;
         const TileImages & tile_images;
         const SplatImages & splat_images;
+        const AltarImages & altar_images;
         Layout & layout;
         Maps & maps;
         MapDisplay & map_display;

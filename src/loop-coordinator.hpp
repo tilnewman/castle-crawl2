@@ -3,6 +3,7 @@
 //
 // loop-coordinator.hpp
 //
+#include "altar-images.hpp"
 #include "campfire.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
@@ -58,6 +59,7 @@ namespace castlecrawl
         GameConfig m_config;
         std::unique_ptr<TileImages> m_tileImagesUPtr;
         std::unique_ptr<SplatImages> m_splatImagesUPtr;
+        std::unique_ptr<AltarImages> m_altarImagesUPtr;
         Layout m_layout;
         Maps m_maps;
         std::unique_ptr<MapDisplay> m_mapDisplayUPtr;
