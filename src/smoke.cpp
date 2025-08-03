@@ -35,9 +35,12 @@ namespace castlecrawl
 
     void SmokeParticle::update(const Context & t_context, const float t_elapsedTimeSec)
     {
-        sprite.move({ 0.0f, -(move_speed * t_elapsedTimeSec) });
+        // these calculations are sensitive to slow frame rates that increase t_elapsedTimeSec
+        const float elapsedTimeClamped = std::min(t_elapsedTimeSec, (1.0f / 60.0f));
 
-        const float scale{ 1.0f + (scale_speed * std::min(t_elapsedTimeSec, (1.0f / 60.0f))) };
+        sprite.move({ 0.0f, -(move_speed * elapsedTimeClamped) });
+
+        const float scale{ 1.0f + (scale_speed * elapsedTimeClamped) };
         sprite.scale({ scale, scale });
 
         alpha_reduction_timer_sec += t_elapsedTimeSec;
