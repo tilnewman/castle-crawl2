@@ -193,6 +193,15 @@ namespace castlecrawl
             "www.creativecommons.org/licenses/by/3.0");
 
         gameOverSfxCredit.vertPosition(stepsSfxCredit.bottom() + vertSpacer);
+
+        Credit & stoneSoupCredit = m_credits.emplace_back(
+            t_context,
+            "Chris Hamons",
+            "Stone Soup's Dungeon Crawl 32x32 Tiles",
+            "https://opengameart.org/content/dungeon-crawl-32x32-tiles",
+            "www.creativecommons.org/publicdomain/zero/1.0");
+
+        stoneSoupCredit.vertPosition(gameOverSfxCredit.bottom() + vertSpacer);
     }
 
     void StateCredits::update(const Context & t_context, const float t_frameTimeSec)
