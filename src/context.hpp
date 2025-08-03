@@ -18,6 +18,7 @@ namespace castlecrawl
     class SplatImages;
     class AltarImages;
     class DoorwayImages;
+    class StatueImages;
     class Layout;
     class Maps;
     class MapDisplay;
@@ -47,6 +48,7 @@ namespace castlecrawl
             const SplatImages & t_splatImages,
             const AltarImages & t_altarImages,
             const DoorwayImages & t_doorwayImages,
+            const StatueImages & t_statueImages,
             Layout & t_layout,
             Maps & t_maps,
             MapDisplay & t_mapDisplay,
@@ -71,6 +73,7 @@ namespace castlecrawl
             , splat_images(t_splatImages)
             , altar_images(t_altarImages)
             , doorway_images(t_doorwayImages)
+            , statue_images(t_statueImages)
             , layout(t_layout)
             , maps(t_maps)
             , map_display(t_mapDisplay)
@@ -97,6 +100,7 @@ namespace castlecrawl
         const SplatImages & splat_images;
         const AltarImages & altar_images;
         const DoorwayImages & doorway_images;
+        const StatueImages & statue_images;
         Layout & layout;
         Maps & maps;
         MapDisplay & map_display;

@@ -26,6 +26,7 @@
 #include "sparkle-particle.hpp"
 #include "splat-images.hpp"
 #include "state-manager.hpp"
+#include "statue-images.hpp"
 #include "tile-images.hpp"
 #include "top-panel.hpp"
 
@@ -62,6 +63,7 @@ namespace castlecrawl
         std::unique_ptr<SplatImages> m_splatImagesUPtr;
         std::unique_ptr<AltarImages> m_altarImagesUPtr;
         std::unique_ptr<DoorwayImages> m_doorwayImagesUPtr;
+        std::unique_ptr<StatueImages> m_statueImagesUPtr;
         Layout m_layout;
         Maps m_maps;
         std::unique_ptr<MapDisplay> m_mapDisplayUPtr;
