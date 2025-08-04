@@ -105,7 +105,7 @@ namespace castlecrawl
         const MapPos_t mapPosAfter = [&]() {
             if (
                 (mapCharAttempted == ' ') || (mapCharAttempted == 'd') ||
-                (mapCharAttempted == '.') || (mapCharAttempted == 's') || (mapCharAttempted == 'S'))
+                (mapCharAttempted == '.') || (mapCharAttempted == 'i') || (mapCharAttempted == 'I'))
             {
                 return mapPosAttempted;
             }
@@ -154,7 +154,7 @@ namespace castlecrawl
             {
                 t_context.sfx.play("door-open");
             }
-            else if ((t_mapCharAttempted == 's') || (t_mapCharAttempted == 'S'))
+            else if ((t_mapCharAttempted == 'i') || (t_mapCharAttempted == 'I'))
             {
                 t_context.sfx.play("stairs");
             }
@@ -169,7 +169,7 @@ namespace castlecrawl
             {
                 t_context.sfx.play("locked");
             }
-            else if (t_mapCharAttempted == 'w')
+            else if (t_mapCharAttempted == 'g')
             {
                 t_context.sfx.play("splash");
             }
@@ -205,7 +205,7 @@ namespace castlecrawl
 
         const auto foundWaterIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {
-                return (cell.object_char == 'w');
+                return (cell.object_char == 'g');
             });
 
         if (foundWaterIter == std::end(surroundingCells))

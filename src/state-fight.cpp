@@ -158,7 +158,7 @@ namespace castlecrawl
                 t_context.state.change(t_context, State::Treasure);
             }
         }
-        else if (objectChar == 'q')
+        else if (objectChar == 'Z')
         {
             t_context.sfx.play("wood-block-break.ogg");
 
@@ -169,7 +169,7 @@ namespace castlecrawl
 
             t_context.state.change(t_context, State::Play);
         }
-        else if (objectChar == 'R')
+        else if (objectChar == 'H')
         {
             t_context.sfx.play("rock-block-break.ogg");
 

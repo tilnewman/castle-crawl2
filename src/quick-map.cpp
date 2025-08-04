@@ -66,7 +66,7 @@ namespace castlecrawl
         }
 
         auto isNotObs = [](const char ch) {
-            return ((ch != '.') && (ch != '|') && (ch != '-') && (ch != 'r'));
+            return ((ch != '.') && (ch != 'Y') && (ch != 'X') && (ch != 'r'));
         };
 
         const MapPos_t mapSize = size();
@@ -90,12 +90,12 @@ namespace castlecrawl
 
                 if (isNotObs(left) || isNotObs(right))
                 {
-                    setChar(x, y, '|');
+                    setChar(x, y, 'Y');
                     continue;
                 }
                 else if (isNotObs(up) || isNotObs(down))
                 {
-                    setChar(x, y, '-');
+                    setChar(x, y, 'X');
                     continue;
                 }
 
@@ -107,7 +107,7 @@ namespace castlecrawl
 
                 if (isNotObs(tl) || isNotObs(tr) || isNotObs(bl) || isNotObs(br))
                 {
-                    setChar(x, y, '|'); // '-' works here too
+                    setChar(x, y, 'Y'); // 'X' works here too
                     continue;
                 }
             }
@@ -129,7 +129,7 @@ namespace castlecrawl
             {
                 const char ch{ getChar(x, y) };
 
-                if ((ch != '|') && (ch != '-'))
+                if ((ch != 'Y') && (ch != 'X'))
                 {
                     continue;
                 }
@@ -139,55 +139,55 @@ namespace castlecrawl
                 const char left{ getChar(x - 1, y) };
                 const char right{ getChar(x + 1, y) };
 
-                if (ch == '|')
+                if (ch == 'Y')
                 {
-                    if ((left == '-') || (right == '-'))
+                    if ((left == 'X') || (right == 'X'))
                     {
-                        setChar(x, y, 'B');
+                        setChar(x, y, 'z');
                     }
 
-                    if ((down == '|') && ((up == ' ') || (up == '.')))
+                    if ((down == 'Y') && ((up == ' ') || (up == '.')))
                     {
-                        setChar(x, y, 'B');
+                        setChar(x, y, 'z');
                     }
 
-                    if ((up == '|') && ((down == ' ') || (down == '.')))
+                    if ((up == 'Y') && ((down == ' ') || (down == '.')))
                     {
-                        setChar(x, y, 'B');
+                        setChar(x, y, 'z');
                     }
                 }
-                else //'-'
+                else //'X'
                 {
-                    if ((up == '|') || (down == '|'))
+                    if ((up == 'Y') || (down == 'Y'))
                     {
-                        setChar(x, y, 'B');
+                        setChar(x, y, 'z');
                     }
 
-                    if ((left == '-') && ((right == ' ') || (right == '.')))
+                    if ((left == 'X') && ((right == ' ') || (right == '.')))
                     {
-                        setChar(x, y, 'B');
+                        setChar(x, y, 'z');
                     }
 
-                    if ((right == '-') && ((left == ' ') || (left == '.')))
+                    if ((right == 'X') && ((left == ' ') || (left == '.')))
                     {
-                        setChar(x, y, 'B');
+                        setChar(x, y, 'z');
                     }
                 }
 
-                if (getChar(x, y) != 'B')
+                if (getChar(x, y) != 'z')
                 {
                     continue;
                 }
 
-                if ((down == '|') || (down == '-'))
+                if ((down == 'Y') || (down == 'X'))
                 {
-                    if ((right == '|') || (right == '-'))
+                    if ((right == 'Y') || (right == 'X'))
                     {
-                        setChar(x, y, 'C');
+                        setChar(x, y, 'x');
                     }
                     else
                     {
-                        setChar(x, y, 'T');
+                        setChar(x, y, 'y');
                     }
                 }
             }

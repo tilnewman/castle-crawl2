@@ -65,7 +65,7 @@ namespace castlecrawl
 
     void MapDisplay::appendVerts(const Context & t_context)
     {
-        char prevObjectChar('.'); // anything except '-' works here
+        char prevObjectChar('.'); // anything except 'X' works here
 
         // any TileImage works here because only using the position and size
         sf::Sprite edgeSprite = t_context.tile_images.sprite(t_context, TileImage::Lava);
@@ -115,7 +115,7 @@ namespace castlecrawl
 
                 // wall shadow object tiles to the right of various wall blocks
                 // must be added after object tiles
-                if (('-' == cell.object_char) && ('-' != prevObjectChar))
+                if (('X' == cell.object_char) && ('X' != prevObjectChar))
                 {
                     appendTileVerts(t_context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
                 }
@@ -143,7 +143,7 @@ namespace castlecrawl
     {
         // liquid or ice anyway (anything that needs the liquid edges drawn around it)
         auto isLiquid = [](const char ch) {
-            return ((ch == 'l') || (ch == 'w') || (ch == 'g') || (ch == 'e') || (ch == 'i'));
+            return ((ch == 'l') || (ch == 'g') || (ch == 'G') || (ch == 'e') || (ch == 'C'));
         };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
