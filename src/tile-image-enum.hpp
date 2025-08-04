@@ -10,6 +10,59 @@
 namespace castlecrawl
 {
 
+    /*
+    
+        Altar_Statue,
+        Altar_Challace,
+        Altar_Skull,
+        Altar_Throne,
+        Altar_Blood,
+        Altar_Body,
+        Altar_Demonic,
+        Altar_Hand,
+        Altar_King,
+
+        Statue_Twins,
+        Statue_Mermaid,
+        Statue_Demonic,
+        Statue_Wraith,
+        Statue_Sword,
+        Statue_Thresher,
+        Statue_Orb,
+        Statue_Naga,
+        Statue_Imp,
+        Statue_Hydra,
+        Statue_Elephant,
+        Statue_Dwarf,
+        Statue_Dragon,
+        Statue_Flamberg,
+        Statue_Centaur,
+        Statue_Cat,
+        Statue_Angel,
+        Statue_Monster,
+        Statue_Princess,
+        Statue_Tengu,
+        
+        Doorway_Wood,
+        Doorway_WoodRune,
+        Doorway_SatanicGray,
+        Doorway_SatanicRed,
+        Doorway_RuneOpen,
+        Doorway_RuneGray,
+        Doorway_RuneBlue,
+        Doorway_RuneSkull,
+        Doorway_MirrorLit,
+        Doorway_Mirror,
+        Doorway_SantaicLava,
+        Doorway_Candle,
+        Doorway_Ghost,
+        Doorway_Snake,
+        Doorway_Oriental,
+        Doorway_OrientalRed,
+
+    */
+    
+
     // used to index so keep unsigned
     enum class TileImage : std::size_t
     {
