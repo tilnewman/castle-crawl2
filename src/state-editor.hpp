@@ -3,12 +3,6 @@
 //
 // state-editor.hpp
 //
-
-/*
-Trees
-Rocks Embossed
-*/
-
 #include "map-types.hpp"
 #include "mouseover.hpp"
 #include "state.hpp"

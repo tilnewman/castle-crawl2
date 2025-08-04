@@ -651,6 +651,28 @@ namespace castlecrawl
                 editMap(t_context, 'a', "Campfire");
             }
         }
+        else if (keyScancode == sf::Keyboard::Scancode::T)
+        {
+            if (isShiftPressed())
+            {
+                const std::vector<TileImage> trees{ TileImage::Tree1,
+                                                    TileImage::Tree2,
+                                                    TileImage::Tree3 };
+
+                editMap(t_context, tileImageToChar(t_context.random.from(trees)), "Tree");
+            }
+            else
+            {
+                const std::vector<TileImage> blocks{ 
+                    TileImage::Block_Emboss1,
+                    TileImage::Block_Emboss2,
+                    TileImage::Block_Emboss3,
+                    TileImage::Block_Emboss4
+                };
+
+                editMap(t_context, tileImageToChar(t_context.random.from(blocks)), "Block");
+            }
+        }
     }
 
     void StateEditor::updateHelpText(const Context & t_context)
@@ -662,7 +684,7 @@ namespace castlecrawl
                 "f-Change-Flooring\nr-Rock\nR-Breakable Rock\nZ-Breakable Wood Wall\n"
                 "w-Water\nl-Lava\nb-Blood\ng-Slime\nd-Door\nD-Locked Door\nb-Barrel\n"
                 "c-Chest\nf-Water Fountain\nF-Blood Fountain\ns-Stairs Up\nS-Stairs Down\n"
-                "p-Rock Point\nP-Altar");
+                "p-Rock Point\nP-Altar\nT-Random Tree\nt-Random Block Wall");
 
             m_keyText.setString(keyText);
 
