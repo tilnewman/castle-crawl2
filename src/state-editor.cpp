@@ -39,6 +39,7 @@ namespace castlecrawl
         , m_dragPosStop{ 0.0f, 0.0f }
         , m_dragRectangle{}
         , m_dragSelectedEntrys{}
+        , m_miscButton{}
         , m_doorwayButton{}
         , m_altarButton{}
         , m_statueButton{}
@@ -88,9 +89,20 @@ namespace castlecrawl
         const float tileSelectButtonVertPos =
             (t_context.layout.mapRect().position.y - (t_context.layout.cellSize().y + 5.0f));
 
-        m_doorwayButton.setup(
+        m_miscButton.setup(
             t_context,
             { t_context.layout.mapRect().position.x, tileSelectButtonVertPos },
+            { TileImage::Barrel,     TileImage::Sign,          TileImage::Chest,
+              TileImage::Door,       TileImage::DoorLocked,    TileImage::Blood,
+              TileImage::Key,        TileImage::FountainWater, TileImage::FountainBlood,
+              TileImage::Water,      TileImage::Slime,         TileImage::Rock,
+              TileImage::RockWeak,   TileImage::Stair_Up,      TileImage::Stair_Down,
+              TileImage::Altar,      TileImage::Bag,           TileImage::Coffin,
+              TileImage::StoneSpire, TileImage::Lava });
+
+        m_doorwayButton.setup(
+            t_context,
+            { (m_miscButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
             { TileImage::Doorway_Wood,
               TileImage::Doorway_WoodRune,
               TileImage::Doorway_SatanicGray,
@@ -256,6 +268,8 @@ namespace castlecrawl
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
+
+        m_miscButton.draw(t_target, t_states);
         m_doorwayButton.draw(t_target, t_states);
         m_altarButton.draw(t_target, t_states);
         m_statueButton.draw(t_target, t_states);
@@ -305,7 +319,8 @@ namespace castlecrawl
             const sf::Vector2f mousePos{ static_cast<float>(buttonPtr->position.x),
                                          static_cast<float>(buttonPtr->position.y) };
 
-            if (!m_doorwayButton.globalBounds().contains(mousePos) &&
+            if (!m_miscButton.globalBounds().contains(mousePos) &&
+                !m_doorwayButton.globalBounds().contains(mousePos) &&
                 !m_altarButton.globalBounds().contains(mousePos) &&
                 !m_statueButton.globalBounds().contains(mousePos) &&
                 !m_columnButton.globalBounds().contains(mousePos) &&
@@ -339,6 +354,7 @@ namespace castlecrawl
                     }
                 };
 
+                selectFromDropDownButton(m_miscButton);
                 selectFromDropDownButton(m_doorwayButton);
                 selectFromDropDownButton(m_altarButton);
                 selectFromDropDownButton(m_statueButton);
@@ -352,7 +368,8 @@ namespace castlecrawl
                 selectFromDropDownButton(m_monsterButton5);
             }
 
-            if (!m_doorwayButton.globalBounds().contains(mousePos) &&
+            if (!m_miscButton.globalBounds().contains(mousePos) &&
+                !m_doorwayButton.globalBounds().contains(mousePos) &&
                 !m_altarButton.globalBounds().contains(mousePos) &&
                 !m_statueButton.globalBounds().contains(mousePos) &&
                 !m_columnButton.globalBounds().contains(mousePos) &&
@@ -387,6 +404,7 @@ namespace castlecrawl
                 const sf::Vector2f mousePos{ static_cast<float>(mouseMovePtr->position.x),
                                              static_cast<float>(mouseMovePtr->position.y) };
 
+                m_miscButton.setIsDroppedDown(m_miscButton.globalBounds().contains(mousePos));
                 m_doorwayButton.setIsDroppedDown(m_doorwayButton.globalBounds().contains(mousePos));
                 m_altarButton.setIsDroppedDown(m_altarButton.globalBounds().contains(mousePos));
                 m_statueButton.setIsDroppedDown(m_statueButton.globalBounds().contains(mousePos));

@@ -86,6 +86,7 @@ namespace castlecrawl
         sf::Vector2f m_dragPosStop;
         sf::RectangleShape m_dragRectangle;
         std::vector<MapEntry_t> m_dragSelectedEntrys;
+        TileSelectButton m_miscButton;
         TileSelectButton m_doorwayButton;
         TileSelectButton m_altarButton;
         TileSelectButton m_statueButton;
