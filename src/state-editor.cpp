@@ -165,24 +165,30 @@ namespace castlecrawl
             return;
         }
 
+        auto isCntrlPressed = []() {
+            return (
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RControl));
+        };
+
+        auto isShiftPressed = []() {
+            return (
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RShift));
+        };
+
         const auto keyScancode = t_event.getIf<sf::Event::KeyPressed>()->scancode;
 
         if (keyScancode == sf::Keyboard::Scancode::Escape)
         {
             t_context.state.change(t_context, State::Quit);
         }
-        else if (
-            (keyScancode == sf::Keyboard::Scancode::S) &&
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl) ||
-             sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RControl)))
+        else if ((keyScancode == sf::Keyboard::Scancode::S) && isCntrlPressed())
         {
             fadeText(t_context, "Saving...");
             save();
         }
-        else if (
-            (keyScancode == sf::Keyboard::Scancode::L) &&
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl) ||
-             sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RControl)))
+        else if ((keyScancode == sf::Keyboard::Scancode::L) && isCntrlPressed())
         {
             fadeText(t_context, "Loading...");
             load(t_context);
@@ -264,36 +270,115 @@ namespace castlecrawl
                 t_context.sfx.play("tap-wood-low");
             }
         }
-        // clang-format off
-        else if (keyScancode == sf::Keyboard::Scancode::Space)     { editMap(t_context, ' ', ' '); }
-        else if (keyScancode == sf::Keyboard::Scancode::Period)    { editMap(t_context, '.', '.'); }
-        else if (keyScancode == sf::Keyboard::Scancode::A)         { editMap(t_context, 'A', 'a'); }
-        else if (keyScancode == sf::Keyboard::Scancode::D)         { editMap(t_context, 'D', 'd'); }
-        else if (keyScancode == sf::Keyboard::Scancode::E)         { editMap(t_context, 'E', 'e'); }
-        else if (keyScancode == sf::Keyboard::Scancode::H)         { editMap(t_context, 'H', 'h'); }
-        else if (keyScancode == sf::Keyboard::Scancode::S)         { editMap(t_context, 'S', 's'); }
-        else if (keyScancode == sf::Keyboard::Scancode::R)         { editMap(t_context, 'R', 'r'); }
-        else if (keyScancode == sf::Keyboard::Scancode::L)         { editMap(t_context, 'l', 'l'); }
-        else if (keyScancode == sf::Keyboard::Scancode::W)         { editMap(t_context, 'w', 'w'); }
-        else if (keyScancode == sf::Keyboard::Scancode::G)         { editMap(t_context, 'g', 'g'); }
-        else if (keyScancode == sf::Keyboard::Scancode::B)         { editMap(t_context, 'b', 'b'); }
-        else if (keyScancode == sf::Keyboard::Scancode::C)         { editMap(t_context, 'c', 'c'); }
-        else if (keyScancode == sf::Keyboard::Scancode::K)         { editMap(t_context, 'k', 'k'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Q)         { editMap(t_context, 'q', 'q'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num0)      { editMap(t_context, '0', '0'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num1)      { editMap(t_context, '!', '1'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num2)      { editMap(t_context, '@', '2'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num3)      { editMap(t_context, '#', '3'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num4)      { editMap(t_context, '$', '4'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num5)      { editMap(t_context, '%', '5'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num6)      { editMap(t_context, '^', '6'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num7)      { editMap(t_context, '&', '7'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num8)      { editMap(t_context, '8', '8'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Num9)      { editMap(t_context, '9', '9'); }
-        else if (keyScancode == sf::Keyboard::Scancode::Semicolon) { editMap(t_context, ';', ':'); }
-        else if (keyScancode == sf::Keyboard::Scancode::LBracket)  { editMap(t_context, '[', '['); }
-        else if (keyScancode == sf::Keyboard::Scancode::RBracket)  { editMap(t_context, ']', ']'); }
-        // clang-format on
+        else if (keyScancode == sf::Keyboard::Scancode::Space)
+        {
+            editMap(t_context, ' ', "Bare Floor");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::Period)
+        {
+            editMap(t_context, '.', "Erase");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::R)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'H', "Breakable Rock");
+            }
+            else
+            {
+                editMap(t_context, 'h', "Rock");
+            }
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::Z)
+        {
+            editMap(t_context, 'Z', "Breakable Wood Wall");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::W)
+        {
+            editMap(t_context, 'g', "Water");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::L)
+        {
+            editMap(t_context, 'l', "Breakable Wood Wall");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::E)
+        {
+            editMap(t_context, 'e', "Blood");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::G)
+        {
+            editMap(t_context, 'G', "Slime");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::D)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'D', "Locked Door");
+            }
+            else
+            {
+                editMap(t_context, 'd', "Door");
+            }
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::C)
+        {
+            editMap(t_context, 'c', "Chest");
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::B)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'k', "Coffin");
+            }
+            else
+            {
+                editMap(t_context, 'b', "Barrel");
+            }
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::H)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'F', "Blood Fountain");
+            }
+            else
+            {
+                editMap(t_context, 'f', "Water Fountain");
+            }
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::S)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'I', "Stairs Down");
+            }
+            else
+            {
+                editMap(t_context, 'i', "Stairs Up");
+            }
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::P)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'j', "Stone Altar");
+            }
+            else
+            {
+                editMap(t_context, 'K', "Stone Spire");
+            }
+        }
+        else if (keyScancode == sf::Keyboard::Scancode::A)
+        {
+            if (isShiftPressed())
+            {
+                editMap(t_context, 'A', "Inferno");
+            }
+            else
+            {
+                editMap(t_context, 'a', "Campfire");
+            }
+        }
     }
 
     void StateEditor::updateHelpText(const Context & t_context)
@@ -302,19 +387,16 @@ namespace castlecrawl
         {
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
-                "f-Change-Flooring\nr-Rock\nR-WeakRock\nl-Lava\nw-Water\nc-Chest\nk-Coffin\n"
-                "!-Bag\n@-Altar\n#-StoneSpire\n$-Key\nq-WeakWoodBlock\na-Campfire\n%^&-Trees\n"
-                "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\nA-Inferno\n"
-                "h-Water Fountain\nH-Blood Fountain\nE-Sign\n"
-                "0-Snake\n1-SnakeBag\n2-Spider\n3-Spiderweb\n4-Goblin\n5-GoblinBarrel\n"
-                "6-Bat\n7-BatMask\n8-Skeleton\n9-SkeletonGrave\n:-Demon\n;-DemonDoor\n"
-                "[-Dragon\n]-DragonInferno");
+                "f-Change-Flooring\nr-Rock\nR-Breakable Rock\nZ-Breakable Wood Wall\n"
+                "w-Water\nl-Lava\nb-Blood\ng-Slime\nd-Door\nD-Locked Door\nb-Barrel\n"
+                "c-Chest\nf-Water Fountain\nF-Blood Fountain\ns-Stairs Up\nS-Stairs Down\n"
+                "p-Rock Point\nP-Altar");
 
             m_keyText.setString(keyText);
 
             m_keyText.setPosition({ ((t_context.layout.topRect().size.x * 0.5f) -
                                      (m_keyText.getGlobalBounds().size.x * 0.5f)),
-                                    (t_context.layout.topRect().size.y - 50.0f) });
+                                    (t_context.layout.topRect().size.y - 25.0f) });
         }
         else
         {
@@ -387,20 +469,11 @@ namespace castlecrawl
         }
     }
 
-    void StateEditor::editMap(const Context & t_context, const char t_upper, const char t_lower)
+    void StateEditor::editMap(
+        const Context & t_context, const char t_newMapChar, const std::string & t_fadeText)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::RShift))
-        {
-            setMapChar(t_context, t_upper);
-            fadeText(t_context, mapCharToName(t_upper));
-        }
-        else
-        {
-            setMapChar(t_context, t_lower);
-            fadeText(t_context, mapCharToName(t_lower));
-        }
-
+        setMapChar(t_context, t_newMapChar);
+        fadeText(t_context, t_fadeText);
         resetMap(t_context);
         t_context.sfx.play("tick-on-1");
     }
@@ -474,58 +547,6 @@ namespace castlecrawl
 
         m_mapChars = lines;
         resetMap(t_context);
-    }
-
-    const std::string StateEditor::mapCharToName(const char t_ch) noexcept
-    {
-        // clang-format off
-        switch (t_ch)
-        {
-            case ' ': { return "Bare Floor"; }
-            case '.': { return "Erase"; }
-            case 'h': { return "Water Fountain"; }
-            case 'H': { return "Blood Fountain"; }
-            case 'a': { return "Campfire"; }
-            case 'A': { return "Inferno"; }
-            case 'D': { return "Door Locked"; }
-            case 'd': { return "Door Unlocked"; }
-            case 'S': { return "Stairs Up"; }
-            case 's': { return "Stairs Down"; }
-            case 'r': { return "Rock"; }
-            case 'R': { return "Weak Rock"; }
-            case 'e': { return "Blood"; }
-            case 'E': { return "Sign"; }
-            case 'l': { return "Lava"; }
-            case 'w': { return "Water"; }
-            case 'g': { return "Slime"; }
-            case 'b': { return "Barrel"; }
-            case 'c': { return "Chest"; }
-            case 'k': { return "Coffin"; }
-            case '!': { return "Bag"; }
-            case '@': { return "Altar"; }
-            case '#': { return "StoneSpire"; }
-            case '$': { return "Key"; }
-            case '%': { return "Tree"; }
-            case '^': { return "Tree"; }
-            case '&': { return "Tree"; }
-            case 'i': { return "Ice"; }
-            case '0': { return "Snake"; }
-            case '1': { return "Snake Bag"; }
-            case '2': { return "Spider"; }
-            case '3': { return "Spiderweb"; }
-            case '4': { return "Goblin"; }
-            case '5': { return "Goblin Barrel"; }
-            case '6': { return "Bat"; }
-            case '7': { return "Bat Mask"; }
-            case '8': { return "Skeleton"; }
-            case '9': { return "Skeleton Grave"; }
-            case ':': { return "Demon"; }
-            case ';': { return "Demon Door"; }
-            case '[': { return "Dragon"; }
-            case ']': { return "Dragon Inferno"; }
-            default:  { return ""; }
-        }
-        // clang-format on
     }
 
     void StateEditor::startDragging(const Context & t_context, const sf::Vector2f & t_pos)

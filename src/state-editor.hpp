@@ -3,6 +3,16 @@
 //
 // state-editor.hpp
 //
+
+/*
+Doorways
+Altars
+Statues
+Trees
+Columns
+Rocks Embossed
+*/
+
 #include "map-types.hpp"
 #include "mouseover.hpp"
 #include "state.hpp"
@@ -51,12 +61,14 @@ namespace castlecrawl
         void resetMap(const Context & t_context);
         void placeEditCursor(const Context & t_context);
         void setMapChar(const Context & t_context, const char t_ch);
-        void editMap(const Context & t_context, const char t_upper, const char t_lower);
+
+        void editMap(
+            const Context & t_context, const char t_newMapChar, const std::string & t_fadeText);
+        
         void fadeText(const Context & t_context, const std::string & t_text);
         void save() const;
         void load(const Context & t_context);
-        [[nodiscard]] const std::string mapCharToName(const char t_ch) noexcept;
-
+        
         void startDragging(const Context & t_context, const sf::Vector2f & t_pos);
         void stopDragging(const Context & t_context, const sf::Vector2f & t_pos);
         void updateDragging(const Context & t_context, const sf::Vector2f & t_pos);
