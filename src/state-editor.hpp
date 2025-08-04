@@ -5,17 +5,14 @@
 //
 
 /*
-Doorways
-Altars
-Statues
 Trees
-Columns
 Rocks Embossed
 */
 
 #include "map-types.hpp"
 #include "mouseover.hpp"
 #include "state.hpp"
+#include "tile-select-button.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -64,11 +61,11 @@ namespace castlecrawl
 
         void editMap(
             const Context & t_context, const char t_newMapChar, const std::string & t_fadeText);
-        
+
         void fadeText(const Context & t_context, const std::string & t_text);
         void save() const;
         void load(const Context & t_context);
-        
+
         void startDragging(const Context & t_context, const sf::Vector2f & t_pos);
         void stopDragging(const Context & t_context, const sf::Vector2f & t_pos);
         void updateDragging(const Context & t_context, const sf::Vector2f & t_pos);
@@ -89,6 +86,17 @@ namespace castlecrawl
         sf::Vector2f m_dragPosStop;
         sf::RectangleShape m_dragRectangle;
         std::vector<MapEntry_t> m_dragSelectedEntrys;
+        TileSelectButton m_doorwayButton;
+        TileSelectButton m_altarButton;
+        TileSelectButton m_statueButton;
+        TileSelectButton m_columnButton;
+        TileSelectButton m_npcButton1;
+        TileSelectButton m_npcButton2;
+        TileSelectButton m_monsterButton1;
+        TileSelectButton m_monsterButton2;
+        TileSelectButton m_monsterButton3;
+        TileSelectButton m_monsterButton4;
+        TileSelectButton m_monsterButton5;
     };
 
 } // namespace castlecrawl

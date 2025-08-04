@@ -39,6 +39,17 @@ namespace castlecrawl
         , m_dragPosStop{ 0.0f, 0.0f }
         , m_dragRectangle{}
         , m_dragSelectedEntrys{}
+        , m_doorwayButton{}
+        , m_altarButton{}
+        , m_statueButton{}
+        , m_columnButton{}
+        , m_npcButton1{}
+        , m_npcButton2{}
+        , m_monsterButton1{}
+        , m_monsterButton2{}
+        , m_monsterButton3{}
+        , m_monsterButton4{}
+        , m_monsterButton5{}
     {}
 
     void StateEditor::onEnter(const Context & t_context)
@@ -71,6 +82,161 @@ namespace castlecrawl
         t_context.campfire_anims.clear();
         t_context.smoke_anims.clear();
         t_context.inferno_anims.clear();
+
+        const sf::Vector2f cellSize = t_context.layout.cellSize();
+
+        const float tileSelectButtonVertPos =
+            (t_context.layout.mapRect().position.y - (t_context.layout.cellSize().y + 5.0f));
+
+        m_doorwayButton.setup(
+            t_context,
+            { t_context.layout.mapRect().position.x, tileSelectButtonVertPos },
+            { TileImage::Doorway_Wood,
+              TileImage::Doorway_WoodRune,
+              TileImage::Doorway_SatanicGray,
+              TileImage::Doorway_SatanicRed,
+              TileImage::Doorway_RuneOpen,
+              TileImage::Doorway_RuneGray,
+              TileImage::Doorway_RuneBlue,
+              TileImage::Doorway_RuneSkull,
+              TileImage::Doorway_MirrorLit,
+              TileImage::Doorway_Mirror,
+              TileImage::Doorway_SantaicLava,
+              TileImage::Doorway_Candle,
+              TileImage::Doorway_Ghost,
+              TileImage::Doorway_Snake,
+              TileImage::Doorway_Oriental,
+              TileImage::Doorway_OrientalRed });
+
+        m_altarButton.setup(
+            t_context,
+            { (m_doorwayButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::Altar_Statue,
+              TileImage::Altar_Challace,
+              TileImage::Altar_Skull,
+              TileImage::Altar_Throne,
+              TileImage::Altar_Blood,
+              TileImage::Altar_Body,
+              TileImage::Altar_Demonic,
+              TileImage::Altar_Hand,
+              TileImage::Altar_King });
+
+        m_statueButton.setup(
+            t_context,
+            { (m_altarButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::Statue_Twins,    TileImage::Statue_Mermaid,  TileImage::Statue_Demonic,
+              TileImage::Statue_Wraith,   TileImage::Statue_Sword,    TileImage::Statue_Thresher,
+              TileImage::Statue_Orb,      TileImage::Statue_Naga,     TileImage::Statue_Imp,
+              TileImage::Statue_Hydra,    TileImage::Statue_Elephant, TileImage::Statue_Dwarf,
+              TileImage::Statue_Dragon,   TileImage::Statue_Flamberg, TileImage::Statue_Centaur,
+              TileImage::Statue_Cat,      TileImage::Statue_Angel,    TileImage::Statue_Monster,
+              TileImage::Statue_Princess, TileImage::Statue_Tengu });
+
+        m_columnButton.setup(
+            t_context,
+            { (m_statueButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::Pillar_CrumbleLeft,
+              TileImage::Pillar_Rubble,
+              TileImage::Pillar_Complete,
+              TileImage::Pillar_Half,
+              TileImage::Pillar_Quarter,
+              TileImage::Pillar_CrumbleRight });
+
+        m_npcButton1.setup(
+            t_context,
+            { (m_columnButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            {
+                TileImage::Gnome,
+                TileImage::Faun,
+                TileImage::Elfman,
+                TileImage::Dwarf,
+                TileImage::Wiglaf,
+                TileImage::Human,
+                TileImage::RedKnight,
+                TileImage::Elf,
+                TileImage::ElfWarrior,
+                TileImage::GreenElf,
+                TileImage::GreenElfMage,
+                TileImage::BlueClown,
+                TileImage::BlueKnight,
+                TileImage::Spartan,
+            });
+
+        m_npcButton2.setup(
+            t_context,
+            { (m_npcButton1.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::Satyr,
+              TileImage::GoldKnight,
+              TileImage::DeepCaster,
+              TileImage::OldMan,
+              TileImage::GoldClown,
+              TileImage::Hag,
+              TileImage::CyanKnight,
+              TileImage::Elfnee,
+              TileImage::Javelinee,
+              TileImage::SkullSpeaker,
+              TileImage::FolkMage,
+              TileImage::Maud,
+              TileImage::GreenRanger,
+              TileImage::BookSpeaker });
+
+        m_monsterButton1.setup(
+            t_context,
+            { (m_npcButton2.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::BeholderSpawn,  TileImage::SkullSlime,   TileImage::BoneDragon,
+              TileImage::SwampThing,     TileImage::RabidRodent,  TileImage::Bat,
+              TileImage::DragonWarlord,  TileImage::AquaSlime,    TileImage::SlimeBeholder,
+              TileImage::Cyclops,        TileImage::FleshCreeper, TileImage::Wailing,
+              TileImage::CoillingViper,  TileImage::IceKnight,    TileImage::Beholder,
+              TileImage::RottingChomper, TileImage::SkitterMite,  TileImage::BloodCreeper,
+              TileImage::WindHowler,     TileImage::GreenSnake });
+
+        m_monsterButton2.setup(
+            t_context,
+            { (m_monsterButton1.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::BloatedCreeper,  TileImage::MudDemon,     TileImage::Serpent,
+              TileImage::WalkingBeholder, TileImage::InvisibleMan, TileImage::Kracklin,
+              TileImage::Kobold,          TileImage::FireGiant,    TileImage::BeholderMite,
+              TileImage::RacerSnake,      TileImage::DessertSnake, TileImage::TwoHeadedOgre,
+              TileImage::MothDragon,      TileImage::Catterhorror, TileImage::CaveSpider,
+              TileImage::VineShambler,    TileImage::SpikeCreeper, TileImage::SlimeShambler,
+              TileImage::Spider,          TileImage::SpellWalker });
+
+        m_monsterButton3.setup(
+            t_context,
+            { (m_monsterButton2.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::GreenWight,   TileImage::SoulEater,
+              TileImage::BoneHound,    TileImage::ArcaneBeholder,
+              TileImage::Siren,        TileImage::Specter,
+              TileImage::BoneHydra,    TileImage::ShadowFiend,
+              TileImage::StripedSnake, TileImage::Scorpion,
+              TileImage::Firebrand,    TileImage::RustDevil,
+              TileImage::Revenant,     TileImage::WidowSpider,
+              TileImage::RedDemon,     TileImage::QuicksilverDragon,
+              TileImage::Dragon,       TileImage::Antlion,
+              TileImage::Quasit,       TileImage::KoboldBrute });
+
+        m_monsterButton4.setup(
+            t_context,
+            { (m_monsterButton3.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::SpiderHorror,  TileImage::OrangeDemon,  TileImage::Ooze,
+              TileImage::OctoCrawler,   TileImage::Wollynaut,    TileImage::BogSlave,
+              TileImage::MutantBeast,   TileImage::MoonTroll,    TileImage::ManaViper,
+              TileImage::Lorocyproca,   TileImage::FleshChomper, TileImage::Juggernaut,
+              TileImage::ElephantDemon, TileImage::RedJelly,     TileImage::IronGiant,
+              TileImage::Hippogriff,    TileImage::HellWing,     TileImage::Hellion,
+              TileImage::HellHound,     TileImage::GuardianCobra });
+
+        m_monsterButton5.setup(
+            t_context,
+            { (m_monsterButton4.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::GoldScorpion, TileImage::GreenBullber,  TileImage::GoldenDragon,
+              TileImage::GiantLeech,   TileImage::GiantAmoeba,   TileImage::OrangeClamber,
+              TileImage::FrostGiant,   TileImage::AntCreeper,    TileImage::SunWeaver,
+              TileImage::SkiteWing,    TileImage::FireElemental, TileImage::RustCrab,
+              TileImage::FireBat,      TileImage::WanderingEye,  TileImage::TwoHeadedGiant,
+              TileImage::BruteWitch,   TileImage::Draconian,     TileImage::WailingSlime,
+              TileImage::Madman,       TileImage::Fungosite });
     }
 
     void StateEditor::update(const Context & t_context, const float t_frameTimeSec)
@@ -90,6 +256,17 @@ namespace castlecrawl
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
+        m_doorwayButton.draw(t_target, t_states);
+        m_altarButton.draw(t_target, t_states);
+        m_statueButton.draw(t_target, t_states);
+        m_columnButton.draw(t_target, t_states);
+        m_npcButton1.draw(t_target, t_states);
+        m_npcButton2.draw(t_target, t_states);
+        m_monsterButton1.draw(t_target, t_states);
+        m_monsterButton2.draw(t_target, t_states);
+        m_monsterButton3.draw(t_target, t_states);
+        m_monsterButton4.draw(t_target, t_states);
+        m_monsterButton5.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
         {
@@ -125,20 +302,70 @@ namespace castlecrawl
     {
         if (const auto buttonPtr = t_event.getIf<sf::Event::MouseButtonPressed>())
         {
-            startDragging(
-                t_context,
-                { static_cast<float>(buttonPtr->position.x),
-                  static_cast<float>(buttonPtr->position.y) });
+            const sf::Vector2f mousePos{ static_cast<float>(buttonPtr->position.x),
+                                         static_cast<float>(buttonPtr->position.y) };
+
+            if (!m_doorwayButton.globalBounds().contains(mousePos) &&
+                !m_altarButton.globalBounds().contains(mousePos) &&
+                !m_statueButton.globalBounds().contains(mousePos) &&
+                !m_columnButton.globalBounds().contains(mousePos) &&
+                !m_npcButton1.globalBounds().contains(mousePos) &&
+                !m_npcButton2.globalBounds().contains(mousePos) &&
+                !m_monsterButton1.globalBounds().contains(mousePos) &&
+                !m_monsterButton2.globalBounds().contains(mousePos) &&
+                !m_monsterButton3.globalBounds().contains(mousePos) &&
+                !m_monsterButton4.globalBounds().contains(mousePos) &&
+                !m_monsterButton5.globalBounds().contains(mousePos))
+            {
+                startDragging(t_context, mousePos);
+            }
 
             return;
         }
 
         if (const auto buttonPtr = t_event.getIf<sf::Event::MouseButtonReleased>())
         {
-            stopDragging(
-                t_context,
-                { static_cast<float>(buttonPtr->position.x),
-                  static_cast<float>(buttonPtr->position.y) });
+            const sf::Vector2f mousePos{ static_cast<float>(buttonPtr->position.x),
+                                         static_cast<float>(buttonPtr->position.y) };
+
+            if (!m_isDragging)
+            {
+                auto selectFromDropDownButton = [&](TileSelectButton & button) {
+                    if (button.globalBounds().contains(mousePos))
+                    {
+                        const TileImage newTileImage = button.screenPosToTileImage(mousePos);
+                        const char newMapChar        = tileImageToChar(newTileImage);
+                        editMap(t_context, newMapChar, std::string(tileImageToName(newTileImage)));
+                    }
+                };
+
+                selectFromDropDownButton(m_doorwayButton);
+                selectFromDropDownButton(m_altarButton);
+                selectFromDropDownButton(m_statueButton);
+                selectFromDropDownButton(m_columnButton);
+                selectFromDropDownButton(m_npcButton1);
+                selectFromDropDownButton(m_npcButton2);
+                selectFromDropDownButton(m_monsterButton1);
+                selectFromDropDownButton(m_monsterButton2);
+                selectFromDropDownButton(m_monsterButton3);
+                selectFromDropDownButton(m_monsterButton4);
+                selectFromDropDownButton(m_monsterButton5);
+            }
+
+            if (!m_doorwayButton.globalBounds().contains(mousePos) &&
+                !m_altarButton.globalBounds().contains(mousePos) &&
+                !m_statueButton.globalBounds().contains(mousePos) &&
+                !m_columnButton.globalBounds().contains(mousePos) &&
+                !m_npcButton1.globalBounds().contains(mousePos) &&
+                !m_npcButton2.globalBounds().contains(mousePos) &&
+                !m_monsterButton1.globalBounds().contains(mousePos) &&
+                !m_monsterButton2.globalBounds().contains(mousePos) &&
+                !m_monsterButton3.globalBounds().contains(mousePos) &&
+                !m_monsterButton4.globalBounds().contains(mousePos) &&
+                !m_monsterButton5.globalBounds().contains(mousePos))
+            {
+                stopDragging(t_context, mousePos);
+            }
 
             return;
         }
@@ -154,6 +381,33 @@ namespace castlecrawl
                     t_context,
                     { static_cast<float>(mouseMovePtr->position.x),
                       static_cast<float>(mouseMovePtr->position.y) });
+            }
+            else
+            {
+                const sf::Vector2f mousePos{ static_cast<float>(mouseMovePtr->position.x),
+                                             static_cast<float>(mouseMovePtr->position.y) };
+
+                m_doorwayButton.setIsDroppedDown(m_doorwayButton.globalBounds().contains(mousePos));
+                m_altarButton.setIsDroppedDown(m_altarButton.globalBounds().contains(mousePos));
+                m_statueButton.setIsDroppedDown(m_statueButton.globalBounds().contains(mousePos));
+                m_columnButton.setIsDroppedDown(m_columnButton.globalBounds().contains(mousePos));
+                m_npcButton1.setIsDroppedDown(m_npcButton1.globalBounds().contains(mousePos));
+                m_npcButton2.setIsDroppedDown(m_npcButton2.globalBounds().contains(mousePos));
+
+                m_monsterButton1.setIsDroppedDown(
+                    m_monsterButton1.globalBounds().contains(mousePos));
+
+                m_monsterButton2.setIsDroppedDown(
+                    m_monsterButton2.globalBounds().contains(mousePos));
+
+                m_monsterButton3.setIsDroppedDown(
+                    m_monsterButton3.globalBounds().contains(mousePos));
+
+                m_monsterButton4.setIsDroppedDown(
+                    m_monsterButton4.globalBounds().contains(mousePos));
+
+                m_monsterButton5.setIsDroppedDown(
+                    m_monsterButton5.globalBounds().contains(mousePos));
             }
 
             return;

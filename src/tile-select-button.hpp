@@ -1,0 +1,69 @@
+#ifndef TILE_SELECT_BUTTON_HPP_INCLUDED
+#define TILE_SELECT_BUTTON_HPP_INCLUDED
+//
+// tile-select-button.hpp
+//
+#include "tile-image-enum.hpp"
+
+#include <vector>
+
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
+namespace castlecrawl
+{
+
+    struct Context;
+
+    //
+
+    struct DropDownTile
+    {
+        DropDownTile(
+            const Context & t_context,
+            const TileImage t_tileImage,
+            const sf::Vector2f & t_screenPos);
+
+        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+
+        TileImage tile_image;
+        sf::Sprite sprite;
+        sf::RectangleShape rectangle;
+    };
+
+    //
+
+    class TileSelectButton
+    {
+      public:
+        TileSelectButton();
+
+        void setup(
+            const Context & t_context,
+            const sf::Vector2f & t_screenPos,
+            const std::vector<TileImage> & t_tileImages);
+
+        // void update(const Context & t_context, const float t_elapsedTimeSec);
+
+        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+
+        inline void setIsDroppedDown(const bool t_isDroppedDown)
+        {
+            m_isDroppedDown = t_isDroppedDown;
+        }
+
+        [[nodiscard]] const sf::FloatRect globalBounds() const;
+
+        [[nodiscard]] TileImage screenPosToTileImage(const sf::Vector2f &) const;
+
+      private:
+        bool m_isDroppedDown;
+        std::vector<DropDownTile> m_tiles;
+    };
+
+} // namespace castlecrawl
+
+#endif // TILE_SELECT_BUTTON_HPP_INCLUDED

@@ -591,6 +591,292 @@ namespace castlecrawl
         // clang-format on
     }
 
+    inline constexpr char tileImageToChar(const TileImage t_image) noexcept
+    {
+        // clang-format off
+        switch (t_image)
+        {
+            case TileImage::Campfire:            { return 'a'; }
+            case TileImage::Inferno:             { return 'A'; }
+            case TileImage::Barrel:              { return 'b'; }
+            case TileImage::Sign:                { return 'B'; }
+            case TileImage::Chest:               { return 'c'; }
+            case TileImage::Ice:                 { return 'C'; }
+            case TileImage::Door:                { return 'd'; }
+            case TileImage::DoorLocked:          { return 'D'; }
+            case TileImage::Blood:               { return 'e'; }
+            case TileImage::Key:                 { return 'E'; }
+            case TileImage::FountainWater:       { return 'f'; }
+            case TileImage::FountainBlood:       { return 'F'; }
+            case TileImage::Water:               { return 'g'; }
+            case TileImage::Slime:               { return 'G'; }
+            case TileImage::Rock:                { return 'h'; }
+            case TileImage::RockWeak:            { return 'H'; }
+            case TileImage::Stair_Up:            { return 'i'; }
+            case TileImage::Stair_Down:          { return 'I'; }
+            case TileImage::Altar:               { return 'j'; }
+            case TileImage::Bag:                 { return 'J'; }
+            case TileImage::Coffin:              { return 'k'; }
+            case TileImage::StoneSpire:          { return 'K'; }
+            case TileImage::Lava:                { return 'l'; }
+            case TileImage::Tree1:               { return 'L'; }
+            case TileImage::Tree2:               { return 'm'; }
+            case TileImage::Tree3:               { return 'M'; }
+
+            case TileImage::Statue_Twins:        { return 'n'; }
+            case TileImage::Statue_Mermaid:      { return 'N'; }
+            case TileImage::Statue_Demonic:      { return 'o'; }
+            case TileImage::Statue_Wraith:       { return 'O'; }
+            case TileImage::Statue_Sword:        { return 'p'; }
+            case TileImage::Statue_Thresher:     { return 'P'; }
+            case TileImage::Statue_Orb:          { return 'q'; }
+            case TileImage::Statue_Naga:         { return 'Q'; }
+            case TileImage::Statue_Imp:          { return 'r'; }
+            case TileImage::Statue_Hydra:        { return 'R'; }
+            case TileImage::Statue_Elephant:     { return 's'; }
+            case TileImage::Statue_Dwarf:        { return 'S'; }
+            case TileImage::Statue_Dragon:       { return 't'; }
+            case TileImage::Statue_Flamberg:     { return 'T'; }
+            case TileImage::Statue_Centaur:      { return 'u'; }
+            case TileImage::Statue_Cat:          { return 'U'; }
+            case TileImage::Statue_Angel:        { return 'v'; }
+            case TileImage::Statue_Monster:      { return 'V'; }
+            case TileImage::Statue_Princess:     { return 'w'; }
+            case TileImage::Statue_Tengu:        { return 'W'; }
+
+            case TileImage::Wall_TopLeft:        { return 'x'; }
+            case TileImage::Wall_Horiz:          { return 'X'; }
+            case TileImage::Wall_Top:            { return 'y'; }
+            case TileImage::Wall_Vert:           { return 'Y'; }
+            case TileImage::Wall_Block:          { return 'z'; }
+            case TileImage::Wall_BlockWeak:      { return 'Z'; }
+
+            case TileImage::Doorway_Wood:        { return '!'; }
+            case TileImage::Doorway_WoodRune:    { return '"'; }
+            case TileImage::Doorway_SatanicGray: { return '#'; }
+            case TileImage::Doorway_SatanicRed:  { return '$'; }
+            case TileImage::Doorway_RuneOpen:    { return '%'; }
+            case TileImage::Doorway_RuneGray:    { return '&'; }
+            case TileImage::Doorway_RuneBlue:    { return '|'; }
+            case TileImage::Doorway_RuneSkull:   { return '('; }
+            case TileImage::Doorway_MirrorLit:   { return ')'; }
+            case TileImage::Doorway_Mirror:      { return '*'; }
+            case TileImage::Doorway_SantaicLava: { return '+'; }
+            case TileImage::Doorway_Candle:      { return ','; }
+            case TileImage::Doorway_Ghost:       { return '-'; }
+            case TileImage::Doorway_Snake:       { return '^'; }
+            case TileImage::Doorway_Oriental:    { return '/'; }
+            case TileImage::Doorway_OrientalRed: { return '0'; }
+
+            case TileImage::Altar_Statue:        { return '1'; }
+            case TileImage::Altar_Challace:      { return '2'; }
+            case TileImage::Altar_Skull:         { return '3'; }
+            case TileImage::Altar_Throne:        { return '4'; }
+            case TileImage::Altar_Blood:         { return '5'; }
+            case TileImage::Altar_Body:          { return '6'; }
+            case TileImage::Altar_Demonic:       { return '7'; }
+            case TileImage::Altar_Hand:          { return '8'; }
+            case TileImage::Altar_King:          { return '9'; }
+
+            case TileImage::Pillar_CrumbleLeft:  { return ':'; }
+            case TileImage::Pillar_Rubble:       { return ';'; }
+            case TileImage::Pillar_Complete:     { return '<'; }
+            case TileImage::Pillar_Half:         { return '='; }
+            case TileImage::Pillar_Quarter:      { return '>'; }
+            case TileImage::Pillar_CrumbleRight: { return '?'; }
+
+            case TileImage::Block_Emboss1:       { return '@'; }
+            case TileImage::Block_Emboss2:       { return '['; }
+            case TileImage::Block_Emboss3:       { return '_'; }
+            case TileImage::Block_Emboss4:       { return ']'; }
+
+            case TileImage::Wall_Shadow:         { return '\x1D'; }
+            case TileImage::Avatar:              { return '\x1E'; }
+
+            case TileImage::Floor_Wood1:         { return '\x00'; }
+            case TileImage::Floor_Wood2:         { return '\x01'; }
+            case TileImage::Floor_Wood3:         { return '\x02'; }
+            case TileImage::Floor_Wood4:         { return '\x03'; }
+            case TileImage::Floor_Wood5:         { return '\x04'; }
+            case TileImage::Floor_Wood6:         { return '\x05'; }
+            case TileImage::Floor_Stone1:        { return '\x06'; }
+            case TileImage::Floor_Stone2:        { return '\x07'; }
+            case TileImage::Floor_Stone3:        { return '\x08'; }
+            case TileImage::Floor_Stone4:        { return '\x09'; }
+            case TileImage::Floor_Stone5:        { return '\x0A'; }
+            case TileImage::Floor_Stone6:        { return '\x0B'; }
+            case TileImage::Floor_Dirt1:         { return '\x0C'; }
+            case TileImage::Floor_Dirt2:         { return '\x0D'; }
+            case TileImage::Floor_Dirt3:         { return '\x0E'; }
+            case TileImage::Floor_Dirt4:         { return '\x0F'; }
+            case TileImage::Floor_Dirt5:         { return '\x10'; }
+
+            case TileImage::LiquidCor_TopLeft:   { return '\x11'; }
+            case TileImage::LiquidCor_TopRight:  { return '\x12'; }
+            case TileImage::LiquidCor_BotLeft:   { return '\x13'; }
+            case TileImage::LiquidCor_BotRight:  { return '\x14'; }
+            case TileImage::LiquidRim_TopLeft:   { return '\x15'; }
+            case TileImage::LiquidRim_Top:       { return '\x16'; }
+            case TileImage::LiquidRim_TopRight:  { return '\x17'; }
+            case TileImage::LiquidRim_Left:      { return '\x18'; }
+            case TileImage::LiquidRim_Right:     { return '\x19'; }
+            case TileImage::LiquidRim_BotLeft:   { return '\x1A'; }
+            case TileImage::LiquidRim_Bot:       { return '\x1B'; }
+            case TileImage::LiquidRim_BotRight:  { return '\x1C'; }
+
+            // monsters
+            case TileImage::BeholderSpawn:       { return '\x80'; }
+            case TileImage::SkullSlime:          { return '\x81'; }
+            case TileImage::BoneDragon:          { return '\x82'; }
+            case TileImage::SwampThing:          { return '\x83'; }
+            case TileImage::RabidRodent:         { return '\x84'; }
+            case TileImage::Bat:                 { return '\x85'; }
+            case TileImage::DragonWarlord:       { return '\x86'; }
+            case TileImage::AquaSlime:           { return '\x87'; }
+
+            case TileImage::SlimeBeholder:       { return '\x88'; }
+            case TileImage::Cyclops:             { return '\x89'; }
+            case TileImage::FleshCreeper:        { return '\x8A'; }
+            case TileImage::Wailing:             { return '\x8B'; }
+            case TileImage::CoillingViper:       { return '\x8C'; }
+            case TileImage::IceKnight:           { return '\x8D'; }
+            case TileImage::Beholder:            { return '\x8E'; }
+            case TileImage::RottingChomper:      { return '\x8F'; }
+
+            case TileImage::SkitterMite:         { return '\x90'; }
+            case TileImage::BloodCreeper:        { return '\x91'; }
+            case TileImage::WindHowler:          { return '\x92'; }
+            case TileImage::GreenSnake:          { return '\x93'; }
+            case TileImage::BloatedCreeper:      { return '\x94'; }
+            case TileImage::MudDemon:            { return '\x95'; }
+            case TileImage::Serpent:             { return '\x96'; }
+            case TileImage::WalkingBeholder:     { return '\x97'; }
+
+            case TileImage::InvisibleMan:        { return '\x98'; }
+            case TileImage::Kracklin:            { return '\x99'; }
+            case TileImage::Kobold:              { return '\x9A'; }
+            case TileImage::FireGiant:           { return '\x9B'; }
+            case TileImage::BeholderMite:        { return '\x9C'; }
+            case TileImage::RacerSnake:          { return '\x9D'; }
+            case TileImage::DessertSnake:        { return '\x9E'; }
+            case TileImage::TwoHeadedOgre:       { return '\x9F'; }
+    ;
+            case TileImage::MothDragon:          { return '\xA0'; }
+            case TileImage::Catterhorror:        { return '\xA1'; }
+            case TileImage::CaveSpider:          { return '\xA2'; }
+            case TileImage::VineShambler:        { return '\xA3'; }
+            case TileImage::SpikeCreeper:        { return '\xA4'; }
+            case TileImage::SlimeShambler:       { return '\xA5'; }
+            case TileImage::Spider:              { return '\xA6'; }
+            case TileImage::SpellWalker:         { return '\xA7'; }
+
+            case TileImage::GreenWight:          { return '\xA8'; }
+            case TileImage::SoulEater:           { return '\xA9'; }
+            case TileImage::BoneHound:           { return '\xAA'; }
+            case TileImage::ArcaneBeholder:      { return '\xAB'; }
+            case TileImage::Siren:               { return '\xAC'; }
+            case TileImage::Specter:             { return '\xAD'; }
+            case TileImage::BoneHydra:           { return '\xAE'; }
+            case TileImage::ShadowFiend:         { return '\xAF'; }
+                     
+            case TileImage::StripedSnake:        { return '\xB0'; }
+            case TileImage::Scorpion:            { return '\xB1'; }
+            case TileImage::Firebrand:           { return '\xB2'; }
+            case TileImage::RustDevil:           { return '\xB3'; }
+            case TileImage::Revenant:            { return '\xB4'; }
+            case TileImage::WidowSpider:         { return '\xB5'; }
+            case TileImage::RedDemon:            { return '\xB6'; }
+            case TileImage::QuicksilverDragon:   { return '\xB7'; }
+
+            case TileImage::Dragon:              { return '\xB8'; }
+            case TileImage::Antlion:             { return '\xB9'; }
+            case TileImage::Quasit:              { return '\xBA'; }
+            case TileImage::KoboldBrute:         { return '\xBB'; }
+            case TileImage::SpiderHorror:        { return '\xBC'; }
+            case TileImage::OrangeDemon:         { return '\xBD'; }
+            case TileImage::Ooze:                { return '\xBE'; }
+            case TileImage::OctoCrawler:         { return '\xBF'; }
+
+            case TileImage::Wollynaut:           { return '\xC0'; }
+            case TileImage::BogSlave:            { return '\xC1'; }
+            case TileImage::MutantBeast:         { return '\xC2'; }
+            case TileImage::MoonTroll:           { return '\xC3'; }
+            case TileImage::ManaViper:           { return '\xC4'; }
+            case TileImage::Lorocyproca:         { return '\xC5'; }
+            case TileImage::FleshChomper:        { return '\xC6'; }
+            case TileImage::Juggernaut:          { return '\xC7'; }
+
+            case TileImage::ElephantDemon:       { return '\xC8'; }
+            case TileImage::RedJelly:            { return '\xC9'; }
+            case TileImage::IronGiant:           { return '\xCA'; }
+            case TileImage::Hippogriff:          { return '\xCB'; }
+            case TileImage::HellWing:            { return '\xCC'; }
+            case TileImage::Hellion:             { return '\xCD'; }
+            case TileImage::HellHound:           { return '\xCE'; }
+            case TileImage::GuardianCobra:       { return '\xCF'; }
+
+            case TileImage::GoldScorpion:        { return '\xD0'; }
+            case TileImage::GreenBullber:        { return '\xD1'; }
+            case TileImage::GoldenDragon:        { return '\xD2'; }
+            case TileImage::GiantLeech:          { return '\xD3'; }
+            case TileImage::GiantAmoeba:         { return '\xD4'; }
+            case TileImage::OrangeClamber:       { return '\xD5'; }
+            case TileImage::FrostGiant:          { return '\xD6'; }
+            case TileImage::AntCreeper:          { return '\xD7'; }
+
+            case TileImage::SunWeaver:           { return '\xD8'; }
+            case TileImage::SkiteWing:           { return '\xD9'; }
+            case TileImage::FireElemental:       { return '\xDA'; }
+            case TileImage::RustCrab:            { return '\xDB'; }
+            case TileImage::FireBat:             { return '\xDC'; }
+            case TileImage::WanderingEye:        { return '\xDD'; }
+            case TileImage::TwoHeadedGiant:      { return '\xDE'; }
+            case TileImage::BruteWitch:          { return '\xDF'; }
+                     
+            case TileImage::Draconian:           { return '\xE0'; }
+            case TileImage::WailingSlime:        { return '\xE1'; }
+            case TileImage::Madman:              { return '\xE2'; }
+            case TileImage::Fungosite:           { return '\xE3'; }
+                        
+            // npc
+            case TileImage::Gnome:               { return '\xE4'; }
+            case TileImage::Faun:                { return '\xE5'; }
+            case TileImage::Elfman:              { return '\xE6'; }
+            case TileImage::Dwarf:               { return '\xE7'; }
+
+            case TileImage::Wiglaf:              { return '\xE8'; }
+            case TileImage::Human:               { return '\xE9'; }
+            case TileImage::RedKnight:           { return '\xEA'; }
+            case TileImage::Elf:                 { return '\xEB'; }
+            case TileImage::ElfWarrior:          { return '\xEC'; }
+            case TileImage::GreenElf:            { return '\xED'; }
+            case TileImage::GreenElfMage:        { return '\xEE'; }
+            case TileImage::BlueClown:           { return '\xEF'; }
+
+            case TileImage::BlueKnight:          { return '\xF0'; }
+            case TileImage::Spartan:             { return '\xF1'; }
+            case TileImage::Satyr:               { return '\xF2'; }
+            case TileImage::GoldKnight:          { return '\xF3'; }
+            case TileImage::DeepCaster:          { return '\xF4'; }
+            case TileImage::OldMan:              { return '\xF5'; }
+            case TileImage::GoldClown:           { return '\xF6'; }
+            case TileImage::Hag:                 { return '\xF7'; }
+
+            case TileImage::CyanKnight:          { return '\xF8'; }
+            case TileImage::Elfnee:              { return '\xF9'; }
+            case TileImage::Javelinee:           { return '\xFA'; }
+            case TileImage::SkullSpeaker:        { return '\xFB'; }
+            case TileImage::FolkMage:            { return '\xFC'; }
+            case TileImage::Maud:                { return '\xFD'; }
+            case TileImage::GreenRanger:         { return '\xFE'; }
+            case TileImage::BookSpeaker:         { return '\xFF'; }
+
+            case TileImage::Empty:
+            default:                             { return ' '; }
+        }
+        // clang-format on
+    }
+
     inline const sf::IntRect tileImageToRect(const TileImage tileImage)
     {
         // clang-format off
