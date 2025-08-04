@@ -11,6 +11,7 @@
 #include "maps.hpp"
 #include "player-display.hpp"
 #include "sfml-defaults.hpp"
+#include "tile-image-enum.hpp"
 
 #include <SFML/System/Time.hpp>
 
@@ -77,128 +78,7 @@ namespace castlecrawl
         }
         else if ((mapCell.object_char != ' ') && (mapCell.object_char != '.'))
         {
-            if (mapCell.object_char == 'l')
-            {
-                message = "lava";
-            }
-            else if (mapCell.object_char == 'w')
-            {
-                message = "water";
-            }
-            else if (mapCell.object_char == 'd')
-            {
-                message = "unlocked door";
-            }
-            else if (mapCell.object_char == 'D')
-            {
-                message = "locked door";
-            }
-            else if (mapCell.object_char == 'r')
-            {
-                message = "solid rock";
-            }
-            else if (mapCell.object_char == 's')
-            {
-                message = "stairs leading down";
-            }
-            else if (mapCell.object_char == 'S')
-            {
-                message = "stairs leading up";
-            }
-            else if (mapCell.object_char == 'b')
-            {
-                message = "barrel";
-            }
-            else if (mapCell.object_char == 'c')
-            {
-                message = "chest";
-            }
-            else if (mapCell.object_char == 'k')
-            {
-                message = "coffin";
-            }
-            else if (mapCell.object_char == '1')
-            {
-                message = "bag of snakes";
-            }
-            else if (mapCell.object_char == '3')
-            {
-                message = "spiderweb";
-            }
-            else if (mapCell.object_char == '5')
-            {
-                message = "barrel of goblins";
-            }
-            else if (mapCell.object_char == '7')
-            {
-                message = "bats";
-            }
-            else if (mapCell.object_char == '9')
-            {
-                message = "skeleton grave";
-            }
-            else if (mapCell.object_char == ';')
-            {
-                message = "demon doorway";
-            }
-            else if (mapCell.object_char == ']')
-            {
-                message = "dragon inferno";
-            }
-            else if (mapCell.object_char == 'g')
-            {
-                message = "slime";
-            }
-            else if (mapCell.object_char == '!')
-            {
-                message = "bag";
-            }
-            else if (mapCell.object_char == '@')
-            {
-                message = "altar";
-            }
-            else if (mapCell.object_char == '#')
-            {
-                message = "stone spire";
-            }
-            else if (mapCell.object_char == '$')
-            {
-                message = "key";
-            }
-            else if (mapCell.object_char == 'a')
-            {
-                message = "campfire";
-            }
-            else if (mapCell.object_char == 'A')
-            {
-                message = "inferno";
-            }
-            else if (mapCell.object_char == 'e')
-            {
-                message = "blood";
-            }
-            else if (mapCell.object_char == 'E')
-            {
-                message = "sign";
-            }
-            else if (mapCell.object_char == 'i')
-            {
-                message = "ice";
-            }
-            else if (
-                (mapCell.object_char == '%') || (mapCell.object_char == '^') ||
-                (mapCell.object_char == '&'))
-            {
-                message = "tree";
-            }
-            else if (mapCell.object_char == 'h')
-            {
-                message = "water fountain";
-            }
-            else if (mapCell.object_char == 'H')
-            {
-                message = "blood fountain";
-            }
+            message = tileImageToName(charToTileImage(mapCell.object_char));
         }
 
         if (message.empty())
