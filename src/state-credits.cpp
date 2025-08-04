@@ -7,7 +7,6 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "enemy.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "item-factory.hpp"

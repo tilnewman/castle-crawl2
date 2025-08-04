@@ -10,6 +10,7 @@
 #include "layout.hpp"
 #include "maps.hpp"
 #include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 #include "splat-images.hpp"
 #include "tile-images.hpp"
 

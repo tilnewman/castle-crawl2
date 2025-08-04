@@ -26,9 +26,6 @@ namespace castlecrawl
         void load(const Context & t_context);
         void verify() const;
 
-        void loadEnemies(const Context & t_context, Map & t_map) const;
-        void unloadEnemies(const Context & t_context) const;
-
       private:
         std::vector<Map> m_maps;
         std::vector<Map>::iterator m_currentIter;

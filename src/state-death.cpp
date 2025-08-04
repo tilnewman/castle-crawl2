@@ -8,7 +8,6 @@
 #include "campfire.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "enemy.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "inferno.hpp"
@@ -95,7 +94,6 @@ namespace castlecrawl
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
-        t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRedRectangle, t_states);

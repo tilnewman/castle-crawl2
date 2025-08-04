@@ -9,7 +9,6 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
-#include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "inferno.hpp"
 #include "item-factory.hpp"
@@ -55,7 +54,6 @@ namespace castlecrawl
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
-        t_context.enemies.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);
         t_context.sparkle_particles.draw(t_target, t_states);

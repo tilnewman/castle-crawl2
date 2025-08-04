@@ -8,7 +8,6 @@
 #include "context.hpp"
 #include "doorway-images.hpp"
 #include "dust-particle.hpp"
-#include "enemy.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
@@ -74,7 +73,6 @@ namespace castlecrawl
         std::unique_ptr<util::SoundPlayer> m_sfxUPtr;
         std::unique_ptr<util::MusicPlayer> m_musicUPtr;
         std::unique_ptr<FontManager> m_fontsUPtr;
-        std::unique_ptr<Enemies> m_enemiesUPtr;
         std::unique_ptr<FramerateText> m_framerateUPtr;
         std::unique_ptr<TopPanel> m_topPanelUPtr;
         item::ItemFactory m_itemFactory;

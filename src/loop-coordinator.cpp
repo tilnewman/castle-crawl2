@@ -38,7 +38,6 @@ namespace castlecrawl
         , m_sfxUPtr{}
         , m_musicUPtr{}
         , m_fontsUPtr{}
-        , m_enemiesUPtr{}
         , m_framerateUPtr{}
         , m_topPanelUPtr{}
         , m_itemFactory{}
@@ -73,7 +72,6 @@ namespace castlecrawl
 
         m_mapDisplayUPtr               = std::make_unique<MapDisplay>();
         m_stateManagerUPtr             = std::make_unique<StateManager>();
-        m_enemiesUPtr                  = std::make_unique<Enemies>();
         m_fontsUPtr                    = std::make_unique<FontManager>();
         m_tileImagesUPtr               = std::make_unique<TileImages>();
         m_splatImagesUPtr              = std::make_unique<SplatImages>();
@@ -107,7 +105,6 @@ namespace castlecrawl
             *m_sfxUPtr,
             *m_musicUPtr,
             *m_fontsUPtr,
-            *m_enemiesUPtr,
             *m_framerateUPtr,
             *m_topPanelUPtr,
             m_itemFactory,
@@ -120,7 +117,6 @@ namespace castlecrawl
         m_itemFactory.setup();
 
         m_fontsUPtr->setup(m_config);
-        m_enemiesUPtr->setup(m_config);
         m_tileImagesUPtr->setup(m_config);
         m_splatImagesUPtr->setup(m_config);
         m_altarImagesUPtr->setup(m_config);
@@ -156,7 +152,6 @@ namespace castlecrawl
         m_stateManagerUPtr.reset();
         m_playerDisplayUPtr.reset();
         m_fontsUPtr.reset();
-        m_enemiesUPtr.reset();
         m_framerateUPtr.reset();
         m_topPanelUPtr.reset();
         m_tileImagesUPtr.reset();

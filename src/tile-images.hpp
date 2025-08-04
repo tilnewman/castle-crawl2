@@ -4,7 +4,6 @@
 // tile-images.hpp
 //
 #include "context.hpp"
-#include "enemy.hpp"
 #include "tile-image-enum.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>

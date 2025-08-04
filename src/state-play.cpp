@@ -9,7 +9,6 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
-#include "enemy.hpp"
 #include "framerate-text.hpp"
 #include "health-bar.hpp"
 #include "inferno.hpp"
@@ -39,7 +38,6 @@ namespace castlecrawl
 
     void StatePlay::update(const Context & t_context, const float t_frameTimeSec)
     {
-        t_context.enemies.update(t_context, t_frameTimeSec);
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.player_display.update(t_context, t_frameTimeSec);
         t_context.framerate.update();
@@ -58,7 +56,6 @@ namespace castlecrawl
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
-        t_context.enemies.draw(t_context, t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);
         t_context.sparkle_particles.draw(t_target, t_states);
         m_mouseover.draw(t_context, t_target, t_states);
@@ -103,15 +100,10 @@ namespace castlecrawl
     {
         const MapPos_t mapPosBefore    = t_context.player_display.position();
         const MapPos_t mapPosAttempted = util::keys::moveIfDir(mapPosBefore, t_key);
-        const bool isEnemyInTheWay     = t_context.enemies.isAnyAtMapPos(mapPosAttempted);
         const char mapCharAttempted    = t_context.maps.current().cell(mapPosAttempted).object_char;
 
         const MapPos_t mapPosAfter = [&]() {
-            if (isEnemyInTheWay)
-            {
-                return mapPosBefore;
-            }
-            else if (
+            if (
                 (mapCharAttempted == ' ') || (mapCharAttempted == 'd') ||
                 (mapCharAttempted == '.') || (mapCharAttempted == 's') || (mapCharAttempted == 'S'))
             {

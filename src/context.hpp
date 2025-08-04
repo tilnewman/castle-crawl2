@@ -26,7 +26,6 @@ namespace castlecrawl
     class Player;
     class PlayerDisplay;
     class FontManager;
-    class Enemies;
     class FramerateText;
     class TopPanel;
     class DustParticleManager;
@@ -59,7 +58,6 @@ namespace castlecrawl
             util::SoundPlayer & t_sfx,
             util::MusicPlayer & t_music,
             FontManager & t_fontManager,
-            Enemies & t_enemies,
             FramerateText & t_framerateText,
             TopPanel & t_topPanel,
             item::ItemFactory & t_itemFactory,
@@ -84,7 +82,6 @@ namespace castlecrawl
             , sfx(t_sfx)
             , music(t_music)
             , fonts(t_fontManager)
-            , enemies(t_enemies)
             , framerate(t_framerateText)
             , top_panel(t_topPanel)
             , items(t_itemFactory)
@@ -111,7 +108,6 @@ namespace castlecrawl
         util::SoundPlayer & sfx;
         util::MusicPlayer & music;
         FontManager & fonts;
-        Enemies & enemies;
         FramerateText & framerate;
         TopPanel & top_panel;
         item::ItemFactory & items;
