@@ -399,6 +399,19 @@ namespace castlecrawl
                 const sf::Vector2f mousePos{ static_cast<float>(mouseMovePtr->position.x),
                                              static_cast<float>(mouseMovePtr->position.y) };
 
+                m_miscButton.updateMousePos(mousePos);
+                m_doorwayButton.updateMousePos(mousePos);
+                m_altarButton.updateMousePos(mousePos);
+                m_statueButton.updateMousePos(mousePos);
+                m_columnButton.updateMousePos(mousePos);
+                m_npcButton1.updateMousePos(mousePos);
+                m_npcButton2.updateMousePos(mousePos);
+                m_monsterButton1.updateMousePos(mousePos);
+                m_monsterButton2.updateMousePos(mousePos);
+                m_monsterButton3.updateMousePos(mousePos);
+                m_monsterButton4.updateMousePos(mousePos);
+                m_monsterButton5.updateMousePos(mousePos);
+
                 m_miscButton.setIsDroppedDown(m_miscButton.globalBounds().contains(mousePos));
                 m_doorwayButton.setIsDroppedDown(m_doorwayButton.globalBounds().contains(mousePos));
                 m_altarButton.setIsDroppedDown(m_altarButton.globalBounds().contains(mousePos));

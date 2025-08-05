@@ -61,8 +61,6 @@ namespace castlecrawl
         }
     }
 
-    // void TileSelectButton::update(const Context & t_context, const float t_elapsedTimeSec) {}
-
     void TileSelectButton::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
     {
         if (m_isDroppedDown)
@@ -118,6 +116,21 @@ namespace castlecrawl
         }
 
         return TileImage::Empty;
+    }
+
+    void TileSelectButton::updateMousePos(const sf::Vector2f & t_mousePos)
+    {
+        for (DropDownTile & tile : m_tiles)
+        {
+            if (tile.sprite.getGlobalBounds().contains(t_mousePos))
+            {
+                tile.outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 255));
+            }
+            else
+            {
+                tile.outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 127));
+            }
+        }
     }
 
 } // namespace castlecrawl

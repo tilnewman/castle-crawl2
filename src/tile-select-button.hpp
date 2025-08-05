@@ -47,8 +47,6 @@ namespace castlecrawl
             const sf::Vector2f & t_screenPos,
             const std::vector<TileImage> & t_tileImages);
 
-        // void update(const Context & t_context, const float t_elapsedTimeSec);
-
         void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
 
         inline void setIsDroppedDown(const bool t_isDroppedDown)
@@ -59,6 +57,8 @@ namespace castlecrawl
         [[nodiscard]] const sf::FloatRect globalBounds() const;
 
         [[nodiscard]] TileImage screenPosToTileImage(const sf::Vector2f &) const;
+
+        void updateMousePos(const sf::Vector2f & t_mousePos);
 
       private:
         bool m_isDroppedDown;
