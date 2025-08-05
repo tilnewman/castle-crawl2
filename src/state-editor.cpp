@@ -287,7 +287,7 @@ namespace castlecrawl
             t_target.draw(m_editRectangle, t_states);
         }
 
-        for (const MapEntry_t & entry : m_dragSelectedEntrys)
+        for (const MapEntry & entry : m_dragSelectedEntrys)
         {
             sf::RectangleShape rectangle;
             rectangle.setFillColor(sf::Color(0, 255, 255, 64));
@@ -753,7 +753,7 @@ namespace castlecrawl
         }
         else
         {
-            for (const MapEntry_t & entry : m_dragSelectedEntrys)
+            for (const MapEntry & entry : m_dragSelectedEntrys)
             {
                 const char currentMapChar = m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
                                                 .at(static_cast<std::size_t>(entry.pos.x));
@@ -957,7 +957,7 @@ namespace castlecrawl
 
                 if (screenRect.findIntersection(dragRect))
                 {
-                    const MapEntry_t entry{ { x, y }, screenRect };
+                    const MapEntry entry{ { x, y }, screenRect };
                     m_dragSelectedEntrys.push_back(entry);
                 }
 

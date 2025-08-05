@@ -21,7 +21,7 @@ namespace castlecrawl
 
     //
 
-    struct MapEntry_t
+    struct MapEntry
     {
         MapPos_t pos;
         sf::FloatRect rect;
@@ -81,7 +81,7 @@ namespace castlecrawl
         sf::Vector2f m_dragPosStart;
         sf::Vector2f m_dragPosStop;
         sf::RectangleShape m_dragRectangle;
-        std::vector<MapEntry_t> m_dragSelectedEntrys;
+        std::vector<MapEntry> m_dragSelectedEntrys;
         TileSelectButton m_miscButton;
         TileSelectButton m_doorwayButton;
         TileSelectButton m_altarButton;
