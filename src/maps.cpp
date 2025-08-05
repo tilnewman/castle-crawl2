@@ -31,13 +31,8 @@ namespace castlecrawl
 
     void Maps::change(const Context & t_context, MapName t_mapName, const MapPos_t & t_pos)
     {
-        // stop all the animations before changing the map
-        t_context.sparkle_particles.clear();
-        t_context.campfire_anims.clear();
-        t_context.smoke_anims.clear();
-        t_context.inferno_anims.clear();
-
         unloadMonsters(t_context);
+        unloadAnimations(t_context);
 
         m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
             return (map.name() == t_mapName);
@@ -51,6 +46,7 @@ namespace castlecrawl
         t_context.player_display.position(t_context, t_pos);
 
         loadMonsters(t_context);
+        loadAnimations(t_context);
     }
 
     void Maps::loadMonsters(const Context & t_context)
@@ -72,6 +68,50 @@ namespace castlecrawl
     }
 
     void Maps::unloadMonsters(const Context & t_context) { t_context.monsters.reset(); }
+
+    void Maps::loadAnimations(const Context & t_context)
+    {
+        const sf::Vector2i size = current().size();
+        for (int y(0); y < size.y; ++y)
+        {
+            for (int x(0); x < size.x; ++x)
+            {
+                const MapPos_t pos{ x, y };
+                const char ch = current().cell(pos).object_char;
+
+                if (tileImageToChar(TileImage::Campfire) == ch)
+                {
+                    t_context.campfire_anims.add(t_context, pos);
+                }
+                else if (tileImageToChar(TileImage::Inferno) == ch)
+                {
+                    t_context.inferno_anims.add(t_context, pos);
+                }
+            }
+        }
+    }
+
+    void Maps::unloadAnimations(const Context & t_context)
+    {
+        const sf::Vector2i size = current().size();
+        for (int y(0); y < size.y; ++y)
+        {
+            for (int x(0); x < size.x; ++x)
+            {
+                const MapPos_t pos{ x, y };
+                const char ch = current().cell(pos).object_char;
+
+                if (tileImageToChar(TileImage::Campfire) == ch)
+                {
+                    t_context.campfire_anims.remove(t_context, pos);
+                }
+                else if (tileImageToChar(TileImage::Inferno) == ch)
+                {
+                    t_context.inferno_anims.remove(t_context, pos);
+                }
+            }
+        }
+    }
 
     void Maps::forceMapForEditting(const Map t_map) { *m_currentIter = t_map; }
 
