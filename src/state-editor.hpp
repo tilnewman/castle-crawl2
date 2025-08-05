@@ -58,7 +58,7 @@ namespace castlecrawl
             const Context & t_context, const char t_newMapChar, const std::string & t_fadeText);
 
         void fadeText(const Context & t_context, const std::string & t_text);
-        void save() const;
+        void save(const Context & t_context) const;
         void load(const Context & t_context);
 
         void startDragging(const Context & t_context, const sf::Vector2f & t_pos);

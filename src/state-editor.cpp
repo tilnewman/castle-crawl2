@@ -466,7 +466,7 @@ namespace castlecrawl
         else if ((keyScancode == sf::Keyboard::Scancode::S) && isCntrlPressed())
         {
             fadeText(t_context, "Saving...");
-            save();
+            save(t_context);
         }
         else if ((keyScancode == sf::Keyboard::Scancode::L) && isCntrlPressed())
         {
@@ -789,7 +789,7 @@ namespace castlecrawl
               (m_borderRectangle.getPosition().y - (m_fadeText.getGlobalBounds().size.y * 2.0f)) });
     }
 
-    void StateEditor::save() const
+    void StateEditor::save(const Context & t_context) const
     {
         std::ofstream fStream("map.txt", std::ios::trunc);
 
@@ -797,6 +797,8 @@ namespace castlecrawl
         {
             fStream << '\"' << rowStr << "\"," << std::endl;
         }
+
+        t_context.sfx.play("error-4"); // no error here but this sfx sounds right
     }
 
     void StateEditor::load(const Context & t_context)
@@ -817,6 +819,7 @@ namespace castlecrawl
                 std::cerr << "Tried to load map.txt but failed because line " << lineNumber
                           << " was too short." << std::endl;
 
+                t_context.sfx.play("error-2");
                 return;
             }
 
@@ -826,6 +829,7 @@ namespace castlecrawl
                 std::cerr << "Tried to load map.txt but failed because line " << lineNumber
                           << " did NOT start with quotes." << std::endl;
 
+                t_context.sfx.play("error-2");
                 return;
             }
             else
@@ -851,6 +855,7 @@ namespace castlecrawl
                           << " when it should have been exactly " << m_mapChars[0].size() << "."
                           << std::endl;
 
+                t_context.sfx.play("error-2");
                 return;
             }
 
@@ -864,11 +869,13 @@ namespace castlecrawl
                       << lines.size() << " when it should have been exactly " << m_mapChars.size()
                       << "." << std::endl;
 
+            t_context.sfx.play("error-2");
             return;
         }
 
         m_mapChars = lines;
         resetMap(t_context);
+        t_context.sfx.play("error-4"); // no error here but this sfx sounds right
     }
 
     void StateEditor::startDragging(const Context & t_context, const sf::Vector2f & t_pos)
