@@ -33,11 +33,17 @@ namespace castlecrawl
             (m_tileImage == TileImage::HellWing) || (m_tileImage == TileImage::Hellion));
     }
 
-    void Monster::takeTurn(const Context & t_context)
+    bool Monster::takeTurn(const Context & t_context)
     {
-        if (!isPlayerAdjacent(t_context))
+        if (isPlayerAdjacent(t_context))
+        {
+            // todo attack or something
+            return false;
+        }
+        else
         {
             moveTowardPlayer(t_context);
+            return true;
         }
     }
 
@@ -113,12 +119,18 @@ namespace castlecrawl
         m_monsters.emplace_back(t_mapPos, charToTileImage(t_mapChar));
     }
 
-    void MonsterManager::takeTurns(const Context & t_context)
+    bool MonsterManager::takeTurns(const Context & t_context)
     {
+        bool didAnyMonstersMove = false;
         for (Monster & monster : m_monsters)
         {
-            monster.takeTurn(t_context);
+            if (monster.takeTurn(t_context))
+            {
+                didAnyMonstersMove = true;
+            }
         }
+
+        return didAnyMonstersMove;
     }
 
     std::vector<Monster>::iterator MonsterManager::findMonsterFromMapPos(const MapPos_t & t_mapPos)

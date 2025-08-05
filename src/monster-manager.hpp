@@ -37,7 +37,8 @@ namespace castlecrawl
         [[nodiscard]] inline TileImage tileImage() const noexcept { return m_tileImage; }
         [[nodiscard]] bool isUndead() const;
 
-        void takeTurn(const Context & t_context);
+        // returns true if m_mapPos was changed
+        bool takeTurn(const Context & t_context);
 
       private:
         [[nodiscard]] bool isPlayerAdjacent(const Context & t_context) const;
@@ -59,7 +60,9 @@ namespace castlecrawl
 
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
         inline void reset() { m_monsters.clear(); }
-        void takeTurns(const Context & t_context);
+        
+        // returns true if any monsters change map position
+        bool takeTurns(const Context & t_context);
 
       private:
         std::vector<Monster>::iterator findMonsterFromMapPos(const MapPos_t & t_mapPos);

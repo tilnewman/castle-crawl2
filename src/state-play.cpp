@@ -141,8 +141,10 @@ namespace castlecrawl
         {
             t_context.player_display.position(t_context, mapPosAfter);
             
-            t_context.monsters.takeTurns(t_context);
-            t_context.map_display.load(t_context);
+            if (t_context.monsters.takeTurns(t_context))
+            {
+                t_context.map_display.load(t_context);
+            }
 
             handleMapTransition(t_context, mapPosAfter);
             playMoveMusic(t_context);
