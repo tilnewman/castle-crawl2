@@ -33,6 +33,7 @@ namespace castlecrawl
         , m_borderRectangle{}
         , m_keyText{ util::SfmlDefaults::instance().font() }
         , m_fadeText{ util::SfmlDefaults::instance().font() }
+        , m_fadeTextTimerSec{ 0.0f }
         , m_mouseover{}
         , m_isDragging{ false }
         , m_dragPosStart{ 0.0f, 0.0f }
@@ -254,7 +255,7 @@ namespace castlecrawl
     void StateEditor::update(const Context & t_context, const float t_frameTimeSec)
     {
         updateHelpText(t_context);
-        updateFadeText();
+        updateFadeText(t_frameTimeSec);
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
         t_context.smoke_anims.update(t_context, t_frameTimeSec);
@@ -704,12 +705,15 @@ namespace castlecrawl
         }
     }
 
-    void StateEditor::updateFadeText()
+    void StateEditor::updateFadeText(const float t_elapsedTimeSec)
     {
-        sf::Color color = m_fadeText.getFillColor();
-        if (color.a > 0)
+        const float fadeTimeSec = 3.0f;
+        m_fadeTextTimerSec += t_elapsedTimeSec;
+        if (m_fadeTextTimerSec < fadeTimeSec)
         {
-            --color.a;
+            const int alpha = (255 - util::map(m_fadeTextTimerSec, 0.0f, fadeTimeSec, 0, 255));
+            sf::Color color = m_fadeText.getFillColor();
+            color.a         = static_cast<uint8_t>(alpha);
             m_fadeText.setFillColor(color);
         }
     }
@@ -787,6 +791,8 @@ namespace castlecrawl
             { ((t_context.layout.topRect().size.x * 0.5f) -
                (m_fadeText.getGlobalBounds().size.x * 0.5f)),
               (m_borderRectangle.getPosition().y - (m_fadeText.getGlobalBounds().size.y * 2.0f)) });
+
+        m_fadeTextTimerSec = 0.0f;
     }
 
     void StateEditor::save(const Context & t_context) const

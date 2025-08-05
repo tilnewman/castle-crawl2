@@ -49,7 +49,7 @@ namespace castlecrawl
       private:
         [[nodiscard]] bool isMouseOverAnyButton(const sf::Vector2f & t_mousePos) const;
         void updateHelpText(const Context & t_context);
-        void updateFadeText();
+        void updateFadeText(const float t_elapsedTimeSec);
         void resetMap(const Context & t_context);
         void placeEditCursor(const Context & t_context);
         void setMapChar(const Context & t_context, const char t_ch);
@@ -75,6 +75,7 @@ namespace castlecrawl
         sf::RectangleShape m_borderRectangle;
         sf::Text m_keyText;
         sf::Text m_fadeText;
+        float m_fadeTextTimerSec;
         Mouseover m_mouseover;
         bool m_isDragging;
         sf::Vector2f m_dragPosStart;
