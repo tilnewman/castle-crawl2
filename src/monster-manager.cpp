@@ -8,6 +8,9 @@
 #include "context.hpp"
 #include "maps.hpp"
 #include "player-display.hpp"
+#include "random.hpp"
+
+#include <algorithm>
 
 namespace castlecrawl
 {
@@ -27,8 +30,7 @@ namespace castlecrawl
             (m_tileImage == TileImage::Siren) || (m_tileImage == TileImage::Specter) ||
             (m_tileImage == TileImage::BoneHydra) || (m_tileImage == TileImage::ShadowFiend) ||
             (m_tileImage == TileImage::Revenant) || (m_tileImage == TileImage::Lorocyproca) ||
-            (m_tileImage == TileImage::HellWing) || (m_tileImage == TileImage::Hellion)
-        );
+            (m_tileImage == TileImage::HellWing) || (m_tileImage == TileImage::Hellion));
     }
 
     void Monster::takeTurn(const Context & t_context)
@@ -52,9 +54,52 @@ namespace castlecrawl
         return (foundIter != std::end(surroundingCells));
     }
 
-    void Monster::moveTowardPlayer(const Context &)
+    void Monster::moveTowardPlayer(const Context & t_context)
     {
-        // todo
+        const std::vector<MapCell> adjacentCells =
+            t_context.maps.current().surroundingCellsHorizVert(m_mapPos);
+
+        const MapPos_t playerPos = t_context.player_display.position();
+
+        std::vector<MapPosDist> posDists;
+        for (const MapCell & cell : adjacentCells)
+        {
+            if (cell.object_char == ' ')
+            {
+                posDists.emplace_back(cell.position, mapDistance(playerPos, cell.position));
+            }
+        }
+
+        std::sort(
+            std::begin(posDists),
+            std::end(posDists),
+            [](const MapPosDist & a, const MapPosDist & b) { return (a.distance < b.distance); });
+
+        if (posDists.empty())
+        {
+            // there are no adjacent valid and empty cells, so do nothing
+            return;
+        }
+
+        const int closestDistance = posDists.front().distance;
+
+        std::erase_if(
+            posDists, [&](const MapPosDist & mpd) { return (mpd.distance != closestDistance); });
+
+        moveTo(t_context, t_context.random.from(posDists).position);
+    }
+
+    void Monster::moveTo(const Context & t_context, const MapPos_t & t_newMapPos)
+    {
+        const char myChar = t_context.maps.current().cell(m_mapPos).object_char;
+        t_context.maps.current().setObjectChar(m_mapPos, ' ');
+        m_mapPos = t_newMapPos;
+        t_context.maps.current().setObjectChar(m_mapPos, myChar);
+    }
+
+    int Monster::mapDistance(const MapPos_t & t_posA, const MapPos_t & t_posB) const
+    {
+        return (std::abs(t_posB.x - t_posA.x) + std::abs(t_posB.y - t_posA.y));
     }
 
     //

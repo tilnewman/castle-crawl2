@@ -17,6 +17,7 @@
 #include "mana-bar.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
+#include "monster-manager.hpp"
 #include "mouseover.hpp"
 #include "music-player.hpp"
 #include "player-display.hpp"
@@ -103,8 +104,7 @@ namespace castlecrawl
         const char mapCharAttempted    = t_context.maps.current().cell(mapPosAttempted).object_char;
 
         const MapPos_t mapPosAfter = [&]() {
-            if (
-                (mapCharAttempted == ' ') || (mapCharAttempted == 'd') ||
+            if ((mapCharAttempted == ' ') || (mapCharAttempted == 'd') ||
                 (mapCharAttempted == '.') || (mapCharAttempted == 'i') || (mapCharAttempted == 'I'))
             {
                 return mapPosAttempted;
@@ -140,6 +140,10 @@ namespace castlecrawl
         if (didMove)
         {
             t_context.player_display.position(t_context, mapPosAfter);
+            
+            t_context.monsters.takeTurns(t_context);
+            t_context.map_display.load(t_context);
+
             handleMapTransition(t_context, mapPosAfter);
             playMoveMusic(t_context);
         }

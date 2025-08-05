@@ -15,6 +15,19 @@ namespace castlecrawl
 
     //
 
+    struct MapPosDist
+    {
+        MapPosDist(const MapPos_t & t_mapPos, const int t_distance)
+            : position{ t_mapPos }
+            , distance{ t_distance }
+        {}
+
+        MapPos_t position{ -1, -1 }; // both must be negative to be invalid
+        int distance{ 0 };
+    };
+
+    //
+
     class Monster
     {
       public:
@@ -29,6 +42,8 @@ namespace castlecrawl
       private:
         [[nodiscard]] bool isPlayerAdjacent(const Context & t_context) const;
         void moveTowardPlayer(const Context & t_context);
+        [[nodiscard]] int mapDistance(const MapPos_t & t_posA, const MapPos_t & t_posB) const;
+        void moveTo(const Context & t_context, const MapPos_t & t_newMapPos);
 
       private:
         MapPos_t m_mapPos;
