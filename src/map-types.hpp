@@ -59,8 +59,6 @@ namespace castlecrawl
     {
         Level_1_Cell,
         Level_1_CellBlock,
-        Level_1_SecretCells,
-        Level_1_CellJunction,
         Level_1_CellsEnd,
         Level_1_MainHall,
         Level_1_BoilerRoom,
@@ -68,7 +66,8 @@ namespace castlecrawl
         Level_1_CoffinRoom,
         Level_1_LakeStronghold,
         Level_1_LavaGatehouse,
-        Level_1_LavaHiddenPath
+        Level_1_LavaHiddenPath,
+        Level_1_Basement
     };
 
     inline constexpr std::string_view toString(const MapName t_name) noexcept
@@ -78,8 +77,6 @@ namespace castlecrawl
         {
             case MapName::Level_1_Cell:             { return "Level_1_Cell"; }
             case MapName::Level_1_CellBlock:        { return "Level_1_CellBlock"; }
-            case MapName::Level_1_SecretCells:      { return "Level_1_SecretCells"; }
-            case MapName::Level_1_CellJunction:     { return "Level_1_CellJunction"; }
             case MapName::Level_1_CellsEnd:         { return "Level_1_CellsEnd"; }
             case MapName::Level_1_MainHall:         { return "Level_1_MainHall"; }
             case MapName::Level_1_BoilerRoom:       { return "Level_1_BoilerRoom"; }
@@ -88,6 +85,7 @@ namespace castlecrawl
             case MapName::Level_1_LakeStronghold:   { return "Level_1_LakeStronghold"; }
             case MapName::Level_1_LavaGatehouse:    { return "Level_1_LavaGatehouse"; }
             case MapName::Level_1_LavaHiddenPath:   { return "Level_1_LavaHiddenPath"; }
+            case MapName::Level_1_Basement:         { return "Level_1_Basement"; }
             default:                                { return "(unknown_MapName)"; }
         }
         // clang-format on
