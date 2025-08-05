@@ -312,6 +312,23 @@ namespace castlecrawl
         m_mouseover.draw(t_context, t_target, t_states);
     }
 
+    bool StateEditor::isMouseOverAnyButton(const sf::Vector2f & t_mousePos) const
+    {
+        return (
+            m_miscButton.globalBounds().contains(t_mousePos) ||
+            m_doorwayButton.globalBounds().contains(t_mousePos) ||
+            m_altarButton.globalBounds().contains(t_mousePos) ||
+            m_statueButton.globalBounds().contains(t_mousePos) ||
+            m_columnButton.globalBounds().contains(t_mousePos) ||
+            m_npcButton1.globalBounds().contains(t_mousePos) ||
+            m_npcButton2.globalBounds().contains(t_mousePos) ||
+            m_monsterButton1.globalBounds().contains(t_mousePos) ||
+            m_monsterButton2.globalBounds().contains(t_mousePos) ||
+            m_monsterButton3.globalBounds().contains(t_mousePos) ||
+            m_monsterButton4.globalBounds().contains(t_mousePos) ||
+            m_monsterButton5.globalBounds().contains(t_mousePos));
+    }
+
     void StateEditor::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         if (const auto buttonPtr = t_event.getIf<sf::Event::MouseButtonPressed>())
@@ -319,18 +336,7 @@ namespace castlecrawl
             const sf::Vector2f mousePos{ static_cast<float>(buttonPtr->position.x),
                                          static_cast<float>(buttonPtr->position.y) };
 
-            if (!m_miscButton.globalBounds().contains(mousePos) &&
-                !m_doorwayButton.globalBounds().contains(mousePos) &&
-                !m_altarButton.globalBounds().contains(mousePos) &&
-                !m_statueButton.globalBounds().contains(mousePos) &&
-                !m_columnButton.globalBounds().contains(mousePos) &&
-                !m_npcButton1.globalBounds().contains(mousePos) &&
-                !m_npcButton2.globalBounds().contains(mousePos) &&
-                !m_monsterButton1.globalBounds().contains(mousePos) &&
-                !m_monsterButton2.globalBounds().contains(mousePos) &&
-                !m_monsterButton3.globalBounds().contains(mousePos) &&
-                !m_monsterButton4.globalBounds().contains(mousePos) &&
-                !m_monsterButton5.globalBounds().contains(mousePos))
+            if (!isMouseOverAnyButton(mousePos))
             {
                 startDragging(t_context, mousePos);
             }
@@ -368,18 +374,7 @@ namespace castlecrawl
                 selectFromDropDownButton(m_monsterButton5);
             }
 
-            if (!m_miscButton.globalBounds().contains(mousePos) &&
-                !m_doorwayButton.globalBounds().contains(mousePos) &&
-                !m_altarButton.globalBounds().contains(mousePos) &&
-                !m_statueButton.globalBounds().contains(mousePos) &&
-                !m_columnButton.globalBounds().contains(mousePos) &&
-                !m_npcButton1.globalBounds().contains(mousePos) &&
-                !m_npcButton2.globalBounds().contains(mousePos) &&
-                !m_monsterButton1.globalBounds().contains(mousePos) &&
-                !m_monsterButton2.globalBounds().contains(mousePos) &&
-                !m_monsterButton3.globalBounds().contains(mousePos) &&
-                !m_monsterButton4.globalBounds().contains(mousePos) &&
-                !m_monsterButton5.globalBounds().contains(mousePos))
+            if (!isMouseOverAnyButton(mousePos))
             {
                 stopDragging(t_context, mousePos);
             }
@@ -663,12 +658,10 @@ namespace castlecrawl
             }
             else
             {
-                const std::vector<TileImage> blocks{ 
-                    TileImage::Block_Emboss1,
-                    TileImage::Block_Emboss2,
-                    TileImage::Block_Emboss3,
-                    TileImage::Block_Emboss4
-                };
+                const std::vector<TileImage> blocks{ TileImage::Block_Emboss1,
+                                                     TileImage::Block_Emboss2,
+                                                     TileImage::Block_Emboss3,
+                                                     TileImage::Block_Emboss4 };
 
                 editMap(t_context, tileImageToChar(t_context.random.from(blocks)), "Block");
             }

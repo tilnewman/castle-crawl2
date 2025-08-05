@@ -47,6 +47,7 @@ namespace castlecrawl
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
+        [[nodiscard]] bool isMouseOverAnyButton(const sf::Vector2f & t_mousePos) const;
         void updateHelpText(const Context & t_context);
         void updateFadeText();
         void resetMap(const Context & t_context);
