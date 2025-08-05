@@ -42,7 +42,7 @@ namespace castlecrawl
         }
         else
         {
-            moveTowardPlayer(t_context);
+            moveToward(t_context, t_context.player_display.position());
             return true;
         }
     }
@@ -60,13 +60,11 @@ namespace castlecrawl
         return (foundIter != std::end(surroundingCells));
     }
 
-    void Monster::moveTowardPlayer(const Context & t_context)
+    bool Monster::moveToward(const Context & t_context, const MapPos_t & t_targetMapPos)
     {
         // construct a vector of all possible places we could move to
         const std::vector<MapCell> adjacentCells =
             t_context.maps.current().surroundingCellsHorizVert(m_mapPos);
-
-        const MapPos_t playerPos = t_context.player_display.position();
 
         std::vector<PositionDistance> positions;
         positions.reserve(adjacentCells.size());
@@ -75,11 +73,11 @@ namespace castlecrawl
         {
             if (cell.object_char == ' ')
             {
-                positions.emplace_back(cell.position, distance(playerPos, cell.position));
+                positions.emplace_back(cell.position, distance(t_targetMapPos, cell.position));
             }
         }
 
-        // sort it by distance to the player
+        // sort it by distance to the t_targetMapPos
         std::sort(
             std::begin(positions),
             std::end(positions),
@@ -90,16 +88,16 @@ namespace castlecrawl
         if (positions.empty())
         {
             // there are no adjacent valid and empty positions, so do nothing
-            return;
+            return false;
         }
 
         const int closestDistance = positions.front().distance;
-        const int currentDistance = distance(playerPos, m_mapPos);
+        const int currentDistance = distance(t_targetMapPos, m_mapPos);
 
         if ((closestDistance == currentDistance) && t_context.random.boolean())
         {
             // if moving won't get us any closer, then don't both moving about half the time
-            return;
+            return false;
         }
 
         std::erase_if(positions, [&](const PositionDistance & mpd) {
@@ -107,6 +105,7 @@ namespace castlecrawl
         });
 
         moveTo(t_context, t_context.random.from(positions).position);
+        return true;
     }
 
     void Monster::moveTo(const Context & t_context, const MapPos_t & t_newMapPos)

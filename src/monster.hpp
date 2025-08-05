@@ -24,7 +24,10 @@ namespace castlecrawl
 
       private:
         [[nodiscard]] bool isPlayerAdjacent(const Context & t_context) const;
-        void moveTowardPlayer(const Context & t_context);
+        
+        // returns true if actually moved (might not if not possible)
+        bool moveToward(const Context & t_context, const MapPos_t & t_targetMapPos);
+        
         void moveTo(const Context & t_context, const MapPos_t & t_newMapPos);
 
       private:
