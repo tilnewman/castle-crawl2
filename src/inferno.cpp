@@ -38,7 +38,7 @@ namespace castlecrawl
         if (is_horiz_flipped)
         {
             sprite.scale({ -1.0f, 1.0f });
-            sprite.move({ cellSize.x , 0.0f });
+            sprite.move({ cellSize.x, 0.0f });
         }
     }
 
@@ -66,8 +66,16 @@ namespace castlecrawl
 
     const sf::IntRect InfernoAnimation::frameRect(const std::size_t t_index) const
     {
-        return { { ((static_cast<int>(t_index) % 8) * 64), ((static_cast<int>(t_index) / 8) * 64) },
-                 { 64, 64 } };
+        sf::IntRect rect{ { 0, 0 }, { 64, 64 } };
+
+        rect.position.x = ((static_cast<int>(t_index) % 8) * 64);
+        rect.position.y = ((static_cast<int>(t_index) / 8) * 64);
+
+        // the logic above is perfect, but a flaw in the art means we need to add one
+        // maybe someday I'll spend the hour in photoshop required to fix the art...
+        ++rect.position.y;
+
+        return rect;
     }
 
     //
