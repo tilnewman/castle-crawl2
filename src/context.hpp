@@ -30,6 +30,7 @@ namespace castlecrawl
     class CampfireAnimationManager;
     class SmokeEffectManager;
     class InfernoAnimationManager;
+    class MonsterManager;
 
     namespace item
     {
@@ -59,7 +60,8 @@ namespace castlecrawl
             SparkleParticleManager & t_sparkleParticleManager,
             CampfireAnimationManager & t_campfireAnimationManager,
             SmokeEffectManager & t_smokeEffectManager,
-            InfernoAnimationManager & t_infernoAnimationManager)
+            InfernoAnimationManager & t_infernoAnimationManager,
+            MonsterManager & t_monsterManager)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -81,6 +83,7 @@ namespace castlecrawl
             , campfire_anims(t_campfireAnimationManager)
             , smoke_anims(t_smokeEffectManager)
             , inferno_anims(t_infernoAnimationManager)
+            , monsters(t_monsterManager)
         {}
 
         const GameConfig & config;
@@ -104,6 +107,7 @@ namespace castlecrawl
         CampfireAnimationManager & campfire_anims;
         SmokeEffectManager & smoke_anims;
         InfernoAnimationManager & inferno_anims;
+        MonsterManager & monsters;
     };
 
 } // namespace castlecrawl

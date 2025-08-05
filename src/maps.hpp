@@ -25,6 +25,8 @@ namespace castlecrawl
       private:
         void load(const Context & t_context);
         void verify() const;
+        void loadMonsters(const Context & t_context);
+        void unloadMonsters(const Context & t_context);
 
       private:
         std::vector<Map> m_maps;

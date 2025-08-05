@@ -10,9 +10,11 @@
 #include "context.hpp"
 #include "inferno.hpp"
 #include "map-display.hpp"
+#include "monster-manager.hpp"
 #include "player-display.hpp"
 #include "smoke.hpp"
 #include "sparkle-particle.hpp"
+#include "tile-image-enum.hpp"
 
 namespace castlecrawl
 {
@@ -35,6 +37,8 @@ namespace castlecrawl
         t_context.smoke_anims.clear();
         t_context.inferno_anims.clear();
 
+        unloadMonsters(t_context);
+
         m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
             return (map.name() == t_mapName);
         });
@@ -45,7 +49,29 @@ namespace castlecrawl
 
         t_context.map_display.load(t_context);
         t_context.player_display.position(t_context, t_pos);
+
+        loadMonsters(t_context);
     }
+
+    void Maps::loadMonsters(const Context & t_context)
+    {
+        const sf::Vector2i size = current().size();
+        for (int y(0); y < size.y; ++y)
+        {
+            for (int x(0); x < size.x; ++x)
+            {
+                const MapPos_t pos{ x, y };
+                const char ch = current().cell(pos).object_char;
+
+                if (isTileImageMonster(charToTileImage(ch)))
+                {
+                    t_context.monsters.add(t_context, pos, ch);
+                }
+            }
+        }
+    }
+
+    void Maps::unloadMonsters(const Context & t_context) { t_context.monsters.reset(); }
 
     void Maps::forceMapForEditting(const Map t_map) { *m_currentIter = t_map; }
 
