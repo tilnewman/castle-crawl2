@@ -31,7 +31,8 @@ namespace castlecrawl
 
         TileImage tile_image;
         sf::Sprite sprite;
-        sf::RectangleShape rectangle;
+        sf::RectangleShape outline_rectangle;
+        sf::RectangleShape background_rectangle;
     };
 
     //

@@ -18,21 +18,27 @@ namespace castlecrawl
         const Context & t_context, const TileImage t_tileImage, const sf::Vector2f & t_screenPos)
         : tile_image{ t_tileImage }
         , sprite{ t_context.tile_images.sprite(t_context, t_tileImage) }
-        , rectangle{}
+        , outline_rectangle{}
+        , background_rectangle{}
     {
         sprite.setPosition(t_screenPos);
 
-        rectangle.setFillColor(sf::Color::Transparent);
-        rectangle.setOutlineColor(sf::Color(0, 255, 255, 127));
-        rectangle.setOutlineThickness(1.0f);
-        rectangle.setPosition(sprite.getPosition());
-        rectangle.setSize(sprite.getGlobalBounds().size);
+        outline_rectangle.setFillColor(sf::Color::Transparent);
+        outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 127));
+        outline_rectangle.setOutlineThickness(1.0f);
+        outline_rectangle.setPosition(sprite.getPosition());
+        outline_rectangle.setSize(sprite.getGlobalBounds().size);
+
+        background_rectangle.setFillColor(sf::Color::Black);
+        background_rectangle.setPosition(sprite.getPosition());
+        background_rectangle.setSize(sprite.getGlobalBounds().size);
     }
 
     void DropDownTile::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
     {
+        t_target.draw(background_rectangle, t_states);
         t_target.draw(sprite, t_states);
-        t_target.draw(rectangle, t_states);
+        t_target.draw(outline_rectangle, t_states);
     }
 
     //

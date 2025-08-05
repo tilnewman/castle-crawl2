@@ -269,19 +269,6 @@ namespace castlecrawl
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
 
-        m_miscButton.draw(t_target, t_states);
-        m_doorwayButton.draw(t_target, t_states);
-        m_altarButton.draw(t_target, t_states);
-        m_statueButton.draw(t_target, t_states);
-        m_columnButton.draw(t_target, t_states);
-        m_npcButton1.draw(t_target, t_states);
-        m_npcButton2.draw(t_target, t_states);
-        m_monsterButton1.draw(t_target, t_states);
-        m_monsterButton2.draw(t_target, t_states);
-        m_monsterButton3.draw(t_target, t_states);
-        m_monsterButton4.draw(t_target, t_states);
-        m_monsterButton5.draw(t_target, t_states);
-
         if (!m_keyText.getString().isEmpty())
         {
             t_target.draw(m_keyText, t_states);
@@ -308,6 +295,19 @@ namespace castlecrawl
 
             t_target.draw(rectangle);
         }
+
+        m_miscButton.draw(t_target, t_states);
+        m_doorwayButton.draw(t_target, t_states);
+        m_altarButton.draw(t_target, t_states);
+        m_statueButton.draw(t_target, t_states);
+        m_columnButton.draw(t_target, t_states);
+        m_npcButton1.draw(t_target, t_states);
+        m_npcButton2.draw(t_target, t_states);
+        m_monsterButton1.draw(t_target, t_states);
+        m_monsterButton2.draw(t_target, t_states);
+        m_monsterButton3.draw(t_target, t_states);
+        m_monsterButton4.draw(t_target, t_states);
+        m_monsterButton5.draw(t_target, t_states);
 
         m_mouseover.draw(t_context, t_target, t_states);
     }
