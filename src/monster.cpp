@@ -62,6 +62,7 @@ namespace castlecrawl
 
     void Monster::moveTowardPlayer(const Context & t_context)
     {
+        // construct a vector of all possible places we could move to
         const std::vector<MapCell> adjacentCells =
             t_context.maps.current().surroundingCellsHorizVert(m_mapPos);
 
@@ -78,6 +79,7 @@ namespace castlecrawl
             }
         }
 
+        // sort it by distance to the player
         std::sort(
             std::begin(positions),
             std::end(positions),
@@ -87,14 +89,21 @@ namespace castlecrawl
 
         if (positions.empty())
         {
-            // there are no adjacent valid and empty cells, so do nothing
+            // there are no adjacent valid and empty positions, so do nothing
             return;
         }
 
         const int closestDistance = positions.front().distance;
+        const int currentDistance = distance(playerPos, m_mapPos);
+
+        if ((closestDistance == currentDistance) && t_context.random.boolean())
+        {
+            // if moving won't get us any closer, then don't both moving about half the time
+            return;
+        }
 
         std::erase_if(positions, [&](const PositionDistance & mpd) {
-            return (mpd.distance != closestDistance);
+            return (mpd.distance > closestDistance);
         });
 
         moveTo(t_context, t_context.random.from(positions).position);
