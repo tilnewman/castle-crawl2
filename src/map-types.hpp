@@ -18,9 +18,30 @@ namespace castlecrawl
     struct MapCell
     {
         // these default values are safe where needed and invalid where needed -don't change
-        MapPos_t position = { -1, -1 };
+        MapPos_t position = { -1, -1 }; // both must be negative to be invalid
         char object_char  = '.';
         char floor_char   = ' ';
+    };
+
+    [[nodiscard]] inline int distance(const MapPos_t & t_posA, const MapPos_t & t_posB)
+    {
+        return (std::abs(t_posB.x - t_posA.x) + std::abs(t_posB.y - t_posA.y));
+    }
+
+    [[nodiscard]] inline int distance(const MapCell & t_cellA, const MapCell & t_cellB) 
+    {
+        return distance(t_cellA.position, t_cellB.position);
+    }
+
+    struct PositionDistance
+    {
+        PositionDistance(const MapPos_t & t_mapPos, const int t_distance)
+            : position{ t_mapPos }
+            , distance{ t_distance }
+        {}
+
+        MapPos_t position{ -1, -1 }; // both must be negative to be invalid
+        int distance{ 0 };
     };
 
     using Map_t = std::vector<std::vector<MapCell>>;

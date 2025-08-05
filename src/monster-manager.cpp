@@ -67,32 +67,37 @@ namespace castlecrawl
 
         const MapPos_t playerPos = t_context.player_display.position();
 
-        std::vector<MapPosDist> posDists;
+        std::vector<PositionDistance> positions;
+        positions.reserve(adjacentCells.size());
+
         for (const MapCell & cell : adjacentCells)
         {
             if (cell.object_char == ' ')
             {
-                posDists.emplace_back(cell.position, mapDistance(playerPos, cell.position));
+                positions.emplace_back(cell.position, distance(playerPos, cell.position));
             }
         }
 
         std::sort(
-            std::begin(posDists),
-            std::end(posDists),
-            [](const MapPosDist & a, const MapPosDist & b) { return (a.distance < b.distance); });
+            std::begin(positions),
+            std::end(positions),
+            [](const PositionDistance & a, const PositionDistance & b) {
+                return (a.distance < b.distance);
+            });
 
-        if (posDists.empty())
+        if (positions.empty())
         {
             // there are no adjacent valid and empty cells, so do nothing
             return;
         }
 
-        const int closestDistance = posDists.front().distance;
+        const int closestDistance = positions.front().distance;
 
-        std::erase_if(
-            posDists, [&](const MapPosDist & mpd) { return (mpd.distance != closestDistance); });
+        std::erase_if(positions, [&](const PositionDistance & mpd) {
+            return (mpd.distance != closestDistance);
+        });
 
-        moveTo(t_context, t_context.random.from(posDists).position);
+        moveTo(t_context, t_context.random.from(positions).position);
     }
 
     void Monster::moveTo(const Context & t_context, const MapPos_t & t_newMapPos)
@@ -101,11 +106,6 @@ namespace castlecrawl
         t_context.maps.current().setObjectChar(m_mapPos, ' ');
         m_mapPos = t_newMapPos;
         t_context.maps.current().setObjectChar(m_mapPos, myChar);
-    }
-
-    int Monster::mapDistance(const MapPos_t & t_posA, const MapPos_t & t_posB) const
-    {
-        return (std::abs(t_posB.x - t_posA.x) + std::abs(t_posB.y - t_posA.y));
     }
 
     //
