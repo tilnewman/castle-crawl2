@@ -807,33 +807,50 @@ namespace castlecrawl
         lines.reserve(m_mapChars.size());
 
         std::string line;
+        std::size_t lineNumber = 0;
         while (std::getline(fStream, line, '\n'))
         {
-            if (line.size() < m_mapChars[0].size())
+            ++lineNumber;
+
+            if (line.size() < 3)
             {
+                std::cerr << "Tried to load map.txt but failed because line " << lineNumber
+                          << " was too short." << std::endl;
+
                 return;
             }
 
             // remove the leading quote
-            if (line[0] == '\"')
+            if (line[0] != '\"')
+            {
+                std::cerr << "Tried to load map.txt but failed because line " << lineNumber
+                          << " did NOT start with quotes." << std::endl;
+
+                return;
+            }
+            else
             {
                 line.erase(std::begin(line));
             }
 
-            // remove the trailing comma
-            if (line[line.size() - 1] == ',')
+            // remove everything from the end until reaching the trailing quote
+            while (!line.empty() && (line.back() != '\"'))
             {
                 line.pop_back();
             }
 
-            // remove the trailing quote
-            if (line[line.size() - 1] == '\"')
+            if (!line.empty())
             {
                 line.pop_back();
             }
 
             if (line.size() != m_mapChars[0].size())
             {
+                std::cerr << "Tried to load map.txt but failed because line " << lineNumber
+                          << " was incorrect length between quotes.  Was " << line.size()
+                          << " when it should have been exactly " << m_mapChars[0].size() << "."
+                          << std::endl;
+
                 return;
             }
 
@@ -842,6 +859,11 @@ namespace castlecrawl
 
         if (lines.size() != m_mapChars.size())
         {
+            std::cerr << "Tried to load map.txt but failed because there were an incorrect number "
+                         "of lines.  Was "
+                      << lines.size() << " when it should have been exactly " << m_mapChars.size()
+                      << "." << std::endl;
+
             return;
         }
 
