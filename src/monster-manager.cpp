@@ -17,6 +17,20 @@ namespace castlecrawl
         , m_tileImage{ t_tileImage }
     {}
 
+    bool Monster::isUndead() const
+    {
+        return (
+            (m_tileImage == TileImage::SkullSlime) || (m_tileImage == TileImage::BoneDragon) ||
+            (m_tileImage == TileImage::RottingChomper) ||
+            (m_tileImage == TileImage::FleshCreeper) || (m_tileImage == TileImage::GreenWight) ||
+            (m_tileImage == TileImage::SoulEater) || (m_tileImage == TileImage::BoneHound) ||
+            (m_tileImage == TileImage::Siren) || (m_tileImage == TileImage::Specter) ||
+            (m_tileImage == TileImage::BoneHydra) || (m_tileImage == TileImage::ShadowFiend) ||
+            (m_tileImage == TileImage::Revenant) || (m_tileImage == TileImage::Lorocyproca) ||
+            (m_tileImage == TileImage::HellWing) || (m_tileImage == TileImage::Hellion)
+        );
+    }
+
     void Monster::takeTurn(const Context & t_context)
     {
         if (!isPlayerAdjacent(t_context))
@@ -38,7 +52,7 @@ namespace castlecrawl
         return (foundIter != std::end(surroundingCells));
     }
 
-    void Monster::moveTowardPlayer(const Context & ) 
+    void Monster::moveTowardPlayer(const Context &)
     {
         // todo
     }
