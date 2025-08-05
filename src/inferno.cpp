@@ -59,7 +59,7 @@ namespace castlecrawl
         }
     }
 
-    void InfernoAnimation::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void InfernoAnimation::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(sprite, t_states);
     }
@@ -98,8 +98,7 @@ namespace castlecrawl
         }
     }
 
-    void InfernoAnimationManager::draw(
-        sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void InfernoAnimationManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const InfernoAnimation & animation : m_animations)
         {

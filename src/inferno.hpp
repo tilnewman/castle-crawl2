@@ -26,7 +26,7 @@ namespace castlecrawl
             const Context & t_context, const sf::Texture & t_texture, const MapPos_t & t_mapPos);
 
         void update(const Context & t_context, const float t_elapsedTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         [[nodiscard]] const sf::IntRect frameRect(const std::size_t t_index) const;
 
         static inline const std::size_t frame_count{ 64 };
@@ -48,7 +48,7 @@ namespace castlecrawl
 
         void setup(const GameConfig & t_config);
         void update(const Context & t_context, const float t_elapsedTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const Context & t_context, const MapPos_t & t_mapPos);
         inline void clear() { m_animations.clear(); }

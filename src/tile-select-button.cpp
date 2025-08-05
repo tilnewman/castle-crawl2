@@ -34,7 +34,7 @@ namespace castlecrawl
         background_rectangle.setSize(sprite.getGlobalBounds().size);
     }
 
-    void DropDownTile::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void DropDownTile::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(background_rectangle, t_states);
         t_target.draw(sprite, t_states);
@@ -61,7 +61,7 @@ namespace castlecrawl
         }
     }
 
-    void TileSelectButton::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void TileSelectButton::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         if (m_isDroppedDown)
         {

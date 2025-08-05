@@ -29,7 +29,7 @@ namespace castlecrawl
             const MapPos_t & t_mapPos);
 
         void update(const Context & t_context, const float t_elapsedTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void reset(const Context & t_context);
 
         MapPos_t map_pos;
@@ -51,7 +51,7 @@ namespace castlecrawl
             const MapPos_t & t_mapPos);
 
         void update(const Context & t_context, const float t_elapsedTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         std::vector<SmokeParticle> particles;
     };
@@ -65,7 +65,7 @@ namespace castlecrawl
 
         void setup(const GameConfig & t_config);
         void update(const Context & t_context, const float t_elapsedTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const MapPos_t & t_mapPos);

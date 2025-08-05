@@ -25,7 +25,7 @@ namespace castlecrawl
         DustParticleEffect();
 
         void update(const Context & t_context, const float t_frameTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         bool is_alive;
         float age_sec;
@@ -44,7 +44,7 @@ namespace castlecrawl
 
         void setup(const GameConfig & t_config);
         void update(const Context & t_context, const float t_frameTimeSec);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         // there is no remove() because they remove themselves in update()
         void clear() { m_effects.clear(); }

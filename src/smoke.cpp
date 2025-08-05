@@ -59,7 +59,7 @@ namespace castlecrawl
         }
     }
 
-    void SmokeParticle::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void SmokeParticle::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(sprite, t_states);
     }
@@ -122,7 +122,7 @@ namespace castlecrawl
         }
     }
 
-    void SmokeEffect::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void SmokeEffect::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const SmokeParticle & particle : particles)
         {
@@ -150,7 +150,7 @@ namespace castlecrawl
         }
     }
 
-    void SmokeEffectManager::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void SmokeEffectManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const SmokeEffect & effect : m_effects)
         {

@@ -27,7 +27,7 @@ namespace castlecrawl
             const TileImage t_tileImage,
             const sf::Vector2f & t_screenPos);
 
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         TileImage tile_image;
         sf::Sprite sprite;
@@ -47,7 +47,7 @@ namespace castlecrawl
             const sf::Vector2f & t_screenPos,
             const std::vector<TileImage> & t_tileImages);
 
-        void draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const;
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         inline void setIsDroppedDown(const bool t_isDroppedDown)
         {

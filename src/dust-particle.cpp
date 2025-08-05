@@ -52,7 +52,7 @@ namespace castlecrawl
         }
     }
 
-    void DustParticleEffect::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void DustParticleEffect::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(sprite, t_states);
     }
@@ -80,7 +80,7 @@ namespace castlecrawl
             m_effects, [&](const DustParticleEffect & effect) { return !effect.is_alive; });
     }
 
-    void DustParticleManager::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void DustParticleManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const DustParticleEffect & effect : m_effects)
         {

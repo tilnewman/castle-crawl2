@@ -67,7 +67,7 @@ namespace castlecrawl
     }
 
     void CampfireAnimationManager::draw(
-        sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+        sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const CampfireAnimation & animation : m_animations)
         {

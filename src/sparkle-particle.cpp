@@ -55,7 +55,7 @@ namespace castlecrawl
         sprite.rotate(sf::degrees(rotation_speed * t_frameTimeSec));
     }
 
-    void SparkleParticle::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void SparkleParticle::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_states.blendMode = sf::BlendAdd;
         t_target.draw(sprite, t_states);
@@ -81,7 +81,7 @@ namespace castlecrawl
         }
     }
 
-    void SparkleParticleEffect::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+    void SparkleParticleEffect::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const SparkleParticle & particle : particles)
         {
@@ -138,7 +138,7 @@ namespace castlecrawl
     }
 
     void
-        SparkleParticleManager::draw(sf::RenderTarget & t_target, sf::RenderStates & t_states) const
+        SparkleParticleManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const SparkleParticleEffect & effect : m_effects)
         {
