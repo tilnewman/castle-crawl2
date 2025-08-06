@@ -598,7 +598,7 @@ namespace castlecrawl
         }
         else if (keyScancode == sf::Keyboard::Scancode::L)
         {
-            editMap(t_context, 'l', "Breakable Wood Wall");
+            editMap(t_context, 'l', "Lava");
         }
         else if (keyScancode == sf::Keyboard::Scancode::E)
         {
