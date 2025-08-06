@@ -32,6 +32,7 @@ namespace castlecrawl
     class InfernoAnimationManager;
     class MonsterManager;
     class NpcManager;
+    class RisingTextAnimationManager;
 
     namespace item
     {
@@ -63,7 +64,8 @@ namespace castlecrawl
             SmokeEffectManager & t_smokeEffectManager,
             InfernoAnimationManager & t_infernoAnimationManager,
             MonsterManager & t_monsterManager,
-            NpcManager & t_npcManager)
+            NpcManager & t_npcManager,
+            RisingTextAnimationManager & t_risingTextAnimationManager)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -87,6 +89,7 @@ namespace castlecrawl
             , inferno_anims(t_infernoAnimationManager)
             , monsters(t_monsterManager)
             , npcs(t_npcManager)
+            , rising_text(t_risingTextAnimationManager)
         {}
 
         const GameConfig & config;
@@ -112,6 +115,7 @@ namespace castlecrawl
         InfernoAnimationManager & inferno_anims;
         MonsterManager & monsters;
         NpcManager & npcs;
+        RisingTextAnimationManager & rising_text;
     };
 
 } // namespace castlecrawl

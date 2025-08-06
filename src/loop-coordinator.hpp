@@ -20,6 +20,7 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
+#include "rising-text-anim.hpp"
 #include "smoke.hpp"
 #include "sound-player.hpp"
 #include "sparkle-particle.hpp"
@@ -79,6 +80,8 @@ namespace castlecrawl
         std::unique_ptr<InfernoAnimationManager> m_infernoAnimationManagerUPtr;
         std::unique_ptr<MonsterManager> m_monsterManagerUPtr;
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
+        std::unique_ptr<RisingTextAnimationManager> m_risingTextAnimationManagerUPtr;
+
         std::unique_ptr<Context> m_contextUPtr;
     };
 

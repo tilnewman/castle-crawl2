@@ -23,6 +23,7 @@
 #include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
+#include "rising-text-anim.hpp"
 #include "smoke.hpp"
 #include "sound-player.hpp"
 #include "sparkle-particle.hpp"
@@ -48,6 +49,7 @@ namespace castlecrawl
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
         t_context.smoke_anims.update(t_context, t_frameTimeSec);
         t_context.inferno_anims.update(t_context, t_frameTimeSec);
+        t_context.rising_text.update(t_context, t_frameTimeSec);
     }
 
     void StatePlay::draw(
@@ -60,6 +62,7 @@ namespace castlecrawl
         t_context.inferno_anims.draw(t_target, t_states);
         t_context.dust_particles.draw(t_target, t_states);
         t_context.sparkle_particles.draw(t_target, t_states);
+        t_context.rising_text.draw(t_target, t_states);
         m_mouseover.draw(t_context, t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
         t_target.draw(t_context.top_panel, t_states);
@@ -106,7 +109,8 @@ namespace castlecrawl
 
         const MapPos_t mapPosAfter = [&]() {
             if ((mapCharAttempted == ' ') || (mapCharAttempted == 'd') ||
-                (mapCharAttempted == '.') || (mapCharAttempted == 'i') || (mapCharAttempted == 'I'))
+                (mapCharAttempted == '.') || (mapCharAttempted == 'i') ||
+                (mapCharAttempted == 'I') || (mapCharAttempted == '~'))
             {
                 return mapPosAttempted;
             }
@@ -142,6 +146,30 @@ namespace castlecrawl
         {
             t_context.player_display.position(t_context, mapPosAfter);
 
+            // pickup coins
+            if (mapCharAttempted == '~')
+            {
+                const int playerLevel = t_context.player.level();
+                const int coinsFound  = t_context.random.fromTo(playerLevel, (playerLevel * 10));
+
+                t_context.player.goldAdj(coinsFound);
+
+                t_context.maps.current().setObjectChar(mapPosAfter, ' ');
+                t_context.map_display.load(t_context);
+
+                std::string risingTextMessage("+");
+                risingTextMessage += std::to_string(coinsFound);
+                risingTextMessage += " gold";
+
+                t_context.rising_text.add(
+                    t_context, risingTextMessage, sf::Color(255, 220, 127), mapPosAfter);
+
+                t_context.sparkle_particles.remove(mapPosAfter);
+
+                t_context.sfx.play("coin");
+            }
+
+            // move monsters and NPCs
             const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
             const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
             if (didAnyMonstersMove || didAnyNpcsMove)
