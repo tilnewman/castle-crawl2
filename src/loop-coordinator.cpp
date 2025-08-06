@@ -25,19 +25,19 @@ namespace castlecrawl
         , m_config{ t_config }
         , m_tileImagesUPtr{}
         , m_splatImagesUPtr{}
-        , m_layout{}
-        , m_maps{}
+        , m_layoutUPtr{}
+        , m_mapsUPtr{}
         , m_mapDisplayUPtr{}
         , m_stateManagerUPtr{}
-        , m_player{}
+        , m_playerUPtr{}
         , m_playerDisplayUPtr{}
-        , m_random{}
+        , m_randomUPtr{}
         , m_sfxUPtr{}
         , m_musicUPtr{}
         , m_fontsUPtr{}
         , m_framerateUPtr{}
         , m_topPanelUPtr{}
-        , m_itemFactory{}
+        , m_itemFactoryUPtr{}
         , m_dustParticleManagerUPtr{}
         , m_sparkleParticleManagerUPtr{}
         , m_campfireAnimationManagerUPtr{}
@@ -66,10 +66,16 @@ namespace castlecrawl
 
         util::SfmlDefaults::instance().setup();
 
-        m_sfxUPtr = std::make_unique<util::SoundPlayer>(m_random);
+        m_randomUPtr = std::make_unique<util::Random>();
+
+        m_sfxUPtr = std::make_unique<util::SoundPlayer>(*m_randomUPtr);
         m_sfxUPtr->setMediaPath((m_config.media_path / "sfx").string());
         m_sfxUPtr->loadAll();
 
+        // this order is NOT critical
+        m_layoutUPtr                     = std::make_unique<Layout>();
+        m_mapsUPtr                       = std::make_unique<Maps>();
+        m_playerUPtr                     = std::make_unique<Player>();
         m_mapDisplayUPtr                 = std::make_unique<MapDisplay>();
         m_stateManagerUPtr               = std::make_unique<StateManager>();
         m_fontsUPtr                      = std::make_unique<FontManager>();
@@ -79,6 +85,7 @@ namespace castlecrawl
         m_musicUPtr                      = std::make_unique<util::MusicPlayer>();
         m_framerateUPtr                  = std::make_unique<FramerateText>();
         m_topPanelUPtr                   = std::make_unique<TopPanel>();
+        m_itemFactoryUPtr                = std::make_unique<item::ItemFactory>();
         m_dustParticleManagerUPtr        = std::make_unique<DustParticleManager>();
         m_sparkleParticleManagerUPtr     = std::make_unique<SparkleParticleManager>();
         m_campfireAnimationManagerUPtr   = std::make_unique<CampfireAnimationManager>();
@@ -92,19 +99,19 @@ namespace castlecrawl
             m_config,
             *m_tileImagesUPtr,
             *m_splatImagesUPtr,
-            m_layout,
-            m_maps,
+            *m_layoutUPtr,
+            *m_mapsUPtr,
             *m_mapDisplayUPtr,
             *m_stateManagerUPtr,
-            m_player,
+            *m_playerUPtr,
             *m_playerDisplayUPtr,
-            m_random,
+            *m_randomUPtr,
             *m_sfxUPtr,
             *m_musicUPtr,
             *m_fontsUPtr,
             *m_framerateUPtr,
             *m_topPanelUPtr,
-            m_itemFactory,
+            *m_itemFactoryUPtr,
             *m_dustParticleManagerUPtr,
             *m_sparkleParticleManagerUPtr,
             *m_campfireAnimationManagerUPtr,
@@ -114,8 +121,8 @@ namespace castlecrawl
             *m_npcManagerUPtr,
             *m_risingTextAnimationManagerUPtr);
 
-        m_itemFactory.setup();
-
+        // this order IS critical
+        m_itemFactoryUPtr->setup();
         m_fontsUPtr->setup(m_config);
         m_tileImagesUPtr->setup(m_config);
         m_splatImagesUPtr->setup(m_config);
@@ -124,19 +131,19 @@ namespace castlecrawl
         m_campfireAnimationManagerUPtr->setup(m_config);
         m_smokeEffectManagerUPtr->setup(m_config);
         m_infernoAnimationManagerUPtr->setup(m_config);
-        m_layout.setup(m_config);
-        m_maps.setup(*m_contextUPtr);
-        m_maps.change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });
+        m_layoutUPtr->setup(m_config);
+        m_mapsUPtr->setup(*m_contextUPtr);
+        m_mapsUPtr->change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });
         m_playerDisplayUPtr->setup(*m_contextUPtr);
         m_framerateUPtr->setup(*m_contextUPtr);
         m_topPanelUPtr->setup(*m_contextUPtr);
-
-        // m_itemFactory.dumpInfo(m_fonts.font());
 
         m_stateManagerUPtr->change(*m_contextUPtr, State::Splash);
 
         m_musicUPtr->setup((m_config.media_path / "music").string());
         m_musicUPtr->start("music.ogg", m_config.music_volume);
+
+        // m_itemFactoryUPtr->dumpInfo(m_fonts.font());
     }
 
     void LoopCoordinator::teardown()
@@ -145,14 +152,20 @@ namespace castlecrawl
 
         m_contextUPtr.reset();
 
+        // this order is NOT critical
+        m_layoutUPtr.reset();
+        m_mapsUPtr.reset();
+        m_playerUPtr.reset();
         m_mapDisplayUPtr.reset();
         m_stateManagerUPtr.reset();
         m_playerDisplayUPtr.reset();
+
         m_fontsUPtr.reset();
         m_framerateUPtr.reset();
         m_topPanelUPtr.reset();
         m_tileImagesUPtr.reset();
         m_splatImagesUPtr.reset();
+        m_itemFactoryUPtr.reset();
         m_dustParticleManagerUPtr.reset();
         m_sparkleParticleManagerUPtr.reset();
         m_campfireAnimationManagerUPtr.reset();
@@ -164,6 +177,9 @@ namespace castlecrawl
 
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();
+
+        // this reset must occur AFTER m_sfxUPtr.reset()
+        m_randomUPtr.reset();
 
         m_musicUPtr->stopAll();
         m_musicUPtr.reset();

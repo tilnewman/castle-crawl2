@@ -58,21 +58,26 @@ namespace castlecrawl
         sf::RenderStates m_renderStates;
 
         GameConfig m_config;
+
+        // okay, look.
+        // These are all pointers because that way I can better control
+        // the order they are created/destroyed in setup() and teardown().
+        // Also it keeps this class from being too big for the stack.
         std::unique_ptr<TileImages> m_tileImagesUPtr;
         std::unique_ptr<SplatImages> m_splatImagesUPtr;
-        Layout m_layout;
-        Maps m_maps;
+        std::unique_ptr<Layout> m_layoutUPtr;
+        std::unique_ptr<Maps> m_mapsUPtr;
         std::unique_ptr<MapDisplay> m_mapDisplayUPtr;
         std::unique_ptr<StateManager> m_stateManagerUPtr;
-        Player m_player;
+        std::unique_ptr<Player> m_playerUPtr;
         std::unique_ptr<PlayerDisplay> m_playerDisplayUPtr;
-        util::Random m_random;
+        std::unique_ptr<util::Random> m_randomUPtr;
         std::unique_ptr<util::SoundPlayer> m_sfxUPtr;
         std::unique_ptr<util::MusicPlayer> m_musicUPtr;
         std::unique_ptr<FontManager> m_fontsUPtr;
         std::unique_ptr<FramerateText> m_framerateUPtr;
         std::unique_ptr<TopPanel> m_topPanelUPtr;
-        item::ItemFactory m_itemFactory;
+        std::unique_ptr<item::ItemFactory> m_itemFactoryUPtr;
         std::unique_ptr<DustParticleManager> m_dustParticleManagerUPtr;
         std::unique_ptr<SparkleParticleManager> m_sparkleParticleManagerUPtr;
         std::unique_ptr<CampfireAnimationManager> m_campfireAnimationManagerUPtr;
