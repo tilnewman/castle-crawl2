@@ -106,6 +106,10 @@ namespace castlecrawl
                 {
                     t_context.inferno_anims.add(t_context, pos);
                 }
+                else if (tileImageToChar(TileImage::Coins) == ch)
+                {
+                    t_context.sparkle_particles.add(t_context, pos);
+                }
             }
         }
     }
@@ -132,6 +136,10 @@ namespace castlecrawl
                 else if (tileImageToChar(TileImage::Inferno) == ch)
                 {
                     t_context.inferno_anims.remove(t_context, pos);
+                }
+                else if (tileImageToChar(TileImage::Coins) == ch)
+                {
+                    t_context.sparkle_particles.remove(pos);
                 }
             }
         }
