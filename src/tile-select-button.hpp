@@ -30,9 +30,9 @@ namespace castlecrawl
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         TileImage tile_image;
-        sf::Sprite sprite;
+        sf::Sprite tile_sprite;
+        sf::Sprite background_sprite;
         sf::RectangleShape outline_rectangle;
-        sf::RectangleShape background_rectangle;
     };
 
     //

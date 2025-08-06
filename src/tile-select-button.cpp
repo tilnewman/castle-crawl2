@@ -17,27 +17,24 @@ namespace castlecrawl
     DropDownTile::DropDownTile(
         const Context & t_context, const TileImage t_tileImage, const sf::Vector2f & t_screenPos)
         : tile_image{ t_tileImage }
-        , sprite{ t_context.tile_images.sprite(t_context, t_tileImage) }
+        , tile_sprite{ t_context.tile_images.sprite(t_context, t_tileImage) }
+        , background_sprite{ t_context.tile_images.sprite(t_context, TileImage::DarkBackground) }
         , outline_rectangle{}
-        , background_rectangle{}
     {
-        sprite.setPosition(t_screenPos);
+        tile_sprite.setPosition(t_screenPos);
+        background_sprite.setPosition(t_screenPos);
 
         outline_rectangle.setFillColor(sf::Color::Transparent);
         outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 127));
         outline_rectangle.setOutlineThickness(1.0f);
-        outline_rectangle.setPosition(sprite.getPosition());
-        outline_rectangle.setSize(sprite.getGlobalBounds().size);
-
-        background_rectangle.setFillColor(sf::Color::Black);
-        background_rectangle.setPosition(sprite.getPosition());
-        background_rectangle.setSize(sprite.getGlobalBounds().size);
+        outline_rectangle.setPosition(tile_sprite.getPosition());
+        outline_rectangle.setSize(tile_sprite.getGlobalBounds().size);
     }
 
     void DropDownTile::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        t_target.draw(background_rectangle, t_states);
-        t_target.draw(sprite, t_states);
+        t_target.draw(background_sprite, t_states);
+        t_target.draw(tile_sprite, t_states);
         t_target.draw(outline_rectangle, t_states);
     }
 
@@ -82,7 +79,7 @@ namespace castlecrawl
 
         if (!m_tiles.empty())
         {
-            bounds = m_tiles.front().sprite.getGlobalBounds();
+            bounds = m_tiles.front().tile_sprite.getGlobalBounds();
 
             if (m_isDroppedDown)
             {
@@ -104,13 +101,13 @@ namespace castlecrawl
         {
             for (const DropDownTile & tile : m_tiles)
             {
-                if (tile.sprite.getGlobalBounds().contains(t_screenPos))
+                if (tile.tile_sprite.getGlobalBounds().contains(t_screenPos))
                 {
                     return tile.tile_image;
                 }
             }
         }
-        else if (m_tiles.front().sprite.getGlobalBounds().contains(t_screenPos))
+        else if (m_tiles.front().tile_sprite.getGlobalBounds().contains(t_screenPos))
         {
             return m_tiles.front().tile_image;
         }
@@ -122,7 +119,7 @@ namespace castlecrawl
     {
         for (DropDownTile & tile : m_tiles)
         {
-            if (tile.sprite.getGlobalBounds().contains(t_mousePos))
+            if (tile.tile_sprite.getGlobalBounds().contains(t_mousePos))
             {
                 tile.outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 255));
             }
