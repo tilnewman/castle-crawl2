@@ -736,9 +736,7 @@ namespace castlecrawl
     void StateEditor::resetMap(const Context & t_context)
     {
         Map map(MapName::Level_1_Cell, t_context, m_floor, m_mapChars, MapTransitions_t{});
-
-        t_context.maps.forceMapForEditting(map);
-        t_context.map_display.load(t_context);
+        t_context.maps.forceMapForEditting(t_context, map);
     }
 
     void StateEditor::placeEditCursor(const Context & t_context)

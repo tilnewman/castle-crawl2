@@ -113,7 +113,18 @@ namespace castlecrawl
         }
     }
 
-    void Maps::forceMapForEditting(const Map t_map) { *m_currentIter = t_map; }
+    void Maps::forceMapForEditting(const Context & t_context, const Map t_map) 
+    {
+        unloadMonsters(t_context);
+        unloadAnimations(t_context);
+
+        *m_currentIter = t_map;
+
+        t_context.map_display.load(t_context);
+
+        loadMonsters(t_context);
+        loadAnimations(t_context);
+    }
 
     void Maps::load(const Context & t_context)
     {
