@@ -474,6 +474,21 @@ namespace castlecrawl
             fadeText(t_context, "Loading...");
             load(t_context);
         }
+        else if ((keyScancode == sf::Keyboard::Scancode::R) && isCntrlPressed())
+        {
+            m_mapChars = std::vector<std::string>(
+                static_cast<std::size_t>(t_context.config.map_size_max.y),
+                std::string(static_cast<std::size_t>(t_context.config.map_size_max.x), '.'));
+
+            resetMap(t_context);
+
+            m_editPos = { 0, 0 };
+            placeEditCursor(t_context);
+
+            m_dragSelectedEntrys.clear();
+
+            t_context.sfx.play("error-4"); // no error here but this sfx sounds right
+        }
         else if (keyScancode == sf::Keyboard::Scancode::F)
         {
             if (m_floor == Floor::Dirt)
@@ -812,7 +827,7 @@ namespace castlecrawl
         std::ifstream fStream("map.txt", std::ios::in);
 
         std::vector<std::string> lines;
-        lines.reserve(m_mapChars.size());
+        lines.reserve(static_cast<std::size_t>(t_context.config.map_size_max.y));
 
         std::string line;
         std::size_t lineNumber = 0;
@@ -820,10 +835,11 @@ namespace castlecrawl
         {
             ++lineNumber;
 
-            if (line.size() < 3)
+            if (line.size() < 7)
             {
                 std::cerr << "Tried to load map.txt but failed because line " << lineNumber
-                          << " was too short." << std::endl;
+                          << " was too short before removing quotes and other stuff.  Was length "
+                          << line.size() << " when minimum is 7." << std::endl;
 
                 t_context.sfx.play("error-2");
                 return;
@@ -854,12 +870,11 @@ namespace castlecrawl
                 line.pop_back();
             }
 
-            if (line.size() != m_mapChars[0].size())
+            if (line.size() < 3)
             {
                 std::cerr << "Tried to load map.txt but failed because line " << lineNumber
-                          << " was incorrect length between quotes.  Was " << line.size()
-                          << " when it should have been exactly " << m_mapChars[0].size() << "."
-                          << std::endl;
+                          << " was too short between quotes.  Was " << line.size()
+                          << " when the minimum is 3." << std::endl;
 
                 t_context.sfx.play("error-2");
                 return;
@@ -868,12 +883,11 @@ namespace castlecrawl
             lines.push_back(line);
         }
 
-        if (lines.size() != m_mapChars.size())
+        if (lines.size() < 3)
         {
-            std::cerr << "Tried to load map.txt but failed because there were an incorrect number "
-                         "of lines.  Was "
-                      << lines.size() << " when it should have been exactly " << m_mapChars.size()
-                      << "." << std::endl;
+            std::cerr << "Tried to load map.txt but failed because there were too few lines/rows."
+                      << "There were only " << lines.size() << "when the minimum is 3."
+                      << std::endl;
 
             t_context.sfx.play("error-2");
             return;
@@ -881,6 +895,12 @@ namespace castlecrawl
 
         m_mapChars = lines;
         resetMap(t_context);
+
+        m_editPos = { 0, 0 };
+        placeEditCursor(t_context);
+
+        m_dragSelectedEntrys.clear();
+
         t_context.sfx.play("error-4"); // no error here but this sfx sounds right
     }
 
