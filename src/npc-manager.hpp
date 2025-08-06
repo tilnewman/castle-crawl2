@@ -1,10 +1,10 @@
-#ifndef MONSTER_MANAGER_HPP_INCLUDED
-#define MONSTER_MANAGER_HPP_INCLUDED
+#ifndef NPC_MANAGER_HPP_INCLUDED
+#define NPC_MANAGER_HPP_INCLUDED
 //
-// monster-manager.hpp
+// npc-manager.hpp
 //
 #include "map-types.hpp"
-#include "monster.hpp"
+#include "npc.hpp"
 #include "tile-image-enum.hpp"
 
 #include <vector>
@@ -13,24 +13,24 @@ namespace castlecrawl
 {
     struct Context;
 
-    class MonsterManager
+    class NpcManager
     {
       public:
-        MonsterManager();
+        NpcManager();
 
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
-        inline void reset() { m_monsters.clear(); }
+        inline void reset() { m_npcs.clear(); }
         
         // returns true if any monsters change map position
         bool takeTurns(const Context & t_context);
 
       private:
-        std::vector<Monster>::iterator findFromMapPos(const MapPos_t & t_mapPos);
+        std::vector<Npc>::iterator findFromMapPos(const MapPos_t & t_mapPos);
 
       private:
-        std::vector<Monster> m_monsters;
+        std::vector<Npc> m_npcs;
     };
 
 } // namespace castlecrawl
 
-#endif // MONSTER_MANAGER_HPP_INCLUDED
+#endif // NPC_MANAGER_HPP_INCLUDED

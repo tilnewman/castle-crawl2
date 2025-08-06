@@ -16,6 +16,7 @@
 #include "maps.hpp"
 #include "monster-manager.hpp"
 #include "music-player.hpp"
+#include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
@@ -77,7 +78,7 @@ namespace castlecrawl
         std::unique_ptr<SmokeEffectManager> m_smokeEffectManagerUPtr;
         std::unique_ptr<InfernoAnimationManager> m_infernoAnimationManagerUPtr;
         std::unique_ptr<MonsterManager> m_monsterManagerUPtr;
-
+        std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<Context> m_contextUPtr;
     };
 

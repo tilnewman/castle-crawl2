@@ -25,8 +25,8 @@ namespace castlecrawl
       private:
         void load(const Context & t_context);
         void verify() const;
-        void loadMonsters(const Context & t_context);
-        void unloadMonsters(const Context & t_context);
+        void loadCreatures(const Context & t_context);
+        void unloadCreatures(const Context & t_context);
         void loadAnimations(const Context & t_context);
         void unloadAnimations(const Context & t_context);
 

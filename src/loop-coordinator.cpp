@@ -44,6 +44,7 @@ namespace castlecrawl
         , m_smokeEffectManagerUPtr{}
         , m_infernoAnimationManagerUPtr{}
         , m_monsterManagerUPtr{}
+        , m_npcManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -83,6 +84,7 @@ namespace castlecrawl
         m_smokeEffectManagerUPtr        = std::make_unique<SmokeEffectManager>();
         m_infernoAnimationManagerUPtr   = std::make_unique<InfernoAnimationManager>();
         m_monsterManagerUPtr            = std::make_unique<MonsterManager>();
+        m_npcManagerUPtr                = std::make_unique<NpcManager>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -106,7 +108,8 @@ namespace castlecrawl
             *m_campfireAnimationManagerUPtr,
             *m_smokeEffectManagerUPtr,
             *m_infernoAnimationManagerUPtr,
-            *m_monsterManagerUPtr);
+            *m_monsterManagerUPtr,
+            *m_npcManagerUPtr);
 
         m_itemFactory.setup();
 
@@ -153,6 +156,7 @@ namespace castlecrawl
         m_smokeEffectManagerUPtr.reset();
         m_infernoAnimationManagerUPtr.reset();
         m_monsterManagerUPtr.reset();
+        m_npcManagerUPtr.reset();
 
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();

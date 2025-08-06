@@ -11,6 +11,7 @@
 #include "inferno.hpp"
 #include "map-display.hpp"
 #include "monster-manager.hpp"
+#include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "smoke.hpp"
 #include "sparkle-particle.hpp"
@@ -31,7 +32,7 @@ namespace castlecrawl
 
     void Maps::change(const Context & t_context, MapName t_mapName, const MapPos_t & t_pos)
     {
-        unloadMonsters(t_context);
+        unloadCreatures(t_context);
         unloadAnimations(t_context);
 
         m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
@@ -45,11 +46,11 @@ namespace castlecrawl
         t_context.map_display.load(t_context);
         t_context.player_display.position(t_context, t_pos);
 
-        loadMonsters(t_context);
+        loadCreatures(t_context);
         loadAnimations(t_context);
     }
 
-    void Maps::loadMonsters(const Context & t_context)
+    void Maps::loadCreatures(const Context & t_context)
     {
         const sf::Vector2i size = current().size();
         for (int y(0); y < size.y; ++y)
@@ -59,15 +60,28 @@ namespace castlecrawl
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
 
+                if ((ch == ' ') || (ch == '.'))
+                {
+                    continue;
+                }
+
                 if (isTileImageMonster(charToTileImage(ch)))
                 {
                     t_context.monsters.add(t_context, pos, ch);
+                }
+                else if (isTileImageNpc(charToTileImage(ch)))
+                {
+                    t_context.npcs.add(t_context, pos, ch);
                 }
             }
         }
     }
 
-    void Maps::unloadMonsters(const Context & t_context) { t_context.monsters.reset(); }
+    void Maps::unloadCreatures(const Context & t_context)
+    {
+        t_context.monsters.reset();
+        t_context.npcs.reset();
+    }
 
     void Maps::loadAnimations(const Context & t_context)
     {
@@ -78,6 +92,11 @@ namespace castlecrawl
             {
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
+
+                if ((ch == ' ') || (ch == '.'))
+                {
+                    continue;
+                }
 
                 if (tileImageToChar(TileImage::Campfire) == ch)
                 {
@@ -100,6 +119,11 @@ namespace castlecrawl
             {
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
+                
+                if ((ch == ' ') || (ch == '.'))
+                {
+                    continue;
+                }
 
                 if (tileImageToChar(TileImage::Campfire) == ch)
                 {
@@ -113,16 +137,16 @@ namespace castlecrawl
         }
     }
 
-    void Maps::forceMapForEditting(const Context & t_context, const Map t_map) 
+    void Maps::forceMapForEditting(const Context & t_context, const Map t_map)
     {
-        unloadMonsters(t_context);
+        unloadCreatures(t_context);
         unloadAnimations(t_context);
 
         *m_currentIter = t_map;
 
         t_context.map_display.load(t_context);
 
-        loadMonsters(t_context);
+        loadCreatures(t_context);
         loadAnimations(t_context);
     }
 
@@ -174,7 +198,7 @@ namespace castlecrawl
                 "... ........bb   .     .     .....",
                 "...    ...................d.......",
                 "...... .....     .     .b    .....",
-                "...... .....     D     d     .....",
+                "...... .....  \xE4  D     d     .....",
                 "...... .....~    .     .     .....",
                 "...... ...........................",
                 "......d..........................."

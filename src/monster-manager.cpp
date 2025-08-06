@@ -38,7 +38,7 @@ namespace castlecrawl
         return didAnyMonstersMove;
     }
 
-    std::vector<Monster>::iterator MonsterManager::findMonsterFromMapPos(const MapPos_t & t_mapPos)
+    std::vector<Monster>::iterator MonsterManager::findFromMapPos(const MapPos_t & t_mapPos)
     {
         for (auto iter{ std::begin(m_monsters) }; iter != std::end(m_monsters); ++iter)
         {

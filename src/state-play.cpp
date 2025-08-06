@@ -20,6 +20,7 @@
 #include "monster-manager.hpp"
 #include "mouseover.hpp"
 #include "music-player.hpp"
+#include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
 #include "smoke.hpp"
@@ -140,8 +141,10 @@ namespace castlecrawl
         if (didMove)
         {
             t_context.player_display.position(t_context, mapPosAfter);
-            
-            if (t_context.monsters.takeTurns(t_context))
+
+            const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
+            const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
+            if (didAnyMonstersMove || didAnyNpcsMove)
             {
                 t_context.map_display.load(t_context);
             }
