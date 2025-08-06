@@ -42,6 +42,8 @@ namespace castlecrawl
         Tree1,
         Tree2,
         Tree3,
+        Coins,
+        DarkBackground,
 
         Wall_TopLeft,
         Wall_Horiz,
@@ -292,9 +294,18 @@ namespace castlecrawl
 
     inline constexpr bool isDrawnByMapDisplay(const char ch) noexcept
     {
-        return ((ch != 'a') && (ch != 'A') && (ch != ' '));
+        return ((ch != 'a') && (ch != 'A') && (ch != ' ') && (ch != '.'));
     }
 
+    /*
+            //case '\\':
+            //case '`':
+            //case '{':
+            //case '\'':
+            //case '}';
+            //
+            //case '\x7F':
+    */
     inline constexpr TileImage charToTileImage(const char ch) noexcept
     {
         // clang-format off
@@ -326,6 +337,7 @@ namespace castlecrawl
             case 'L':    { return TileImage::Tree1;                 }
             case 'm':    { return TileImage::Tree2;                 }
             case 'M':    { return TileImage::Tree3;                 }
+            case '~':    { return TileImage::Coins;                 }
 
             case 'n':    { return TileImage::Statue_Twins;          }
             case 'N':    { return TileImage::Statue_Mermaid;        }
@@ -394,16 +406,7 @@ namespace castlecrawl
             case '_':    { return TileImage::Block_Emboss3;         }
             case ']':    { return TileImage::Block_Emboss4;         }
 
-            //case '\\':
-            //case '`':
-            //case '{':
-            //case '\'':
-            //case '}';
-            //case '~':
-            //
-            //case '\x1F':
-            //case '\x7F':
-                    
+            case '\x1F': { return TileImage::DarkBackground;        }
             case '\x1D': { return TileImage::Wall_Shadow;           }
             case '\x1E': { return TileImage::Avatar;                }
 
@@ -622,7 +625,8 @@ namespace castlecrawl
             case TileImage::Tree1:               { return 'L'; }
             case TileImage::Tree2:               { return 'm'; }
             case TileImage::Tree3:               { return 'M'; }
-
+            case TileImage::Coins:               { return '~'; }
+            
             case TileImage::Statue_Twins:        { return 'n'; }
             case TileImage::Statue_Mermaid:      { return 'N'; }
             case TileImage::Statue_Demonic:      { return 'o'; }
@@ -690,6 +694,7 @@ namespace castlecrawl
             case TileImage::Block_Emboss3:       { return '_'; }
             case TileImage::Block_Emboss4:       { return ']'; }
 
+            case TileImage::DarkBackground:      { return '\x1F'; }
             case TileImage::Wall_Shadow:         { return '\x1D'; }
             case TileImage::Avatar:              { return '\x1E'; }
 
@@ -1054,7 +1059,8 @@ namespace castlecrawl
             case TileImage::Lava:                
             case TileImage::Tree1:               
             case TileImage::Tree2:               
-            case TileImage::Tree3:               
+            case TileImage::Tree3:     
+            case TileImage::Coins:
 
             case TileImage::Statue_Twins:        
             case TileImage::Statue_Mermaid:      
@@ -1123,6 +1129,7 @@ namespace castlecrawl
             case TileImage::Block_Emboss3:       
             case TileImage::Block_Emboss4:       
 
+            case TileImage::DarkBackground:
             case TileImage::Wall_Shadow:         
             case TileImage::Avatar:              
 
@@ -1340,7 +1347,8 @@ namespace castlecrawl
             case TileImage::Lava:                
             case TileImage::Tree1:               
             case TileImage::Tree2:               
-            case TileImage::Tree3:               
+            case TileImage::Tree3:   
+            case TileImage::Coins:
 
             case TileImage::Statue_Twins:        
             case TileImage::Statue_Mermaid:      
@@ -1409,6 +1417,7 @@ namespace castlecrawl
             case TileImage::Block_Emboss3:       
             case TileImage::Block_Emboss4:       
 
+            case TileImage::DarkBackground:
             case TileImage::Wall_Shadow:         
             case TileImage::Avatar:              
 
@@ -1478,6 +1487,9 @@ namespace castlecrawl
             case TileImage::Tree1:              { return sf::IntRect( {128,224},{32,32}); }
             case TileImage::Tree2:              { return sf::IntRect( {160,224},{32,32}); }
             case TileImage::Tree3:              { return sf::IntRect( {192,224},{32,32}); }
+            case TileImage::Coins:              { return sf::IntRect( {192,160},{32,32}); }
+            
+            case TileImage::DarkBackground:     { return sf::IntRect( {128,160},{32,32}); }
             case TileImage::Wall_Shadow:        { return sf::IntRect( { 32, 32},{32,32}); }
             case TileImage::Avatar:             { return sf::IntRect( {224,224},{32,32}); }
             
@@ -1763,6 +1775,9 @@ namespace castlecrawl
             case TileImage::Tree1:              { return "Tree"; }
             case TileImage::Tree2:              { return "Tree"; }
             case TileImage::Tree3:              { return "Tree"; }
+            case TileImage::Coins:              { return "Coins"; }
+
+            case TileImage::DarkBackground:     { return "DarkBackground"; }
             case TileImage::Wall_Shadow:        { return "Wall_Shadow"; }
             case TileImage::Avatar:             { return "You"; }
             

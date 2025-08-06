@@ -98,7 +98,7 @@ namespace castlecrawl
                 }
 
                 // floor tiles
-                if (' ' != cell.floor_char)
+                if ((' ' != cell.floor_char) && ('.' != cell.floor_char))
                 {
                     appendTileVerts(
                         t_context, charToTileImage(cell.floor_char), screenPos, m_floorVerts);

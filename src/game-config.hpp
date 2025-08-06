@@ -16,7 +16,7 @@ namespace castlecrawl
     {
         std::filesystem::path media_path;
         sf::VideoMode video_mode;
-        sf::Color background_color   = sf::Color::Black; // sf::Color(16, 16, 16);
+        sf::Color background_color   = sf::Color::Black;
         float music_volume           = 40.0f;
         unsigned int framerate_limit = 0;
         float top_panel_height_ratio = 0.1f;
