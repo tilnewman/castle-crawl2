@@ -99,7 +99,7 @@ namespace castlecrawl
               TileImage::Water,      TileImage::Slime,         TileImage::Rock,
               TileImage::RockWeak,   TileImage::Stair_Up,      TileImage::Stair_Down,
               TileImage::Altar,      TileImage::Bag,           TileImage::Coffin,
-              TileImage::StoneSpire, TileImage::Lava });
+              TileImage::StoneSpire, TileImage::Lava,          TileImage::Coins });
 
         m_doorwayButton.setup(
             t_context,
@@ -260,6 +260,7 @@ namespace castlecrawl
         t_context.campfire_anims.update(t_context, t_frameTimeSec);
         t_context.smoke_anims.update(t_context, t_frameTimeSec);
         t_context.inferno_anims.update(t_context, t_frameTimeSec);
+        t_context.sparkle_particles.update(t_context, t_frameTimeSec);
     }
 
     void StateEditor::draw(
@@ -269,6 +270,7 @@ namespace castlecrawl
         t_context.campfire_anims.draw(t_target, t_states);
         t_context.smoke_anims.draw(t_target, t_states);
         t_context.inferno_anims.draw(t_target, t_states);
+        t_context.sparkle_particles.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
         {
@@ -621,7 +623,14 @@ namespace castlecrawl
         }
         else if (keyScancode == sf::Keyboard::Scancode::C)
         {
-            editMap(t_context, 'c', "Chest");
+            if (isShiftPressed())
+            {
+                editMap(t_context, '~', "Coins");
+            }
+            else
+            {
+                editMap(t_context, 'c', "Chest");
+            }
         }
         else if (keyScancode == sf::Keyboard::Scancode::B)
         {
@@ -708,8 +717,8 @@ namespace castlecrawl
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
                 "f-Change-Flooring\nr-Rock\nR-Breakable Rock\nZ-Breakable Wood Wall\n"
                 "w-Water\nl-Lava\nb-Blood\ng-Slime\nd-Door\nD-Locked Door\nb-Barrel\n"
-                "c-Chest\nf-Water Fountain\nF-Blood Fountain\ns-Stairs Up\nS-Stairs Down\n"
-                "p-Rock Point\nP-Altar\nT-Random Tree\nt-Random Block Wall");
+                "c-Chest\nC-Coins\nf-Water Fountain\nF-Blood Fountain\ns-Stairs Up\n"
+                "S-Stairs Down\np-Rock Point\nP-Altar\nT-Random Tree\nt-Random Block Wall");
 
             m_keyText.setString(keyText);
 
@@ -748,22 +757,10 @@ namespace castlecrawl
             t_context.maps.current().mapPosToScreenPos(t_context, m_editPos));
     }
 
-    void StateEditor::setMapChar(const Context & t_context, const char t_ch)
+    void StateEditor::setMapChar(const Context &, const char t_ch)
     {
         if (m_dragSelectedEntrys.empty())
         {
-            const char currentMapChar = m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
-                                            .at(static_cast<std::size_t>(m_editPos.x));
-
-            if (currentMapChar == 'a')
-            {
-                t_context.campfire_anims.remove(t_context, m_editPos);
-            }
-            else if (currentMapChar == 'A')
-            {
-                t_context.inferno_anims.remove(t_context, m_editPos);
-            }
-
             m_mapChars.at(static_cast<std::size_t>(m_editPos.y))
                 .at(static_cast<std::size_t>(m_editPos.x)) = t_ch;
         }
@@ -771,18 +768,6 @@ namespace castlecrawl
         {
             for (const MapEntry & entry : m_dragSelectedEntrys)
             {
-                const char currentMapChar = m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
-                                                .at(static_cast<std::size_t>(entry.pos.x));
-
-                if (currentMapChar == 'a')
-                {
-                    t_context.campfire_anims.remove(t_context, entry.pos);
-                }
-                else if (currentMapChar == 'A')
-                {
-                    t_context.inferno_anims.remove(t_context, entry.pos);
-                }
-
                 m_mapChars.at(static_cast<std::size_t>(entry.pos.y))
                     .at(static_cast<std::size_t>(entry.pos.x)) = t_ch;
             }
