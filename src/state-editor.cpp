@@ -487,6 +487,9 @@ namespace castlecrawl
 
             m_dragSelectedEntrys.clear();
 
+            m_borderRectangle.setPosition(t_context.layout.mapRect().position);
+            m_borderRectangle.setSize(t_context.layout.mapRect().size);
+
             t_context.sfx.play("error-4"); // no error here but this sfx sounds right
         }
         else if (keyScancode == sf::Keyboard::Scancode::F)
@@ -898,6 +901,9 @@ namespace castlecrawl
         placeEditCursor(t_context);
 
         m_dragSelectedEntrys.clear();
+
+        m_borderRectangle.setPosition(t_context.layout.mapRect().position);
+        m_borderRectangle.setSize(t_context.layout.mapRect().size);
 
         t_context.sfx.play("error-4"); // no error here but this sfx sounds right
     }
