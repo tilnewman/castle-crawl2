@@ -42,7 +42,7 @@ namespace castlecrawl
 
     void AnimationManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        // this order is important to things looking right
+        // this order is important for things to look right
         m_sparkleManagerUPtr->draw(t_target, t_states);
         m_dustManagerUPtr->draw(t_target, t_states);
         m_campfiresUPtr->draw(t_target, t_states);

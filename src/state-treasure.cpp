@@ -92,7 +92,7 @@ namespace castlecrawl
 
         m_helpText = t_context.fonts.makeText(
             FontSize::Small,
-            "(Press 'T' to take items then 'Enter' when finished)",
+            "(Press Enter to take items then Escape when finished)",
             sf::Color(200, 200, 200));
 
         m_helpText.setStyle(sf::Text::Italic);
@@ -127,7 +127,7 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.anim.draw(t_target, t_states);
-        
+
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRectangle, t_states);
         t_target.draw(m_titleText, t_states);
@@ -145,8 +145,7 @@ namespace castlecrawl
     {
         if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            if ((keyPtr->scancode == sf::Keyboard::Scancode::Enter) ||
-                (keyPtr->scancode == sf::Keyboard::Scancode::Escape))
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
                 t_context.state.change(t_context, State::Play);
             }
@@ -168,7 +167,7 @@ namespace castlecrawl
 
                 updateItemDescText(t_context);
             }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::T)
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Enter)
             {
                 if (m_itemListboxUPtr->empty())
                 {
