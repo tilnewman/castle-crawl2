@@ -484,7 +484,7 @@ namespace castlecrawl
             m_borderRectangle.setPosition(t_context.layout.mapRect().position);
             m_borderRectangle.setSize(t_context.layout.mapRect().size);
 
-            t_context.sfx.play("error-4"); // no error here but this sfx sounds right
+            t_context.sfx.play("sonar-ping");
         }
         else if (keyScancode == sf::Keyboard::Scancode::F)
         {
@@ -797,7 +797,7 @@ namespace castlecrawl
             fStream << '\"' << rowStr << "\"," << std::endl;
         }
 
-        t_context.sfx.play("error-4"); // no error here but this sfx sounds right
+        t_context.sfx.play("sonar-ping");
     }
 
     void StateEditor::load(const Context & t_context)
@@ -882,7 +882,7 @@ namespace castlecrawl
         m_borderRectangle.setPosition(t_context.layout.mapRect().position);
         m_borderRectangle.setSize(t_context.layout.mapRect().size);
 
-        t_context.sfx.play("error-4"); // no error here but this sfx sounds right
+        t_context.sfx.play("sonar-ping");
     }
 
     void StateEditor::startDragging(const Context & t_context, const sf::Vector2f & t_pos)
