@@ -5,6 +5,7 @@
 //
 #include "inferno.hpp"
 
+#include "animation-manager.hpp"
 #include "context.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
@@ -109,7 +110,7 @@ namespace castlecrawl
     void InfernoAnimationManager::add(const Context & t_context, const MapPos_t & t_mapPos)
     {
         m_animations.emplace_back(t_context, m_texture, t_mapPos);
-        t_context.smoke_anims.add(t_context, t_mapPos);
+        t_context.anim.smoke().add(t_context, t_mapPos);
     }
 
     void InfernoAnimationManager::remove(const Context & t_context, const MapPos_t & t_mapPos)
@@ -118,7 +119,7 @@ namespace castlecrawl
             return (t_mapPos == animation.map_pos);
         });
 
-        t_context.smoke_anims.remove(t_mapPos);
+        t_context.anim.smoke().remove(t_mapPos);
     }
 
 } // namespace castlecrawl

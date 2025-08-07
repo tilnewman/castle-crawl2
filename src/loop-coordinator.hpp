@@ -3,13 +3,11 @@
 //
 // loop-coordinator.hpp
 //
-#include "campfire.hpp"
+#include "animation-manager.hpp"
 #include "context.hpp"
-#include "dust-particle.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
-#include "inferno.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -20,10 +18,7 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
-#include "rising-text-anim.hpp"
-#include "smoke.hpp"
 #include "sound-player.hpp"
-#include "sparkle-particle.hpp"
 #include "splat-images.hpp"
 #include "state-manager.hpp"
 #include "tile-images.hpp"
@@ -78,14 +73,9 @@ namespace castlecrawl
         std::unique_ptr<FramerateText> m_framerateUPtr;
         std::unique_ptr<TopPanel> m_topPanelUPtr;
         std::unique_ptr<item::ItemFactory> m_itemFactoryUPtr;
-        std::unique_ptr<DustParticleManager> m_dustParticleManagerUPtr;
-        std::unique_ptr<SparkleParticleManager> m_sparkleParticleManagerUPtr;
-        std::unique_ptr<CampfireAnimationManager> m_campfireAnimationManagerUPtr;
-        std::unique_ptr<SmokeEffectManager> m_smokeEffectManagerUPtr;
-        std::unique_ptr<InfernoAnimationManager> m_infernoAnimationManagerUPtr;
         std::unique_ptr<MonsterManager> m_monsterManagerUPtr;
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
-        std::unique_ptr<RisingTextAnimationManager> m_risingTextAnimationManagerUPtr;
+        std::unique_ptr<AnimationManager> m_animationManagerUPtr;
 
         std::unique_ptr<Context> m_contextUPtr;
     };

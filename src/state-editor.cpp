@@ -5,19 +5,16 @@
 //
 #include "state-editor.hpp"
 
-#include "campfire.hpp"
+#include "animation-manager.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "game-config.hpp"
-#include "inferno.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
-#include "smoke.hpp"
 #include "sound-player.hpp"
-#include "sparkle-particle.hpp"
 #include "state-manager.hpp"
 
 #include <fstream>
@@ -80,10 +77,7 @@ namespace castlecrawl
         m_fadeText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
 
         // clear these in case there were any loaded with the first playable map
-        t_context.sparkle_particles.clear();
-        t_context.campfire_anims.clear();
-        t_context.smoke_anims.clear();
-        t_context.inferno_anims.clear();
+        t_context.anim.clear();
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
@@ -257,20 +251,14 @@ namespace castlecrawl
         updateHelpText(t_context);
         updateFadeText(t_frameTimeSec);
         m_mouseover.update(t_context, t_frameTimeSec);
-        t_context.campfire_anims.update(t_context, t_frameTimeSec);
-        t_context.smoke_anims.update(t_context, t_frameTimeSec);
-        t_context.inferno_anims.update(t_context, t_frameTimeSec);
-        t_context.sparkle_particles.update(t_context, t_frameTimeSec);
+        t_context.anim.update(t_context, t_frameTimeSec);
     }
 
     void StateEditor::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
-        t_context.campfire_anims.draw(t_target, t_states);
-        t_context.smoke_anims.draw(t_target, t_states);
-        t_context.inferno_anims.draw(t_target, t_states);
-        t_context.sparkle_particles.draw(t_target, t_states);
+        t_context.anim.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
         {

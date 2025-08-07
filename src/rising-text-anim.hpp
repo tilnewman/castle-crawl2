@@ -44,7 +44,7 @@ namespace castlecrawl
                 const MapPos_t & t_mapPos);
 
         void remove(const MapPos_t & t_mapPos);
-        inline void reset() { m_animations.clear(); }
+        inline void clear() { m_animations.clear(); }
 
       private:
         std::vector<RisingTextAnimation> m_animations;

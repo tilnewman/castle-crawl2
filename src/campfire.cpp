@@ -5,6 +5,7 @@
 //
 #include "campfire.hpp"
 
+#include "animation-manager.hpp"
 #include "context.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
@@ -66,8 +67,8 @@ namespace castlecrawl
         }
     }
 
-    void CampfireAnimationManager::draw(
-        sf::RenderTarget & t_target, sf::RenderStates t_states) const
+    void
+        CampfireAnimationManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const CampfireAnimation & animation : m_animations)
         {
@@ -89,7 +90,7 @@ namespace castlecrawl
 
         util::centerInside(animation.sprite, { screenPos, cellSize });
 
-        t_context.smoke_anims.add(t_context, t_mapPos);
+        t_context.anim.smoke().add(t_context, t_mapPos);
     }
 
     void CampfireAnimationManager::remove(const Context & t_context, const MapPos_t & t_mapPos)
@@ -98,7 +99,7 @@ namespace castlecrawl
             return (t_mapPos == animation.map_pos);
         });
 
-        t_context.smoke_anims.remove(t_mapPos);
+        t_context.anim.smoke().remove(t_mapPos);
     }
 
     const sf::IntRect CampfireAnimationManager::frameRect(const std::size_t index) const

@@ -25,14 +25,9 @@ namespace castlecrawl
     class FontManager;
     class FramerateText;
     class TopPanel;
-    class DustParticleManager;
-    class SparkleParticleManager;
-    class CampfireAnimationManager;
-    class SmokeEffectManager;
-    class InfernoAnimationManager;
     class MonsterManager;
     class NpcManager;
-    class RisingTextAnimationManager;
+    class AnimationManager;
 
     namespace item
     {
@@ -58,14 +53,9 @@ namespace castlecrawl
             FramerateText & t_framerateText,
             TopPanel & t_topPanel,
             item::ItemFactory & t_itemFactory,
-            DustParticleManager & t_dustParticleManager,
-            SparkleParticleManager & t_sparkleParticleManager,
-            CampfireAnimationManager & t_campfireAnimationManager,
-            SmokeEffectManager & t_smokeEffectManager,
-            InfernoAnimationManager & t_infernoAnimationManager,
             MonsterManager & t_monsterManager,
             NpcManager & t_npcManager,
-            RisingTextAnimationManager & t_risingTextAnimationManager)
+            AnimationManager & t_animationManager)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -82,14 +72,9 @@ namespace castlecrawl
             , framerate(t_framerateText)
             , top_panel(t_topPanel)
             , items(t_itemFactory)
-            , dust_particles(t_dustParticleManager)
-            , sparkle_particles(t_sparkleParticleManager)
-            , campfire_anims(t_campfireAnimationManager)
-            , smoke_anims(t_smokeEffectManager)
-            , inferno_anims(t_infernoAnimationManager)
             , monsters(t_monsterManager)
             , npcs(t_npcManager)
-            , rising_text(t_risingTextAnimationManager)
+            , anim(t_animationManager)
         {}
 
         const GameConfig & config;
@@ -108,14 +93,9 @@ namespace castlecrawl
         FramerateText & framerate;
         TopPanel & top_panel;
         item::ItemFactory & items;
-        DustParticleManager & dust_particles;
-        SparkleParticleManager & sparkle_particles;
-        CampfireAnimationManager & campfire_anims;
-        SmokeEffectManager & smoke_anims;
-        InfernoAnimationManager & inferno_anims;
         MonsterManager & monsters;
         NpcManager & npcs;
-        RisingTextAnimationManager & rising_text;
+        AnimationManager & anim;
     };
 
 } // namespace castlecrawl

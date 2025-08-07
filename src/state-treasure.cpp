@@ -5,12 +5,10 @@
 //
 #include "state-treasure.hpp"
 
-#include "campfire.hpp"
+#include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "dust-particle.hpp"
 #include "framerate-text.hpp"
-#include "inferno.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -18,9 +16,7 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "sfml-defaults.hpp"
-#include "smoke.hpp"
 #include "sound-player.hpp"
-#include "sparkle-particle.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
@@ -122,24 +118,16 @@ namespace castlecrawl
     void StateTreasure::update(const Context & t_context, const float t_frameTimeSec)
     {
         t_context.framerate.update();
-        t_context.dust_particles.update(t_context, t_frameTimeSec);
-        t_context.sparkle_particles.update(t_context, t_frameTimeSec);
-        t_context.campfire_anims.update(t_context, t_frameTimeSec);
-        t_context.smoke_anims.update(t_context, t_frameTimeSec);
-        t_context.inferno_anims.update(t_context, t_frameTimeSec);
+        t_context.anim.update(t_context, t_frameTimeSec);
     }
 
     void StateTreasure::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
-        t_context.campfire_anims.draw(t_target, t_states);
-        t_context.smoke_anims.draw(t_target, t_states);
-        t_context.inferno_anims.draw(t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
-        t_context.dust_particles.draw(t_target, t_states);
-        t_context.sparkle_particles.draw(t_target, t_states);
-        t_context.framerate.draw(t_target, t_states);
+        t_context.anim.draw(t_target, t_states);
+        
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRectangle, t_states);
         t_target.draw(m_titleText, t_states);

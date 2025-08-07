@@ -5,12 +5,11 @@
 //
 #include "state-death.hpp"
 
-#include "campfire.hpp"
+#include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
-#include "inferno.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -19,7 +18,6 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "sfml-defaults.hpp"
-#include "smoke.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -55,9 +53,7 @@ namespace castlecrawl
 
     void StateDeath::update(const Context & t_context, const float t_elapsedTimeSec)
     {
-        t_context.campfire_anims.update(t_context, t_elapsedTimeSec);
-        t_context.smoke_anims.update(t_context, t_elapsedTimeSec);
-        t_context.inferno_anims.update(t_context, t_elapsedTimeSec);
+        t_context.anim.update(t_context, t_elapsedTimeSec);
 
         if (m_fadeRedRectangle.getFillColor().a < 255)
         {
@@ -91,10 +87,9 @@ namespace castlecrawl
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
-        t_context.campfire_anims.draw(t_target, t_states);
-        t_context.smoke_anims.draw(t_target, t_states);
-        t_context.inferno_anims.draw(t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
+        t_context.anim.draw(t_target, t_states);
+
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRedRectangle, t_states);
         t_target.draw(m_fadeBlackRectangle, t_states);

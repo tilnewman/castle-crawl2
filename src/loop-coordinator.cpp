@@ -38,14 +38,9 @@ namespace castlecrawl
         , m_framerateUPtr{}
         , m_topPanelUPtr{}
         , m_itemFactoryUPtr{}
-        , m_dustParticleManagerUPtr{}
-        , m_sparkleParticleManagerUPtr{}
-        , m_campfireAnimationManagerUPtr{}
-        , m_smokeEffectManagerUPtr{}
-        , m_infernoAnimationManagerUPtr{}
         , m_monsterManagerUPtr{}
         , m_npcManagerUPtr{}
-        , m_risingTextAnimationManagerUPtr{}
+        , m_animationManagerUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -73,27 +68,22 @@ namespace castlecrawl
         m_sfxUPtr->loadAll();
 
         // this order is NOT critical
-        m_layoutUPtr                     = std::make_unique<Layout>();
-        m_mapsUPtr                       = std::make_unique<Maps>();
-        m_playerUPtr                     = std::make_unique<Player>();
-        m_mapDisplayUPtr                 = std::make_unique<MapDisplay>();
-        m_stateManagerUPtr               = std::make_unique<StateManager>();
-        m_fontsUPtr                      = std::make_unique<FontManager>();
-        m_tileImagesUPtr                 = std::make_unique<TileImages>();
-        m_splatImagesUPtr                = std::make_unique<SplatImages>();
-        m_playerDisplayUPtr              = std::make_unique<PlayerDisplay>();
-        m_musicUPtr                      = std::make_unique<util::MusicPlayer>();
-        m_framerateUPtr                  = std::make_unique<FramerateText>();
-        m_topPanelUPtr                   = std::make_unique<TopPanel>();
-        m_itemFactoryUPtr                = std::make_unique<item::ItemFactory>();
-        m_dustParticleManagerUPtr        = std::make_unique<DustParticleManager>();
-        m_sparkleParticleManagerUPtr     = std::make_unique<SparkleParticleManager>();
-        m_campfireAnimationManagerUPtr   = std::make_unique<CampfireAnimationManager>();
-        m_smokeEffectManagerUPtr         = std::make_unique<SmokeEffectManager>();
-        m_infernoAnimationManagerUPtr    = std::make_unique<InfernoAnimationManager>();
-        m_monsterManagerUPtr             = std::make_unique<MonsterManager>();
-        m_npcManagerUPtr                 = std::make_unique<NpcManager>();
-        m_risingTextAnimationManagerUPtr = std::make_unique<RisingTextAnimationManager>();
+        m_layoutUPtr           = std::make_unique<Layout>();
+        m_mapsUPtr             = std::make_unique<Maps>();
+        m_playerUPtr           = std::make_unique<Player>();
+        m_mapDisplayUPtr       = std::make_unique<MapDisplay>();
+        m_stateManagerUPtr     = std::make_unique<StateManager>();
+        m_fontsUPtr            = std::make_unique<FontManager>();
+        m_tileImagesUPtr       = std::make_unique<TileImages>();
+        m_splatImagesUPtr      = std::make_unique<SplatImages>();
+        m_playerDisplayUPtr    = std::make_unique<PlayerDisplay>();
+        m_musicUPtr            = std::make_unique<util::MusicPlayer>();
+        m_framerateUPtr        = std::make_unique<FramerateText>();
+        m_topPanelUPtr         = std::make_unique<TopPanel>();
+        m_itemFactoryUPtr      = std::make_unique<item::ItemFactory>();
+        m_monsterManagerUPtr   = std::make_unique<MonsterManager>();
+        m_npcManagerUPtr       = std::make_unique<NpcManager>();
+        m_animationManagerUPtr = std::make_unique<AnimationManager>();
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -112,25 +102,16 @@ namespace castlecrawl
             *m_framerateUPtr,
             *m_topPanelUPtr,
             *m_itemFactoryUPtr,
-            *m_dustParticleManagerUPtr,
-            *m_sparkleParticleManagerUPtr,
-            *m_campfireAnimationManagerUPtr,
-            *m_smokeEffectManagerUPtr,
-            *m_infernoAnimationManagerUPtr,
             *m_monsterManagerUPtr,
             *m_npcManagerUPtr,
-            *m_risingTextAnimationManagerUPtr);
+            *m_animationManagerUPtr);
 
         // this order IS critical
         m_itemFactoryUPtr->setup();
         m_fontsUPtr->setup(m_config);
         m_tileImagesUPtr->setup(m_config);
         m_splatImagesUPtr->setup(m_config);
-        m_dustParticleManagerUPtr->setup(m_config);
-        m_sparkleParticleManagerUPtr->setup(m_config);
-        m_campfireAnimationManagerUPtr->setup(m_config);
-        m_smokeEffectManagerUPtr->setup(m_config);
-        m_infernoAnimationManagerUPtr->setup(m_config);
+        m_animationManagerUPtr->setup(m_config);
         m_layoutUPtr->setup(m_config);
         m_mapsUPtr->setup(*m_contextUPtr);
         m_mapsUPtr->change(*m_contextUPtr, MapName::Level_1_Cell, { 3, 2 });
@@ -159,26 +140,20 @@ namespace castlecrawl
         m_mapDisplayUPtr.reset();
         m_stateManagerUPtr.reset();
         m_playerDisplayUPtr.reset();
-
         m_fontsUPtr.reset();
         m_framerateUPtr.reset();
         m_topPanelUPtr.reset();
         m_tileImagesUPtr.reset();
         m_splatImagesUPtr.reset();
         m_itemFactoryUPtr.reset();
-        m_dustParticleManagerUPtr.reset();
-        m_sparkleParticleManagerUPtr.reset();
-        m_campfireAnimationManagerUPtr.reset();
-        m_smokeEffectManagerUPtr.reset();
-        m_infernoAnimationManagerUPtr.reset();
         m_monsterManagerUPtr.reset();
         m_npcManagerUPtr.reset();
-        m_risingTextAnimationManagerUPtr.reset();
+        m_animationManagerUPtr.reset();
 
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();
 
-        // this reset must occur AFTER m_sfxUPtr.reset()
+        // this reset() must occur AFTER m_sfxUPtr.reset()
         m_randomUPtr.reset();
 
         m_musicUPtr->stopAll();
