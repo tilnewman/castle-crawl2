@@ -98,11 +98,11 @@ namespace castlecrawl
                 screenPos.x -= (screenSize.x * 0.5f);
                 screenPos.y -= (cellSize.y * 0.4f);
 
-                //util::AnimConfig config;
-                //config.color = sf::Color(255, 255, 255, 127);
+                util::AnimConfig config;
+                config.color = sf::Color(255, 255, 255, 127);
 
                 t_context.anim.player().play(
-                    "flat-smoke", { { screenPos }, { screenSize } });
+                    "flat-smoke", { { screenPos }, { screenSize } }, config);
             }
         }
     }
