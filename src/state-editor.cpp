@@ -8,6 +8,7 @@
 #include "animation-manager.hpp"
 #include "context.hpp"
 #include "font.hpp"
+#include "framerate-text.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -252,6 +253,7 @@ namespace castlecrawl
         updateFadeText(t_frameTimeSec);
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.anim.update(t_context, t_frameTimeSec);
+        t_context.framerate.update(t_context);
     }
 
     void StateEditor::draw(
@@ -301,6 +303,8 @@ namespace castlecrawl
         m_monsterButton5.draw(t_target, t_states);
 
         m_mouseover.draw(t_context, t_target, t_states);
+
+        t_context.framerate.draw(t_target, t_states);
     }
 
     bool StateEditor::isMouseOverAnyButton(const sf::Vector2f & t_mousePos) const

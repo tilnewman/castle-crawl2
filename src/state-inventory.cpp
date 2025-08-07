@@ -185,7 +185,7 @@ namespace castlecrawl
 
     void StateInventory::update(const Context & t_context, const float t_frameTimeSec)
     {
-        t_context.framerate.update();
+        t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
 
         if (m_errorText.getFillColor().a > 0)

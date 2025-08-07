@@ -137,8 +137,7 @@ namespace castlecrawl
         }
     }
 
-    void
-        SparkleParticleManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
+    void SparkleParticleManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const SparkleParticleEffect & effect : m_effects)
         {
@@ -189,6 +188,18 @@ namespace castlecrawl
         std::erase_if(m_effects, [&](const SparkleParticleEffect & effect) {
             return (t_mapPos == effect.map_pos);
         });
+    }
+
+    std::size_t SparkleParticleManager::particleCount() const
+    {
+        std::size_t count = 0;
+
+        for (const SparkleParticleEffect & effect : m_effects)
+        {
+            count += effect.particles.size();
+        }
+
+        return count;
     }
 
 } // namespace castlecrawl

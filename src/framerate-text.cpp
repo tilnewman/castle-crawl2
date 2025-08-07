@@ -5,10 +5,12 @@
 //
 #include "framerate-text.hpp"
 
+#include "animation-manager.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "layout.hpp"
 #include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 
 #include <SFML/System/Time.hpp>
 
@@ -27,25 +29,32 @@ namespace castlecrawl
         m_secondClock.restart();
 
         m_text.setFont(t_context.fonts.font());
-        m_text.setCharacterSize(30);
-        m_text.setFillColor(sf::Color::White);
+        m_text.setCharacterSize(24);
+        m_text.setFillColor(sf::Color(255, 255, 255, 192));
 
         m_text.setPosition(
-            { 0.0f,
-              (t_context.layout.botRect().position.y + t_context.layout.botRect().size.y) -
-                  50.0f });
+            { 0.0f, (t_context.layout.botRect().position.y + t_context.layout.botRect().size.y) });
     }
 
-    void FramerateText::update()
+    void FramerateText::update(const Context & t_context)
     {
         m_frameCounter += 1.0f;
 
         const float elapsedTimeSec = m_secondClock.getElapsedTime().asSeconds();
         if (elapsedTimeSec >= 1.0f)
         {
-            const std::size_t fps       = static_cast<std::size_t>(m_frameCounter / elapsedTimeSec);
-            const std::string fpsString = std::to_string(fps) + "fps";
-            m_text.setString(fpsString);
+            const std::size_t fps = static_cast<std::size_t>(m_frameCounter / elapsedTimeSec);
+            std::string message   = std::to_string(fps) + "fps, ";
+            message += std::to_string(t_context.anim.particleCount());
+            message += "particles";
+
+            m_text.setString(message);
+            util::setOriginToPosition(m_text);
+
+            m_text.setPosition(
+                { 0.0f,
+                  (t_context.layout.botRect().position.y + t_context.layout.botRect().size.y) -
+                      m_text.getGlobalBounds().size.y });
 
             m_frameCounter = 0.0f;
             m_secondClock.restart();

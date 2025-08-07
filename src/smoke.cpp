@@ -186,4 +186,16 @@ namespace castlecrawl
         // clang-format on
     }
 
+    std::size_t SmokeEffectManager::particleCount() const
+    { 
+        std::size_t count = 0;
+
+        for (const SmokeEffect & effect : m_effects)
+        {
+            count += effect.particles.size();
+        }
+
+        return count;
+    }
+
 } // namespace castlecrawl

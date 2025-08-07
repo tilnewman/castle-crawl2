@@ -62,6 +62,7 @@ namespace castlecrawl
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const MapPos_t & t_mapPos);
         inline void clear() { m_effects.clear(); }
+        [[nodiscard]] std::size_t particleCount() const;
 
       private:
         sf::Texture m_texture;

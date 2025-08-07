@@ -38,6 +38,8 @@ namespace castlecrawl
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void clear();
 
+        std::size_t particleCount() const;
+
       private:
         std::unique_ptr<DustParticleManager> m_dustManagerUPtr;
         std::unique_ptr<SparkleParticleManager> m_sparkleManagerUPtr;

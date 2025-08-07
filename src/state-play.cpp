@@ -39,7 +39,7 @@ namespace castlecrawl
     {
         m_mouseover.update(t_context, t_frameTimeSec);
         t_context.player_display.update(t_context, t_frameTimeSec);
-        t_context.framerate.update();
+        t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
     }
 

@@ -61,4 +61,12 @@ namespace castlecrawl
         m_risingUPtr->clear();
     }
 
+    std::size_t AnimationManager::particleCount() const
+    {
+        return (
+            m_dustManagerUPtr->particleCount() + m_sparkleManagerUPtr->particleCount() +
+            m_campfiresUPtr->particleCount() + m_smokeEffectManagerUPtr->particleCount() +
+            m_infernoManagerUPtr->particleCount() + m_risingUPtr->particleCount());
+    }
+
 } // namespace castlecrawl

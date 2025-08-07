@@ -45,6 +45,7 @@ namespace castlecrawl
 
         void remove(const MapPos_t & t_mapPos);
         inline void clear() { m_animations.clear(); }
+        [[nodiscard]] inline std::size_t particleCount() const { return m_animations.size(); }
 
       private:
         std::vector<RisingTextAnimation> m_animations;
