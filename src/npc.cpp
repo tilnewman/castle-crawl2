@@ -22,7 +22,7 @@ namespace castlecrawl
     bool Npc::takeTurn(const Context & t_context)
     {
         // only walk about a sixth of the time
-        if (t_context.random.fromTo(1, 6) == 1)
+        if (!isPlayerAdjacent(t_context) && (t_context.random.fromTo(1, 6) == 1))
         {
             std::vector<MapCell> adjacentCells =
                 t_context.maps.current().surroundingCellsHorizVert(mapPosition());
