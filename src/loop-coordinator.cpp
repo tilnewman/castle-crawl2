@@ -68,22 +68,24 @@ namespace castlecrawl
         m_sfxUPtr->loadAll();
 
         // this order is NOT critical
-        m_layoutUPtr           = std::make_unique<Layout>();
-        m_mapsUPtr             = std::make_unique<Maps>();
-        m_playerUPtr           = std::make_unique<Player>();
-        m_mapDisplayUPtr       = std::make_unique<MapDisplay>();
-        m_stateManagerUPtr     = std::make_unique<StateManager>();
-        m_fontsUPtr            = std::make_unique<FontManager>();
-        m_tileImagesUPtr       = std::make_unique<TileImages>();
-        m_splatImagesUPtr      = std::make_unique<SplatImages>();
-        m_playerDisplayUPtr    = std::make_unique<PlayerDisplay>();
-        m_musicUPtr            = std::make_unique<util::MusicPlayer>();
-        m_framerateUPtr        = std::make_unique<FramerateText>();
-        m_topPanelUPtr         = std::make_unique<TopPanel>();
-        m_itemFactoryUPtr      = std::make_unique<item::ItemFactory>();
-        m_monsterManagerUPtr   = std::make_unique<MonsterManager>();
-        m_npcManagerUPtr       = std::make_unique<NpcManager>();
-        m_animationManagerUPtr = std::make_unique<AnimationManager>();
+        m_layoutUPtr         = std::make_unique<Layout>();
+        m_mapsUPtr           = std::make_unique<Maps>();
+        m_playerUPtr         = std::make_unique<Player>();
+        m_mapDisplayUPtr     = std::make_unique<MapDisplay>();
+        m_stateManagerUPtr   = std::make_unique<StateManager>();
+        m_fontsUPtr          = std::make_unique<FontManager>();
+        m_tileImagesUPtr     = std::make_unique<TileImages>();
+        m_splatImagesUPtr    = std::make_unique<SplatImages>();
+        m_playerDisplayUPtr  = std::make_unique<PlayerDisplay>();
+        m_musicUPtr          = std::make_unique<util::MusicPlayer>();
+        m_framerateUPtr      = std::make_unique<FramerateText>();
+        m_topPanelUPtr       = std::make_unique<TopPanel>();
+        m_itemFactoryUPtr    = std::make_unique<item::ItemFactory>();
+        m_monsterManagerUPtr = std::make_unique<MonsterManager>();
+        m_npcManagerUPtr     = std::make_unique<NpcManager>();
+
+        m_animationManagerUPtr = std::make_unique<AnimationManager>(
+            *m_randomUPtr, (m_config.media_path / "image" / "animation").string());
 
         m_contextUPtr = std::make_unique<Context>(
             m_config,
@@ -153,7 +155,7 @@ namespace castlecrawl
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();
 
-        // this reset() must occur AFTER m_sfxUPtr.reset()
+        // this reset() must occur AFTER m_sfxUPtr.reset() and m_animationManagerUPtr.reset()
         m_randomUPtr.reset();
 
         m_musicUPtr->stopAll();

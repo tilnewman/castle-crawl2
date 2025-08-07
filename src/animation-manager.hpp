@@ -3,9 +3,11 @@
 //
 // animation-manager.hpp
 //
+#include "animation-player.hpp"
 #include "campfire.hpp"
 #include "dust-particle.hpp"
 #include "inferno.hpp"
+#include "random.hpp"
 #include "rising-text-anim.hpp"
 #include "smoke.hpp"
 #include "sparkle-particle.hpp"
@@ -23,7 +25,7 @@ namespace castlecrawl
     class AnimationManager
     {
       public:
-        AnimationManager();
+        AnimationManager(const util::Random & t_random, const std::string & t_pathStr);
 
         void setup(const GameConfig & t_config);
 
@@ -33,6 +35,7 @@ namespace castlecrawl
         [[nodiscard]] inline SmokeEffectManager & smoke() { return *m_smokeEffectManagerUPtr; }
         [[nodiscard]] inline InfernoAnimationManager & inferno() { return *m_infernoManagerUPtr; }
         [[nodiscard]] inline RisingTextAnimationManager & risingText() { return *m_risingUPtr; }
+        [[nodiscard]] inline util::AnimationPlayer & player() { return *m_playerUPtr; }
 
         void update(const Context & t_context, const float t_elapsedTimeSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
@@ -47,6 +50,7 @@ namespace castlecrawl
         std::unique_ptr<SmokeEffectManager> m_smokeEffectManagerUPtr;
         std::unique_ptr<InfernoAnimationManager> m_infernoManagerUPtr;
         std::unique_ptr<RisingTextAnimationManager> m_risingUPtr;
+        std::unique_ptr<util::AnimationPlayer> m_playerUPtr;
     };
 
 } // namespace castlecrawl

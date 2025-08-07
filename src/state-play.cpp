@@ -84,6 +84,26 @@ namespace castlecrawl
             {
                 t_context.state.change(t_context, State::Fight);
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
+            {
+                // todo remove after testing
+                const sf::Vector2f cellSize   = t_context.layout.cellSize();
+                const sf::Vector2f screenSize = (cellSize * 1.5f);
+
+                sf::Vector2f screenPos =
+                    (t_context.maps.current().mapPosToScreenPos(
+                         t_context, t_context.player_display.position()) +
+                     (cellSize * 0.5f));
+
+                screenPos.x -= (screenSize.x * 0.5f);
+                screenPos.y -= (cellSize.y * 0.4f);
+
+                //util::AnimConfig config;
+                //config.color = sf::Color(255, 255, 255, 127);
+
+                t_context.anim.player().play(
+                    "flat-smoke", { { screenPos }, { screenSize } });
+            }
         }
     }
 
