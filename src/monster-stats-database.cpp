@@ -1298,7 +1298,7 @@ namespace castlecrawl
         std::cout << std::endl;
     }
 
-    const MonsterStats MonsterStatsDatabase::stats(const TileImage & t_tileImage) const
+    const MonsterStats MonsterStatsDatabase::find(const TileImage & t_tileImage) const
     {
         M_CHECK(
             isTileImageMonster(t_tileImage),

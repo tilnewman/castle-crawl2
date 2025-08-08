@@ -5,6 +5,7 @@
 //
 #include "monster.hpp"
 
+#include "check-macros.hpp"
 #include "context.hpp"
 #include "maps.hpp"
 #include "player-display.hpp"
@@ -15,9 +16,15 @@
 namespace castlecrawl
 {
 
-    Monster::Monster(const MapPos_t & t_mapPos, const TileImage t_tileImage)
-        : Creature{ t_mapPos, t_tileImage}
-    {}
+    Monster::Monster(
+        const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage)
+        : Creature{ t_mapPos, t_tileImage }
+        , m_stats{ t_context.monster_stats.find(t_tileImage) }
+    {
+        M_CHECK(
+            m_stats.isValid(),
+            "MonsterStatsDatabase failed to find " << tileImageToName(t_tileImage));
+    }
 
     bool Monster::takeTurn(const Context & t_context)
     {
@@ -32,6 +39,5 @@ namespace castlecrawl
             return true;
         }
     }
-
 
 } // namespace castlecrawl

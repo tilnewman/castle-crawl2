@@ -54,7 +54,7 @@ namespace castlecrawl
         void setup();
         void dumpInfo() const;
 
-        [[nodiscard]] const MonsterStats stats(const TileImage & t_tileImage) const;
+        [[nodiscard]] const MonsterStats find(const TileImage & t_tileImage) const;
 
       private:
         void verifyAll() const;

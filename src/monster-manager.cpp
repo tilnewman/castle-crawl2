@@ -19,9 +19,10 @@ namespace castlecrawl
         : m_monsters{}
     {}
 
-    void MonsterManager::add(const Context &, const MapPos_t & t_mapPos, const char t_mapChar)
+    void MonsterManager::add(
+        const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar)
     {
-        m_monsters.emplace_back(t_mapPos, charToTileImage(t_mapChar));
+        m_monsters.emplace_back(t_context, t_mapPos, charToTileImage(t_mapChar));
     }
 
     bool MonsterManager::takeTurns(const Context & t_context)
