@@ -150,9 +150,7 @@ namespace castlecrawl::item
             Item(Weapon::Dagger, WeaponMaterial::Bronze, "Hobo Dagger", { .lck = 2 }));
 
         t_items.push_back(Item(
-            Weapon::Scythe,
-            WeaponMaterial::Gold,
-            "Sythe of the Lich", { .arc = 4, .dmg = 4 }));
+            Weapon::Scythe, WeaponMaterial::Gold, "Sythe of the Lich", { .arc = 4, .dmg = 4 }));
 
         t_items.push_back(
             Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));

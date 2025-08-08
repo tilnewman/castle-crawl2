@@ -206,7 +206,7 @@ namespace castlecrawl
               TileImage::WalkingBeholder, TileImage::InvisibleMan, TileImage::Kracklin,
               TileImage::Kobold,          TileImage::FireGiant,    TileImage::BeholderMite,
               TileImage::RacerSnake,      TileImage::DessertSnake, TileImage::TwoHeadedOgre,
-              TileImage::MothDragon,      TileImage::Catterhorror, TileImage::CaveSpider,
+              TileImage::MothDragon,      TileImage::Caterhorror,  TileImage::CaveSpider,
               TileImage::VineShambler,    TileImage::SpikeCreeper, TileImage::SlimeShambler,
               TileImage::Spider,          TileImage::SpellWalker });
 
@@ -229,7 +229,7 @@ namespace castlecrawl
             { (m_monsterButton3.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
             { TileImage::SpiderHorror,  TileImage::OrangeDemon,  TileImage::Ooze,
               TileImage::OctoCrawler,   TileImage::Wollynaut,    TileImage::BogSlave,
-              TileImage::MutantBull,    TileImage::MoonTroll,    TileImage::ManaViper,
+              TileImage::MutantBull,    TileImage::MoonTroll,    TileImage::ManaCobra,
               TileImage::Lorocyproca,   TileImage::FleshChomper, TileImage::Juggernaut,
               TileImage::ElephantDemon, TileImage::RedJelly,     TileImage::IronGiant,
               TileImage::Hippogriff,    TileImage::HellWing,     TileImage::Hellion,

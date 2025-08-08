@@ -13,7 +13,16 @@ namespace castlecrawl
 
     struct MonsterStats
     {
-        [[nodiscard]] inline bool isValid() const noexcept { return (health > 0); }
+        [[nodiscard]] inline bool isValid() const noexcept
+        {
+            // only mana,luck,arcane are allowed to be zero
+            return ((health > 0) && (strength > 0) && (dexterity > 0) && (accuracy > 0));
+        }
+
+        [[nodiscard]] inline bool isSpellCaster() const noexcept
+        {
+            return ((mana > 0) && (arcane > 0));
+        }
 
         int health{ 0 };
         int mana{ 0 };
@@ -22,6 +31,19 @@ namespace castlecrawl
         int arcane{ 0 };
         int accuracy{ 0 };
         int luck{ 0 };
+
+        bool is_flying{ false };
+        bool is_undead{ false };
+        bool is_immune_to_nonmagical_weapons{ false };
+
+        float breathe_fire_attack_ratio{ 0.0f };
+        float poison_attack_ratio{ 0.0f };
+        float acid_attack_ratio{ 0.0f };
+        float spell_attack_ratio{ 0.0f };
+        float break_attack_ratio{ 0.0f };
+        float devour_attack_ratio{ 0.0f };
+
+        // stun/immobilize/terror/stone/slowed
     };
 
     class MonsterStatsDatabase

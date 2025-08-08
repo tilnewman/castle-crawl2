@@ -131,8 +131,8 @@ namespace castlecrawl
         m_musicUPtr->setup((m_config.media_path / "music").string());
         m_musicUPtr->start("music.ogg", m_config.music_volume);
 
-        // m_itemFactoryUPtr->dumpInfo(m_fonts.font());
-        m_monsterStatsDatabaseUPtr->dumpInfo();
+        // m_itemFactoryUPtr->dumpInfo(m_fontsUPtr->font());
+        // m_monsterStatsDatabaseUPtr->dumpInfo();
     }
 
     void LoopCoordinator::teardown()

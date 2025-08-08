@@ -19,7 +19,6 @@ namespace castlecrawl
 
         [[nodiscard]] inline const MapPos_t mapPosition() const noexcept { return m_mapPos; }
         [[nodiscard]] inline TileImage tileImage() const noexcept { return m_tileImage; }
-        [[nodiscard]] bool isUndead() const;
 
         // returns true if m_mapPos was changed
         virtual bool takeTurn(const Context & t_context) = 0;
