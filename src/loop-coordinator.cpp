@@ -41,6 +41,7 @@ namespace castlecrawl
         , m_monsterManagerUPtr{}
         , m_npcManagerUPtr{}
         , m_animationManagerUPtr{}
+        , m_monsterStatsDatabaseUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -84,6 +85,8 @@ namespace castlecrawl
         m_monsterManagerUPtr = std::make_unique<MonsterManager>();
         m_npcManagerUPtr     = std::make_unique<NpcManager>();
 
+        m_monsterStatsDatabaseUPtr = std::make_unique<MonsterStatsDatabase>();
+
         m_animationManagerUPtr = std::make_unique<AnimationManager>(
             *m_randomUPtr, (m_config.media_path / "image" / "animation").string());
 
@@ -106,10 +109,12 @@ namespace castlecrawl
             *m_itemFactoryUPtr,
             *m_monsterManagerUPtr,
             *m_npcManagerUPtr,
-            *m_animationManagerUPtr);
+            *m_animationManagerUPtr,
+            *m_monsterStatsDatabaseUPtr);
 
         // this order IS critical
         m_itemFactoryUPtr->setup();
+        m_monsterStatsDatabaseUPtr->setup();
         m_fontsUPtr->setup(m_config);
         m_tileImagesUPtr->setup(m_config);
         m_splatImagesUPtr->setup(m_config);
@@ -127,6 +132,7 @@ namespace castlecrawl
         m_musicUPtr->start("music.ogg", m_config.music_volume);
 
         // m_itemFactoryUPtr->dumpInfo(m_fonts.font());
+        m_monsterStatsDatabaseUPtr->dumpInfo();
     }
 
     void LoopCoordinator::teardown()
@@ -151,6 +157,7 @@ namespace castlecrawl
         m_monsterManagerUPtr.reset();
         m_npcManagerUPtr.reset();
         m_animationManagerUPtr.reset();
+        m_monsterStatsDatabaseUPtr.reset();
 
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();

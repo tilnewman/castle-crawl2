@@ -157,7 +157,7 @@ namespace castlecrawl
         SlimeBeholder,
         Cyclops,
         FleshCreeper,
-        Wailing,
+        WailingCreeper,
         CoillingViper,
         IceKnight,
         Beholder,
@@ -219,7 +219,7 @@ namespace castlecrawl
 
         Wollynaut,
         BogSlave,
-        MutantBeast,
+        MutantBull,
         MoonTroll,
         ManaViper,
         Lorocyproca,
@@ -454,7 +454,7 @@ namespace castlecrawl
             case '\x88': { return TileImage::SlimeBeholder;         }
             case '\x89': { return TileImage::Cyclops;               }
             case '\x8A': { return TileImage::FleshCreeper;          }
-            case '\x8B': { return TileImage::Wailing;               }
+            case '\x8B': { return TileImage::WailingCreeper;        }
             case '\x8C': { return TileImage::CoillingViper;         }
             case '\x8D': { return TileImage::IceKnight;             }
             case '\x8E': { return TileImage::Beholder;              }
@@ -516,7 +516,7 @@ namespace castlecrawl
                      
             case '\xC0': { return TileImage::Wollynaut;             }
             case '\xC1': { return TileImage::BogSlave;              }
-            case '\xC2': { return TileImage::MutantBeast;           }
+            case '\xC2': { return TileImage::MutantBull;            }
             case '\xC3': { return TileImage::MoonTroll;             }
             case '\xC4': { return TileImage::ManaViper;             }
             case '\xC5': { return TileImage::Lorocyproca;           }
@@ -742,7 +742,7 @@ namespace castlecrawl
             case TileImage::SlimeBeholder:       { return '\x88'; }
             case TileImage::Cyclops:             { return '\x89'; }
             case TileImage::FleshCreeper:        { return '\x8A'; }
-            case TileImage::Wailing:             { return '\x8B'; }
+            case TileImage::WailingCreeper:      { return '\x8B'; }
             case TileImage::CoillingViper:       { return '\x8C'; }
             case TileImage::IceKnight:           { return '\x8D'; }
             case TileImage::Beholder:            { return '\x8E'; }
@@ -804,7 +804,7 @@ namespace castlecrawl
 
             case TileImage::Wollynaut:           { return '\xC0'; }
             case TileImage::BogSlave:            { return '\xC1'; }
-            case TileImage::MutantBeast:         { return '\xC2'; }
+            case TileImage::MutantBull:          { return '\xC2'; }
             case TileImage::MoonTroll:           { return '\xC3'; }
             case TileImage::ManaViper:           { return '\xC4'; }
             case TileImage::Lorocyproca:         { return '\xC5'; }
@@ -900,7 +900,7 @@ namespace castlecrawl
             case TileImage::SlimeBeholder:       
             case TileImage::Cyclops:             
             case TileImage::FleshCreeper:        
-            case TileImage::Wailing:             
+            case TileImage::WailingCreeper:             
             case TileImage::CoillingViper:       
             case TileImage::IceKnight:           
             case TileImage::Beholder:            
@@ -962,7 +962,7 @@ namespace castlecrawl
 
             case TileImage::Wollynaut:           
             case TileImage::BogSlave:            
-            case TileImage::MutantBeast:         
+            case TileImage::MutantBull:         
             case TileImage::MoonTroll:           
             case TileImage::ManaViper:           
             case TileImage::Lorocyproca:         
@@ -1335,7 +1335,7 @@ namespace castlecrawl
             case TileImage::SlimeBeholder:      { return sf::IntRect( {256, 32},{32,32}); }
             case TileImage::Cyclops:            { return sf::IntRect( {288, 32},{32,32}); }
             case TileImage::FleshCreeper:       { return sf::IntRect( {320, 32},{32,32}); }
-            case TileImage::Wailing:            { return sf::IntRect( {352, 32},{32,32}); }
+            case TileImage::WailingCreeper:     { return sf::IntRect( {352, 32},{32,32}); }
             case TileImage::CoillingViper:      { return sf::IntRect( {384, 32},{32,32}); }
             case TileImage::IceKnight:          { return sf::IntRect( {416, 32},{32,32}); }
             case TileImage::Beholder:           { return sf::IntRect( {448, 32},{32,32}); }
@@ -1397,7 +1397,7 @@ namespace castlecrawl
 
             case TileImage::Wollynaut:          { return sf::IntRect( {256,256},{32,32}); }
             case TileImage::BogSlave:           { return sf::IntRect( {288,256},{32,32}); }
-            case TileImage::MutantBeast:        { return sf::IntRect( {320,256},{32,32}); }
+            case TileImage::MutantBull:         { return sf::IntRect( {320,256},{32,32}); }
             case TileImage::MoonTroll:          { return sf::IntRect( {352,256},{32,32}); }
             case TileImage::ManaViper:          { return sf::IntRect( {384,256},{32,32}); }
             case TileImage::Lorocyproca:        { return sf::IntRect( {416,256},{32,32}); }
@@ -1623,7 +1623,7 @@ namespace castlecrawl
             case TileImage::SlimeBeholder:      { return "Slime Beholder"; }
             case TileImage::Cyclops:            { return "Cyclops"; }
             case TileImage::FleshCreeper:       { return "Flesh Creeper"; }
-            case TileImage::Wailing:            { return "Wailing"; }
+            case TileImage::WailingCreeper:     { return "WailingCreeper"; }
             case TileImage::CoillingViper:      { return "Coilling Viper"; }
             case TileImage::IceKnight:          { return "Ice Knight"; }
             case TileImage::Beholder:           { return "Beholder"; }
@@ -1685,7 +1685,7 @@ namespace castlecrawl
                                            
             case TileImage::Wollynaut:          { return "Wollynaut"; }
             case TileImage::BogSlave:           { return "Bog Slave"; }
-            case TileImage::MutantBeast:        { return "Mutant Beast"; }
+            case TileImage::MutantBull:         { return "Mutant Bull"; }
             case TileImage::MoonTroll:          { return "Moon Troll"; }
             case TileImage::ManaViper:          { return "Mana Viper"; }
             case TileImage::Lorocyproca:        { return "Lorocyproca"; }

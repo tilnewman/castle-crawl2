@@ -13,6 +13,7 @@
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"
+#include "monster-stats-database.hpp"
 #include "music-player.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
@@ -76,6 +77,7 @@ namespace castlecrawl
         std::unique_ptr<MonsterManager> m_monsterManagerUPtr;
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<AnimationManager> m_animationManagerUPtr;
+        std::unique_ptr<MonsterStatsDatabase> m_monsterStatsDatabaseUPtr;
 
         std::unique_ptr<Context> m_contextUPtr;
     };

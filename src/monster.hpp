@@ -17,6 +17,8 @@ namespace castlecrawl
 
         // returns true if m_mapPos was changed
         virtual bool takeTurn(const Context & t_context) override;
+
+      private:
     };
 
 } // namespace castlecrawl

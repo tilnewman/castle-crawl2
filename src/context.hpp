@@ -28,6 +28,7 @@ namespace castlecrawl
     class MonsterManager;
     class NpcManager;
     class AnimationManager;
+    class MonsterStatsDatabase;
 
     namespace item
     {
@@ -55,7 +56,8 @@ namespace castlecrawl
             item::ItemFactory & t_itemFactory,
             MonsterManager & t_monsterManager,
             NpcManager & t_npcManager,
-            AnimationManager & t_animationManager)
+            AnimationManager & t_animationManager,
+            MonsterStatsDatabase & t_monsterStatsDatabase)
             : config(t_config)
             , tile_images(t_tileImages)
             , splat_images(t_splatImages)
@@ -75,6 +77,7 @@ namespace castlecrawl
             , monsters(t_monsterManager)
             , npcs(t_npcManager)
             , anim(t_animationManager)
+            , monster_stats(t_monsterStatsDatabase)
         {}
 
         const GameConfig & config;
@@ -96,6 +99,7 @@ namespace castlecrawl
         MonsterManager & monsters;
         NpcManager & npcs;
         AnimationManager & anim;
+        MonsterStatsDatabase & monster_stats;
     };
 
 } // namespace castlecrawl
