@@ -535,63 +535,63 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FleshCreeper,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 40,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 20,
+                          .dexterity = 20,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+                          .accuracy  = 20,
+                          .luck      = 4 }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::WailingCreeper,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 30,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 16,
+                          .dexterity = 18,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+                          .accuracy  = 24,
+                          .luck      = 3 }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BloodCreeper,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 50,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 25,
+                          .dexterity = 25,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+                          .accuracy  = 25,
+                          .luck      = 3 }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BloatedCreeper,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 60,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 30,
+                          .dexterity = 17,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+                          .accuracy  = 26,
+                          .luck      = 1 }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SpikeCreeper,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 40,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 30,
+                          .dexterity = 25,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+                          .accuracy  = 20,
+                          .luck      = 8 }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::AntCreeper,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 24,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 16,
+                          .dexterity = 16,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+                          .accuracy  = 16,
+                          .luck      = 7 }));
 
         //
         // snakes
@@ -963,13 +963,14 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Kracklin,
-            MonsterStats{ .health    = 0,
-                          .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
-                          .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+            MonsterStats{ .health             = 60,
+                          .mana               = 60,
+                          .strength           = 60,
+                          .dexterity          = 30,
+                          .arcane             = 30,
+                          .accuracy           = 30,
+                          .luck               = 30,
+                          .spell_attack_ratio = 0.1f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Caterhorror,
@@ -1134,23 +1135,24 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::OrangeClamber,
-            MonsterStats{ .health    = 0,
-                          .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
-                          .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0 }));
+            MonsterStats{ .health             = 80,
+                          .mana               = 0,
+                          .strength           = 67,
+                          .dexterity          = 14,
+                          .arcane             = 0,
+                          .accuracy           = 40,
+                          .luck               = 10,
+                          .break_attack_ratio = 0.025f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SunWeaver,
-            MonsterStats{ .health                          = 0,
-                          .mana                            = 0,
-                          .strength                        = 0,
-                          .dexterity                       = 0,
-                          .arcane                          = 0,
-                          .accuracy                        = 0,
-                          .luck                            = 0,
+            MonsterStats{ .health                          = 70,
+                          .mana                            = 70,
+                          .strength                        = 45,
+                          .dexterity                       = 35,
+                          .arcane                          = 70,
+                          .accuracy                        = 30,
+                          .luck                            = 60,
                           .is_immune_to_nonmagical_weapons = true }));
 
         m_imageStatsMap.insert(std::make_pair(
@@ -1167,25 +1169,26 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Draconian,
-            MonsterStats{ .health    = 0,
+            MonsterStats{ .health    = 66,
                           .mana      = 0,
-                          .strength  = 0,
-                          .dexterity = 0,
+                          .strength  = 66,
+                          .dexterity = 33,
                           .arcane    = 0,
-                          .accuracy  = 0,
-                          .luck      = 0,
+                          .accuracy  = 33,
+                          .luck      = 15,
                           .is_flying = true }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Fungosite,
-            MonsterStats{ .health              = 0,
+            MonsterStats{ .health              = 44,
                           .mana                = 0,
-                          .strength            = 0,
-                          .dexterity           = 0,
+                          .strength            = 30,
+                          .dexterity           = 20,
                           .arcane              = 0,
-                          .accuracy            = 0,
-                          .luck                = 0,
-                          .poison_attack_ratio = 0.087f }));
+                          .accuracy            = 20,
+                          .luck                = 20,
+                          .poison_attack_ratio = 0.087f,
+                          .acid_attack_ratio   = 0.0475f }));
     }
 
     void MonsterStatsDatabase::setup() { verifyAll(); }
@@ -1337,11 +1340,10 @@ namespace castlecrawl
                 isTileImageMonster(pair.first),
                 "MonsterStatsDatabase had a non-monster in it: " << tileImageToName(pair.first));
 
-            // uncomment after all monsters have stats
-            // M_CHECK(
-            //     pair.second.isValid(),
-            //     "MonsterStatsDatabase had invalid stats in it for: "
-            //         << tileImageToName(pair.first));
+            M_CHECK(
+                pair.second.isValid(),
+                "MonsterStatsDatabase had invalid stats in it for: "
+                    << tileImageToName(pair.first));
 
             if (pair.second.mana > 0)
             {
