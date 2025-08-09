@@ -214,7 +214,8 @@ namespace castlecrawl
                           .arcane             = 24,
                           .accuracy           = 15,
                           .luck               = 15,
-                          .spell_attack_ratio = 0.088f }));
+                          .spell_attack_ratio = 0.088f,
+                          .spells             = { Spell::Spark } }));
 
         //
         // beholders
@@ -230,7 +231,8 @@ namespace castlecrawl
                           .accuracy           = 20,
                           .luck               = 20,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.1f }));
+                          .spell_attack_ratio = 0.1f,
+                          .spells             = { Spell::Terrorize, Spell::HeartAttack } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BeholderSpawn,
@@ -242,7 +244,8 @@ namespace castlecrawl
                           .accuracy           = 15,
                           .luck               = 13,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.05f }));
+                          .spell_attack_ratio = 0.05f,
+                          .spells             = { Spell::Slow } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BeholderMite,
@@ -254,7 +257,8 @@ namespace castlecrawl
                           .accuracy           = 15,
                           .luck               = 12,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.06f }));
+                          .spell_attack_ratio = 0.06f,
+                          .spells             = { Spell::Slow } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SlimeBeholder,
@@ -266,7 +270,8 @@ namespace castlecrawl
                           .accuracy           = 16,
                           .luck               = 11,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.04f }));
+                          .spell_attack_ratio = 0.04f,
+                          .spells             = { Spell::Slow } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::WalkingBeholder,
@@ -278,7 +283,8 @@ namespace castlecrawl
                           .accuracy           = 17,
                           .luck               = 17,
                           .is_flying          = false,
-                          .spell_attack_ratio = 0.075f }));
+                          .spell_attack_ratio = 0.075f,
+                          .spells             = { Spell::Stun } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::ArcaneBeholder,
@@ -290,7 +296,8 @@ namespace castlecrawl
                           .accuracy           = 16,
                           .luck               = 30,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.15f }));
+                          .spell_attack_ratio = 0.15f,
+                          .spells = { Spell::Jolt, Spell::FreezingWind, Spell::Stun } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::WanderingEye,
@@ -302,7 +309,8 @@ namespace castlecrawl
                           .accuracy           = 18,
                           .luck               = 14,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.111f }));
+                          .spell_attack_ratio = 0.111f,
+                          .spells             = { Spell::Immobalize } }));
 
         //
         // slimes
@@ -501,7 +509,8 @@ namespace castlecrawl
                           .accuracy           = 35,
                           .luck               = 2,
                           .spell_attack_ratio = 0.0932f,
-                          .break_attack_ratio = 0.02f }));
+                          .break_attack_ratio = 0.02f,
+                          .spells             = { Spell::Immobalize } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FireGiant,
@@ -715,7 +724,8 @@ namespace castlecrawl
                           .accuracy            = 20,
                           .luck                = 20,
                           .poison_attack_ratio = 0.1f,
-                          .spell_attack_ratio  = 0.1f }));
+                          .spell_attack_ratio  = 0.1f,
+                          .spells = { Spell::Flare, Spell::FreezingWind, Spell::Jolt } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::GuardianCobra,
@@ -791,7 +801,8 @@ namespace castlecrawl
                           .luck               = 14,
                           .is_flying          = true,
                           .is_undead          = true,
-                          .spell_attack_ratio = 0.131f }));
+                          .spell_attack_ratio = 0.131f,
+                          .spells             = { Spell::Scare } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SoulEater,
@@ -805,7 +816,8 @@ namespace castlecrawl
                           .is_flying                       = true,
                           .is_undead                       = true,
                           .is_immune_to_nonmagical_weapons = true,
-                          .spell_attack_ratio              = 0.072f }));
+                          .spell_attack_ratio              = 0.072f,
+                          .spells                          = { Spell::HeartAttack } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Siren,
@@ -817,7 +829,8 @@ namespace castlecrawl
                           .accuracy           = 20,
                           .luck               = 23,
                           .is_flying          = true,
-                          .spell_attack_ratio = 0.1f }));
+                          .spell_attack_ratio = 0.1f,
+                          .spells             = { Spell::Terrorize } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Specter,
@@ -831,7 +844,8 @@ namespace castlecrawl
                           .is_flying                       = true,
                           .is_undead                       = true,
                           .is_immune_to_nonmagical_weapons = true,
-                          .spell_attack_ratio              = 0.0975f }));
+                          .spell_attack_ratio              = 0.0975f,
+                          .spells                          = { Spell::Terrorize } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::ShadowFiend,
@@ -845,7 +859,8 @@ namespace castlecrawl
                           .is_flying                       = true,
                           .is_undead                       = true,
                           .is_immune_to_nonmagical_weapons = true,
-                          .spell_attack_ratio              = 0.0875f }));
+                          .spell_attack_ratio              = 0.0875f,
+                          .spells = { Spell::Terrorize, Spell::HeartAttack } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Revenant,
@@ -858,7 +873,8 @@ namespace castlecrawl
                           .luck                            = 34,
                           .is_undead                       = true,
                           .is_immune_to_nonmagical_weapons = true,
-                          .spell_attack_ratio              = 0.1f }));
+                          .spell_attack_ratio              = 0.1f,
+                          .spells = { Spell::Terrorize, Spell::HeartAttack } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Lorocyproca,
@@ -872,7 +888,8 @@ namespace castlecrawl
                           .is_flying                       = true,
                           .is_undead                       = true,
                           .is_immune_to_nonmagical_weapons = true,
-                          .spell_attack_ratio              = 0.1f }));
+                          .spell_attack_ratio              = 0.1f,
+                          .spells                          = { Spell::Terrorize } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::HellWing,
@@ -885,7 +902,8 @@ namespace castlecrawl
                           .luck               = 22,
                           .is_flying          = true,
                           .is_undead          = true,
-                          .spell_attack_ratio = 0.1f }));
+                          .spell_attack_ratio = 0.1f,
+                          .spells             = { Spell::HeartAttack } }));
 
         //
         // misc
@@ -1013,7 +1031,8 @@ namespace castlecrawl
                           .arcane             = 30,
                           .accuracy           = 30,
                           .luck               = 30,
-                          .spell_attack_ratio = 0.1f }));
+                          .spell_attack_ratio = 0.1f,
+                          .spells = { Spell::Flare, Spell::FreezingWind, Spell::Lightning } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Caterhorror,
@@ -1056,7 +1075,8 @@ namespace castlecrawl
                           .arcane             = 80,
                           .accuracy           = 10,
                           .luck               = 30,
-                          .spell_attack_ratio = 0.1f }));
+                          .spell_attack_ratio = 0.1f,
+                          .spells = { Spell::Flare, Spell::FreezingWind, Spell::Lightning } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BoneHound,
@@ -1132,7 +1152,8 @@ namespace castlecrawl
                           .arcane             = 37,
                           .accuracy           = 25,
                           .luck               = 16,
-                          .spell_attack_ratio = 0.5f }));
+                          .spell_attack_ratio = 0.5f,
+                          .spells             = { Spell::Terrorize } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::MoonTroll,
@@ -1200,7 +1221,9 @@ namespace castlecrawl
                           .arcane                          = 70,
                           .accuracy                        = 30,
                           .luck                            = 60,
-                          .is_immune_to_nonmagical_weapons = true }));
+                          .is_immune_to_nonmagical_weapons = true,
+                          .spell_attack_ratio              = 0.175f,
+                          .spells                          = { Spell::Flare, Spell::Fireball } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FireElemental,
@@ -1247,9 +1270,8 @@ namespace castlecrawl
         {
             std::ofstream csvFileStream("monster-stats.csv", std::ios_base::trunc);
 
-            csvFileStream << "name,value,health,mana,str,dex,arc,acc,lck,flying,undead,"
-                             "immune,breathe fire,poison,acid,spell,break,devour,of ice,"
-                             "of fire\n";
+            csvFileStream << "name,value,health,mana,str,dex,arc,acc,lck,flying,undead,immune,"
+                             "breathe fire,poison,acid,cast,break,devour,of ice,of fire,spells\n";
 
             for (const auto & pair : m_imageStatsMap)
             {
@@ -1297,6 +1319,12 @@ namespace castlecrawl
                 if (pair.second.is_strong_to_fire_weak_to_ice)
                 {
                     csvFileStream << "of fire";
+                }
+                csvFileStream << ',';
+
+                for (const Spell spell : pair.second.spells)
+                {
+                    csvFileStream << spellToName(spell) << '/';
                 }
                 csvFileStream << '\n';
             }
@@ -1426,107 +1454,107 @@ namespace castlecrawl
         // verify all are valid
         for (const auto & pair : m_imageStatsMap)
         {
-            M_CHECK(
-                isTileImageMonster(pair.first),
-                "MonsterStatsDatabase had a non-monster in it: " << tileImageToName(pair.first));
+            const TileImage & tileImage = pair.first;
+            const MonsterStats & stats  = pair.second;
+            const std::string_view name = tileImageToName(pair.first);
 
             M_CHECK(
-                pair.second.isValid(),
-                "MonsterStatsDatabase had invalid stats for: "
-                    << tileImageToName(pair.first));
+                isTileImageMonster(tileImage),
+                "MonsterStatsDatabase had a non-monster in it: " << name);
 
-            if (pair.second.mana_max > 0)
+            M_CHECK(
+                ((stats.health_max > 0) && (stats.strength > 0) && (stats.dexterity > 0) &&
+                 (stats.accuracy > 0)),
+                "MonsterStatsDatabase had invalid (zero value) stats for: " << name);
+
+            if (stats.mana_max > 0)
             {
-                M_CHECK(
-                    (pair.second.arcane > 0),
-                    "Monster had mana_max>0 but arcane=0: " << tileImageToName(pair.first));
+                M_CHECK((stats.arcane > 0), "Monster had mana_max>0 but arcane=0: " << name);
             }
 
-            if (pair.second.arcane > 0)
+            if (stats.arcane > 0)
             {
-                M_CHECK(
-                    (pair.second.mana_max > 0),
-                    "Monster had arcane>0 but mana_max=0: " << tileImageToName(pair.first));
+                M_CHECK((stats.mana_max > 0), "Monster had arcane>0 but mana_max=0: " << name);
             }
 
-            if (pair.second.spell_attack_ratio > 0.0f)
+            if (stats.spell_attack_ratio > 0.0f)
             {
                 M_CHECK(
-                    (pair.second.mana_max > 0),
-                    "Monster casts the stun spell but had zero mana_max:"
-                        << tileImageToName(pair.first));
+                    (stats.mana_max > 0),
+                    "Monster casts the stun spell but had zero mana_max: " << name);
 
                 M_CHECK(
-                    (pair.second.arcane > 0),
-                    "Monster casts the stun spell but had zero arcane stat:"
-                        << tileImageToName(pair.first));
+                    (stats.arcane > 0),
+                    "Monster casts the stun spell but had zero arcane stat: " << name);
             }
 
-            if (pair.second.is_strong_to_fire_weak_to_ice)
+            if ((stats.mana_max > 0) || (stats.arcane > 0))
+            {
+                M_CHECK(!stats.spells.empty(), "Monster spellcaster has no spells: " << name);
+            }
+
+            if (stats.is_strong_to_fire_weak_to_ice)
             {
                 M_CHECK(
-                    !pair.second.is_strong_to_ice_weak_to_fire,
-                    "Monster is both OF FIRE and OF ICE:" << tileImageToName(pair.first));
+                    !stats.is_strong_to_ice_weak_to_fire,
+                    "Monster is both OF FIRE and OF ICE: " << name);
             }
 
-            if (pair.second.is_strong_to_ice_weak_to_fire)
+            if (stats.is_strong_to_ice_weak_to_fire)
             {
                 M_CHECK(
-                    !pair.second.is_strong_to_fire_weak_to_ice,
-                    "Monster is both OF FIRE and OF ICE:" << tileImageToName(pair.first));
+                    !stats.is_strong_to_fire_weak_to_ice,
+                    "Monster is both OF FIRE and OF ICE: " << name);
             }
 
             M_CHECK(
-                (pair.second.health_max <= MonsterStats::stat_max),
-                "Monster health_max is invalid: " << tileImageToName(pair.first));
+                (stats.health_max <= MonsterStats::stat_max),
+                "Monster health_max is invalid: " << name);
 
             M_CHECK(
-                (pair.second.mana_max <= MonsterStats::stat_max),
-                "Monster mana_max is invalid: " << tileImageToName(pair.first));
+                (stats.mana_max <= MonsterStats::stat_max),
+                "Monster mana_max is invalid: " << name);
 
             M_CHECK(
-                (pair.second.strength <= MonsterStats::stat_max),
-                "Monster strength is invalid: " << tileImageToName(pair.first));
+                (stats.strength <= MonsterStats::stat_max),
+                "Monster strength is invalid: " << name);
 
             M_CHECK(
-                (pair.second.dexterity <= MonsterStats::stat_max),
-                "Monster dexterity is invalid: " << tileImageToName(pair.first));
+                (stats.dexterity <= MonsterStats::stat_max),
+                "Monster dexterity is invalid: " << name);
 
             M_CHECK(
-                (pair.second.arcane <= MonsterStats::stat_max),
-                "Monster arcane is invalid: " << tileImageToName(pair.first));
+                (stats.arcane <= MonsterStats::stat_max), "Monster arcane is invalid: " << name);
 
             M_CHECK(
-                (pair.second.accuracy <= MonsterStats::stat_max),
-                "Monster accuracy is invalid: " << tileImageToName(pair.first));
+                (stats.accuracy <= MonsterStats::stat_max),
+                "Monster accuracy is invalid: " << name);
+
+            M_CHECK((stats.luck <= MonsterStats::stat_max), "Monster luck is invalid: " << name);
 
             M_CHECK(
-                (pair.second.luck <= MonsterStats::stat_max),
-                "Monster luck is invalid: " << tileImageToName(pair.first));
+                !(stats.breathe_fire_attack_ratio > 1.0f),
+                "Monster breathe_fire_attack_ratio is invalid: " << name);
 
             M_CHECK(
-                !(pair.second.breathe_fire_attack_ratio > 1.0f),
-                "Monster breathe_fire_attack_ratio is invalid: " << tileImageToName(pair.first));
+                !(stats.poison_attack_ratio > 1.0f),
+                "Monster poison_attack_ratio is invalid: " << name);
 
             M_CHECK(
-                !(pair.second.poison_attack_ratio > 1.0f),
-                "Monster poison_attack_ratio is invalid: " << tileImageToName(pair.first));
+                !(stats.acid_attack_ratio > 1.0f),
+                "Monster acid_attack_ratio is invalid: " << name);
 
             M_CHECK(
-                !(pair.second.acid_attack_ratio > 1.0f),
-                "Monster acid_attack_ratio is invalid: " << tileImageToName(pair.first));
+                !(stats.spell_attack_ratio > 1.0f),
+                "Monster spell_attack_ratio is invalid: " << name);
 
             M_CHECK(
-                !(pair.second.spell_attack_ratio > 1.0f),
-                "Monster spell_attack_ratio is invalid: " << tileImageToName(pair.first));
+                !(stats.break_attack_ratio > 1.0f),
+                "Monster break_attack_ratio is invalid: " << name);
 
             M_CHECK(
-                !(pair.second.break_attack_ratio > 1.0f),
-                "Monster break_attack_ratio is invalid: " << tileImageToName(pair.first));
-
-            M_CHECK(
-                !(pair.second.devour_attack_ratio > 1.0f),
-                "Monster devour_attack_ratio is invalid: " << tileImageToName(pair.first));
+                !(stats.devour_attack_ratio > 1.0f),
+                "Monster devour_attack_ratio is invalid: " << name);
         }
     }
 

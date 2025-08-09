@@ -3,26 +3,22 @@
 //
 // monster-stats-database.hpp
 //
+#include "spells.hpp"
 #include "tile-image-enum.hpp"
 
 #include <SFML/Graphics/Font.hpp>
 
 #include <map>
+#include <vector>
 
 namespace castlecrawl
 {
 
     struct MonsterStats
     {
-        [[nodiscard]] inline bool isValid() const noexcept
-        {
-            // only mana,luck,arcane are allowed to be zero
-            return ((health_max > 0) && (strength > 0) && (dexterity > 0) && (accuracy > 0));
-        }
-
         [[nodiscard]] inline bool isSpellCaster() const noexcept
         {
-            return ((mana_max > 0) && (arcane > 0));
+            return ((mana_max > 0) && (arcane > 0) && !spells.empty());
         }
 
         [[nodiscard]] inline bool isElemental() const noexcept
@@ -56,6 +52,8 @@ namespace castlecrawl
         float spell_attack_ratio{ 0.0f };
         float break_attack_ratio{ 0.0f };
         float devour_attack_ratio{ 0.0f };
+
+        std::vector<Spell> spells{};
     };
 
     //
