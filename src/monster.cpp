@@ -20,11 +20,9 @@ namespace castlecrawl
         const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage)
         : Creature{ t_mapPos, t_tileImage }
         , m_stats{ t_context.monster_stats.find(t_tileImage) }
-    {
-        M_CHECK(
-            m_stats.isValid(),
-            "MonsterStatsDatabase failed to find " << tileImageToName(t_tileImage));
-    }
+        , m_health{ m_stats.health_max }
+        , m_mana{ m_stats.mana_max }
+    {}
 
     bool Monster::takeTurn(const Context & t_context)
     {

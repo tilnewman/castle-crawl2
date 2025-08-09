@@ -1377,14 +1377,12 @@ namespace castlecrawl
             "MonsterStatsDatabase query was not a monster: " << tileImageToName(t_tileImage));
 
         const auto foundIter = m_imageStatsMap.find(t_tileImage);
-        if (foundIter == std::end(m_imageStatsMap))
-        {
-            return {}; // default constructed stats are invalid
-        }
-        else
-        {
-            return foundIter->second;
-        }
+
+        M_CHECK(
+            (foundIter != std::end(m_imageStatsMap)),
+            "MonsterStatsDatabase failed to find this monster: " << tileImageToName(t_tileImage));
+
+        return foundIter->second;
     }
 
     void MonsterStatsDatabase::verifyAll() const
