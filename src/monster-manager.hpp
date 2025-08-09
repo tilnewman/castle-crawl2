@@ -7,6 +7,9 @@
 #include "monster.hpp"
 #include "tile-image-enum.hpp"
 
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include <vector>
 
 namespace castlecrawl
@@ -20,9 +23,14 @@ namespace castlecrawl
 
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
         inline void reset() { m_monsters.clear(); }
-        
+
         // returns true if any monsters change map position
         bool takeTurns(const Context & t_context);
+
+        void drawHealthLines(
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const;
 
       private:
         std::vector<Monster>::iterator findFromMapPos(const MapPos_t & t_mapPos);

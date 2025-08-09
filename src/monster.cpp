@@ -21,7 +21,6 @@ namespace castlecrawl
         : Creature{ t_mapPos, t_tileImage }
         , m_stats{ t_context.monster_stats.find(t_tileImage) }
         , m_health{ m_stats.health_max }
-        , m_mana{ m_stats.mana_max }
     {}
 
     bool Monster::takeTurn(const Context & t_context)

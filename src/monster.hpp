@@ -23,13 +23,12 @@ namespace castlecrawl
 
         [[nodiscard]] inline float healthRatio() const noexcept
         {
-            return (static_cast<float>(m_health) / static_cast<float>(MonsterStats::stat_max));
+            return (static_cast<float>(m_health) / static_cast<float>(m_stats.health_max));
         }
 
       private:
         MonsterStats m_stats;
         int m_health;
-        int m_mana;
     };
 
 } // namespace castlecrawl
