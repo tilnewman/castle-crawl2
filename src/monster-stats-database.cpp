@@ -27,12 +27,6 @@ namespace castlecrawl
         value += accuracy;
         value += luck;
 
-        // can't think of a reason that flying helps a monster...
-        // if (is_flying)
-        // {
-        //     value += 10;
-        // }
-
         if (is_undead)
         {
             value += 20;
@@ -1378,6 +1372,7 @@ namespace castlecrawl
         std::cout << "\tSpellcaster count = " << spellCasterCount << " / "
                   << util::makePercentString(spellCasterCount, monsterCount) << '\n';
 
+        // list all monsters by values
         std::cout << "\n\t--- Monster Values ---\n";
 
         std::sort(
@@ -1390,6 +1385,7 @@ namespace castlecrawl
             std::cout << "\t\t" << value.value << "\t" << value.name << '\n';
         }
 
+        // make a picture of the graph of monster values
         std::sort(std::begin(rawValues), std::end(rawValues));
         util::StatsDisplay<int>::makeAndSavePNG("monster-values", t_font, rawValues);
     }
