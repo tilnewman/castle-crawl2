@@ -8,7 +8,6 @@
 #include <SFML/Graphics/Font.hpp>
 
 #include <map>
-#include <vector>
 
 namespace castlecrawl
 {
@@ -31,7 +30,7 @@ namespace castlecrawl
             return (is_strong_to_ice_weak_to_fire || is_strong_to_fire_weak_to_ice);
         }
 
-        // not used by the game, only used for statistics investigation
+        // not used by the game, only to nerd out on stats and graphs
         [[nodiscard]] int value() const;
 
         int health_max{ 0 };
@@ -58,6 +57,8 @@ namespace castlecrawl
         float break_attack_ratio{ 0.0f };
         float devour_attack_ratio{ 0.0f };
     };
+
+    //
 
     class MonsterStatsDatabase
     {

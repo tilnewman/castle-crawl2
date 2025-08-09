@@ -10,6 +10,7 @@
 #include "util.hpp"
 
 #include <fstream>
+#include <vector>
 
 namespace castlecrawl
 {
@@ -54,7 +55,7 @@ namespace castlecrawl
     {
 
         //
-        // the weak
+        // weak ones
         //
 
         m_imageStatsMap.insert(std::make_pair(
@@ -204,7 +205,6 @@ namespace castlecrawl
                           .accuracy   = 16,
                           .luck       = 8 }));
 
-        // TODO needs more spells to cast
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BruteWitch,
             MonsterStats{ .health_max         = 26,
@@ -729,7 +729,7 @@ namespace castlecrawl
                           .poison_attack_ratio = 0.0975f }));
 
         //
-        // Spider
+        // spiders
         //
 
         m_imageStatsMap.insert(std::make_pair(
@@ -1421,7 +1421,7 @@ namespace castlecrawl
         M_CHECK(
             (m_imageStatsMap.size() == count),
             "MonsterStatsDatabase has missing or extra entries.  Has "
-                << m_imageStatsMap.size() << " but should have " << count);
+                << m_imageStatsMap.size() << " but should have exactly " << count);
 
         // verify all are valid
         for (const auto & pair : m_imageStatsMap)
@@ -1432,29 +1432,21 @@ namespace castlecrawl
 
             M_CHECK(
                 pair.second.isValid(),
-                "MonsterStatsDatabase had invalid stats in it for: "
+                "MonsterStatsDatabase had invalid stats for: "
                     << tileImageToName(pair.first));
 
             if (pair.second.mana_max > 0)
             {
                 M_CHECK(
                     (pair.second.arcane > 0),
-                    "MonsterStats invalid.  Mana was > 0 but arcane=0, for: "
-                        << tileImageToName(pair.first));
-            }
-
-            if (pair.second.mana_max > 0)
-            {
-                M_CHECK(
-                    (pair.second.arcane > 0),
-                    "Monster had mana_max>0 but zero arcane: " << tileImageToName(pair.first));
+                    "Monster had mana_max>0 but arcane=0: " << tileImageToName(pair.first));
             }
 
             if (pair.second.arcane > 0)
             {
                 M_CHECK(
                     (pair.second.mana_max > 0),
-                    "Monster had arcane>0 but zero mana_max: " << tileImageToName(pair.first));
+                    "Monster had arcane>0 but mana_max=0: " << tileImageToName(pair.first));
             }
 
             if (pair.second.spell_attack_ratio > 0.0f)
