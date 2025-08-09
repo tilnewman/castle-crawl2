@@ -26,6 +26,11 @@ namespace castlecrawl
             return ((mana_max > 0) && (arcane > 0));
         }
 
+        [[nodiscard]] inline bool isElemental() const noexcept
+        {
+            return (is_strong_to_ice_weak_to_fire || is_strong_to_fire_weak_to_ice);
+        }
+
         // not used by the game, only used for statistics investigation
         [[nodiscard]] int value() const;
 
