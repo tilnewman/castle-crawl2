@@ -196,8 +196,8 @@ namespace castlecrawl
         Credit & stoneSoupCredit = m_credits.emplace_back(
             t_context,
             "Chris Hamons",
-            "Stone Soup's Dungeon Crawl 32x32 Tiles",
-            "https://opengameart.org/content/dungeon-crawl-32x32-tiles",
+            "Stone Soup's Dungeon Crawl Tiles",
+            "wwww.opengameart.org/content/dungeon-crawl-32x32-tiles",
             "www.creativecommons.org/publicdomain/zero/1.0");
 
         stoneSoupCredit.vertPosition(gameOverSfxCredit.bottom() + vertSpacer);
