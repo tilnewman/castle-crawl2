@@ -27,14 +27,15 @@ namespace castlecrawl
         value += accuracy;
         value += luck;
 
-        if (is_flying)
-        {
-            value += 20;
-        }
+        // can't think of a reason that flying helps a monster...
+        // if (is_flying)
+        // {
+        //     value += 10;
+        // }
 
         if (is_undead)
         {
-            value += 40;
+            value += 20;
         }
 
         if (is_immune_to_nonmagical_weapons)
@@ -115,14 +116,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FireBat,
-            MonsterStats{ .health_max = 14,
-                          .mana_max   = 0,
-                          .strength   = 14,
-                          .dexterity  = 14,
-                          .arcane     = 0,
-                          .accuracy   = 14,
-                          .luck       = 14,
-                          .is_flying  = true }));
+            MonsterStats{ .health_max                = 14,
+                          .mana_max                  = 0,
+                          .strength                  = 14,
+                          .dexterity                 = 14,
+                          .arcane                    = 0,
+                          .accuracy                  = 14,
+                          .luck                      = 14,
+                          .is_flying                 = true,
+                          .breathe_fire_attack_ratio = 0.1f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::RustCrab,
