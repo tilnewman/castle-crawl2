@@ -7,8 +7,10 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "fight-util.hpp"
 #include "layout.hpp"
 #include "maps.hpp"
+#include "player.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "splat-images.hpp"
@@ -71,13 +73,19 @@ namespace castlecrawl
     }
 
     void PlayerDisplay::draw(
-        const Context &, sf::RenderTarget & t_target, sf::RenderStates t_states) const
+        const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(m_sprite, t_states);
 
         if (m_splatTimeSec > 0.0f)
         {
             t_target.draw(m_splatSprite, t_states);
+        }
+
+        const float healthRatio = t_context.player.health().ratio();
+        if (healthRatio < 1.0f)
+        {
+            t_target.draw(makeCreatureHealthBar(t_context, healthRatio, m_mapPos), t_states);
         }
     }
 
