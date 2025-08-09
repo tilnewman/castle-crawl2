@@ -116,15 +116,16 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FireBat,
-            MonsterStats{ .health_max                = 14,
-                          .mana_max                  = 0,
-                          .strength                  = 14,
-                          .dexterity                 = 14,
-                          .arcane                    = 0,
-                          .accuracy                  = 14,
-                          .luck                      = 14,
-                          .is_flying                 = true,
-                          .breathe_fire_attack_ratio = 0.1f }));
+            MonsterStats{ .health_max                    = 14,
+                          .mana_max                      = 0,
+                          .strength                      = 14,
+                          .dexterity                     = 14,
+                          .arcane                        = 0,
+                          .accuracy                      = 14,
+                          .luck                          = 14,
+                          .is_flying                     = true,
+                          .is_strong_to_fire_weak_to_ice = true,
+                          .breathe_fire_attack_ratio     = 0.1f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::RustCrab,
@@ -351,14 +352,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::RedJelly,
-            MonsterStats{ .health_max        = 16,
-                          .mana_max          = 0,
-                          .strength          = 14,
-                          .dexterity         = 9,
-                          .arcane            = 0,
-                          .accuracy          = 15,
-                          .luck              = 15,
-                          .acid_attack_ratio = 0.06f }));
+            MonsterStats{ .health_max                    = 16,
+                          .mana_max                      = 0,
+                          .strength                      = 14,
+                          .dexterity                     = 9,
+                          .arcane                        = 0,
+                          .accuracy                      = 15,
+                          .luck                          = 15,
+                          .is_strong_to_fire_weak_to_ice = true,
+                          .acid_attack_ratio             = 0.06f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::GiantAmoeba,
@@ -425,6 +427,7 @@ namespace castlecrawl
                           .luck                            = 44,
                           .is_flying                       = true,
                           .is_immune_to_nonmagical_weapons = true,
+                          .is_strong_to_fire_weak_to_ice   = true,
                           .breathe_fire_attack_ratio       = 0.333f,
                           .break_attack_ratio              = 0.013f }));
 
@@ -508,14 +511,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FireGiant,
-            MonsterStats{ .health_max         = 65,
-                          .mana_max           = 0,
-                          .strength           = 65,
-                          .dexterity          = 27,
-                          .arcane             = 0,
-                          .accuracy           = 38,
-                          .luck               = 10,
-                          .break_attack_ratio = 0.03f }));
+            MonsterStats{ .health_max                    = 65,
+                          .mana_max                      = 0,
+                          .strength                      = 65,
+                          .dexterity                     = 27,
+                          .arcane                        = 0,
+                          .accuracy                      = 38,
+                          .luck                          = 10,
+                          .is_strong_to_fire_weak_to_ice = true,
+                          .break_attack_ratio            = 0.03f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::TwoHeadedOgre,
@@ -552,14 +556,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FrostGiant,
-            MonsterStats{ .health_max         = 65,
-                          .mana_max           = 0,
-                          .strength           = 65,
-                          .dexterity          = 27,
-                          .arcane             = 0,
-                          .accuracy           = 38,
-                          .luck               = 10,
-                          .break_attack_ratio = 0.03f }));
+            MonsterStats{ .health_max                    = 65,
+                          .mana_max                      = 0,
+                          .strength                      = 65,
+                          .dexterity                     = 27,
+                          .arcane                        = 0,
+                          .accuracy                      = 38,
+                          .luck                          = 10,
+                          .is_strong_to_ice_weak_to_fire = true,
+                          .break_attack_ratio            = 0.03f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::TwoHeadedGiant,
@@ -960,7 +965,8 @@ namespace castlecrawl
                           .arcane                          = 0,
                           .accuracy                        = 27,
                           .luck                            = 20,
-                          .is_immune_to_nonmagical_weapons = true }));
+                          .is_immune_to_nonmagical_weapons = true,
+                          .is_strong_to_ice_weak_to_fire   = true }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SkitterMite,
@@ -1081,14 +1087,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Firebrand,
-            MonsterStats{ .health_max                = 45,
-                          .mana_max                  = 0,
-                          .strength                  = 33,
-                          .dexterity                 = 23,
-                          .arcane                    = 0,
-                          .accuracy                  = 23,
-                          .luck                      = 7,
-                          .breathe_fire_attack_ratio = 0.222f }));
+            MonsterStats{ .health_max                    = 45,
+                          .mana_max                      = 0,
+                          .strength                      = 33,
+                          .dexterity                     = 23,
+                          .arcane                        = 0,
+                          .accuracy                      = 23,
+                          .luck                          = 7,
+                          .is_strong_to_fire_weak_to_ice = true,
+                          .breathe_fire_attack_ratio     = 0.222f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::RustDevil,
@@ -1102,14 +1109,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::RedDemon,
-            MonsterStats{ .health_max = 66,
-                          .mana_max   = 0,
-                          .strength   = 44,
-                          .dexterity  = 33,
-                          .arcane     = 0,
-                          .accuracy   = 22,
-                          .luck       = 11,
-                          .is_flying  = true }));
+            MonsterStats{ .health_max                    = 66,
+                          .mana_max                      = 0,
+                          .strength                      = 44,
+                          .dexterity                     = 33,
+                          .arcane                        = 0,
+                          .accuracy                      = 22,
+                          .luck                          = 11,
+                          .is_flying                     = true,
+                          .is_strong_to_fire_weak_to_ice = true }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::OrangeDemon,
@@ -1141,7 +1149,8 @@ namespace castlecrawl
                           .arcane                          = 0,
                           .accuracy                        = 26,
                           .luck                            = 26,
-                          .is_immune_to_nonmagical_weapons = true }));
+                          .is_immune_to_nonmagical_weapons = true,
+                          .is_strong_to_ice_weak_to_fire   = true }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Hippogriff,
@@ -1156,14 +1165,15 @@ namespace castlecrawl
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Hellion,
-            MonsterStats{ .health_max = 80,
-                          .mana_max   = 0,
-                          .strength   = 78,
-                          .dexterity  = 36,
-                          .arcane     = 0,
-                          .accuracy   = 36,
-                          .luck       = 36,
-                          .is_undead  = true }));
+            MonsterStats{ .health_max                    = 80,
+                          .mana_max                      = 0,
+                          .strength                      = 78,
+                          .dexterity                     = 36,
+                          .arcane                        = 0,
+                          .accuracy                      = 36,
+                          .luck                          = 36,
+                          .is_undead                     = true,
+                          .is_strong_to_fire_weak_to_ice = true }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::GreenBullber,
@@ -1208,6 +1218,7 @@ namespace castlecrawl
                           .accuracy                        = 40,
                           .luck                            = 20,
                           .is_immune_to_nonmagical_weapons = true,
+                          .is_strong_to_fire_weak_to_ice   = true,
                           .breathe_fire_attack_ratio       = 1.0f }));
 
         m_imageStatsMap.insert(std::make_pair(
@@ -1243,7 +1254,8 @@ namespace castlecrawl
             std::ofstream csvFileStream("monster-stats.csv", std::ios_base::trunc);
 
             csvFileStream << "name,value,health,mana,str,dex,arc,acc,lck,flying,undead,"
-                             "immune,breathe fire,poison,acid,spell,break,devour\n";
+                             "immune,breathe fire,poison,acid,spell,break,devour,of ice,"
+                             "of fire\n";
 
             for (const auto & pair : m_imageStatsMap)
             {
@@ -1280,7 +1292,19 @@ namespace castlecrawl
                 csvFileStream << pair.second.acid_attack_ratio << ',';
                 csvFileStream << pair.second.spell_attack_ratio << ',';
                 csvFileStream << pair.second.break_attack_ratio << ',';
-                csvFileStream << pair.second.devour_attack_ratio << '\n';
+                csvFileStream << pair.second.devour_attack_ratio << ',';
+
+                if (pair.second.is_strong_to_ice_weak_to_fire)
+                {
+                    csvFileStream << "of ice";
+                }
+                csvFileStream << ',';
+
+                if (pair.second.is_strong_to_fire_weak_to_ice)
+                {
+                    csvFileStream << "of fire";
+                }
+                csvFileStream << '\n';
             }
         }
 
@@ -1448,6 +1472,20 @@ namespace castlecrawl
                     (pair.second.arcane > 0),
                     "Monster casts the stun spell but had zero arcane stat:"
                         << tileImageToName(pair.first));
+            }
+
+            if (pair.second.is_strong_to_fire_weak_to_ice)
+            {
+                M_CHECK(
+                    !pair.second.is_strong_to_ice_weak_to_fire,
+                    "Monster is both OF FIRE and OF ICE:" << tileImageToName(pair.first));
+            }
+
+            if (pair.second.is_strong_to_ice_weak_to_fire)
+            {
+                M_CHECK(
+                    !pair.second.is_strong_to_fire_weak_to_ice,
+                    "Monster is both OF FIRE and OF ICE:" << tileImageToName(pair.first));
             }
 
             M_CHECK(

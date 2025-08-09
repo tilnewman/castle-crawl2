@@ -43,6 +43,8 @@ namespace castlecrawl
         bool is_flying{ false };
         bool is_undead{ false };
         bool is_immune_to_nonmagical_weapons{ false };
+        bool is_strong_to_ice_weak_to_fire{ false };
+        bool is_strong_to_fire_weak_to_ice{ false };
 
         float breathe_fire_attack_ratio{ 0.0f };
         float poison_attack_ratio{ 0.0f };
