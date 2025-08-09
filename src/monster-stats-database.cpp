@@ -1243,7 +1243,7 @@ namespace castlecrawl
             std::ofstream csvFileStream("monster-stats.csv", std::ios_base::trunc);
 
             csvFileStream << "name,value,health,mana,str,dex,arc,acc,lck,flying,undead,"
-                             "immune,breathe fire,poison,acid,stun,break,devour\n";
+                             "immune,breathe fire,poison,acid,spell,break,devour\n";
 
             for (const auto & pair : m_imageStatsMap)
             {
@@ -1451,6 +1451,58 @@ namespace castlecrawl
                     "Monster casts the stun spell but had zero arcane stat:"
                         << tileImageToName(pair.first));
             }
+
+            M_CHECK(
+                (pair.second.health_max <= MonsterStats::stat_max),
+                "Monster health_max is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                (pair.second.mana_max <= MonsterStats::stat_max),
+                "Monster mana_max is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                (pair.second.strength <= MonsterStats::stat_max),
+                "Monster strength is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                (pair.second.dexterity <= MonsterStats::stat_max),
+                "Monster dexterity is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                (pair.second.arcane <= MonsterStats::stat_max),
+                "Monster arcane is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                (pair.second.accuracy <= MonsterStats::stat_max),
+                "Monster accuracy is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                (pair.second.luck <= MonsterStats::stat_max),
+                "Monster luck is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                !(pair.second.breathe_fire_attack_ratio > 1.0f),
+                "Monster breathe_fire_attack_ratio is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                !(pair.second.poison_attack_ratio > 1.0f),
+                "Monster poison_attack_ratio is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                !(pair.second.acid_attack_ratio > 1.0f),
+                "Monster acid_attack_ratio is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                !(pair.second.spell_attack_ratio > 1.0f),
+                "Monster spell_attack_ratio is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                !(pair.second.break_attack_ratio > 1.0f),
+                "Monster break_attack_ratio is invalid: " << tileImageToName(pair.first));
+
+            M_CHECK(
+                !(pair.second.devour_attack_ratio > 1.0f),
+                "Monster devour_attack_ratio is invalid: " << tileImageToName(pair.first));
         }
     }
 

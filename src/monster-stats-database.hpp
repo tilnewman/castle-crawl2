@@ -38,6 +38,8 @@ namespace castlecrawl
         int accuracy{ 0 };
         int luck{ 0 };
 
+        static inline const int stat_max{ 100 };
+
         bool is_flying{ false };
         bool is_undead{ false };
         bool is_immune_to_nonmagical_weapons{ false };
@@ -48,8 +50,6 @@ namespace castlecrawl
         float spell_attack_ratio{ 0.0f };
         float break_attack_ratio{ 0.0f };
         float devour_attack_ratio{ 0.0f };
-
-        // stun/immobilize/terror/stone/slowed
     };
 
     class MonsterStatsDatabase
