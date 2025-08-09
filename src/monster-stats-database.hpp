@@ -5,6 +5,8 @@
 //
 #include "tile-image-enum.hpp"
 
+#include <SFML/Graphics/Font.hpp>
+
 #include <map>
 #include <vector>
 
@@ -16,16 +18,20 @@ namespace castlecrawl
         [[nodiscard]] inline bool isValid() const noexcept
         {
             // only mana,luck,arcane are allowed to be zero
-            return ((health > 0) && (strength > 0) && (dexterity > 0) && (accuracy > 0));
+            return ((health_max > 0) && (strength > 0) && (dexterity > 0) && (accuracy > 0));
         }
 
         [[nodiscard]] inline bool isSpellCaster() const noexcept
         {
-            return ((mana > 0) && (arcane > 0));
+            return ((mana_max > 0) && (arcane > 0));
         }
 
-        int health{ 0 };
-        int mana{ 0 };
+        // not used by the game, only used for statistics investigation
+        [[nodiscard]] int value() const;
+
+        int health_max{ 0 };
+        int mana_max{ 0 };
+
         int strength{ 0 };
         int dexterity{ 0 };
         int arcane{ 0 };
@@ -52,7 +58,7 @@ namespace castlecrawl
         MonsterStatsDatabase();
 
         void setup();
-        void dumpInfo() const;
+        void dumpInfo(const sf::Font & t_font) const;
 
         [[nodiscard]] const MonsterStats find(const TileImage & t_tileImage) const;
 
