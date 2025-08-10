@@ -7,8 +7,10 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "fight-util.hpp"
 #include "maps.hpp"
 #include "player-display.hpp"
+#include "player.hpp"
 #include "random.hpp"
 
 #include <algorithm>
@@ -39,8 +41,34 @@ namespace castlecrawl
         if (action == MonsterAction::CastSpell)
         {
             const Spell spellToCast = t_context.random.from(spellsThatCanBeCast);
-            m_actionString += "_";
+            m_mana -= spellToManaCost(spellToCast);
+            m_actionString += '_';
+            m_actionString += std::to_string(m_mana);
+            m_actionString += '_';
             m_actionString += spellToName(spellToCast);
+        }
+        else if (action == MonsterAction::Attack)
+        {
+            const RollResult roll = rollRivalStats(
+                t_context, m_stats.accuracy, t_context.player.dexterity().current(), m_stats.luck);
+
+            if (roll.result)
+            {
+                m_actionString += "_Hit";
+
+                if (roll.critical)
+                {
+                    m_actionString += "_CRITICAL";
+                }
+                else if (roll.lucky)
+                {
+                    m_actionString += "_LUCKY";
+                }
+            }
+            else
+            {
+                m_actionString += "_Miss";
+            }
         }
 
         return false;

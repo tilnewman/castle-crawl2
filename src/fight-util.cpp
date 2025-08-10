@@ -8,6 +8,9 @@
 #include "context.hpp"
 #include "layout.hpp"
 #include "maps.hpp"
+#include "random.hpp"
+
+#include <algorithm>
 
 namespace castlecrawl
 {
@@ -46,6 +49,56 @@ namespace castlecrawl
         rectangle.setPosition(screenPos);
 
         return rectangle;
+    }
+
+    const RollResult rollRivalStats(
+        const Context & t_context,
+        const int t_challengerValue,
+        const int t_defenderValue,
+        const int t_challengerLuckValue)
+    {
+        // check for lucky or unlucky first
+        if (t_challengerLuckValue > 0)
+        {
+            const int luckMin  = 0;
+            const int luckMax  = 200;
+            const int luckRoll = t_context.random.fromTo(luckMin, luckMax);
+
+            if (luckRoll == luckMin)
+            {
+                return RollResult{ .result = false };
+            }
+            else if (luckRoll == luckMax)
+            {
+                return RollResult{ .result = true, .lucky = true };
+            }
+            else if (luckRoll < t_challengerLuckValue)
+            {
+                return RollResult{ .result = true, .lucky = true };
+            }
+        }
+
+        const int rollMin = 0;
+        const int rollMax = 20;
+        const int hitRoll = t_context.random.fromTo(rollMin, rollMax);
+
+        if (hitRoll == rollMin)
+        {
+            return RollResult{ .result = false };
+        }
+        else if (hitRoll == rollMax)
+        {
+            return RollResult{ .result = true, .critical = true };
+        }
+        else
+        {
+            int adjustedValue = std::clamp((t_challengerValue - t_defenderValue), rollMin, rollMax);
+
+            const int accuracyFloor = 5;
+            adjustedValue           = std::clamp((adjustedValue + accuracyFloor), rollMin, rollMax);
+
+            return RollResult{ .result = (hitRoll < adjustedValue) };
+        }
     }
 
 } // namespace castlecrawl
