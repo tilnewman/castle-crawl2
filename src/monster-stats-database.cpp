@@ -22,6 +22,8 @@ namespace castlecrawl
         value += health_max;
         value += mana_max;
 
+        value += armor;
+
         value += strength;
         value += dexterity;
         value += arcane;
@@ -72,6 +74,7 @@ namespace castlecrawl
             TileImage::Kobold,
             MonsterStats{ .health_max = 15,
                           .mana_max   = 0,
+                          .armor      = 3,
                           .strength   = 15,
                           .dexterity  = 15,
                           .arcane     = 0,
@@ -82,6 +85,7 @@ namespace castlecrawl
             TileImage::KoboldBrute,
             MonsterStats{ .health_max = 18,
                           .mana_max   = 0,
+                          .armor      = 6,
                           .strength   = 18,
                           .dexterity  = 12,
                           .arcane     = 0,
@@ -113,6 +117,7 @@ namespace castlecrawl
             TileImage::FireBat,
             MonsterStats{ .health_max                    = 14,
                           .mana_max                      = 0,
+                          .armor                         = 3,
                           .strength                      = 14,
                           .dexterity                     = 14,
                           .arcane                        = 0,
@@ -126,6 +131,7 @@ namespace castlecrawl
             TileImage::RustCrab,
             MonsterStats{ .health_max         = 18,
                           .mana_max           = 0,
+                          .armor              = 5,
                           .strength           = 17,
                           .dexterity          = 11,
                           .arcane             = 0,
@@ -148,6 +154,7 @@ namespace castlecrawl
             TileImage::Scorpion,
             MonsterStats{ .health_max          = 16,
                           .mana_max            = 0,
+                          .armor               = 4,
                           .strength            = 14,
                           .dexterity           = 19,
                           .arcane              = 0,
@@ -159,6 +166,7 @@ namespace castlecrawl
             TileImage::GoldScorpion,
             MonsterStats{ .health_max = 32,
                           .mana_max   = 0,
+                          .armor      = 8,
                           .strength   = 28,
                           .dexterity  = 25,
                           .arcane     = 0,
@@ -169,6 +177,7 @@ namespace castlecrawl
             TileImage::Antlion,
             MonsterStats{ .health_max = 28,
                           .mana_max   = 0,
+                          .armor      = 5,
                           .strength   = 20,
                           .dexterity  = 18,
                           .arcane     = 0,
@@ -303,6 +312,7 @@ namespace castlecrawl
             TileImage::WanderingEye,
             MonsterStats{ .health_max         = 36,
                           .mana_max           = 40,
+                          .armor              = 4,
                           .strength           = 20,
                           .dexterity          = 12,
                           .arcane             = 25,
@@ -320,6 +330,7 @@ namespace castlecrawl
             TileImage::SkullSlime,
             MonsterStats{ .health_max        = 33,
                           .mana_max          = 0,
+                          .armor             = 2,
                           .strength          = 18,
                           .dexterity         = 10,
                           .arcane            = 0,
@@ -356,6 +367,7 @@ namespace castlecrawl
             TileImage::RedJelly,
             MonsterStats{ .health_max                    = 16,
                           .mana_max                      = 0,
+                          .armor                         = 1,
                           .strength                      = 14,
                           .dexterity                     = 9,
                           .arcane                        = 0,
@@ -397,6 +409,7 @@ namespace castlecrawl
             TileImage::Dragon,
             MonsterStats{ .health_max                = 60,
                           .mana_max                  = 0,
+                          .armor                     = 15,
                           .strength                  = 50,
                           .dexterity                 = 25,
                           .arcane                    = 0,
@@ -409,6 +422,7 @@ namespace castlecrawl
             TileImage::BoneDragon,
             MonsterStats{ .health_max                = 65,
                           .mana_max                  = 0,
+                          .armor                     = 10,
                           .strength                  = 55,
                           .dexterity                 = 29,
                           .arcane                    = 0,
@@ -422,6 +436,7 @@ namespace castlecrawl
             TileImage::DragonWarlord,
             MonsterStats{ .health_max                      = 91,
                           .mana_max                        = 0,
+                          .armor                           = 20,
                           .strength                        = 80,
                           .dexterity                       = 40,
                           .arcane                          = 0,
@@ -437,6 +452,7 @@ namespace castlecrawl
             TileImage::BoneHydra,
             MonsterStats{ .health_max                = 95,
                           .mana_max                  = 0,
+                          .armor                     = 18,
                           .strength                  = 75,
                           .dexterity                 = 33,
                           .arcane                    = 0,
@@ -450,6 +466,7 @@ namespace castlecrawl
             TileImage::MothDragon,
             MonsterStats{ .health_max                = 37,
                           .mana_max                  = 0,
+                          .armor                     = 6,
                           .strength                  = 37,
                           .dexterity                 = 37,
                           .arcane                    = 0,
@@ -462,6 +479,7 @@ namespace castlecrawl
             TileImage::QuicksilverDragon,
             MonsterStats{ .health_max                = 57,
                           .mana_max                  = 0,
+                          .armor                     = 14,
                           .strength                  = 38,
                           .dexterity                 = 51,
                           .arcane                    = 0,
@@ -474,6 +492,7 @@ namespace castlecrawl
             TileImage::GoldenDragon,
             MonsterStats{ .health_max                      = 72,
                           .mana_max                        = 0,
+                          .armor                           = 28,
                           .strength                        = 67,
                           .dexterity                       = 44,
                           .arcane                          = 0,
@@ -487,6 +506,7 @@ namespace castlecrawl
             TileImage::SkiteWing,
             MonsterStats{ .health_max                = 29,
                           .mana_max                  = 0,
+                          .armor                     = 7,
                           .strength                  = 17,
                           .dexterity                 = 28,
                           .arcane                    = 0,
@@ -503,6 +523,7 @@ namespace castlecrawl
             TileImage::Cyclops,
             MonsterStats{ .health_max         = 55,
                           .mana_max           = 35,
+                          .armor              = 3,
                           .strength           = 55,
                           .dexterity          = 20,
                           .arcane             = 18,
@@ -516,6 +537,7 @@ namespace castlecrawl
             TileImage::FireGiant,
             MonsterStats{ .health_max                    = 65,
                           .mana_max                      = 0,
+                          .armor                         = 4,
                           .strength                      = 65,
                           .dexterity                     = 27,
                           .arcane                        = 0,
@@ -528,6 +550,7 @@ namespace castlecrawl
             TileImage::TwoHeadedOgre,
             MonsterStats{ .health_max         = 49,
                           .mana_max           = 0,
+                          .armor              = 2,
                           .strength           = 47,
                           .dexterity          = 9,
                           .arcane             = 0,
@@ -539,6 +562,7 @@ namespace castlecrawl
             TileImage::Juggernaut,
             MonsterStats{ .health_max         = 75,
                           .mana_max           = 0,
+                          .armor              = 5,
                           .strength           = 75,
                           .dexterity          = 22,
                           .arcane             = 0,
@@ -550,6 +574,7 @@ namespace castlecrawl
             TileImage::IronGiant,
             MonsterStats{ .health_max         = 70,
                           .mana_max           = 0,
+                          .armor              = 4,
                           .strength           = 70,
                           .dexterity          = 19,
                           .arcane             = 0,
@@ -561,6 +586,7 @@ namespace castlecrawl
             TileImage::FrostGiant,
             MonsterStats{ .health_max                    = 65,
                           .mana_max                      = 0,
+                          .armor                         = 7,
                           .strength                      = 65,
                           .dexterity                     = 27,
                           .arcane                        = 0,
@@ -573,6 +599,7 @@ namespace castlecrawl
             TileImage::TwoHeadedGiant,
             MonsterStats{ .health_max         = 59,
                           .mana_max           = 0,
+                          .armor              = 2,
                           .strength           = 59,
                           .dexterity          = 14,
                           .arcane             = 0,
@@ -588,6 +615,7 @@ namespace castlecrawl
             TileImage::FleshCreeper,
             MonsterStats{ .health_max = 40,
                           .mana_max   = 0,
+                          .armor      = 5,
                           .strength   = 20,
                           .dexterity  = 20,
                           .arcane     = 0,
@@ -598,6 +626,7 @@ namespace castlecrawl
             TileImage::WailingCreeper,
             MonsterStats{ .health_max = 30,
                           .mana_max   = 0,
+                          .armor      = 4,
                           .strength   = 16,
                           .dexterity  = 18,
                           .arcane     = 0,
@@ -608,6 +637,7 @@ namespace castlecrawl
             TileImage::BloodCreeper,
             MonsterStats{ .health_max = 50,
                           .mana_max   = 0,
+                          .armor      = 2,
                           .strength   = 25,
                           .dexterity  = 25,
                           .arcane     = 0,
@@ -618,6 +648,7 @@ namespace castlecrawl
             TileImage::BloatedCreeper,
             MonsterStats{ .health_max = 60,
                           .mana_max   = 0,
+                          .armor      = 3,
                           .strength   = 30,
                           .dexterity  = 17,
                           .arcane     = 0,
@@ -628,6 +659,7 @@ namespace castlecrawl
             TileImage::SpikeCreeper,
             MonsterStats{ .health_max = 40,
                           .mana_max   = 0,
+                          .armor      = 5,
                           .strength   = 30,
                           .dexterity  = 25,
                           .arcane     = 0,
@@ -638,6 +670,7 @@ namespace castlecrawl
             TileImage::AntCreeper,
             MonsterStats{ .health_max = 24,
                           .mana_max   = 0,
+                          .armor      = 3,
                           .strength   = 16,
                           .dexterity  = 16,
                           .arcane     = 0,
@@ -674,6 +707,7 @@ namespace castlecrawl
             TileImage::Serpent,
             MonsterStats{ .health_max          = 35,
                           .mana_max            = 0,
+                          .armor               = 2,
                           .strength            = 22,
                           .dexterity           = 38,
                           .arcane              = 0,
@@ -718,6 +752,7 @@ namespace castlecrawl
             TileImage::ManaCobra,
             MonsterStats{ .health_max          = 30,
                           .mana_max            = 30,
+                          .armor               = 2,
                           .strength            = 20,
                           .dexterity           = 30,
                           .arcane              = 30,
@@ -731,6 +766,7 @@ namespace castlecrawl
             TileImage::GuardianCobra,
             MonsterStats{ .health_max          = 50,
                           .mana_max            = 0,
+                          .armor               = 3,
                           .strength            = 29,
                           .dexterity           = 33,
                           .arcane              = 0,
@@ -757,6 +793,7 @@ namespace castlecrawl
             TileImage::CaveSpider,
             MonsterStats{ .health_max          = 22,
                           .mana_max            = 0,
+                          .armor               = 3,
                           .strength            = 23,
                           .dexterity           = 28,
                           .arcane              = 0,
@@ -895,6 +932,7 @@ namespace castlecrawl
             TileImage::HellWing,
             MonsterStats{ .health_max         = 60,
                           .mana_max           = 40,
+                          .armor              = 5,
                           .strength           = 60,
                           .dexterity          = 48,
                           .arcane             = 40,
@@ -913,6 +951,7 @@ namespace castlecrawl
             TileImage::Wollynaut,
             MonsterStats{ .health_max          = 80,
                           .mana_max            = 0,
+                          .armor               = 9,
                           .strength            = 60,
                           .dexterity           = 15,
                           .arcane              = 0,
@@ -925,6 +964,7 @@ namespace castlecrawl
             TileImage::ElephantDemon,
             MonsterStats{ .health_max          = 90,
                           .mana_max            = 0,
+                          .armor               = 8,
                           .strength            = 70,
                           .dexterity           = 20,
                           .arcane              = 0,
@@ -972,6 +1012,7 @@ namespace castlecrawl
             TileImage::IceKnight,
             MonsterStats{ .health_max                      = 77,
                           .mana_max                        = 0,
+                          .armor                           = 30,
                           .strength                        = 47,
                           .dexterity                       = 17,
                           .arcane                          = 0,
@@ -1026,6 +1067,7 @@ namespace castlecrawl
             TileImage::Kracklin,
             MonsterStats{ .health_max         = 60,
                           .mana_max           = 60,
+                          .armor              = 11,
                           .strength           = 60,
                           .dexterity          = 30,
                           .arcane             = 30,
@@ -1038,6 +1080,7 @@ namespace castlecrawl
             TileImage::Caterhorror,
             MonsterStats{ .health_max = 40,
                           .mana_max   = 0,
+                          .armor      = 7,
                           .strength   = 30,
                           .dexterity  = 20,
                           .arcane     = 0,
@@ -1070,6 +1113,7 @@ namespace castlecrawl
             TileImage::SpellWalker,
             MonsterStats{ .health_max         = 48,
                           .mana_max           = 40,
+                          .armor              = 6,
                           .strength           = 10,
                           .dexterity          = 20,
                           .arcane             = 80,
@@ -1082,6 +1126,7 @@ namespace castlecrawl
             TileImage::BoneHound,
             MonsterStats{ .health_max = 44,
                           .mana_max   = 0,
+                          .armor      = 3,
                           .strength   = 31,
                           .dexterity  = 26,
                           .arcane     = 0,
@@ -1103,6 +1148,7 @@ namespace castlecrawl
             TileImage::Firebrand,
             MonsterStats{ .health_max                    = 45,
                           .mana_max                      = 0,
+                          .armor                         = 8,
                           .strength                      = 33,
                           .dexterity                     = 23,
                           .arcane                        = 0,
@@ -1125,6 +1171,7 @@ namespace castlecrawl
             TileImage::RedDemon,
             MonsterStats{ .health_max                    = 66,
                           .mana_max                      = 0,
+                          .armor                         = 6,
                           .strength                      = 44,
                           .dexterity                     = 33,
                           .arcane                        = 0,
@@ -1137,6 +1184,7 @@ namespace castlecrawl
             TileImage::OrangeDemon,
             MonsterStats{ .health_max = 46,
                           .mana_max   = 0,
+                          .armor      = 3,
                           .strength   = 24,
                           .dexterity  = 23,
                           .arcane     = 0,
@@ -1205,6 +1253,7 @@ namespace castlecrawl
             TileImage::OrangeClamber,
             MonsterStats{ .health_max         = 80,
                           .mana_max           = 0,
+                          .armor              = 12,
                           .strength           = 67,
                           .dexterity          = 14,
                           .arcane             = 0,
@@ -1216,6 +1265,7 @@ namespace castlecrawl
             TileImage::SunWeaver,
             MonsterStats{ .health_max                      = 70,
                           .mana_max                        = 70,
+                          .armor                           = 5,
                           .strength                        = 45,
                           .dexterity                       = 35,
                           .arcane                          = 70,
@@ -1270,14 +1320,16 @@ namespace castlecrawl
         {
             std::ofstream csvFileStream("monster-stats.csv", std::ios_base::trunc);
 
-            csvFileStream << "name,value,health,mana,str,dex,arc,acc,lck,flying,undead,immune,"
-                             "breathe fire,poison,acid,cast,break,devour,of ice,of fire,spells\n";
+            csvFileStream
+                << "name,value,health,armor,mana,str,dex,arc,acc,lck,flying,undead,immune,"
+                   "breathe fire,poison,acid,cast,break,devour,of ice,of fire,spells\n";
 
             for (const auto & pair : m_imageStatsMap)
             {
                 csvFileStream << tileImageToName(pair.first) << ',';
                 csvFileStream << pair.second.value() << ',';
                 csvFileStream << pair.second.health_max << ',';
+                csvFileStream << pair.second.armor << ',';
                 csvFileStream << pair.second.mana_max << ',';
                 csvFileStream << pair.second.strength << ',';
                 csvFileStream << pair.second.dexterity << ',';
@@ -1507,6 +1559,11 @@ namespace castlecrawl
                     !stats.is_strong_to_fire_weak_to_ice,
                     "Monster is both OF FIRE and OF ICE: " << name);
             }
+
+            M_CHECK((stats.armor >= 0), "Monster armor was negative: " << name);
+
+            M_CHECK(
+                (stats.armor <= MonsterStats::stat_max), "Monster armor was too high: " << name);
 
             M_CHECK(
                 (stats.health_max <= MonsterStats::stat_max),

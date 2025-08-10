@@ -32,6 +32,8 @@ namespace castlecrawl
         int health_max{ 0 };
         int mana_max{ 0 };
 
+        int armor{ 0 };
+
         int strength{ 0 };
         int dexterity{ 0 };
         int arcane{ 0 };
