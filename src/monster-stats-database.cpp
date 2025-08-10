@@ -42,8 +42,8 @@ namespace castlecrawl
         value += static_cast<int>(poison_attack_ratio * 200.0f);
         value += static_cast<int>(acid_attack_ratio * 200.0f);
         value += static_cast<int>(spell_attack_ratio * 200.0f);
-        value += static_cast<int>(break_attack_ratio * 200.0f);
-        value += static_cast<int>(devour_attack_ratio * 200.0f);
+        value += static_cast<int>(break_attack_ratio * 2000.0f);
+        value += static_cast<int>(devour_attack_ratio * 2000.0f);
 
         return value;
     }
@@ -131,7 +131,7 @@ namespace castlecrawl
                           .arcane             = 0,
                           .accuracy           = 16,
                           .luck               = 5,
-                          .break_attack_ratio = 0.02f }));
+                          .break_attack_ratio = 0.002f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::GiantLeech,
@@ -142,7 +142,7 @@ namespace castlecrawl
                           .arcane              = 0,
                           .accuracy            = 16,
                           .luck                = 1,
-                          .devour_attack_ratio = 0.025f }));
+                          .devour_attack_ratio = 0.0025f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Scorpion,
@@ -387,7 +387,7 @@ namespace castlecrawl
                           .luck                            = 14,
                           .is_immune_to_nonmagical_weapons = true,
                           .acid_attack_ratio               = 0.13f,
-                          .devour_attack_ratio             = 0.02f }));
+                          .devour_attack_ratio             = 0.002f }));
 
         //
         // dragons
@@ -431,7 +431,7 @@ namespace castlecrawl
                           .is_immune_to_nonmagical_weapons = true,
                           .is_strong_to_fire_weak_to_ice   = true,
                           .breathe_fire_attack_ratio       = 0.333f,
-                          .break_attack_ratio              = 0.013f }));
+                          .break_attack_ratio              = 0.0013f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::BoneHydra,
@@ -509,7 +509,7 @@ namespace castlecrawl
                           .accuracy           = 35,
                           .luck               = 2,
                           .spell_attack_ratio = 0.0932f,
-                          .break_attack_ratio = 0.02f,
+                          .break_attack_ratio = 0.002f,
                           .spells             = { Spell::Immobalize } }));
 
         m_imageStatsMap.insert(std::make_pair(
@@ -522,7 +522,7 @@ namespace castlecrawl
                           .accuracy                      = 38,
                           .luck                          = 10,
                           .is_strong_to_fire_weak_to_ice = true,
-                          .break_attack_ratio            = 0.03f }));
+                          .break_attack_ratio            = 0.003f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::TwoHeadedOgre,
@@ -533,7 +533,7 @@ namespace castlecrawl
                           .arcane             = 0,
                           .accuracy           = 17,
                           .luck               = 4,
-                          .break_attack_ratio = 0.02f }));
+                          .break_attack_ratio = 0.002f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::Juggernaut,
@@ -544,7 +544,7 @@ namespace castlecrawl
                           .arcane             = 0,
                           .accuracy           = 21,
                           .luck               = 8,
-                          .break_attack_ratio = 0.075f }));
+                          .break_attack_ratio = 0.0075f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::IronGiant,
@@ -555,7 +555,7 @@ namespace castlecrawl
                           .arcane             = 0,
                           .accuracy           = 19,
                           .luck               = 9,
-                          .break_attack_ratio = 0.04f }));
+                          .break_attack_ratio = 0.004f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FrostGiant,
@@ -567,7 +567,7 @@ namespace castlecrawl
                           .accuracy                      = 38,
                           .luck                          = 10,
                           .is_strong_to_ice_weak_to_fire = true,
-                          .break_attack_ratio            = 0.03f }));
+                          .break_attack_ratio            = 0.003f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::TwoHeadedGiant,
@@ -578,7 +578,7 @@ namespace castlecrawl
                           .arcane             = 0,
                           .accuracy           = 19,
                           .luck               = 5,
-                          .break_attack_ratio = 0.021f }));
+                          .break_attack_ratio = 0.0021f }));
 
         //
         // creepers
@@ -918,8 +918,8 @@ namespace castlecrawl
                           .arcane              = 0,
                           .accuracy            = 25,
                           .luck                = 4,
-                          .break_attack_ratio  = 0.03f,
-                          .devour_attack_ratio = 0.02f }));
+                          .break_attack_ratio  = 0.003f,
+                          .devour_attack_ratio = 0.002f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::ElephantDemon,
@@ -930,8 +930,8 @@ namespace castlecrawl
                           .arcane              = 0,
                           .accuracy            = 30,
                           .luck                = 4,
-                          .break_attack_ratio  = 0.03f,
-                          .devour_attack_ratio = 0.02f }));
+                          .break_attack_ratio  = 0.003f,
+                          .devour_attack_ratio = 0.002f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::RottingChomper,
@@ -944,7 +944,7 @@ namespace castlecrawl
                           .luck                = 0,
                           .is_undead           = true,
                           .poison_attack_ratio = 0.111f,
-                          .devour_attack_ratio = 0.03f }));
+                          .devour_attack_ratio = 0.003f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FleshChomper,
@@ -955,7 +955,7 @@ namespace castlecrawl
                           .arcane              = 0,
                           .accuracy            = 26,
                           .luck                = 0,
-                          .devour_attack_ratio = 0.03f }));
+                          .devour_attack_ratio = 0.003f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SwampThing,
@@ -1210,7 +1210,7 @@ namespace castlecrawl
                           .arcane             = 0,
                           .accuracy           = 40,
                           .luck               = 10,
-                          .break_attack_ratio = 0.025f }));
+                          .break_attack_ratio = 0.0025f }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::SunWeaver,
