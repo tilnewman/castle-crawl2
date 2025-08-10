@@ -99,11 +99,6 @@ namespace castlecrawl
 
             t_context.player.health().adjCurrent(-damage);
             t_context.top_panel.update(t_context);
-
-            if (t_context.player.health().current() == 0)
-            {
-                t_context.state.change(t_context, State::Death);
-            }
         }
     }
 

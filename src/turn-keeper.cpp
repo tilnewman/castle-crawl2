@@ -9,11 +9,21 @@ namespace castlecrawl
 {
 
     TurnKeeper::TurnKeeper()
-        : m_isPlayerTurn{ true }
+        : m_owner{ TurnOwner::Player }
     {}
 
-    void TurnKeeper::advance() { m_isPlayerTurn = !m_isPlayerTurn; }
+    void TurnKeeper::advance()
+    {
+        int nextTurnNumber = (static_cast<int>(m_owner) + 1);
 
-    void TurnKeeper::reset() { m_isPlayerTurn = true; }
+        if (nextTurnNumber > static_cast<int>(TurnOwner::System))
+        {
+            nextTurnNumber = 0;
+        }
+
+        m_owner = static_cast<TurnOwner>(nextTurnNumber);
+    }
+
+    void TurnKeeper::reset() { m_owner = TurnOwner::Player; }
 
 } // namespace castlecrawl

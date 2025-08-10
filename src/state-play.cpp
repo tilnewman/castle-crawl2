@@ -42,6 +42,36 @@ namespace castlecrawl
         t_context.player_display.update(t_context, t_frameTimeSec);
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
+
+        if (t_context.turn.owner() == TurnOwner::Monster)
+        {
+            if (t_context.monsters.takeTurns(t_context))
+            {
+                t_context.map_display.load(t_context);
+            }
+
+            t_context.turn.advance();
+        }
+        else if (t_context.turn.owner() == TurnOwner::Npc)
+        {
+            if (t_context.npcs.takeTurns(t_context))
+            {
+                t_context.map_display.load(t_context);
+            }
+
+            t_context.turn.advance();
+        }
+        else if (t_context.turn.owner() == TurnOwner::System)
+        {
+            if (t_context.player.health().current() == 0)
+            {
+                t_context.state.change(t_context, State::Death);
+            }
+            else
+            {
+                t_context.turn.advance();
+            }
+        }
     }
 
     void StatePlay::draw(
@@ -82,7 +112,6 @@ namespace castlecrawl
                     {
                         playMoveMusic(t_context);
                         t_context.turn.advance();
-                        nonPlayersTakeTurns(t_context);
                     }
                 }
             }
@@ -105,12 +134,11 @@ namespace castlecrawl
                 if (t_context.turn.isPlayerTurn())
                 {
                     t_context.turn.advance();
-                    nonPlayersTakeTurns(t_context);
                 }
             }
             // todo remove after testing
             else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
-            {   
+            {
                 const sf::Vector2f cellSize   = t_context.layout.cellSize();
                 const sf::Vector2f screenSize = (cellSize * 1.5f);
 
@@ -163,11 +191,7 @@ namespace castlecrawl
             t_context.player.health().adjCurrent(-1);
             t_context.top_panel.update(t_context);
 
-            if (t_context.player.health().current() == 0)
-            {
-                t_context.player_display.bloodSplatStop();
-                t_context.state.change(t_context, State::Death);
-            }
+            return true; // okay, we didn't move, but we DID something and lost our turn
         }
 
         if (didMove)
@@ -291,18 +315,6 @@ namespace castlecrawl
         }
 
         return false;
-    }
-
-    void StatePlay::nonPlayersTakeTurns(const Context & t_context)
-    {
-        const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
-        const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
-        if (didAnyMonstersMove || didAnyNpcsMove)
-        {
-            t_context.map_display.load(t_context);
-        }
-
-        t_context.turn.advance();
     }
 
 } // namespace castlecrawl

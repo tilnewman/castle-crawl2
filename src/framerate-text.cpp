@@ -45,18 +45,11 @@ namespace castlecrawl
         if (elapsedTimeSec >= 1.0f)
         {
             const std::size_t fps = static_cast<std::size_t>(m_frameCounter / elapsedTimeSec);
-            std::string message   = std::to_string(fps) + "fps, ";
+            std::string message   = std::to_string(fps) + "FPS, ";
             message += std::to_string(t_context.anim.particleCount());
-            message += "particles, ";
-            
-            if (t_context.turn.isPlayerTurn())
-            {
-                message += "player's turn";
-            }
-            else
-            {
-                message += "NON-player turn";
-            }
+            message += " Particles, ";
+            message += turnOwnerToName(t_context.turn.owner());
+            message += "'s Turn";
 
             m_text.setString(message);
             util::setOriginToPosition(m_text);
