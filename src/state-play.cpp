@@ -25,6 +25,7 @@
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
+#include "turn-keeper.hpp"
 
 namespace castlecrawl
 {
@@ -75,29 +76,41 @@ namespace castlecrawl
                 (keyPtr->scancode == sf::Keyboard::Scancode::Left) ||
                 (keyPtr->scancode == sf::Keyboard::Scancode::Right))
             {
-                handlePlayerMove(t_context, keyPtr->scancode);
+                if (t_context.turn.isPlayerTurn())
+                {
+                    if (handlePlayerMove(t_context, keyPtr->scancode))
+                    {
+                        playMoveMusic(t_context);
+                        t_context.turn.advance();
+                        nonPlayersTakeTurns(t_context);
+                    }
+                }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::I)
             {
-                t_context.state.change(t_context, State::Inventory);
+                if (t_context.turn.isPlayerTurn())
+                {
+                    t_context.state.change(t_context, State::Inventory);
+                }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::F)
             {
-                t_context.state.change(t_context, State::Fight);
+                if (t_context.turn.isPlayerTurn())
+                {
+                    t_context.state.change(t_context, State::Fight);
+                }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Space)
             {
-                // move monsters and NPCs
-                const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
-                const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
-                if (didAnyMonstersMove || didAnyNpcsMove)
+                if (t_context.turn.isPlayerTurn())
                 {
-                    t_context.map_display.load(t_context);
+                    t_context.turn.advance();
+                    nonPlayersTakeTurns(t_context);
                 }
             }
+            // todo remove after testing
             else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
-            {
-                // todo remove after testing
+            {   
                 const sf::Vector2f cellSize   = t_context.layout.cellSize();
                 const sf::Vector2f screenSize = (cellSize * 1.5f);
 
@@ -118,7 +131,7 @@ namespace castlecrawl
         }
     }
 
-    void StatePlay::handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key)
+    bool StatePlay::handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key)
     {
         const MapPos_t mapPosBefore    = t_context.player_display.position();
         const MapPos_t mapPosAttempted = util::keys::moveIfDir(mapPosBefore, t_key);
@@ -155,8 +168,6 @@ namespace castlecrawl
                 t_context.player_display.bloodSplatStop();
                 t_context.state.change(t_context, State::Death);
             }
-
-            return;
         }
 
         if (didMove)
@@ -186,17 +197,13 @@ namespace castlecrawl
                 t_context.sfx.play("coin");
             }
 
-            // move monsters and NPCs
-            const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
-            const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
-            if (didAnyMonstersMove || didAnyNpcsMove)
+            if (handleMapTransition(t_context, mapPosAfter))
             {
-                t_context.map_display.load(t_context);
+                m_mouseover.reset();
             }
-
-            handleMapTransition(t_context, mapPosAfter);
-            playMoveMusic(t_context);
         }
+
+        return didMove;
     }
 
     void StatePlay::playMoveSfx(
@@ -279,12 +286,23 @@ namespace castlecrawl
             if (transition.from_pos == t_mapPosAfter)
             {
                 t_context.maps.change(t_context, transition.to_name, transition.to_pos);
-                m_mouseover.reset();
                 return true;
             }
         }
 
         return false;
+    }
+
+    void StatePlay::nonPlayersTakeTurns(const Context & t_context)
+    {
+        const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
+        const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
+        if (didAnyMonstersMove || didAnyNpcsMove)
+        {
+            t_context.map_display.load(t_context);
+        }
+
+        t_context.turn.advance();
     }
 
 } // namespace castlecrawl

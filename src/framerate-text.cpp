@@ -11,6 +11,7 @@
 #include "layout.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
+#include "turn-keeper.hpp"
 
 #include <SFML/System/Time.hpp>
 
@@ -46,7 +47,16 @@ namespace castlecrawl
             const std::size_t fps = static_cast<std::size_t>(m_frameCounter / elapsedTimeSec);
             std::string message   = std::to_string(fps) + "fps, ";
             message += std::to_string(t_context.anim.particleCount());
-            message += "particles";
+            message += "particles, ";
+            
+            if (t_context.turn.isPlayerTurn())
+            {
+                message += "player's turn";
+            }
+            else
+            {
+                message += "NON-player turn";
+            }
 
             m_text.setString(message);
             util::setOriginToPosition(m_text);

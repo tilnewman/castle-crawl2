@@ -32,13 +32,15 @@ namespace castlecrawl
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key);
+        [[nodiscard]] bool
+            handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key);
 
         void playMoveSfx(
             const Context & t_context, const bool t_didMove, const char t_mapCharAttempted) const;
 
         void playMoveMusic(const Context & t_context) const;
         bool handleMapTransition(const Context & t_context, const MapPos_t & t_mapPosAfter);
+        void nonPlayersTakeTurns(const Context & t_context);
 
       private:
         Mouseover m_mouseover;

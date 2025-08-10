@@ -24,6 +24,7 @@
 #include "state-manager.hpp"
 #include "tile-images.hpp"
 #include "top-panel.hpp"
+#include "turn-keeper.hpp"
 
 #include <memory>
 #include <string>
@@ -78,6 +79,7 @@ namespace castlecrawl
         std::unique_ptr<NpcManager> m_npcManagerUPtr;
         std::unique_ptr<AnimationManager> m_animationManagerUPtr;
         std::unique_ptr<MonsterStatsDatabase> m_monsterStatsDatabaseUPtr;
+        std::unique_ptr<TurnKeeper> m_turnKeeperUPtr;
 
         std::unique_ptr<Context> m_contextUPtr;
     };
