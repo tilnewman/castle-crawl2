@@ -23,7 +23,7 @@ namespace castlecrawl
     bool Creature::isPlayerAdjacent(const Context & t_context) const
     {
         const std::vector<MapCell> surroundingCells =
-            t_context.maps.current().surroundingCellsAll(m_mapPos);
+            t_context.maps.current().surroundingCellsHorizVert(m_mapPos);
 
         const auto foundIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [&](const MapCell & cell) {

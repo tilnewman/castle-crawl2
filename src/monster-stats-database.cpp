@@ -1338,6 +1338,7 @@ namespace castlecrawl
             std::string name{};
             int value{};
         };
+
         std::vector<MonsterValue> values;
         std::vector<int> rawValues;
 

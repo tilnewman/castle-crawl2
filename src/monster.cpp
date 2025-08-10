@@ -12,6 +12,8 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
+#include "state-manager.hpp"
+#include "top-panel.hpp"
 
 #include <algorithm>
 
@@ -54,15 +56,41 @@ namespace castlecrawl
 
             if (roll.result)
             {
-                m_actionString += "_Hit";
+                // calc damage
+                const int damageMin = (1 + (m_stats.strength / 10));
+                const int damageMax = std::max((damageMin + 1), m_stats.strength);
+                int damage          = t_context.random.fromTo(damageMin, damageMax);
 
-                if (roll.critical)
+                damage -= t_context.player.armor().as<int>();
+                if (damage < 0)
                 {
-                    m_actionString += "_CRITICAL";
+                    damage = 0;
                 }
-                else if (roll.lucky)
+
+                if (0 == damage)
                 {
-                    m_actionString += "_LUCKY";
+                    m_actionString += "_Miss_Armor";
+                }
+                else
+                {
+                    if (roll.lucky)
+                    {
+                        m_actionString += "_Lucky";
+                    }
+
+                    m_actionString += "_Hit_";
+                    m_actionString += std::to_string(damage);
+
+                    t_context.player.health().adjCurrent(-damage);
+                    t_context.top_panel.update(t_context);
+
+                    t_context.player_display.shake();
+                    t_context.player_display.bloodSplatStart(t_context);
+
+                    if (t_context.player.health().current() == 0)
+                    {
+                        t_context.state.change(t_context, State::Death);
+                    }
                 }
             }
             else

@@ -94,7 +94,7 @@ namespace castlecrawl
         {
             int adjustedValue = std::clamp((t_challengerValue - t_defenderValue), rollMin, rollMax);
 
-            const int accuracyFloor = 5;
+            const int accuracyFloor = (rollMax / 4);
             adjustedValue           = std::clamp((adjustedValue + accuracyFloor), rollMin, rollMax);
 
             return RollResult{ .result = (hitRoll < adjustedValue) };
