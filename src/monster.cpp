@@ -37,9 +37,10 @@ namespace castlecrawl
             return true;
         }
 
-        const std::vector<Spell> spellsThatCanBeCast = spellsThereIsManaToCast();
+        const std::vector<Spell> spellsThatCanBeCast = spellsThereIsManaEnoughToCast();
         const MonsterAction action = decideWhichActionToTake(t_context, spellsThatCanBeCast);
         m_actionString             = monsterActionToName(action);
+
         if (action == MonsterAction::CastSpell)
         {
             const Spell spellToCast = t_context.random.from(spellsThatCanBeCast);
@@ -51,55 +52,59 @@ namespace castlecrawl
         }
         else if (action == MonsterAction::Attack)
         {
-            const RollResult roll = rollRivalStats(
-                t_context, m_stats.accuracy, t_context.player.dexterity().current(), m_stats.luck);
-
-            if (roll.result)
-            {
-                // calc damage
-                const int damageMin = (1 + (m_stats.strength / 10));
-                const int damageMax = std::max((damageMin + 1), m_stats.strength);
-                int damage          = t_context.random.fromTo(damageMin, damageMax);
-
-                damage -= t_context.player.armor().as<int>();
-                if (damage < 0)
-                {
-                    damage = 0;
-                }
-
-                if (0 == damage)
-                {
-                    m_actionString += "_Miss_Armor";
-                }
-                else
-                {
-                    if (roll.lucky)
-                    {
-                        m_actionString += "_Lucky";
-                    }
-
-                    m_actionString += "_Hit_";
-                    m_actionString += std::to_string(damage);
-
-                    t_context.player.health().adjCurrent(-damage);
-                    t_context.top_panel.update(t_context);
-
-                    t_context.player_display.shake();
-                    t_context.player_display.bloodSplatStart(t_context);
-
-                    if (t_context.player.health().current() == 0)
-                    {
-                        t_context.state.change(t_context, State::Death);
-                    }
-                }
-            }
-            else
-            {
-                m_actionString += "_Miss";
-            }
+            attackPlayer(t_context);
         }
 
         return false;
+    }
+
+    void Monster::attackPlayer(const Context & t_context)
+    {
+        const RollResult roll = rollRivalStats(
+            t_context, m_stats.accuracy, t_context.player.dexterity().current(), m_stats.luck);
+
+        if (!roll.result)
+        {
+            m_actionString += "_Miss";
+            return;
+        }
+
+        // calc damage
+        const int damageMin = (1 + (m_stats.strength / 10));
+        const int damageMax = std::max((damageMin + 1), m_stats.strength);
+        int damage          = t_context.random.fromTo(damageMin, damageMax);
+
+        damage -= t_context.player.armor().as<int>();
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+
+        if (0 == damage)
+        {
+            m_actionString += "_Miss_Armor";
+        }
+        else
+        {
+            if (roll.lucky)
+            {
+                m_actionString += "_Lucky";
+            }
+
+            m_actionString += "_Hit_";
+            m_actionString += std::to_string(damage);
+
+            t_context.player_display.shake();
+            t_context.player_display.bloodSplatStart(t_context);
+
+            t_context.player.health().adjCurrent(-damage);
+            t_context.top_panel.update(t_context);
+
+            if (t_context.player.health().current() == 0)
+            {
+                t_context.state.change(t_context, State::Death);
+            }
+        }
     }
 
     MonsterAction Monster::decideWhichActionToTake(
@@ -181,7 +186,13 @@ namespace castlecrawl
         return MonsterAction::Attack;
     }
 
-    const std::vector<Spell> Monster::spellsThereIsManaToCast() const
+    int Monster::healthAdj(const int t_adjustment)
+    {
+        m_health = std::clamp((m_health + t_adjustment), 0, MonsterStats::stat_max);
+        return m_health;
+    }
+
+    const std::vector<Spell> Monster::spellsThereIsManaEnoughToCast() const
     {
         std::vector<Spell> spells;
 

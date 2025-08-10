@@ -70,11 +70,17 @@ namespace castlecrawl
             return (static_cast<float>(m_health) / static_cast<float>(m_stats.health_max));
         }
 
+        int healthAdj(const int t_adjustment);
+
+        [[nodiscard]] inline bool isAlive() const noexcept { return (m_health > 0); }
+
       private:
-        [[nodiscard]] const std::vector<Spell> spellsThereIsManaToCast() const;
+        [[nodiscard]] const std::vector<Spell> spellsThereIsManaEnoughToCast() const;
 
         [[nodiscard]] MonsterAction decideWhichActionToTake(
             const Context & t_context, const std::vector<Spell> & t_spellsThatCanBeCast) const;
+
+        void attackPlayer(const Context & t_context);
 
       private:
         MonsterStats m_stats;
