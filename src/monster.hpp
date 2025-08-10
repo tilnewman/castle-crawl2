@@ -6,9 +6,53 @@
 #include "creature.hpp"
 #include "monster-stats-database.hpp"
 
+#include <string>
+#include <vector>
+
 namespace castlecrawl
 {
     struct Context;
+
+    enum class MonsterAction
+    {
+        Attack,
+        CastSpell,
+        AcidSpray,
+        PoisonBite,
+        BreakWeapon,
+        DevourArmor,
+        BreatheFire
+    };
+
+    inline constexpr std::string_view monsterActionToName(const MonsterAction t_action) noexcept
+    {
+        // clang-format off
+        switch(t_action)
+        {
+            case MonsterAction::Attack:         { return "Attack"; }
+            case MonsterAction::CastSpell:      { return "CastSpell"; }
+            case MonsterAction::AcidSpray:      { return "AcidSpray"; }
+            case MonsterAction::PoisonBite:     { return "PoisonBite"; }
+            case MonsterAction::BreakWeapon:    { return "BreakWeapon"; }
+            case MonsterAction::DevourArmor:    { return "DevourArmor"; }
+            case MonsterAction::BreatheFire:    
+            default:                            { return "BreatheFire"; }
+        }
+        // clang-format on
+    }
+
+    struct MonsterActionEntry
+    {
+        MonsterActionEntry(const MonsterAction t_action, const float t_min, const float t_max)
+            : action{ t_action }
+            , min{ t_min }
+            , max{ t_max }
+        {}
+
+        MonsterAction action;
+        float min;
+        float max;
+    };
 
     class Monster : public Creature
     {
@@ -27,8 +71,19 @@ namespace castlecrawl
         }
 
       private:
+        [[nodiscard]] const std::vector<Spell> spellsThereIsManaToCast() const;
+
+        [[nodiscard]] MonsterAction decideWhichActionToTake(
+            const Context & t_context, const std::vector<Spell> & t_spellsThatCanBeCast) const;
+
+      private:
         MonsterStats m_stats;
         int m_health;
+        int m_mana;
+        
+        // TODO remove after testing
+        public:
+        std::string m_actionString;
     };
 
 } // namespace castlecrawl

@@ -85,6 +85,16 @@ namespace castlecrawl
             {
                 t_context.state.change(t_context, State::Fight);
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Space)
+            {
+                // move monsters and NPCs
+                const bool didAnyMonstersMove = t_context.monsters.takeTurns(t_context);
+                const bool didAnyNpcsMove     = t_context.npcs.takeTurns(t_context);
+                if (didAnyMonstersMove || didAnyNpcsMove)
+                {
+                    t_context.map_display.load(t_context);
+                }
+            }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
             {
                 // todo remove after testing
