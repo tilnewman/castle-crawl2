@@ -9,7 +9,9 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "dust-particle.hpp"
+#include "fight-util.hpp"
 #include "framerate-text.hpp"
+#include "inventory.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
@@ -21,6 +23,7 @@
 #include "state-manager.hpp"
 #include "state-treasure.hpp"
 #include "top-panel.hpp"
+#include "turn-keeper.hpp"
 
 namespace castlecrawl
 {
@@ -60,7 +63,11 @@ namespace castlecrawl
 
     void StateFight::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        // all other handlers are key released events
+        if (t_context.turn.owner() != TurnOwner::Player)
+        {
+            return;
+        }
+
         if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
@@ -123,12 +130,11 @@ namespace castlecrawl
     void StateFight::fight(const Context & t_context, const MapPos_t & t_pos)
     {
         const char objectChar = t_context.maps.current().cell(t_pos).object_char;
+        State nextState       = State::Play;
 
-        // TODO lots more needed here, like checking for enemies etc.
         if (objectChar == ' ')
         {
             t_context.sfx.play("miss.ogg");
-            t_context.state.change(t_context, State::Play);
         }
         else if (objectChar == 'b')
         {
@@ -140,14 +146,10 @@ namespace castlecrawl
             t_context.anim.dust().add(t_context, t_pos);
 
             const item::Treasure treasure = t_context.items.randomTreasureFind(t_context);
-            if (treasure.empty())
-            {
-                t_context.state.change(t_context, State::Play);
-            }
-            else
+            if (!treasure.empty())
             {
                 StateTreasure::setTreasure(treasure);
-                t_context.state.change(t_context, State::Treasure);
+                nextState = State::Treasure;
             }
         }
         else if (objectChar == 'Z')
@@ -158,8 +160,6 @@ namespace castlecrawl
             t_context.map_display.load(t_context);
 
             t_context.anim.dust().add(t_context, t_pos);
-
-            t_context.state.change(t_context, State::Play);
         }
         else if (objectChar == 'H')
         {
@@ -169,14 +169,69 @@ namespace castlecrawl
             t_context.map_display.load(t_context);
 
             t_context.anim.dust().add(t_context, t_pos);
+        }
+        else if (const TileImage monsterTileImage{ charToTileImage(objectChar) };
+                 isTileImageMonster(monsterTileImage))
+        {
+            Player & player{ t_context.player };
 
-            t_context.state.change(t_context, State::Play);
+            const auto itemOpt{ player.inventory().weaponEquipped() };
+            std::string weaponName{ "fists" };
+            sf::Vector2i weaponDamageMinMax{ 1, 2 };
+            if (itemOpt)
+            {
+                weaponName           = itemOpt->name();
+                weaponDamageMinMax.x = itemOpt->damageMin();
+                weaponDamageMinMax.y = itemOpt->damageMax();
+            }
+
+            const MonsterStats monsterStats = t_context.monsters.stats(t_pos);
+
+            const RollResult rollResult = rollRivalStats(
+                t_context,
+                player.accuracy().current(),
+                monsterStats.dexterity,
+                player.luck().current());
+
+            if (rollResult.result)
+            {
+                t_context.sfx.play("hit.ogg");
+
+                int damage = t_context.random.fromTo(weaponDamageMinMax.x, weaponDamageMinMax.y);
+                if (rollResult.critical)
+                {
+                    damage *= 2;
+                }
+
+                t_context.monsters.damage(t_pos, damage);
+
+                std::string message{ std::to_string(damage) };
+                message += "dmg";
+                if (rollResult.lucky)
+                {
+                    message += " lucky!";
+                }
+                else if (rollResult.critical)
+                {
+                    message += " critical!";
+                }
+
+                t_context.anim.risingText().add(
+                    t_context, message, sf::Color::White, t_context.player_display.position());
+            }
+            else
+            {
+                t_context.sfx.play("miss.ogg");
+            }
         }
         else
         {
+            // all other objects can just be hit with no ramifications so just play the sfx
             t_context.sfx.play("hit.ogg");
-            t_context.state.change(t_context, State::Play);
         }
+
+        t_context.turn.advance();
+        t_context.state.change(t_context, nextState);
     }
 
 } // namespace castlecrawl

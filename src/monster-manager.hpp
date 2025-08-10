@@ -32,8 +32,10 @@ namespace castlecrawl
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
 
-      private:
-        std::vector<Monster>::iterator findFromMapPos(const MapPos_t & t_mapPos);
+        [[nodiscard]] const MonsterStats stats(const MapPos_t & t_mapPos) const;
+
+        // returns true if killed
+        bool damage(const MapPos_t & t_mapPos, const int t_damage);
 
       private:
         std::vector<Monster> m_monsters;

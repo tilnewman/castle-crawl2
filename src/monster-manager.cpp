@@ -32,6 +32,11 @@ namespace castlecrawl
         bool didAnyMonstersMove = false;
         for (Monster & monster : m_monsters)
         {
+            if (!monster.isAlive())
+            {
+                continue;
+            }
+
             if (monster.takeTurn(t_context))
             {
                 didAnyMonstersMove = true;
@@ -67,17 +72,31 @@ namespace castlecrawl
         }
     }
 
-    std::vector<Monster>::iterator MonsterManager::findFromMapPos(const MapPos_t & t_mapPos)
+    const MonsterStats MonsterManager::stats(const MapPos_t & t_mapPos) const
     {
-        for (auto iter{ std::begin(m_monsters) }; iter != std::end(m_monsters); ++iter)
+        for (const Monster & monster : m_monsters)
         {
-            if (iter->mapPosition() == t_mapPos)
+            if (monster.mapPosition() == t_mapPos)
             {
-                return iter;
+                return monster.stats();
             }
         }
 
-        return std::end(m_monsters);
+        return {}; // default constructed MonsterStats are invalid with all zeros anyway
+    }
+
+    bool MonsterManager::damage(const MapPos_t & t_mapPos, const int t_damage)
+    {
+        for (Monster & monster : m_monsters)
+        {
+            if (monster.mapPosition() == t_mapPos)
+            {
+                monster.healthAdj(-t_damage);
+                return !monster.isAlive();
+            }
+        }
+
+        return false;
     }
 
 } // namespace castlecrawl
