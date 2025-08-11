@@ -167,11 +167,11 @@ namespace castlecrawl
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();
 
-        // this reset() must occur AFTER m_sfxUPtr.reset() and m_animationManagerUPtr.reset()
-        m_randomUPtr.reset();
-
         m_musicUPtr->stopAll();
         m_musicUPtr.reset();
+
+        // this reset() must occur AFTER m_sfxUPtr.reset() and m_animationManagerUPtr.reset()
+        m_randomUPtr.reset();
 
         m_renderWindow.close();
 
