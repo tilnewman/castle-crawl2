@@ -129,8 +129,8 @@ namespace castlecrawl
 
     void StateFight::fight(const Context & t_context, const MapPos_t & t_pos)
     {
-        const char objectChar = t_context.maps.current().cell(t_pos).object_char;
-        State nextState       = State::Play;
+        const char objectChar{ t_context.maps.current().cell(t_pos).object_char };
+        State nextState{ State::Play };
 
         if (objectChar == ' ')
         {
@@ -145,7 +145,7 @@ namespace castlecrawl
 
             t_context.anim.dust().add(t_context, t_pos);
 
-            const item::Treasure treasure = t_context.items.randomTreasureFind(t_context);
+            const item::Treasure treasure{ t_context.items.randomTreasureFind(t_context) };
             if (!treasure.empty())
             {
                 StateTreasure::setTreasure(treasure);
@@ -185,19 +185,19 @@ namespace castlecrawl
                 weaponDamageMinMax.y = itemOpt->damageMax();
             }
 
-            const MonsterStats monsterStats = t_context.monsters.stats(t_pos);
+            const MonsterStats monsterStats{ t_context.monsters.stats(t_pos) };
 
-            const RollResult rollResult = rollRivalStats(
+            const RollResult rollResult{ rollRivalStats(
                 t_context,
                 player.accuracy().current(),
                 monsterStats.dexterity,
-                player.luck().current());
+                player.luck().current()) };
 
             if (rollResult.result)
             {
                 t_context.sfx.play("hit.ogg");
 
-                int damage = t_context.random.fromTo(weaponDamageMinMax.x, weaponDamageMinMax.y);
+                int damage{ t_context.random.fromTo(weaponDamageMinMax.x, weaponDamageMinMax.y) };
                 if (rollResult.critical)
                 {
                     damage *= 2;

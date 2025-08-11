@@ -62,8 +62,8 @@ namespace castlecrawl
 
     void Monster::attackPlayer(const Context & t_context)
     {
-        const RollResult roll = rollRivalStats(
-            t_context, m_stats.accuracy, t_context.player.dexterity().current(), m_stats.luck);
+        const RollResult roll{ rollRivalStats(
+            t_context, m_stats.accuracy, t_context.player.dexterity().current(), m_stats.luck) };
 
         if (!roll.result)
         {
@@ -74,9 +74,9 @@ namespace castlecrawl
         }
 
         // calc damage
-        const int damageMin = (1 + (m_stats.strength / 10));
-        const int damageMax = std::max((damageMin + 1), m_stats.strength);
-        int damage          = t_context.random.fromTo(damageMin, damageMax);
+        const int damageMin{ 1 + (m_stats.strength / 10) };
+        const int damageMax{ std::max((damageMin + 1), m_stats.strength) };
+        int damage{ t_context.random.fromTo(damageMin, damageMax) };
 
         damage -= t_context.player.armor().as<int>();
         if (damage < 0)
@@ -110,7 +110,7 @@ namespace castlecrawl
     {
         std::vector<MonsterActionEntry> entries;
 
-        float actionRatioSum = 0.0f;
+        float actionRatioSum{ 0.0f };
 
         if (m_stats.breathe_fire_attack_ratio > 0.0f)
         {
