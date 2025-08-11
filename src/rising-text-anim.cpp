@@ -28,7 +28,7 @@ namespace castlecrawl
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
         util::centerInside(text, { cellScreenPos, cellSize });
-        text.move({ 0.0f, -(cellSize.y * 0.5f) });
+        text.move({ 0.0f, -cellSize.y });
 
         screen_pos = text.getPosition();
     }

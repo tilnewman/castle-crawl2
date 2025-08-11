@@ -206,7 +206,7 @@ namespace castlecrawl
                 t_context.monsters.damage(t_pos, damage);
 
                 std::string message{ std::to_string(damage) };
-                message += "dmg";
+                message += " dmg";
                 if (rollResult.lucky)
                 {
                     message += " lucky!";
@@ -217,11 +217,20 @@ namespace castlecrawl
                 }
 
                 t_context.anim.risingText().add(
-                    t_context, message, sf::Color::White, t_context.player_display.position());
+                    t_context,
+                    message,
+                    sf::Color(255, 200, 200),
+                    t_context.player_display.position());
             }
             else
             {
                 t_context.sfx.play("miss.ogg");
+
+                t_context.anim.risingText().add(
+                    t_context,
+                    "miss",
+                    sf::Color(255, 200, 100),
+                    t_context.player_display.position());
             }
         }
         else
