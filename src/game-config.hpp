@@ -23,7 +23,7 @@ namespace castlecrawl
 
         sf::Color message_color_attack_miss = sf::Color(255, 200, 100);
         sf::Color message_color_attack_hit  = sf::Color(255, 200, 200);
-        sf::Color message_color_cast_spell  = sf::Color(220, 0, 220);
+        sf::Color message_color_cast_spell  = sf::Color(220, 100, 220);
         sf::Color message_color_coins       = sf::Color(255, 200, 100);
 
         // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
