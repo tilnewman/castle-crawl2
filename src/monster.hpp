@@ -57,13 +57,20 @@ namespace castlecrawl
     class Monster : public Creature
     {
       public:
-        Monster(const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage);
+        Monster(
+            const Context & t_context,
+            const std::size_t t_uniqueId,
+            const MapPos_t & t_mapPos,
+            const TileImage t_tileImage);
+
         virtual ~Monster() override = default;
 
         // returns true if m_mapPos was changed
         virtual bool takeTurn(const Context & t_context) override;
 
-        [[nodiscard]] inline const MonsterStats stats() const { return m_stats; }
+        [[nodiscard]] inline std::size_t uniqueId() const noexcept { return m_uniqueId; }
+
+        [[nodiscard]] inline const MonsterStats stats() const noexcept { return m_stats; }
 
         [[nodiscard]] inline float healthRatio() const noexcept
         {
@@ -83,6 +90,7 @@ namespace castlecrawl
         void attackPlayer(const Context & t_context);
 
       private:
+        std::size_t m_uniqueId;
         MonsterStats m_stats;
         int m_health;
         int m_mana;

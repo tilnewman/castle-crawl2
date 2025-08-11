@@ -40,10 +40,10 @@ namespace castlecrawl
 
         void playMoveMusic(const Context & t_context) const;
         bool handleMapTransition(const Context & t_context, const MapPos_t & t_mapPosAfter);
-        void nonPlayersTakeTurns(const Context & t_context);
 
       private:
         Mouseover m_mouseover;
+        std::size_t m_monsterUniqueId;
     };
 
 } // namespace castlecrawl

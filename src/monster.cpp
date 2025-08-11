@@ -23,8 +23,12 @@ namespace castlecrawl
 {
 
     Monster::Monster(
-        const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage)
+        const Context & t_context,
+        const std::size_t t_uniqueId,
+        const MapPos_t & t_mapPos,
+        const TileImage t_tileImage)
         : Creature{ t_mapPos, t_tileImage }
+        , m_uniqueId{ t_uniqueId }
         , m_stats{ t_context.monster_stats.find(t_tileImage) }
         , m_health{ m_stats.health_max }
         , m_mana{ m_stats.mana_max }
@@ -32,10 +36,14 @@ namespace castlecrawl
 
     bool Monster::takeTurn(const Context & t_context)
     {
+        if (!isAlive())
+        {
+            return false;
+        }
+
         if (!isPlayerAdjacent(t_context))
         {
-            moveToward(t_context, t_context.player_display.position());
-            return true;
+            return moveToward(t_context, t_context.player_display.position());
         }
 
         const std::vector<Spell> spellsThatCanBeCast{ spellsThereIsManaEnoughToCast() };

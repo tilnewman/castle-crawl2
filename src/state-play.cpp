@@ -31,7 +31,8 @@ namespace castlecrawl
 {
 
     StatePlay::StatePlay()
-        : m_mouseover()
+        : m_mouseover{}
+        , m_monsterUniqueId{0}
     {}
 
     void StatePlay::onEnter(const Context &) {}
@@ -50,12 +51,16 @@ namespace castlecrawl
                 t_context.map_display.load(t_context);
             }
 
-            if (t_context.monsters.takeTurns(t_context))
+            if (t_context.monsters.takeTurn(t_context, m_monsterUniqueId++))
             {
                 t_context.map_display.load(t_context);
             }
 
-            t_context.turn.advance();
+            if (m_monsterUniqueId >= t_context.monsters.count())
+            {
+                m_monsterUniqueId = 0;
+                t_context.turn.advance();
+            }
         }
         else if (t_context.turn.owner() == TurnOwner::Npc)
         {

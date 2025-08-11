@@ -22,10 +22,10 @@ namespace castlecrawl
         MonsterManager();
 
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
-        inline void reset() { m_monsters.clear(); }
+        void reset();
 
-        // returns true if any monsters change map position
-        bool takeTurns(const Context & t_context);
+        // returns true if the monster changed map position
+        bool takeTurn(const Context & t_context, const std::size_t t_uniqueId);
 
         void drawHealthLines(
             const Context & t_context,
@@ -40,7 +40,12 @@ namespace castlecrawl
         // returns true if any were removed
         bool removeDead(const Context & t_context);
 
+        [[nodiscard]] inline std::size_t count() const { return m_monsters.size(); }
+
       private:
+        // these IDs are only unique to each map
+        std::size_t m_nextUniqueId;
+
         std::vector<Monster> m_monsters;
     };
 

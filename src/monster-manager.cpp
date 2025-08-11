@@ -18,32 +18,33 @@ namespace castlecrawl
 {
 
     MonsterManager::MonsterManager()
-        : m_monsters{}
+        : m_nextUniqueId{ 0 }
+        , m_monsters{}
     {}
 
     void MonsterManager::add(
         const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar)
     {
-        m_monsters.emplace_back(t_context, t_mapPos, charToTileImage(t_mapChar));
+        m_monsters.emplace_back(t_context, m_nextUniqueId++, t_mapPos, charToTileImage(t_mapChar));
     }
 
-    bool MonsterManager::takeTurns(const Context & t_context)
+    void MonsterManager::reset() 
+    { 
+        m_monsters.clear(); 
+        m_nextUniqueId = 0;
+    }
+
+    bool MonsterManager::takeTurn(const Context & t_context, const std::size_t t_uniqueId)
     {
-        bool didAnyMonstersMove = false;
         for (Monster & monster : m_monsters)
         {
-            if (!monster.isAlive())
+            if (monster.uniqueId() == t_uniqueId)
             {
-                continue;
-            }
-
-            if (monster.takeTurn(t_context))
-            {
-                didAnyMonstersMove = true;
+                return monster.takeTurn(t_context);
             }
         }
 
-        return didAnyMonstersMove;
+        return false;
     }
 
     void MonsterManager::drawHealthLines(
