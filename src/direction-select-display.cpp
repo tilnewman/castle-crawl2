@@ -64,7 +64,8 @@ namespace castlecrawl
         m_arrowSpriteLeft.setPosition(offScreenPos);
         m_arrowSpriteRight.setPosition(offScreenPos);
 
-        const float arrowSpriteShrinkScale{ 0.75f };
+        const float arrowSpriteShrinkScale{ 0.5f };
+        const float arrowMove{ cellSize.x * 0.25f };
 
         //
 
@@ -88,6 +89,7 @@ namespace castlecrawl
                     m_topRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
 
             m_arrowSpriteUp.setPosition(util::center(m_topRectangle.getGlobalBounds()));
+            m_arrowSpriteUp.move({ 0.0f, arrowMove });
         }
 
         if (t_context.maps.current().isPosValid(botPos))
@@ -110,6 +112,8 @@ namespace castlecrawl
                     m_botRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
 
             m_arrowSpriteDown.setPosition(util::center(m_botRectangle.getGlobalBounds()));
+
+            m_arrowSpriteDown.move({ 0.0f, -arrowMove });
         }
 
         if (t_context.maps.current().isPosValid(leftPos))
@@ -132,6 +136,8 @@ namespace castlecrawl
                     m_leftRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
 
             m_arrowSpriteLeft.setPosition(util::center(m_leftRectangle.getGlobalBounds()));
+
+            m_arrowSpriteLeft.move({ (arrowMove * 2.0f), 0.0f });
         }
 
         if (t_context.maps.current().isPosValid(rightPos))
@@ -149,6 +155,8 @@ namespace castlecrawl
                 m_arrowSpriteRight,
                 util::scaleRectInPlaceCopy(
                     m_rightRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
+
+            m_arrowSpriteRight.move({ -(arrowMove * 2.0f), 0.0f });
         }
     }
 
