@@ -21,6 +21,11 @@ namespace castlecrawl
         unsigned int framerate_limit = 0;
         float top_panel_height_ratio = 0.1f;
 
+        sf::Color message_color_attack_miss = sf::Color(255, 200, 100);
+        sf::Color message_color_attack_hit  = sf::Color(255, 200, 200);
+        sf::Color message_color_cast_spell  = sf::Color(220, 0, 220);
+        sf::Color message_color_coins       = sf::Color(255, 200, 100);
+
         // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
         sf::Vector2i map_size_max = { 41, 23 };
     };

@@ -5,6 +5,7 @@
 //
 #include "monster.hpp"
 
+#include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "fight-util.hpp"
@@ -12,6 +13,7 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
+#include "rising-text-anim.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
@@ -33,22 +35,22 @@ namespace castlecrawl
         if (!isPlayerAdjacent(t_context))
         {
             moveToward(t_context, t_context.player_display.position());
-            m_actionString.clear();
             return true;
         }
 
-        const std::vector<Spell> spellsThatCanBeCast = spellsThereIsManaEnoughToCast();
-        const MonsterAction action = decideWhichActionToTake(t_context, spellsThatCanBeCast);
-        m_actionString             = monsterActionToName(action);
+        const std::vector<Spell> spellsThatCanBeCast{ spellsThereIsManaEnoughToCast() };
+        const MonsterAction action{ decideWhichActionToTake(t_context, spellsThatCanBeCast) };
 
         if (action == MonsterAction::CastSpell)
         {
-            const Spell spellToCast = t_context.random.from(spellsThatCanBeCast);
+            const Spell spellToCast{ t_context.random.from(spellsThatCanBeCast) };
             m_mana -= spellToManaCost(spellToCast);
-            m_actionString += '_';
-            m_actionString += std::to_string(m_mana);
-            m_actionString += '_';
-            m_actionString += spellToName(spellToCast);
+
+            std::string actionMessage{ " Casts " };
+            actionMessage += spellToName(spellToCast);
+
+            t_context.anim.risingText().add(
+                t_context, actionMessage, t_context.config.message_color_cast_spell, mapPosition());
         }
         else if (action == MonsterAction::Attack)
         {
@@ -65,7 +67,9 @@ namespace castlecrawl
 
         if (!roll.result)
         {
-            m_actionString += "_Miss";
+            t_context.anim.risingText().add(
+                t_context, "miss", t_context.config.message_color_attack_miss, mapPosition());
+
             return;
         }
 
@@ -82,17 +86,16 @@ namespace castlecrawl
 
         if (0 == damage)
         {
-            m_actionString += "_Miss_Armor";
+            t_context.anim.risingText().add(
+                t_context, "miss armor", t_context.config.message_color_attack_miss, mapPosition());
         }
         else
         {
-            if (roll.lucky)
-            {
-                m_actionString += "_Lucky";
-            }
+            std::string actionMessage{ std::to_string(damage) };
+            actionMessage += " dmg";
 
-            m_actionString += "_Hit_";
-            m_actionString += std::to_string(damage);
+            t_context.anim.risingText().add(
+                t_context, actionMessage, t_context.config.message_color_attack_hit, mapPosition());
 
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);

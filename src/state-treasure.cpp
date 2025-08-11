@@ -54,8 +54,8 @@ namespace castlecrawl
 
         //
 
-        m_titleText =
-            t_context.fonts.makeText(FontSize::Huge, "Treasure!", sf::Color(255, 200, 100));
+        m_titleText = t_context.fonts.makeText(
+            FontSize::Huge, "Treasure!", t_context.config.message_color_coins);
 
         m_titleText.setPosition(
             { ((boardRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),

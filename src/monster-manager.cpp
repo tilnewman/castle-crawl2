@@ -57,18 +57,6 @@ namespace castlecrawl
                     makeCreatureHealthBar(t_context, monster.healthRatio(), monster.mapPosition()),
                     t_states);
             }
-
-            if (!monster.m_actionString.empty())
-            {
-                sf::Text text = t_context.fonts.makeText(FontSize::Small, monster.m_actionString);
-
-                text.setPosition(
-                    t_context.maps.current().mapPosToScreenPos(t_context, monster.mapPosition()));
-
-                text.move({ 0.0f, -text.getGlobalBounds().size.y });
-
-                t_target.draw(text, t_states);
-            }
         }
     }
 

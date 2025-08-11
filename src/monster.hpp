@@ -86,10 +86,6 @@ namespace castlecrawl
         MonsterStats m_stats;
         int m_health;
         int m_mana;
-        
-        // TODO remove after testing
-        public:
-        std::string m_actionString;
     };
 
 } // namespace castlecrawl

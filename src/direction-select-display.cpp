@@ -154,10 +154,11 @@ namespace castlecrawl
 
     void DirectionSelectDisplay::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        t_target.draw(m_topRectangle, t_states);
-        t_target.draw(m_botRectangle, t_states);
-        t_target.draw(m_leftRectangle, t_states);
-        t_target.draw(m_rightRectangle, t_states);
+        // it might look better without these rectangles, so skip drawing for now
+        // t_target.draw(m_topRectangle, t_states);
+        // t_target.draw(m_botRectangle, t_states);
+        // t_target.draw(m_leftRectangle, t_states);
+        // t_target.draw(m_rightRectangle, t_states);
 
         t_target.draw(m_arrowSpriteUp, t_states);
         t_target.draw(m_arrowSpriteDown, t_states);

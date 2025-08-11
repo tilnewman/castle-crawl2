@@ -214,7 +214,10 @@ namespace castlecrawl
                 risingTextMessage += " gold";
 
                 t_context.anim.risingText().add(
-                    t_context, risingTextMessage, sf::Color(255, 220, 127), mapPosAfter);
+                    t_context,
+                    risingTextMessage,
+                    t_context.config.message_color_coins,
+                    mapPosAfter);
 
                 t_context.anim.sparkle().remove(mapPosAfter);
 

@@ -219,7 +219,7 @@ namespace castlecrawl
                 t_context.anim.risingText().add(
                     t_context,
                     message,
-                    sf::Color(255, 200, 200),
+                    t_context.config.message_color_attack_hit,
                     t_context.player_display.position());
             }
             else
@@ -229,7 +229,7 @@ namespace castlecrawl
                 t_context.anim.risingText().add(
                     t_context,
                     "miss",
-                    sf::Color(255, 200, 100),
+                    t_context.config.message_color_attack_miss,
                     t_context.player_display.position());
             }
         }

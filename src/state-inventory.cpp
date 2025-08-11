@@ -128,7 +128,10 @@ namespace castlecrawl
 
         std::string goldStr{ "Gold: " };
         goldStr += std::to_string(t_context.player.gold());
-        m_goldText = t_context.fonts.makeText(FontSize::Medium, goldStr, sf::Color(255, 200, 100));
+
+        m_goldText = t_context.fonts.makeText(
+            FontSize::Medium, goldStr, t_context.config.message_color_coins);
+        
         util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
         m_goldText.move({ 0.0f, -m_goldText.getGlobalBounds().size.y });
         m_goldText.move({ 0.0f, -pad });
