@@ -22,6 +22,7 @@ namespace castlecrawl
         , m_lightningSprite{ m_lightningTexture }
         , m_willShowLightning{ false }
         , m_timerSec{ 0.0f }
+        , m_isFadingIn{ true }
         , m_isFadingOut{ false }
     {}
 
@@ -53,28 +54,40 @@ namespace castlecrawl
                                          (m_lightningSprite.getGlobalBounds().size.x * 0.45f)),
                                         (m_castleSprite.getGlobalBounds().position.y -
                                          (m_lightningSprite.getGlobalBounds().size.y * 0.15f)) });
-
-        //
-
-        m_fader.setup(true, sf::Color::Black, 1.5f, screenRect);
     }
 
     void StateSplash::update(const Context & t_context, const float t_frameTimeSec)
     {
-        m_fader.update(t_frameTimeSec);
-
         m_timerSec += t_frameTimeSec;
 
-        if (m_isFadingOut)
+        if (m_isFadingIn)
         {
-            const float fadeOutDuration = 1.0f;
+            const float fadeInDuration{ 4.0f };
+            if (m_timerSec < fadeInDuration)
+            {
+                sf::Color color{ m_castleSprite.getColor() };
+
+                color.a = static_cast<uint8_t>(
+                    util::map(m_timerSec, 0.0f, fadeInDuration, 0, 255));
+
+                m_castleSprite.setColor(color);
+            }
+            else
+            {
+                m_isFadingIn = false;
+                m_timerSec   = 0.0f;
+            }
+        }
+        else if (m_isFadingOut)
+        {
+            const float fadeOutDuration{ 1.0f };
             if (m_timerSec > fadeOutDuration)
             {
                 t_context.state.setChangePending(State::Play);
             }
             else
             {
-                sf::Color color = m_castleSprite.getColor();
+                sf::Color color{ m_castleSprite.getColor() };
 
                 color.a = static_cast<uint8_t>(
                     255 - util::map(m_timerSec, 0.0f, fadeOutDuration, 0, 255));
@@ -117,13 +130,11 @@ namespace castlecrawl
         {
             t_target.draw(m_lightningSprite, t_states);
         }
-
-        m_fader.draw(t_target, t_states);
     }
 
     void StateSplash::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (m_fader.isFading() || m_isFadingOut)
+        if (m_isFadingIn)
         {
             return;
         }
@@ -135,7 +146,7 @@ namespace castlecrawl
                 t_context.state.setChangePending(State::Editor);
             }
             else
-            {
+            {   
                 m_isFadingOut       = true;
                 m_willShowLightning = false;
                 m_timerSec          = 0.0f;

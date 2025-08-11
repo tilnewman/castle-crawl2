@@ -3,7 +3,6 @@
 //
 // state-splash.hpp
 //
-#include "fader.hpp"
 #include "state.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -37,9 +36,8 @@ namespace castlecrawl
         sf::Texture m_lightningTexture;
         sf::Sprite m_lightningSprite;
         bool m_willShowLightning;
-        sf::Clock m_clock;
         float m_timerSec;
-        Fader m_fader;
+        bool m_isFadingIn;
         bool m_isFadingOut;
     };
 
