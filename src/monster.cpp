@@ -64,6 +64,65 @@ namespace castlecrawl
         {
             attackPlayer(t_context);
         }
+        else if (action == MonsterAction::AcidSpray)
+        {
+            const int strengthRoot{ 1 + static_cast<int>(
+                                            std::sqrt(static_cast<float>(m_stats.strength))) };
+
+            const int damage{ t_context.random.fromTo(strengthRoot, (strengthRoot * 3)) };
+
+            t_context.player_display.shake();
+            t_context.player_display.bloodSplatStart(t_context);
+
+            t_context.player.health().adjCurrent(-damage);
+            t_context.top_panel.update(t_context);
+
+            std::string message{ std::to_string(damage) };
+            message += " dmg acid spray";
+
+            t_context.anim.risingText().add(
+                t_context, message, t_context.config.message_color_poison, mapPosition());
+        }
+        else if (action == MonsterAction::BreakWeapon)
+        {
+            // TODO break/unequip/drop the player's weapon
+
+            t_context.anim.risingText().add(
+                t_context, "breaks weapon!", t_context.config.message_color_item, mapPosition());
+        }
+        else if (action == MonsterAction::DevourArmor)
+        {
+            // TODO devour/unequip/drop the player's armor
+
+            t_context.anim.risingText().add(
+                t_context, "devours armor!", t_context.config.message_color_item, mapPosition());
+        }
+        else if (action == MonsterAction::BreatheFire)
+        {
+            const int strengthRoot{ 1 + static_cast<int>(
+                                            std::sqrt(static_cast<float>(m_stats.strength))) };
+
+            const int damage{ t_context.random.fromTo(strengthRoot, (strengthRoot * 3)) };
+
+            t_context.player_display.shake();
+            t_context.player_display.bloodSplatStart(t_context);
+
+            t_context.player.health().adjCurrent(-damage);
+            t_context.top_panel.update(t_context);
+
+            std::string message{ std::to_string(damage) };
+            message += " dmg fire breath";
+
+            t_context.anim.risingText().add(
+                t_context, message, t_context.config.message_color_attack_hit, mapPosition());
+        }
+        else if (action == MonsterAction::PoisonBite)
+        {
+            // TODO give the player the poisoned condition
+
+            t_context.anim.risingText().add(
+                t_context, "infect poison", t_context.config.message_color_poison, mapPosition());
+        }
 
         return false;
     }
