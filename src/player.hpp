@@ -3,9 +3,12 @@
 //
 // player.hpp
 //
+#include "condition.hpp"
 #include "inventory.hpp"
 #include "stat.hpp"
 #include "strong-types.hpp"
+
+#include <vector>
 
 namespace castlecrawl
 {
@@ -39,6 +42,16 @@ namespace castlecrawl
             return m_equipEffects;
         }
 
+        [[nodiscard]] inline const std::vector<Condition> conditions() const
+        {
+            return m_conditions;
+        }
+
+        [[nodiscard]] bool hasCondition(const Condition t_condition) const;
+
+        void addCondition(const Condition t_condition);
+        void removeCondition(const Condition t_condition);
+
       private:
         constexpr static int statMin     = 1;
         constexpr static int statMax     = 100;
@@ -61,6 +74,8 @@ namespace castlecrawl
 
         item::Inventory m_inventory;
         item::EquipEffect m_equipEffects;
+
+        std::vector<Condition> m_conditions;
     };
 
 } // namespace castlecrawl

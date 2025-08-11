@@ -5,6 +5,8 @@
 //
 #include "player.hpp"
 
+#include <algorithm>
+
 namespace castlecrawl
 {
 
@@ -37,6 +39,27 @@ namespace castlecrawl
         m_dexterity.adjCurrent(m_equipEffects.dex);
         m_luck.adjCurrent(m_equipEffects.lck);
         m_strength.adjCurrent(m_equipEffects.str);
+    }
+
+    bool Player::hasCondition(const Condition t_condition) const
+    {
+        const auto foundIter{ std::find(
+            std::begin(m_conditions), std::end(m_conditions), t_condition) };
+
+        return (foundIter != std::end(m_conditions));
+    }
+
+    void Player::addCondition(const Condition t_condition)
+    {
+        if (!hasCondition(t_condition))
+        {
+            m_conditions.push_back(t_condition);
+        }
+    }
+    
+    void Player::removeCondition(const Condition t_condition)
+    { 
+        std::erase(m_conditions, t_condition);
     }
 
 } // namespace castlecrawl

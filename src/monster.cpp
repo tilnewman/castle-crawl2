@@ -87,12 +87,16 @@ namespace castlecrawl
         {
             // TODO break/unequip/drop the player's weapon
 
+            // TODO check that the player actually has an equiped weapon
+
             t_context.anim.risingText().add(
                 t_context, "breaks weapon!", t_context.config.message_color_item, mapPosition());
         }
         else if (action == MonsterAction::DevourArmor)
         {
             // TODO devour/unequip/drop the player's armor
+
+            // TODO check that the player actually has an equiped piece of armor
 
             t_context.anim.risingText().add(
                 t_context, "devours armor!", t_context.config.message_color_item, mapPosition());
