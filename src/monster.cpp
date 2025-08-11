@@ -78,7 +78,7 @@ namespace castlecrawl
         const int damageMax{ std::max((damageMin + 1), m_stats.strength) };
         int damage{ t_context.random.fromTo(damageMin, damageMax) };
 
-        damage -= t_context.player.armor().as<int>();
+        damage -= static_cast<int>(std::sqrt(t_context.player.armor().as<float>()) * 2.0f);
         if (damage < 0)
         {
             damage = 0;
