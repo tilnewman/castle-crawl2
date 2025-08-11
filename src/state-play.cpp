@@ -65,7 +65,7 @@ namespace castlecrawl
         {
             if (t_context.player.health().current() == 0)
             {
-                t_context.state.change(t_context, State::Death);
+                t_context.state.setChangePending(State::Death);
             }
             else
             {
@@ -98,7 +98,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                t_context.state.change(t_context, State::Quit);
+                t_context.state.setChangePending(State::Quit);
             }
             else if (
                 (keyPtr->scancode == sf::Keyboard::Scancode::Up) ||
@@ -119,14 +119,14 @@ namespace castlecrawl
             {
                 if (t_context.turn.isPlayerTurn())
                 {
-                    t_context.state.change(t_context, State::Inventory);
+                    t_context.state.setChangePending(State::Inventory);
                 }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::F)
             {
                 if (t_context.turn.isPlayerTurn())
                 {
-                    t_context.state.change(t_context, State::Fight);
+                    t_context.state.setChangePending(State::Fight);
                 }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::Space)

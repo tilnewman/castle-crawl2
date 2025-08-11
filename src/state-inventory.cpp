@@ -240,7 +240,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                t_context.state.change(t_context, State::Play);
+                t_context.state.setChangePending(State::Play);
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
             {

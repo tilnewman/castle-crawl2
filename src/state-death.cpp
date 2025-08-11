@@ -80,7 +80,7 @@ namespace castlecrawl
         }
         else
         {
-            t_context.state.change(t_context, State::Credits);
+            t_context.state.setChangePending(State::Credits);
         }
     }
 
@@ -108,7 +108,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                t_context.state.change(t_context, State::Credits);
+                t_context.state.setChangePending(State::Credits);
             }
         }
     }

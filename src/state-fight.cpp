@@ -72,7 +72,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                t_context.state.change(t_context, State::Play);
+                t_context.state.setChangePending(State::Play);
             }
             else if (
                 !m_isDirectionSelected && ((keyPtr->scancode == sf::Keyboard::Scancode::Up) ||
@@ -240,7 +240,7 @@ namespace castlecrawl
         }
 
         t_context.turn.advance();
-        t_context.state.change(t_context, nextState);
+        t_context.state.setChangePending(nextState);
     }
 
 } // namespace castlecrawl

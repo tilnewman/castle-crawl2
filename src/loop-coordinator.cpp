@@ -129,7 +129,8 @@ namespace castlecrawl
         m_framerateUPtr->setup(*m_contextUPtr);
         m_topPanelUPtr->setup(*m_contextUPtr);
 
-        m_stateManagerUPtr->change(*m_contextUPtr, State::Splash);
+        m_stateManagerUPtr->setChangePending(State::Splash);
+        m_stateManagerUPtr->change(*m_contextUPtr);
 
         m_musicUPtr->setup((m_config.media_path / "music").string());
         m_musicUPtr->start("music.ogg", m_config.music_volume);
@@ -200,7 +201,7 @@ namespace castlecrawl
     {
         if (t_event.is<sf::Event::Closed>())
         {
-            m_stateManagerUPtr->change(*m_contextUPtr, State::Quit);
+            m_stateManagerUPtr->setChangePending(State::Quit);
         }
         else
         {
@@ -217,6 +218,11 @@ namespace castlecrawl
 
     void LoopCoordinator::update(const float t_frameTimeSec)
     {
+        if (m_stateManagerUPtr->isChangePending())
+        {
+            m_stateManagerUPtr->change(*m_contextUPtr);
+        }
+
         m_stateManagerUPtr->current().update(*m_contextUPtr, t_frameTimeSec);
     }
 

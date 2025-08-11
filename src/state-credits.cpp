@@ -213,7 +213,7 @@ namespace castlecrawl
         Credit & lastCredit = m_credits.back();
         if (lastCredit.bottom() < 0.0f)
         {
-            t_context.state.change(t_context, State::Quit);
+            t_context.state.setChangePending(State::Quit);
         }
     }
 
@@ -234,7 +234,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                t_context.state.change(t_context, State::Quit);
+                t_context.state.setChangePending(State::Quit);
             }
         }
     }

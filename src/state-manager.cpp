@@ -24,24 +24,32 @@ namespace castlecrawl
         : m_stateUPtr(factory(State::Init))
     {}
 
-    void StateManager::change(const Context & t_context, const State t_newState)
+    void StateManager::change(const Context & t_context)
     {
-        const State currentState = m_stateUPtr->which();
+        if (!isChangePending())
+        {
+            return;
+        }
+
+        const State currentState{ m_stateUPtr->which() };
+        const State pendingState{ m_pendingStateOpt.value() };
 
         M_CHECK(
-            (t_newState != currentState),
-            "Tried to change to the same State! (" << t_newState << ")");
+            (pendingState != currentState),
+            "Tried to change to the same State! (" << pendingState << ")");
 
         m_stateUPtr->onExit(t_context);
-        m_stateUPtr = factory(t_newState);
+        m_stateUPtr = factory(pendingState);
         m_stateUPtr->onEnter(t_context);
+
+        m_pendingStateOpt.reset();
     }
 
     std::unique_ptr<IState> StateManager::factory(const State t_state) const
     {
         switch (t_state)
         {
-            // clang-format off
+                // clang-format off
             case State::Init:       { return std::make_unique<StateInit>(); } 
             case State::Splash:     { return std::make_unique<StateSplash>(); }
             case State::Play:       { return std::make_unique<StatePlay>(); }
@@ -56,7 +64,7 @@ namespace castlecrawl
             {
                 throw std::runtime_error("Error: state-manager::factory() called with unknown state!");
             }
-            // clang-format on
+                // clang-format on
         }
     }
 

@@ -456,7 +456,7 @@ namespace castlecrawl
 
         if (keyScancode == sf::Keyboard::Scancode::Escape)
         {
-            t_context.state.change(t_context, State::Quit);
+            t_context.state.setChangePending(State::Quit);
         }
         else if ((keyScancode == sf::Keyboard::Scancode::S) && isCntrlPressed())
         {

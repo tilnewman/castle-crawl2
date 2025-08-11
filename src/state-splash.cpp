@@ -70,7 +70,7 @@ namespace castlecrawl
             const float fadeOutDuration = 1.0f;
             if (m_timerSec > fadeOutDuration)
             {
-                t_context.state.change(t_context, State::Play);
+                t_context.state.setChangePending(State::Play);
             }
             else
             {
@@ -132,7 +132,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::E)
             {
-                t_context.state.change(t_context, State::Editor);
+                t_context.state.setChangePending(State::Editor);
             }
             else
             {

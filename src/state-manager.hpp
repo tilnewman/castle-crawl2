@@ -6,6 +6,7 @@
 #include "state.hpp"
 
 #include <memory>
+#include <optional>
 
 namespace castlecrawl
 {
@@ -17,12 +18,21 @@ namespace castlecrawl
         StateManager();
 
         [[nodiscard]] inline IState & current() const { return *m_stateUPtr; }
-        void change(const Context & t_context, const State t_newState);
+
+        inline void setChangePending(const State t_newState) { m_pendingStateOpt = t_newState; }
+
+        [[nodiscard]] inline bool isChangePending() const noexcept
+        {
+            return m_pendingStateOpt.has_value();
+        }
+
+        void change(const Context & t_context);
 
       private:
         [[nodiscard]] std::unique_ptr<IState> factory(const State t_state) const;
 
       private:
+        std::optional<State> m_pendingStateOpt;
         std::unique_ptr<IState> m_stateUPtr;
     };
 
