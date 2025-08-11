@@ -15,14 +15,15 @@
 namespace castlecrawl
 {
 
-    const sf::RectangleShape makeCreatureHealthBar(
+    const HealthBarRectangles makeCreatureHealthBars(
         const Context & t_context, const float t_healthRatio, const MapPos_t & t_mapPos)
     {
-        const sf::Vector2f cellSize = t_context.layout.cellSize();
-        const float height          = (cellSize.y * 0.075f);
+        const sf::Vector2f cellSize{ t_context.layout.cellSize() };
+        const float height{ cellSize.y * 0.075f };
 
-        sf::RectangleShape rectangle;
+        HealthBarRectangles rectangles;
 
+        // setup foreground rectangle
         auto findColor = [&]() {
             sf::Color color = sf::Color::Green;
             if (t_healthRatio < 0.333f)
@@ -37,18 +38,27 @@ namespace castlecrawl
             return color;
         };
 
-        rectangle.setFillColor(findColor());
-        rectangle.setOutlineThickness(0.0f);
-        rectangle.setSize({ (cellSize.x * t_healthRatio), height });
+        rectangles.foreground.setFillColor(findColor());
+        rectangles.foreground.setOutlineThickness(0.0f);
+        rectangles.foreground.setSize({ (cellSize.x * t_healthRatio), height });
 
         const sf::Vector2f cellScreenPos =
             t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos);
 
         const sf::Vector2f screenPos{ cellScreenPos.x, ((cellScreenPos.y + cellSize.y) - height) };
 
-        rectangle.setPosition(screenPos);
+        rectangles.foreground.setPosition(screenPos);
 
-        return rectangle;
+        // setup background rectangle
+        rectangles.background = rectangles.foreground;
+
+        sf::Color backgroundColor{ rectangles.background.getFillColor() };
+        backgroundColor.a = 64;
+        rectangles.background.setFillColor(backgroundColor);
+
+        rectangles.background.setSize({ cellSize.x, height });
+
+        return rectangles;
     }
 
     const RollResult rollRivalStats(

@@ -53,9 +53,11 @@ namespace castlecrawl
         {
             if (monster.healthRatio() < 1.0f)
             {
-                t_target.draw(
-                    makeCreatureHealthBar(t_context, monster.healthRatio(), monster.mapPosition()),
-                    t_states);
+                const auto rectangles{ makeCreatureHealthBars(
+                    t_context, monster.healthRatio(), monster.mapPosition()) };
+
+                t_target.draw(rectangles.background, t_states);
+                t_target.draw(rectangles.foreground, t_states);
             }
         }
     }
@@ -85,6 +87,27 @@ namespace castlecrawl
         }
 
         return false;
+    }
+
+    bool MonsterManager::removeDead(const Context & t_context)
+    {
+        bool wereAnyRemoved{ false };
+
+        for (const Monster & monster : m_monsters)
+        {
+            if (!monster.isAlive())
+            {
+                t_context.maps.current().setObjectChar(monster.mapPosition(), ' ');
+                wereAnyRemoved = true;
+            }
+        }
+
+        if (wereAnyRemoved)
+        {
+            std::erase_if(m_monsters, [](const Monster & monster) { return !monster.isAlive(); });
+        }
+
+        return wereAnyRemoved;
     }
 
 } // namespace castlecrawl

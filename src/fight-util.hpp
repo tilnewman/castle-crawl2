@@ -12,7 +12,13 @@ namespace castlecrawl
 
     struct Context;
 
-    [[nodiscard]] const sf::RectangleShape makeCreatureHealthBar(
+    struct HealthBarRectangles
+    {
+        sf::RectangleShape foreground;
+        sf::RectangleShape background;
+    };
+
+    [[nodiscard]] const HealthBarRectangles makeCreatureHealthBars(
         const Context & t_context, const float t_healthRatio, const MapPos_t & t_mapPos);
 
     struct RollResult

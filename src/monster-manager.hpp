@@ -37,6 +37,9 @@ namespace castlecrawl
         // returns true if killed
         bool damage(const MapPos_t & t_mapPos, const int t_damage);
 
+        // returns true if any were removed
+        bool removeDead(const Context & t_context);
+
       private:
         std::vector<Monster> m_monsters;
     };

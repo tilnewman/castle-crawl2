@@ -45,6 +45,11 @@ namespace castlecrawl
 
         if (t_context.turn.owner() == TurnOwner::Monster)
         {
+            if (t_context.monsters.removeDead(t_context))
+            {
+                t_context.map_display.load(t_context);
+            }
+
             if (t_context.monsters.takeTurns(t_context))
             {
                 t_context.map_display.load(t_context);

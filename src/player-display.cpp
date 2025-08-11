@@ -85,7 +85,9 @@ namespace castlecrawl
         const float healthRatio = t_context.player.health().ratio();
         if (healthRatio < 1.0f)
         {
-            t_target.draw(makeCreatureHealthBar(t_context, healthRatio, m_mapPos), t_states);
+            const auto rectangles{ makeCreatureHealthBars(t_context, healthRatio, m_mapPos) };
+            t_target.draw(rectangles.background, t_states);
+            t_target.draw(rectangles.foreground, t_states);
         }
     }
 
