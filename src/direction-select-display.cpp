@@ -40,7 +40,7 @@ namespace castlecrawl
 
         const sf::Color fillColor{ 0, 255, 255, 32 };
         const sf::Color outlineColor{ 0, 255, 255, 127 };
-        const sf::Color arrowColor{ 100, 255, 255, 64 };
+        const sf::Color arrowColor{ 100, 255, 255, 92 };
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
