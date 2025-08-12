@@ -92,7 +92,7 @@ namespace castlecrawl
         m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "");
         m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "");
 
-        const float valueTextHorizPos{ (util::right(m_dexTitleText) + padLarge) };
+        const float valueTextHorizPos{ (util::right(m_dexTitleText) + (padLarge * 0.5f)) };
 
         m_strValueText.setPosition(
             { valueTextHorizPos, m_strTitleText.getGlobalBounds().position.y - 7.0f });
@@ -376,34 +376,13 @@ namespace castlecrawl
 
     void StateInventory::updateStatText(const Context & t_context)
     {
-        std::string str;
+        m_strValueText.setString(std::to_string(t_context.player.strength().current()));
+        m_dexValueText.setString(std::to_string(t_context.player.dexterity().current()));
+        m_accValueText.setString(std::to_string(t_context.player.accuracy().current()));
+        m_lckValueText.setString(std::to_string(t_context.player.luck().current()));
+        m_arcValueText.setString(std::to_string(t_context.player.arcane().current()));
 
-        str = std::to_string(t_context.player.strength().current());
-        str += "/";
-        str += std::to_string(t_context.player.strength().max());
-        m_strValueText.setString(str);
-
-        str = std::to_string(t_context.player.dexterity().current());
-        str += "/";
-        str += std::to_string(t_context.player.dexterity().max());
-        m_dexValueText.setString(str);
-
-        str = std::to_string(t_context.player.accuracy().current());
-        str += "/";
-        str += std::to_string(t_context.player.accuracy().max());
-        m_accValueText.setString(str);
-
-        str = std::to_string(t_context.player.luck().current());
-        str += "/";
-        str += std::to_string(t_context.player.luck().max());
-        m_lckValueText.setString(str);
-
-        str = std::to_string(t_context.player.arcane().current());
-        str += "/";
-        str += std::to_string(t_context.player.arcane().max());
-        m_arcValueText.setString(str);
-
-        str = "Armor: ";
+        std::string str{ "Armor: " };
         str += std::to_string(t_context.player.armor().get());
         m_armorText.setString(str);
     }
