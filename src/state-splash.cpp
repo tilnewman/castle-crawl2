@@ -62,7 +62,7 @@ namespace castlecrawl
 
         if (m_isFadingIn)
         {
-            const float fadeInDuration{ 4.0f };
+            const float fadeInDuration{ 3.0f };
             if (m_timerSec < fadeInDuration)
             {
                 sf::Color color{ m_castleSprite.getColor() };
