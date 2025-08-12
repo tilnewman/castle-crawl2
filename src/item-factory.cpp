@@ -804,4 +804,17 @@ namespace castlecrawl::item
         return treasure;
     }
 
+    const std::optional<Item> ItemFactory::find(const std::string & t_itemName) const
+    {
+        for (const Item & item : m_allItems)
+        {
+            if (item.name() == t_itemName)
+            {
+                return item;
+            }
+        }
+
+        return {};
+    }
+
 } // namespace castlecrawl::item

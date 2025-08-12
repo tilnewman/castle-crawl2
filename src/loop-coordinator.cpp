@@ -137,6 +137,20 @@ namespace castlecrawl
 
         // m_itemFactoryUPtr->dumpInfo(m_fontsUPtr->font());
         // m_monsterStatsDatabaseUPtr->dumpInfo(m_fontsUPtr->font());
+
+        // TODO remove after testing
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Boots").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Greaves").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Cuirass").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Bracers").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Gauntlets").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Bronze Dagger").value());
+        m_playerUPtr->inventory().equip(0);
     }
 
     void LoopCoordinator::teardown()

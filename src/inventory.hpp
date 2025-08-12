@@ -21,7 +21,7 @@ namespace castlecrawl::item
         void remove(const std::size_t t_index);
 
         // returns an error message if fails
-        [[nodiscard]] std::string equip(const std::size_t t_index);
+        std::string equip(const std::size_t t_index);
 
         void unequip(const std::size_t t_index);
 

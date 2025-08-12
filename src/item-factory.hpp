@@ -7,6 +7,8 @@
 
 #include <SFML/Graphics/Font.hpp>
 
+#include <optional>
+
 namespace castlecrawl
 {
     struct Context;
@@ -35,6 +37,8 @@ namespace castlecrawl::item
         [[nodiscard]] const Treasure randomHerbFind(const Context & t_context) const;
 
         [[nodiscard]] const ItemVec_t & allItems() const { return m_allItems; }
+        [[nodiscard]] const std::optional<Item> find(const std::string & t_itemName) const;
+
         void dumpInfo(const sf::Font & t_font) const;
 
       private:
