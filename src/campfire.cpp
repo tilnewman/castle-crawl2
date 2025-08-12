@@ -42,7 +42,9 @@ namespace castlecrawl
     void CampfireAnimationManager::setup(const GameConfig & t_config)
     {
         util::TextureLoader::load(
-            m_texture, (t_config.media_path / "image" / "campfire.png"), true);
+            m_texture,
+            (t_config.media_path / "image" / "animation" / "campfire-32x" / "campfire.png"),
+            true);
     }
 
     void CampfireAnimationManager::update(const Context &, const float t_elapsedTimeSec)

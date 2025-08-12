@@ -88,7 +88,9 @@ namespace castlecrawl
     void InfernoAnimationManager::setup(const GameConfig & t_config)
     {
         util::TextureLoader::load(
-            m_texture, (t_config.media_path / "image" / "inferno.png"), false);
+            m_texture,
+            (t_config.media_path / "image" / "animation" / "inferno-64x" / "inferno.png"),
+            false);
     }
 
     void InfernoAnimationManager::update(const Context & t_context, const float t_elapsedTimeSec)
