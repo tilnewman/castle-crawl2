@@ -54,7 +54,7 @@ namespace castlecrawl
 
         //
 
-        const sf::FloatRect screenRect = t_context.layout.screenRect();
+        const sf::FloatRect screenRect{ t_context.layout.screenRect() };
         const float pad{ screenRect.size.x * 0.0025f };
         const float padLarge{ pad * 10.0f };
         const sf::FloatRect botRect = t_context.layout.botRect();
@@ -92,7 +92,7 @@ namespace castlecrawl
         m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "");
         m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "");
 
-        const float valueTextHorizPos = (util::right(m_dexTitleText) + padLarge);
+        const float valueTextHorizPos{ (util::right(m_dexTitleText) + padLarge) };
 
         m_strValueText.setPosition(
             { valueTextHorizPos, m_strTitleText.getGlobalBounds().position.y - 7.0f });
@@ -131,7 +131,7 @@ namespace castlecrawl
 
         m_goldText = t_context.fonts.makeText(
             FontSize::Medium, goldStr, t_context.config.message_color_coins);
-        
+
         util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
         m_goldText.move({ 0.0f, -m_goldText.getGlobalBounds().size.y });
         m_goldText.move({ 0.0f, -pad });
@@ -194,7 +194,7 @@ namespace castlecrawl
 
         if (m_errorText.getFillColor().a > 0)
         {
-            sf::Color color = m_errorText.getFillColor();
+            sf::Color color{ m_errorText.getFillColor() };
             --color.a;
             m_errorText.setFillColor(color);
         }
@@ -249,8 +249,8 @@ namespace castlecrawl
             {
                 if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
                 {
-                    const std::string resultStr =
-                        t_context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
+                    const std::string resultStr{ t_context.player.inventory().equip(
+                        m_unListboxUPtr->selectedIndex()) };
 
                     if (resultStr.empty())
                     {

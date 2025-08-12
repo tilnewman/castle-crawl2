@@ -88,7 +88,7 @@ namespace castlecrawl
     void StateFight::handleSelectDirection(
         const Context & t_context, const sf::Keyboard::Scancode t_key)
     {
-        const MapPos_t mapPos = t_context.player_display.position();
+        const MapPos_t mapPos{ t_context.player_display.position() };
 
         const MapPos_t upPos{ mapPos.x, (mapPos.y - 1) };
         const MapPos_t downPos{ mapPos.x, (mapPos.y + 1) };
