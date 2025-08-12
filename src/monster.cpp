@@ -14,6 +14,7 @@
 #include "player.hpp"
 #include "random.hpp"
 #include "rising-text-anim.hpp"
+#include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
@@ -34,22 +35,29 @@ namespace castlecrawl
         , m_mana{ m_stats.mana_max }
     {}
 
-    bool Monster::takeTurn(const Context & t_context)
+    CreatureAction Monster::takeTurn(const Context & t_context)
     {
         if (!isAlive())
         {
-            return false;
+            return CreatureAction::None;
         }
 
         if (!isPlayerAdjacent(t_context))
         {
-            return moveToward(t_context, t_context.player_display.position());
+            if (moveToward(t_context, t_context.player_display.position()))
+            {
+                return CreatureAction::Move;
+            }
+            else
+            {
+                return CreatureAction::None;
+            }
         }
 
         const std::vector<Spell> spellsThatCanBeCast{ spellsThereIsManaEnoughToCast() };
-        const MonsterAction action{ decideWhichActionToTake(t_context, spellsThatCanBeCast) };
+        const CreatureAction action{ decideWhichActionToTake(t_context, spellsThatCanBeCast) };
 
-        if (action == MonsterAction::CastSpell)
+        if (action == CreatureAction::CastSpell)
         {
             const Spell spellToCast{ t_context.random.from(spellsThatCanBeCast) };
             m_mana -= spellToManaCost(spellToCast);
@@ -59,12 +67,15 @@ namespace castlecrawl
 
             t_context.anim.risingText().add(
                 t_context, actionMessage, t_context.config.message_color_cast_spell, mapPosition());
+
+            return CreatureAction::CastSpell;
         }
-        else if (action == MonsterAction::Attack)
+        else if (action == CreatureAction::Attack)
         {
             attackPlayer(t_context);
+            return CreatureAction::Attack;
         }
-        else if (action == MonsterAction::AcidSpray)
+        else if (action == CreatureAction::AcidSpray)
         {
             const int strengthRoot{ 1 + static_cast<int>(
                                             std::sqrt(static_cast<float>(m_stats.strength))) };
@@ -82,8 +93,10 @@ namespace castlecrawl
 
             t_context.anim.risingText().add(
                 t_context, message, t_context.config.message_color_poison, mapPosition());
+
+            return CreatureAction::AcidSpray;
         }
-        else if (action == MonsterAction::BreakWeapon)
+        else if (action == CreatureAction::BreakWeapon)
         {
             // TODO break/unequip/drop the player's weapon
 
@@ -91,8 +104,10 @@ namespace castlecrawl
 
             t_context.anim.risingText().add(
                 t_context, "breaks weapon!", t_context.config.message_color_item, mapPosition());
+
+            return CreatureAction::BreakWeapon;
         }
-        else if (action == MonsterAction::DevourArmor)
+        else if (action == CreatureAction::DevourArmor)
         {
             // TODO devour/unequip/drop the player's armor
 
@@ -100,8 +115,10 @@ namespace castlecrawl
 
             t_context.anim.risingText().add(
                 t_context, "devours armor!", t_context.config.message_color_item, mapPosition());
+
+            return CreatureAction::DevourArmor;
         }
-        else if (action == MonsterAction::BreatheFire)
+        else if (action == CreatureAction::BreatheFire)
         {
             const int strengthRoot{ 1 + static_cast<int>(
                                             std::sqrt(static_cast<float>(m_stats.strength))) };
@@ -119,16 +136,21 @@ namespace castlecrawl
 
             t_context.anim.risingText().add(
                 t_context, message, t_context.config.message_color_attack_hit, mapPosition());
+
+            return CreatureAction::BreatheFire;
         }
-        else if (action == MonsterAction::PoisonBite)
+        else if (action == CreatureAction::PoisonBite)
         {
             // TODO give the player the poisoned condition
 
             t_context.anim.risingText().add(
                 t_context, "infect poison", t_context.config.message_color_poison, mapPosition());
+
+            return CreatureAction::PoisonBite;
         }
 
-        return false;
+        // should never get here
+        return CreatureAction::None;
     }
 
     void Monster::attackPlayer(const Context & t_context)
@@ -141,6 +163,7 @@ namespace castlecrawl
             t_context.anim.risingText().add(
                 t_context, "miss", t_context.config.message_color_attack_miss, mapPosition());
 
+            t_context.sfx.play("miss");
             return;
         }
 
@@ -159,11 +182,15 @@ namespace castlecrawl
         {
             t_context.anim.risingText().add(
                 t_context, "miss armor", t_context.config.message_color_attack_miss, mapPosition());
+
+            t_context.sfx.play("miss");
         }
         else
         {
             std::string actionMessage{ std::to_string(damage) };
             actionMessage += " dmg";
+
+            t_context.sfx.play("hit");
 
             t_context.anim.risingText().add(
                 t_context, actionMessage, t_context.config.message_color_attack_hit, mapPosition());
@@ -176,17 +203,17 @@ namespace castlecrawl
         }
     }
 
-    MonsterAction Monster::decideWhichActionToTake(
+    CreatureAction Monster::decideWhichActionToTake(
         const Context & t_context, const std::vector<Spell> & t_spellsThatCanBeCast) const
     {
-        std::vector<MonsterActionEntry> entries;
+        std::vector<CreatureActionEntry> entries;
 
         float actionRatioSum{ 0.0f };
 
         if (m_stats.breathe_fire_attack_ratio > 0.0f)
         {
-            entries.push_back(MonsterActionEntry(
-                MonsterAction::BreatheFire,
+            entries.push_back(CreatureActionEntry(
+                CreatureAction::BreatheFire,
                 actionRatioSum,
                 (actionRatioSum + m_stats.breathe_fire_attack_ratio)));
 
@@ -195,8 +222,8 @@ namespace castlecrawl
 
         if (m_stats.poison_attack_ratio > 0.0f)
         {
-            entries.push_back(MonsterActionEntry(
-                MonsterAction::PoisonBite,
+            entries.push_back(CreatureActionEntry(
+                CreatureAction::PoisonBite,
                 actionRatioSum,
                 (actionRatioSum + m_stats.poison_attack_ratio)));
 
@@ -205,8 +232,8 @@ namespace castlecrawl
 
         if (m_stats.acid_attack_ratio > 0.0f)
         {
-            entries.push_back(MonsterActionEntry(
-                MonsterAction::AcidSpray,
+            entries.push_back(CreatureActionEntry(
+                CreatureAction::AcidSpray,
                 actionRatioSum,
                 (actionRatioSum + m_stats.acid_attack_ratio)));
 
@@ -215,8 +242,8 @@ namespace castlecrawl
 
         if (m_stats.break_attack_ratio > 0.0f)
         {
-            entries.push_back(MonsterActionEntry(
-                MonsterAction::BreakWeapon,
+            entries.push_back(CreatureActionEntry(
+                CreatureAction::BreakWeapon,
                 actionRatioSum,
                 (actionRatioSum + m_stats.break_attack_ratio)));
 
@@ -225,8 +252,8 @@ namespace castlecrawl
 
         if (m_stats.devour_attack_ratio > 0.0f)
         {
-            entries.push_back(MonsterActionEntry(
-                MonsterAction::DevourArmor,
+            entries.push_back(CreatureActionEntry(
+                CreatureAction::DevourArmor,
                 actionRatioSum,
                 (actionRatioSum + m_stats.devour_attack_ratio)));
 
@@ -235,8 +262,8 @@ namespace castlecrawl
 
         if (m_stats.isSpellCaster() && !t_spellsThatCanBeCast.empty())
         {
-            entries.push_back(MonsterActionEntry(
-                MonsterAction::CastSpell,
+            entries.push_back(CreatureActionEntry(
+                CreatureAction::CastSpell,
                 actionRatioSum,
                 (actionRatioSum + m_stats.spell_attack_ratio)));
 
@@ -244,7 +271,7 @@ namespace castlecrawl
         }
 
         const float actionSelectRatio = t_context.random.fromTo(0.0f, 1.0f);
-        for (const MonsterActionEntry & entry : entries)
+        for (const CreatureActionEntry & entry : entries)
         {
             if ((actionSelectRatio >= entry.min) && (actionSelectRatio <= entry.max))
             {
@@ -252,7 +279,7 @@ namespace castlecrawl
             }
         }
 
-        return MonsterAction::Attack;
+        return CreatureAction::Attack;
     }
 
     int Monster::healthAdj(const int t_adjustment)

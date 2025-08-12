@@ -29,7 +29,7 @@ namespace castlecrawl
         bool didAnyNpcsMove = false;
         for (Npc & npc : m_npcs)
         {
-            if (npc.takeTurn(t_context))
+            if (npc.takeTurn(t_context) == CreatureAction::Move)
             {
                 didAnyNpcsMove = true;
             }

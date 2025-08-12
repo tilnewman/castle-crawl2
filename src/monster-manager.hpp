@@ -25,7 +25,7 @@ namespace castlecrawl
         void reset();
 
         // returns true if the monster changed map position
-        bool takeTurn(const Context & t_context, const std::size_t t_uniqueId);
+        CreatureAction takeTurn(const Context & t_context, const std::size_t t_uniqueId);
 
         void drawHealthLines(
             const Context & t_context,

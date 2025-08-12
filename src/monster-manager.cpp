@@ -34,7 +34,7 @@ namespace castlecrawl
         m_nextUniqueId = 0;
     }
 
-    bool MonsterManager::takeTurn(const Context & t_context, const std::size_t t_uniqueId)
+    CreatureAction MonsterManager::takeTurn(const Context & t_context, const std::size_t t_uniqueId)
     {
         for (Monster & monster : m_monsters)
         {
@@ -44,7 +44,8 @@ namespace castlecrawl
             }
         }
 
-        return false;
+        // should never get here...not really...i don't think...
+        return CreatureAction::None;
     }
 
     void MonsterManager::drawHealthLines(

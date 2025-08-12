@@ -32,7 +32,7 @@ namespace castlecrawl
 
     StatePlay::StatePlay()
         : m_mouseover{}
-        , m_monsterUniqueId{0}
+        , m_monsterUniqueId{ 0 }
     {}
 
     void StatePlay::onEnter(const Context &) {}
@@ -43,23 +43,44 @@ namespace castlecrawl
         t_context.player_display.update(t_context, t_frameTimeSec);
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
+        t_context.turn.update(t_frameTimeSec);
 
-        if (t_context.turn.owner() == TurnOwner::Monster)
+        if (t_context.turn.owner() == TurnOwner::Player)
+        {
+            if (t_context.player.health().current() == 0)
+            {
+                t_context.state.setChangePending(State::Death);
+            }
+        }
+        else if (t_context.turn.owner() == TurnOwner::Monster)
         {
             if (t_context.monsters.removeDead(t_context))
             {
                 t_context.map_display.load(t_context);
             }
 
-            if (t_context.monsters.takeTurn(t_context, m_monsterUniqueId++))
+            const CreatureAction actionTaken{ t_context.monsters.takeTurn(
+                t_context, m_monsterUniqueId++) };
+
+            float delayAfterTurn{ 0.0f };
+            if (actionTaken == CreatureAction::Move)
             {
                 t_context.map_display.load(t_context);
+                delayAfterTurn = t_context.config.turn_delay_after_nonplayer_move;
+            }
+            else if (actionTaken == CreatureAction::None)
+            {
+                delayAfterTurn = 0.0f;
+            }
+            else
+            {
+                delayAfterTurn = t_context.config.turn_delay_after_nonplayer_attack;
             }
 
             if (m_monsterUniqueId >= t_context.monsters.count())
             {
                 m_monsterUniqueId = 0;
-                t_context.turn.advance();
+                t_context.turn.advance(delayAfterTurn);
             }
         }
         else if (t_context.turn.owner() == TurnOwner::Npc)
@@ -70,17 +91,6 @@ namespace castlecrawl
             }
 
             t_context.turn.advance();
-        }
-        else if (t_context.turn.owner() == TurnOwner::System)
-        {
-            if (t_context.player.health().current() == 0)
-            {
-                t_context.state.setChangePending(State::Death);
-            }
-            else
-            {
-                t_context.turn.advance();
-            }
         }
     }
 

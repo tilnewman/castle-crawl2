@@ -11,30 +11,28 @@ namespace castlecrawl
     enum class TurnOwner
     {
         Player,
+        PlayerDelay,
         Monster,
+        MonsterDelay,
         Npc,
-        System // used to play animations and the like
+        NpcDelay
     };
 
     [[nodiscard]] inline constexpr std::string_view
         turnOwnerToName(const TurnOwner t_turnOwner) noexcept
     {
-        if (t_turnOwner == TurnOwner::Player)
+        // clang-format off
+        switch (t_turnOwner)
         {
-            return "Player";
+            case TurnOwner::Player:         { return "Player"; }
+            case TurnOwner::PlayerDelay:    { return "PlayerDelay"; }
+            case TurnOwner::Monster:        { return "Monster"; }
+            case TurnOwner::MonsterDelay:   { return "MonsterDelay"; }
+            case TurnOwner::Npc:            { return "Npc"; }
+            case TurnOwner::NpcDelay:       
+            default:                        { return "NpcDelay"; }
         }
-        else if (t_turnOwner == TurnOwner::Monster)
-        {
-            return "Monster";
-        }
-        else if (t_turnOwner == TurnOwner::Npc)
-        {
-            return "Npc";
-        }
-        else
-        {
-            return "System";
-        }
+        // clang-format on
     }
 
     class TurnKeeper
@@ -49,11 +47,15 @@ namespace castlecrawl
             return (m_owner == TurnOwner::Player);
         }
 
-        void advance();
+        void advance(const float t_delaySec = 0.0f);
         void reset();
+
+        void update(const float t_elapsedTimeSec);
 
       private:
         TurnOwner m_owner;
+        float m_elapsedSec;
+        float m_delaySec;
     };
 
 } // namespace castlecrawl

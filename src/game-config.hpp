@@ -21,6 +21,12 @@ namespace castlecrawl
         unsigned int framerate_limit = 0;
         float top_panel_height_ratio = 0.1f;
 
+        float turn_delay_after_player_misc      = 0.25f;
+        float turn_delay_after_player_move      = 0.0f;
+        float turn_delay_after_player_attack    = 1.5f;
+        float turn_delay_after_nonplayer_move   = 0.0f;
+        float turn_delay_after_nonplayer_attack = 1.5f;
+
         sf::Color message_color_attack_miss = sf::Color(255, 200, 100);
         sf::Color message_color_attack_hit  = sf::Color(255, 200, 200);
         sf::Color message_color_cast_spell  = sf::Color(220, 100, 220);

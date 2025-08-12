@@ -19,7 +19,7 @@ namespace castlecrawl
         : Creature{ t_mapPos, t_tileImage }
     {}
 
-    bool Npc::takeTurn(const Context & t_context)
+    CreatureAction Npc::takeTurn(const Context & t_context)
     {
         // only walk about a sixth of the time
         if (!isPlayerAdjacent(t_context) && (t_context.random.fromTo(1, 6) == 1))
@@ -33,11 +33,11 @@ namespace castlecrawl
             if (!adjacentCells.empty())
             {
                 moveTo(t_context, t_context.random.from(adjacentCells).position);
-                return true;
+                return CreatureAction::Move;
             }
         }
 
-        return false;
+        return CreatureAction::None;
     }
 
 } // namespace castlecrawl

@@ -132,6 +132,8 @@ namespace castlecrawl
         const char objectChar{ t_context.maps.current().cell(t_pos).object_char };
         State nextState{ State::Play };
 
+        float turnDelay{ t_context.config.turn_delay_after_player_misc };
+
         if (objectChar == ' ')
         {
             t_context.sfx.play("miss.ogg");
@@ -195,7 +197,7 @@ namespace castlecrawl
 
             if (rollResult.result)
             {
-                t_context.sfx.play("hit.ogg");
+                t_context.sfx.play("hit");
 
                 int damage{ t_context.random.fromTo(weaponDamageMinMax.x, weaponDamageMinMax.y) };
                 if (rollResult.critical)
@@ -232,14 +234,16 @@ namespace castlecrawl
                     t_context.config.message_color_attack_miss,
                     t_context.player_display.position());
             }
+
+            turnDelay = t_context.config.turn_delay_after_player_attack;
         }
         else
         {
             // all other objects can just be hit with no ramifications so just play the sfx
-            t_context.sfx.play("hit.ogg");
+            t_context.sfx.play("hit");
         }
 
-        t_context.turn.advance();
+        t_context.turn.advance(turnDelay);
         t_context.state.setChangePending(nextState);
     }
 

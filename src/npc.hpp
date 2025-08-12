@@ -16,7 +16,7 @@ namespace castlecrawl
         virtual ~Npc() override = default;
 
         // returns true if m_mapPos was changed
-        virtual bool takeTurn(const Context & t_context) override;
+        virtual CreatureAction takeTurn(const Context & t_context) override;
     };
 
 } // namespace castlecrawl
