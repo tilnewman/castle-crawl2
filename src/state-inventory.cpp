@@ -238,111 +238,129 @@ namespace castlecrawl
 
     void StateInventory::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        // all other handlers are key pressed events
-        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+        const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>();
+        if (!keyPtr)
         {
-            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
-            {
-                t_context.state.setChangePending(State::Play);
-            }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
-            {
-                if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
-                {
-                    const std::string resultStr{ t_context.player.inventory().equip(
-                        m_unListboxUPtr->selectedIndex()) };
+            return;
+        }
 
-                    if (resultStr.empty())
-                    {
-                        t_context.player.updateEquipEffects();
-                        m_unListboxUPtr->redraw();
-                        m_eqListboxUPtr->redraw();
-                        updateStatText(t_context);
-                        updateItemDescText(t_context);
-                        t_context.sfx.play("equip.ogg");
-                    }
-                    else
-                    {
-                        m_errorText.setString(resultStr);
-                        m_errorText.setFillColor(sf::Color::Red);
-
-                        m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
-                                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                                  (util::bottom(m_itemDescText) + 20.0f) });
-
-                        t_context.sfx.play("error-1.ogg");
-                    }
-                }
-                else
-                {
-                    t_context.sfx.play("error-1.ogg");
-                }
-            }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::U)
+        if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+        {
+            t_context.state.setChangePending(State::Play);
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
+        {
+            if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
             {
-                if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
+                const std::string resultStr{ t_context.player.inventory().equip(
+                    m_unListboxUPtr->selectedIndex()) };
+
+                if (resultStr.empty())
                 {
-                    t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
                     t_context.player.updateEquipEffects();
                     m_unListboxUPtr->redraw();
                     m_eqListboxUPtr->redraw();
                     updateStatText(t_context);
                     updateItemDescText(t_context);
-                    t_context.sfx.play("cloth.ogg");
+                    t_context.sfx.play("equip.ogg");
                 }
                 else
                 {
+                    m_errorText.setString(resultStr);
+                    m_errorText.setFillColor(sf::Color::Red);
+
+                    m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+                                               (m_errorText.getGlobalBounds().size.x * 0.5f)),
+                                              (util::bottom(m_itemDescText) + 20.0f) });
+
                     t_context.sfx.play("error-1.ogg");
                 }
             }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
+            else
             {
-                if (!m_unListboxUPtr->getFocus())
-                {
-                    m_unListboxUPtr->setFocus(true);
-                    m_eqListboxUPtr->setFocus(false);
-                    updateItemDescText(t_context);
-                    t_context.sfx.play("tick-on");
-                }
+                t_context.sfx.play("error-1.ogg");
             }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::U)
+        {
+            if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
             {
-                if (!m_eqListboxUPtr->getFocus())
-                {
-                    m_unListboxUPtr->setFocus(false);
-                    m_eqListboxUPtr->setFocus(true);
-                    updateItemDescText(t_context);
-                    t_context.sfx.play("tick-on");
-                }
+                t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
+                t_context.player.updateEquipEffects();
+                m_unListboxUPtr->redraw();
+                m_eqListboxUPtr->redraw();
+                updateStatText(t_context);
+                updateItemDescText(t_context);
+                t_context.sfx.play("cloth.ogg");
             }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
+            else
             {
-                if (m_unListboxUPtr->getFocus())
-                {
-                    m_unListboxUPtr->selectPrev();
-                }
-                else
-                {
-                    m_eqListboxUPtr->selectPrev();
-                }
-
+                t_context.sfx.play("error-1.ogg");
+            }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::D)
+        {
+            if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
+            {
+                t_context.player.inventory().remove(m_unListboxUPtr->selectedIndex());
+                t_context.player.updateEquipEffects();
+                m_unListboxUPtr->redraw();
+                updateStatText(t_context);
+                updateItemDescText(t_context);
+                t_context.sfx.play("drop.ogg");
+            }
+            else
+            {
+                t_context.sfx.play("error-1.ogg");
+            }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
+        {
+            if (!m_unListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->setFocus(true);
+                m_eqListboxUPtr->setFocus(false);
                 updateItemDescText(t_context);
                 t_context.sfx.play("tick-on");
             }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
+        {
+            if (!m_eqListboxUPtr->getFocus())
             {
-                if (m_unListboxUPtr->getFocus())
-                {
-                    m_unListboxUPtr->selectNext();
-                }
-                else
-                {
-                    m_eqListboxUPtr->selectNext();
-                }
-
+                m_unListboxUPtr->setFocus(false);
+                m_eqListboxUPtr->setFocus(true);
                 updateItemDescText(t_context);
                 t_context.sfx.play("tick-on");
             }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
+        {
+            if (m_unListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->selectPrev();
+            }
+            else
+            {
+                m_eqListboxUPtr->selectPrev();
+            }
+
+            updateItemDescText(t_context);
+            t_context.sfx.play("tick-on");
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+        {
+            if (m_unListboxUPtr->getFocus())
+            {
+                m_unListboxUPtr->selectNext();
+            }
+            else
+            {
+                m_eqListboxUPtr->selectNext();
+            }
+
+            updateItemDescText(t_context);
+            t_context.sfx.play("tick-on");
         }
     }
 
