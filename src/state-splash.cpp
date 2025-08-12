@@ -67,8 +67,7 @@ namespace castlecrawl
             {
                 sf::Color color{ m_castleSprite.getColor() };
 
-                color.a = static_cast<uint8_t>(
-                    util::map(m_timerSec, 0.0f, fadeInDuration, 0, 255));
+                color.a = static_cast<uint8_t>(util::map(m_timerSec, 0.0f, fadeInDuration, 0, 255));
 
                 m_castleSprite.setColor(color);
             }
@@ -97,7 +96,12 @@ namespace castlecrawl
         }
         else
         {
-            if ((m_timerSec >= 3.5f) && (m_timerSec < 3.75f))
+            if ((m_timerSec >= 0.0f) && (m_timerSec < 0.25f))
+            {
+                m_willShowLightning = true;
+                return;
+            }
+            else if ((m_timerSec >= 3.5f) && (m_timerSec < 3.75f))
             {
                 m_willShowLightning = true;
                 return;
@@ -134,19 +138,14 @@ namespace castlecrawl
 
     void StateSplash::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (m_isFadingIn)
-        {
-            return;
-        }
-
         if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::E)
             {
                 t_context.state.setChangePending(State::Editor);
             }
-            else
-            {   
+            else if (!m_isFadingIn && !m_isFadingOut)
+            {
                 m_isFadingOut       = true;
                 m_willShowLightning = false;
                 m_timerSec          = 0.0f;
