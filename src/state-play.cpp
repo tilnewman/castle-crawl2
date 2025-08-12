@@ -82,8 +82,10 @@ namespace castlecrawl
                 m_monsterUniqueId = 0;
                 t_context.turn.advance(delayAfterTurn);
             }
-
-            ++m_monsterUniqueId;
+            else
+            {
+                ++m_monsterUniqueId;
+            }
         }
         else if (t_context.turn.owner() == TurnOwner::Npc)
         {
