@@ -175,10 +175,15 @@ namespace castlecrawl
                 screenPos.y -= (cellSize.y * 0.4f);
 
                 util::AnimConfig config;
-                config.color = sf::Color(255, 255, 255, 127);
+                config.color      = sf::Color(255, 255, 255, 127);
+                config.is_default = false;
 
                 t_context.anim.player().play(
                     "flat-smoke", { { screenPos }, { screenSize } }, config);
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::B)
+            {
+                t_context.anim.flatSmoke().add(t_context, t_context.player_display.position());
             }
         }
     }

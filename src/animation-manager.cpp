@@ -18,6 +18,7 @@ namespace castlecrawl
         , m_smokeEffectManagerUPtr{ std::make_unique<SmokeEffectManager>() }
         , m_infernoManagerUPtr{ std::make_unique<InfernoAnimationManager>() }
         , m_risingUPtr{ std::make_unique<RisingTextAnimationManager>() }
+        , m_flatSmokeUPtr{ std::make_unique<FlatSmokeAnimManager>() }
         , m_playerUPtr{ std::make_unique<util::AnimationPlayer>(t_random, t_pathStr) }
     {}
 
@@ -29,6 +30,7 @@ namespace castlecrawl
         m_smokeEffectManagerUPtr->setup(t_config);
         m_infernoManagerUPtr->setup(t_config);
         // m_risingUPtr has no setup() function
+        m_flatSmokeUPtr->setup(t_config);
         m_playerUPtr->loadAll();
     }
 
@@ -40,6 +42,7 @@ namespace castlecrawl
         m_smokeEffectManagerUPtr->update(t_context, t_elapsedTimeSec);
         m_infernoManagerUPtr->update(t_context, t_elapsedTimeSec);
         m_risingUPtr->update(t_context, t_elapsedTimeSec);
+        m_flatSmokeUPtr->update(t_context, t_elapsedTimeSec);
         m_playerUPtr->update(t_elapsedTimeSec);
     }
 
@@ -52,6 +55,7 @@ namespace castlecrawl
         m_infernoManagerUPtr->draw(t_target, t_states);
         m_smokeEffectManagerUPtr->draw(t_target, t_states);
         m_risingUPtr->draw(t_target, t_states);
+        m_flatSmokeUPtr->draw(t_target, t_states);
         m_playerUPtr->draw(t_target, t_states);
     }
 
@@ -63,6 +67,7 @@ namespace castlecrawl
         m_smokeEffectManagerUPtr->clear();
         m_infernoManagerUPtr->clear();
         m_risingUPtr->clear();
+        m_flatSmokeUPtr->clear();
         m_playerUPtr->stopAll();
     }
 
@@ -73,7 +78,8 @@ namespace castlecrawl
         return (
             m_dustManagerUPtr->particleCount() + m_sparkleManagerUPtr->particleCount() +
             m_campfiresUPtr->particleCount() + m_smokeEffectManagerUPtr->particleCount() +
-            m_infernoManagerUPtr->particleCount() + m_risingUPtr->particleCount());
+            m_infernoManagerUPtr->particleCount() + m_risingUPtr->particleCount() +
+            m_flatSmokeUPtr->particleCount());
     }
 
 } // namespace castlecrawl

@@ -6,6 +6,7 @@
 #include "animation-player.hpp"
 #include "campfire.hpp"
 #include "dust-particle.hpp"
+#include "flat-smoke-anim.hpp"
 #include "inferno.hpp"
 #include "random.hpp"
 #include "rising-text-anim.hpp"
@@ -35,6 +36,7 @@ namespace castlecrawl
         [[nodiscard]] inline SmokeEffectManager & smoke() { return *m_smokeEffectManagerUPtr; }
         [[nodiscard]] inline InfernoAnimationManager & inferno() { return *m_infernoManagerUPtr; }
         [[nodiscard]] inline RisingTextAnimationManager & risingText() { return *m_risingUPtr; }
+        [[nodiscard]] inline FlatSmokeAnimManager & flatSmoke() { return *m_flatSmokeUPtr; }
         [[nodiscard]] inline util::AnimationPlayer & player() { return *m_playerUPtr; }
 
         void update(const Context & t_context, const float t_elapsedTimeSec);
@@ -50,6 +52,7 @@ namespace castlecrawl
         std::unique_ptr<SmokeEffectManager> m_smokeEffectManagerUPtr;
         std::unique_ptr<InfernoAnimationManager> m_infernoManagerUPtr;
         std::unique_ptr<RisingTextAnimationManager> m_risingUPtr;
+        std::unique_ptr<FlatSmokeAnimManager> m_flatSmokeUPtr;
         std::unique_ptr<util::AnimationPlayer> m_playerUPtr;
     };
 
