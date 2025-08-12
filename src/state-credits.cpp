@@ -125,8 +125,10 @@ namespace castlecrawl
 
         m_credits.reserve(16);
 
+        const float vertSpacer = (screenRect.size.y * 0.12f);
+
         Credit & softwareCredit =
-            m_credits.emplace_back(t_context, "Ziesche Til Newman", "Software");
+            m_credits.emplace_back(t_context, "Ziesche Til Newman", "Design, Programming");
 
         Credit & sfmlCredit = m_credits.emplace_back(
             t_context,
@@ -135,13 +137,7 @@ namespace castlecrawl
             "www.sfml-dev.org",
             "zlib/png license");
 
-        const float vertSpacer = (screenRect.size.y * 0.12f);
         sfmlCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
-
-        Credit & fontCredit = m_credits.emplace_back(
-            t_context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
-
-        fontCredit.vertPosition(sfmlCredit.bottom() + vertSpacer);
 
         Credit & tileCredit = m_credits.emplace_back(
             t_context,
@@ -150,12 +146,21 @@ namespace castlecrawl
             "www.lostgarden.home.blog/2006/07/08/more-free-game-graphic",
             "www.creativecommons.org/licenses/by/3.0");
 
-        tileCredit.vertPosition(fontCredit.bottom() + vertSpacer);
+        tileCredit.vertPosition(sfmlCredit.bottom() + vertSpacer);
 
-        Credit & iconCredit = m_credits.emplace_back(
-            t_context, "game-icons.net", "Images", "www.creativecommons.org/licenses/by/3.0");
+        Credit & stoneSoupCredit = m_credits.emplace_back(
+            t_context,
+            "Chris Hamons",
+            "Stone Soup's Dungeon Crawl Tiles",
+            "wwww.opengameart.org/content/dungeon-crawl-32x32-tiles",
+            "www.creativecommons.org/publicdomain/zero/1.0");
 
-        iconCredit.vertPosition(tileCredit.bottom() + vertSpacer);
+        stoneSoupCredit.vertPosition(tileCredit.bottom() + vertSpacer);
+
+        Credit & fontCredit = m_credits.emplace_back(
+            t_context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
+
+        fontCredit.vertPosition(stoneSoupCredit.bottom() + vertSpacer);
 
         Credit & doorSfxCredit = m_credits.emplace_back(
             t_context,
@@ -164,7 +169,7 @@ namespace castlecrawl
             "www.freesound.org/people/InspectorJ/sounds/339677",
             "www.creativecommons.org/licenses/by/3.0");
 
-        doorSfxCredit.vertPosition(iconCredit.bottom() + vertSpacer);
+        doorSfxCredit.vertPosition(fontCredit.bottom() + vertSpacer);
 
         Credit & spiderSfxCredit = m_credits.emplace_back(
             t_context,
@@ -192,15 +197,6 @@ namespace castlecrawl
             "www.creativecommons.org/licenses/by/3.0");
 
         gameOverSfxCredit.vertPosition(stepsSfxCredit.bottom() + vertSpacer);
-
-        Credit & stoneSoupCredit = m_credits.emplace_back(
-            t_context,
-            "Chris Hamons",
-            "Stone Soup's Dungeon Crawl Tiles",
-            "wwww.opengameart.org/content/dungeon-crawl-32x32-tiles",
-            "www.creativecommons.org/publicdomain/zero/1.0");
-
-        stoneSoupCredit.vertPosition(gameOverSfxCredit.bottom() + vertSpacer);
     }
 
     void StateCredits::update(const Context & t_context, const float t_frameTimeSec)
