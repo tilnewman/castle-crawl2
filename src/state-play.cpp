@@ -60,7 +60,7 @@ namespace castlecrawl
             }
 
             const CreatureAction actionTaken{ t_context.monsters.takeTurn(
-                t_context, m_monsterUniqueId++) };
+                t_context, m_monsterUniqueId) };
 
             float delayAfterTurn{ 0.0f };
             if (actionTaken == CreatureAction::Move)
@@ -82,6 +82,8 @@ namespace castlecrawl
                 m_monsterUniqueId = 0;
                 t_context.turn.advance(delayAfterTurn);
             }
+
+            ++m_monsterUniqueId;
         }
         else if (t_context.turn.owner() == TurnOwner::Npc)
         {
