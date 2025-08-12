@@ -232,6 +232,14 @@ namespace castlecrawl
             {
                 t_context.state.setChangePending(State::Quit);
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+            {
+                for (Credit & credit : m_credits)
+                {
+                    credit.update(0.1f);
+                }
+
+            }
         }
     }
 
