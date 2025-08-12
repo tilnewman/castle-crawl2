@@ -38,6 +38,9 @@ namespace castlecrawl
         void updateItemDescText(const Context & t_context);
         void updateStatText(const Context & t_context);
 
+        [[nodiscard]] const std::string
+            equipHintMessage(const Context & t_context, const item::Item & t_unEquipItem) const;
+
       private:
         sf::RectangleShape m_fadeRectangle;
         sf::Text m_unTitleText;

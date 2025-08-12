@@ -366,15 +366,23 @@ namespace castlecrawl
 
     void StateInventory::updateItemDescText(const Context & t_context)
     {
-        m_itemDescText.setString("");
+
+        std::string descStr{ "" };
 
         if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
         {
             const std::size_t index = m_unListboxUPtr->selectedIndex();
             if (index < t_context.player.inventory().unItems().size())
             {
-                m_itemDescText.setString(
-                    t_context.player.inventory().unItems().at(index).description());
+                const item::Item & unEquipItem{ t_context.player.inventory().unItems().at(index) };
+                descStr = unEquipItem.description();
+
+                const std::string upEquipStr{ equipHintMessage(t_context, unEquipItem) };
+                if (!upEquipStr.empty())
+                {
+                    descStr += '\n';
+                    descStr += upEquipStr;
+                }
             }
         }
         else if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
@@ -382,10 +390,11 @@ namespace castlecrawl
             const std::size_t index = m_eqListboxUPtr->selectedIndex();
             if (index < t_context.player.inventory().eqItems().size())
             {
-                m_itemDescText.setString(
-                    t_context.player.inventory().eqItems().at(index).description());
+                descStr = t_context.player.inventory().eqItems().at(index).description();
             }
         }
+
+        m_itemDescText.setString(descStr);
 
         m_itemDescText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                       (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
@@ -403,6 +412,63 @@ namespace castlecrawl
         std::string str{ "Armor: " };
         str += std::to_string(t_context.player.armor().get());
         m_armorText.setString(str);
+    }
+
+    const std::string StateInventory::equipHintMessage(
+        const Context & t_context, const item::Item & t_unEquipItem) const
+    {
+        if (m_eqListboxUPtr->empty())
+        {
+            return "";
+        }
+
+        const auto & inventory{ t_context.player.inventory() };
+
+        if (t_unEquipItem.isWeapon())
+        {
+            const std::optional<item::Item> eqWeaponOpt{ inventory.weaponEquipped() };
+            if (!eqWeaponOpt.has_value())
+            {
+                return "Hint: You have no weapon equipped, so you should equip this weapon.";
+            }
+
+            if (eqWeaponOpt.value().value() < t_unEquipItem.value())
+            {
+                return "Hint: This weapon is considered more valuable than the weapon you have "
+                       "equipped, so you should consider equipping this one instead.";
+            }
+        }
+        else if (t_unEquipItem.isArmor())
+        {
+            std::optional<item::Item> eqAmorOfSameType{};
+            for (const item::Item & eqItem : inventory.eqItems())
+            {
+                if (eqItem.isArmor() && eqItem.armorType() == t_unEquipItem.armorType())
+                {
+                    eqAmorOfSameType = eqItem;
+                    break;
+                }
+            }
+
+            if (!eqAmorOfSameType.has_value())
+            {
+                std::string message{ "Hint: You have no " };
+                message += item::toString(t_unEquipItem.armorType());
+                message += " equipped, so you should equip this piece of armor.";
+                return message;
+            }
+            
+            if (eqAmorOfSameType.value().value() < t_unEquipItem.value())
+            {
+                std::string message{ "Hint: This " };
+                message += item::toString(t_unEquipItem.armorType());
+                message += " is considered more valuable than the one you have equipped,";
+                message += " so you should consider equipping this one instead.";
+                return message;
+            }
+        }
+
+        return "";
     }
 
 } // namespace castlecrawl
