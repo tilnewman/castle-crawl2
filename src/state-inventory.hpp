@@ -37,6 +37,7 @@ namespace castlecrawl
       private:
         void updateItemDescText(const Context & t_context);
         void updateStatText(const Context & t_context);
+        void updateEquipHintText(const Context & t_context);
 
         [[nodiscard]] const std::string
             equipHintMessage(const Context & t_context, const item::Item & t_unEquipItem) const;
@@ -47,7 +48,9 @@ namespace castlecrawl
         std::unique_ptr<Listbox> m_unListboxUPtr;
         sf::Text m_eqTitleText;
         std::unique_ptr<Listbox> m_eqListboxUPtr;
+       
         sf::Text m_itemDescText;
+        sf::Text m_itemHintText;
 
         sf::Text m_errorText;
         float m_errorTextElapsedSec;

@@ -31,6 +31,7 @@ namespace castlecrawl
         , m_eqTitleText{ util::SfmlDefaults::instance().font() }
         , m_eqListboxUPtr{}
         , m_itemDescText{ util::SfmlDefaults::instance().font() }
+        , m_itemHintText{ util::SfmlDefaults::instance().font() }
         , m_errorText{ util::SfmlDefaults::instance().font() }
         , m_errorTextElapsedSec{ 0.0f }
         , m_strTitleText{ util::SfmlDefaults::instance().font() }
@@ -162,8 +163,18 @@ namespace castlecrawl
         m_unListboxUPtr->setFocus(true);
         m_eqListboxUPtr->setFocus(false);
 
+        //
+
         m_itemDescText = t_context.fonts.makeText(FontSize::Small, "");
         updateItemDescText(t_context);
+
+        //
+
+        m_itemHintText = t_context.fonts.makeText(FontSize::Small, "");
+        m_itemHintText.setFillColor(sf::Color(255, 240, 140));
+        updateEquipHintText(t_context);
+
+        //
 
         m_unTitleText = t_context.fonts.makeText(
             FontSize::Small, "Unequipped Items:", sf::Color(255, 255, 255, 160));
@@ -220,6 +231,7 @@ namespace castlecrawl
         t_target.draw(*m_unListboxUPtr, t_states);
         t_target.draw(*m_eqListboxUPtr, t_states);
         t_target.draw(m_itemDescText, t_states);
+        t_target.draw(m_itemHintText, t_states);
         t_target.draw(m_errorText, t_states);
         t_target.draw(m_unTitleText, t_states);
         t_target.draw(m_eqTitleText, t_states);
@@ -268,6 +280,7 @@ namespace castlecrawl
                     m_eqListboxUPtr->redraw();
                     updateStatText(t_context);
                     updateItemDescText(t_context);
+                    updateEquipHintText(t_context);
                     t_context.sfx.play("equip.ogg");
                 }
                 else
@@ -298,6 +311,7 @@ namespace castlecrawl
                 m_eqListboxUPtr->redraw();
                 updateStatText(t_context);
                 updateItemDescText(t_context);
+                updateEquipHintText(t_context);
                 t_context.sfx.play("cloth.ogg");
             }
             else
@@ -314,6 +328,7 @@ namespace castlecrawl
                 m_unListboxUPtr->redraw();
                 updateStatText(t_context);
                 updateItemDescText(t_context);
+                updateEquipHintText(t_context);
                 t_context.sfx.play("drop.ogg");
             }
             else
@@ -328,6 +343,7 @@ namespace castlecrawl
                 m_unListboxUPtr->setFocus(true);
                 m_eqListboxUPtr->setFocus(false);
                 updateItemDescText(t_context);
+                updateEquipHintText(t_context);
                 t_context.sfx.play("tick-on");
             }
         }
@@ -338,6 +354,7 @@ namespace castlecrawl
                 m_unListboxUPtr->setFocus(false);
                 m_eqListboxUPtr->setFocus(true);
                 updateItemDescText(t_context);
+                updateEquipHintText(t_context);
                 t_context.sfx.play("tick-on");
             }
         }
@@ -353,6 +370,7 @@ namespace castlecrawl
             }
 
             updateItemDescText(t_context);
+            updateEquipHintText(t_context);
             t_context.sfx.play("tick-on");
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
@@ -367,6 +385,7 @@ namespace castlecrawl
             }
 
             updateItemDescText(t_context);
+            updateEquipHintText(t_context);
             t_context.sfx.play("tick-on");
         }
     }
@@ -377,23 +396,15 @@ namespace castlecrawl
 
         if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
         {
-            const std::size_t index = m_unListboxUPtr->selectedIndex();
+            const std::size_t index{ m_unListboxUPtr->selectedIndex() };
             if (index < t_context.player.inventory().unItems().size())
             {
-                const item::Item & unEquipItem{ t_context.player.inventory().unItems().at(index) };
-                descStr = unEquipItem.description();
-
-                const std::string upEquipStr{ equipHintMessage(t_context, unEquipItem) };
-                if (!upEquipStr.empty())
-                {
-                    descStr += '\n';
-                    descStr += upEquipStr;
-                }
+                descStr = t_context.player.inventory().unItems().at(index).description();
             }
         }
         else if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
         {
-            const std::size_t index = m_eqListboxUPtr->selectedIndex();
+            const std::size_t index{ m_eqListboxUPtr->selectedIndex() };
             if (index < t_context.player.inventory().eqItems().size())
             {
                 descStr = t_context.player.inventory().eqItems().at(index).description();
@@ -418,6 +429,32 @@ namespace castlecrawl
         std::string str{ "Armor: " };
         str += std::to_string(t_context.player.armor().get());
         m_armorText.setString(str);
+    }
+
+    void StateInventory::updateEquipHintText(const Context & t_context)
+    {
+        if (!m_unListboxUPtr->getFocus() || m_unListboxUPtr->empty())
+        {
+            m_itemHintText.setString("");
+            return;
+        }
+
+        const item::Item & unEquippedItem{ t_context.player.inventory().unItems().at(
+            m_unListboxUPtr->selectedIndex()) };
+
+        const std::string equipHintStr{ equipHintMessage(t_context, unEquippedItem) };
+
+        if (equipHintStr.empty())
+        {
+            m_itemHintText.setString("");
+            return;
+        }
+
+        m_itemHintText.setString(equipHintStr);
+
+        m_itemHintText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+                                      (m_itemHintText.getGlobalBounds().size.x * 0.5f)),
+                                     (util::bottom(m_itemDescText) + 0.0f) });
     }
 
     const std::string StateInventory::equipHintMessage(
@@ -466,10 +503,9 @@ namespace castlecrawl
 
             if (eqAmorOfSameType.value().value() < t_unEquipItem.value())
             {
-                std::string message{ "Hint: This " };
+                std::string message{ "Hint: This item is considered more valuable than the " };
                 message += item::toString(t_unEquipItem.armorType());
-                message += " is considered more valuable than the one you have equipped,";
-                message += " so you should consider equipping this one instead.";
+                message += " you have equipped, so you should consider equipping this one instead.";
                 return message;
             }
         }
