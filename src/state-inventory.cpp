@@ -32,6 +32,7 @@ namespace castlecrawl
         , m_eqListboxUPtr{}
         , m_itemDescText{ util::SfmlDefaults::instance().font() }
         , m_errorText{ util::SfmlDefaults::instance().font() }
+        , m_errorTextElapsedSec{ 0.0f }
         , m_strTitleText{ util::SfmlDefaults::instance().font() }
         , m_dexTitleText{ util::SfmlDefaults::instance().font() }
         , m_accTitleText{ util::SfmlDefaults::instance().font() }
@@ -192,10 +193,15 @@ namespace castlecrawl
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
 
-        if (m_errorText.getFillColor().a > 0)
+        const float errorTextFadeDuration{ 3.0f };
+        m_errorTextElapsedSec += t_frameTimeSec;
+        if (m_errorTextElapsedSec < errorTextFadeDuration)
         {
             sf::Color color{ m_errorText.getFillColor() };
-            --color.a;
+
+            color.a = static_cast<uint8_t>(
+                255 - util::map(m_errorTextElapsedSec, 0.0f, errorTextFadeDuration, 0, 255));
+
             m_errorText.setFillColor(color);
         }
     }
@@ -266,6 +272,7 @@ namespace castlecrawl
                 }
                 else
                 {
+                    m_errorTextElapsedSec = 0.0f;
                     m_errorText.setString(resultStr);
                     m_errorText.setFillColor(sf::Color::Red);
 
@@ -366,7 +373,6 @@ namespace castlecrawl
 
     void StateInventory::updateItemDescText(const Context & t_context)
     {
-
         std::string descStr{ "" };
 
         if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
@@ -457,7 +463,7 @@ namespace castlecrawl
                 message += " equipped, so you should equip this piece of armor.";
                 return message;
             }
-            
+
             if (eqAmorOfSameType.value().value() < t_unEquipItem.value())
             {
                 std::string message{ "Hint: This " };

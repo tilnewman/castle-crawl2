@@ -48,7 +48,9 @@ namespace castlecrawl
         sf::Text m_eqTitleText;
         std::unique_ptr<Listbox> m_eqListboxUPtr;
         sf::Text m_itemDescText;
+
         sf::Text m_errorText;
+        float m_errorTextElapsedSec;
 
         sf::Text m_strTitleText;
         sf::Text m_dexTitleText;
