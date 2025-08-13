@@ -38,6 +38,7 @@ namespace castlecrawl
         void updateItemDescText(const Context & t_context);
         void updateStatText(const Context & t_context);
         void updateEquipHintText(const Context & t_context);
+        void updateWeaponText(const Context & t_context);
 
         [[nodiscard]] const std::string
             equipHintMessage(const Context & t_context, const item::Item & t_unEquipItem) const;
@@ -69,6 +70,7 @@ namespace castlecrawl
         //
         sf::Text m_goldText;
         sf::Text m_armorText;
+        sf::Text m_weaponText;
         //
         sf::RectangleShape m_statRectangle;
     };

@@ -46,6 +46,7 @@ namespace castlecrawl
         , m_arcValueText{ util::SfmlDefaults::instance().font() }
         , m_goldText{ util::SfmlDefaults::instance().font() }
         , m_armorText{ util::SfmlDefaults::instance().font() }
+        , m_weaponText{ util::SfmlDefaults::instance().font() }
         , m_statRectangle{}
     {}
 
@@ -147,6 +148,11 @@ namespace castlecrawl
 
         //
 
+        m_weaponText = t_context.fonts.makeText(FontSize::Small, "");
+        m_weaponText.setPosition({ m_goldText.getPosition().x, (util::bottom(m_armorText) + pad) });
+
+        //
+
         m_unListboxUPtr->setup(
             t_context, FontSize::Medium, t_context.items.textExtents().longest_name, 16);
 
@@ -166,13 +172,11 @@ namespace castlecrawl
         //
 
         m_itemDescText = t_context.fonts.makeText(FontSize::Small, "");
-        updateItemDescText(t_context);
 
         //
 
         m_itemHintText = t_context.fonts.makeText(FontSize::Small, "");
         m_itemHintText.setFillColor(sf::Color(255, 240, 140));
-        updateEquipHintText(t_context);
 
         //
 
@@ -197,6 +201,12 @@ namespace castlecrawl
         //
 
         m_errorText = t_context.fonts.makeText(FontSize::Medium, "");
+
+        //
+
+        updateItemDescText(t_context);
+        updateEquipHintText(t_context);
+        updateWeaponText(t_context);
     }
 
     void StateInventory::update(const Context & t_context, const float t_frameTimeSec)
@@ -240,6 +250,7 @@ namespace castlecrawl
 
         t_target.draw(m_goldText, t_states);
         t_target.draw(m_armorText, t_states);
+        t_target.draw(m_weaponText, t_states);
 
         t_target.draw(m_strTitleText, t_states);
         t_target.draw(m_dexTitleText, t_states);
@@ -281,6 +292,7 @@ namespace castlecrawl
                     updateStatText(t_context);
                     updateItemDescText(t_context);
                     updateEquipHintText(t_context);
+                    updateWeaponText(t_context);
                     t_context.sfx.play("equip.ogg");
                 }
                 else
@@ -312,6 +324,7 @@ namespace castlecrawl
                 updateStatText(t_context);
                 updateItemDescText(t_context);
                 updateEquipHintText(t_context);
+                updateWeaponText(t_context);
                 t_context.sfx.play("cloth.ogg");
             }
             else
@@ -455,6 +468,30 @@ namespace castlecrawl
         m_itemHintText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                       (m_itemHintText.getGlobalBounds().size.x * 0.5f)),
                                      (util::bottom(m_itemDescText) + 0.0f) });
+    }
+
+    void StateInventory::updateWeaponText(const Context & t_context)
+    {
+        const std::optional<item::Item> eqWeaponOpt{
+            t_context.player.inventory().weaponEquipped()
+        };
+
+        if (!eqWeaponOpt.has_value())
+        {
+            m_weaponText.setString("No weapon is equipped! Your fists only do [1, 2] damage.");
+            return;
+        }
+
+        const item::Item & weapon{ eqWeaponOpt.value() };
+
+        std::string weaponStr{ weapon.name() };
+        weaponStr += " weapon does [";
+        weaponStr += std::to_string(weapon.damageMin());
+        weaponStr += ", ";
+        weaponStr += std::to_string(weapon.damageMax());
+        weaponStr += "] damage.";
+
+        m_weaponText.setString(weaponStr);
     }
 
     const std::string StateInventory::equipHintMessage(
