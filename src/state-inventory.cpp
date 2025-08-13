@@ -44,6 +44,7 @@ namespace castlecrawl
         , m_accValueText{ util::SfmlDefaults::instance().font() }
         , m_lckValueText{ util::SfmlDefaults::instance().font() }
         , m_arcValueText{ util::SfmlDefaults::instance().font() }
+        , m_healthText{ util::SfmlDefaults::instance().font() }
         , m_goldText{ util::SfmlDefaults::instance().font() }
         , m_armorText{ util::SfmlDefaults::instance().font() }
         , m_weaponText{ util::SfmlDefaults::instance().font() }
@@ -95,7 +96,7 @@ namespace castlecrawl
         m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "");
         m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "");
 
-        const float valueTextHorizPos{ (util::right(m_dexTitleText) + (padLarge * 0.5f)) };
+        const float valueTextHorizPos{ (util::right(m_dexTitleText) + (padLarge * 0.3f)) };
 
         m_strValueText.setPosition(
             { valueTextHorizPos, m_strTitleText.getGlobalBounds().position.y - 7.0f });
@@ -125,7 +126,21 @@ namespace castlecrawl
 
         m_statRectangle.setSize(
             { (screenRect.size.x - (m_statRectangle.getPosition().x * 2.0f)),
-              (util::bottom(m_arcValueText) - m_strTitleText.getPosition().y) + pad });
+              (util::bottom(m_arcValueText) - m_strTitleText.getPosition().y) + (pad * 2.0f) });
+
+        //
+
+        std::string healthStr{ "Health: " };
+        healthStr += std::to_string(t_context.player.health().current());
+        healthStr += '/';
+        healthStr += std::to_string(t_context.player.health().normal());
+
+        m_healthText =
+            t_context.fonts.makeText(FontSize::Medium, healthStr, sf::Color(255, 180, 180));
+
+        util::centerInside(m_healthText, m_statRectangle.getGlobalBounds());
+        m_healthText.move({ -padLarge, -m_healthText.getGlobalBounds().size.y });
+        m_healthText.move({ -padLarge, -pad });
 
         //
 
@@ -135,21 +150,22 @@ namespace castlecrawl
         m_goldText = t_context.fonts.makeText(
             FontSize::Medium, goldStr, t_context.config.message_color_coins);
 
-        util::centerInside(m_goldText, m_statRectangle.getGlobalBounds());
-        m_goldText.move({ 0.0f, -m_goldText.getGlobalBounds().size.y });
-        m_goldText.move({ 0.0f, -pad });
+        m_goldText.setPosition(
+            { m_healthText.getPosition().x, (util::bottom(m_healthText) + pad) });
 
         //
 
         std::string armorStr{ "Armor: " };
         armorStr += std::to_string(t_context.player.armor().get());
         m_armorText = t_context.fonts.makeText(FontSize::Medium, armorStr);
-        m_armorText.setPosition({ m_goldText.getPosition().x, (util::bottom(m_goldText) + pad) });
+        m_armorText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_goldText) + pad) });
 
         //
 
-        m_weaponText = t_context.fonts.makeText(FontSize::Small, "");
-        m_weaponText.setPosition({ m_goldText.getPosition().x, (util::bottom(m_armorText) + pad) });
+        m_weaponText = t_context.fonts.makeText(FontSize::Small, "", sf::Color(220, 220, 220));
+
+        m_weaponText.setPosition(
+            { m_healthText.getPosition().x, (util::bottom(m_armorText) + pad) });
 
         //
 
@@ -248,6 +264,7 @@ namespace castlecrawl
 
         t_target.draw(m_statRectangle, t_states);
 
+        t_target.draw(m_healthText, t_states);
         t_target.draw(m_goldText, t_states);
         t_target.draw(m_armorText, t_states);
         t_target.draw(m_weaponText, t_states);
@@ -365,29 +382,39 @@ namespace castlecrawl
         {
             if (m_unListboxUPtr->getFocus())
             {
-                m_unListboxUPtr->selectPrev();
+                if (m_unListboxUPtr->selectPrev())
+                {
+                    updateAllAfterListboxChange(t_context);
+                    t_context.sfx.play("tick-on");
+                }
             }
-            else
+            else if (m_eqListboxUPtr->getFocus())
             {
-                m_eqListboxUPtr->selectPrev();
+                if (m_eqListboxUPtr->selectPrev())
+                {
+                    updateAllAfterListboxChange(t_context);
+                    t_context.sfx.play("tick-on");
+                }
             }
-
-            updateAllAfterListboxChange(t_context);
-            t_context.sfx.play("tick-on");
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
         {
             if (m_unListboxUPtr->getFocus())
             {
-                m_unListboxUPtr->selectNext();
+                if (m_unListboxUPtr->selectNext())
+                {
+                    updateAllAfterListboxChange(t_context);
+                    t_context.sfx.play("tick-on");
+                }
             }
-            else
+            else if (m_eqListboxUPtr->getFocus())
             {
-                m_eqListboxUPtr->selectNext();
+                if (m_eqListboxUPtr->selectNext())
+                {
+                    updateAllAfterListboxChange(t_context);
+                    t_context.sfx.play("tick-on");
+                }
             }
-
-            updateAllAfterListboxChange(t_context);
-            t_context.sfx.play("tick-on");
         }
     }
 
@@ -677,7 +704,7 @@ namespace castlecrawl
         }
 
         updateAllAfterListboxChange(t_context);
-        
+
         if (unEqItem.isWeapon())
         {
             t_context.sfx.play("equip-blade");

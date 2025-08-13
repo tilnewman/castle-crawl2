@@ -74,7 +74,6 @@ namespace castlecrawl
     std::size_t AnimationManager::particleCount() const
     {
         // m_playerUPtr is not considered a player of particles so don't consider it here
-
         return (
             m_dustManagerUPtr->particleCount() + m_sparkleManagerUPtr->particleCount() +
             m_campfiresUPtr->particleCount() + m_smokeEffectManagerUPtr->particleCount() +
