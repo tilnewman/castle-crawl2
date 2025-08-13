@@ -43,7 +43,7 @@ namespace castlecrawl
         t_context.player_display.update(t_context, t_frameTimeSec);
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
-        t_context.turn.update(t_frameTimeSec);
+        t_context.turn.update(t_context, t_frameTimeSec);
 
         if (t_context.turn.owner() == TurnOwner::Player)
         {
@@ -80,7 +80,7 @@ namespace castlecrawl
             if (m_monsterUniqueId >= t_context.monsters.count())
             {
                 m_monsterUniqueId = 0;
-                t_context.turn.advance(delayAfterTurn);
+                t_context.turn.advance(t_context, delayAfterTurn);
             }
             else
             {
@@ -94,7 +94,7 @@ namespace castlecrawl
                 t_context.map_display.load(t_context);
             }
 
-            t_context.turn.advance();
+            t_context.turn.advance(t_context);
         }
     }
 
@@ -135,7 +135,7 @@ namespace castlecrawl
                     if (handlePlayerMove(t_context, keyPtr->scancode))
                     {
                         playMoveMusic(t_context);
-                        t_context.turn.advance();
+                        t_context.turn.advance(t_context);
                     }
                 }
             }
@@ -157,7 +157,7 @@ namespace castlecrawl
             {
                 if (t_context.turn.isPlayerTurn())
                 {
-                    t_context.turn.advance();
+                    t_context.turn.advance(t_context);
                 }
             }
             // todo remove after testing

@@ -5,6 +5,13 @@
 //
 #include "turn-keeper.hpp"
 
+#include "context.hpp"
+#include "game-config.hpp"
+#include "player.hpp"
+#include "top-panel.hpp"
+
+#include <iostream>
+
 namespace castlecrawl
 {
 
@@ -12,9 +19,10 @@ namespace castlecrawl
         : m_owner{ TurnOwner::Player }
         , m_elapsedSec{ 0.0f }
         , m_delaySec{ 0.0f }
+        , m_turnCount{ 1 }
     {}
 
-    void TurnKeeper::update(const float t_elapsedTimeSec)
+    void TurnKeeper::update(const Context & t_context, const float t_elapsedTimeSec)
     {
         if ((m_owner == TurnOwner::PlayerDelay) || (m_owner == TurnOwner::MonsterDelay) ||
             (m_owner == TurnOwner::NpcDelay))
@@ -22,15 +30,31 @@ namespace castlecrawl
             m_elapsedSec += t_elapsedTimeSec;
             if (m_elapsedSec > m_delaySec)
             {
-                advance(0.0f);
+                advance(t_context, 0.0f);
             }
         }
     }
 
-    void TurnKeeper::advance(const float t_delaySec)
+    void TurnKeeper::advance(const Context & t_context, const float t_delaySec)
     {
-        int nextTurnNumber = (static_cast<int>(m_owner) + 1);
+        if (isPlayerTurn())
+        {
+            if ((m_turnCount % t_context.config.turns_per_health_increase) == 0)
+            {
+                t_context.player.health().adjCurrent(1);
+                t_context.top_panel.update(t_context);
+            }
 
+            if ((m_turnCount % t_context.config.turns_per_mana_increase) == 0)
+            {
+                t_context.player.mana().adjCurrent(1);
+                t_context.top_panel.update(t_context);
+            }
+
+            ++m_turnCount;
+        }
+
+        int nextTurnNumber = (static_cast<int>(m_owner) + 1);
         if (nextTurnNumber > static_cast<int>(TurnOwner::Npc))
         {
             nextTurnNumber = 0;
@@ -40,6 +64,7 @@ namespace castlecrawl
 
         m_delaySec   = t_delaySec;
         m_elapsedSec = 0.0f;
+        
     }
 
     void TurnKeeper::reset() { m_owner = TurnOwner::Player; }

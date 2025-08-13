@@ -8,6 +8,10 @@
 namespace castlecrawl
 {
 
+    struct Context;
+
+    //
+
     enum class TurnOwner
     {
         Player,
@@ -35,6 +39,8 @@ namespace castlecrawl
         // clang-format on
     }
 
+    //
+
     class TurnKeeper
     {
       public:
@@ -47,15 +53,18 @@ namespace castlecrawl
             return (m_owner == TurnOwner::Player);
         }
 
-        void advance(const float t_delaySec = 0.0f);
+        [[nodiscard]] inline std::size_t turnCount() const noexcept { return m_turnCount; }
+
+        void advance(const Context & t_context, const float t_delaySec = 0.0f);
         void reset();
 
-        void update(const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedTimeSec);
 
       private:
         TurnOwner m_owner;
         float m_elapsedSec;
         float m_delaySec;
+        std::size_t m_turnCount;
     };
 
 } // namespace castlecrawl

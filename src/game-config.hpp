@@ -14,28 +14,32 @@ namespace castlecrawl
 
     struct GameConfig
     {
-        std::filesystem::path media_path;
         sf::VideoMode video_mode;
-        sf::Color background_color   = sf::Color::Black;
-        float music_volume           = 40.0f;
-        unsigned int framerate_limit = 0;
-        float top_panel_height_ratio = 0.1f;
+        std::filesystem::path media_path;
+        
+        const sf::Color background_color   = sf::Color::Black;
+        const float music_volume           = 40.0f;
+        const unsigned int framerate_limit = 0;
+        const float top_panel_height_ratio = 0.1f;
 
-        float turn_delay_after_player_misc      = 0.25f;
-        float turn_delay_after_player_move      = 0.0f;
-        float turn_delay_after_player_attack    = 1.5f;
-        float turn_delay_after_nonplayer_move   = 0.0f;
-        float turn_delay_after_nonplayer_attack = 1.5f;
+        const float turn_delay_after_player_misc      = 0.25f;
+        const float turn_delay_after_player_move      = 0.0f;
+        const float turn_delay_after_player_attack    = 1.5f;
+        const float turn_delay_after_nonplayer_move   = 0.0f;
+        const float turn_delay_after_nonplayer_attack = 1.5f;
 
-        sf::Color message_color_attack_miss = sf::Color(255, 200, 100);
-        sf::Color message_color_attack_hit  = sf::Color(255, 200, 200);
-        sf::Color message_color_cast_spell  = sf::Color(220, 100, 220);
-        sf::Color message_color_coins       = sf::Color(255, 200, 100);
-        sf::Color message_color_poison      = sf::Color(100, 255, 100);
-        sf::Color message_color_item        = sf::Color(160, 82, 45);
+        const sf::Color message_color_attack_miss = sf::Color(255, 200, 100);
+        const sf::Color message_color_attack_hit  = sf::Color(255, 200, 200);
+        const sf::Color message_color_cast_spell  = sf::Color(220, 100, 220);
+        const sf::Color message_color_coins       = sf::Color(255, 200, 100);
+        const sf::Color message_color_poison      = sf::Color(100, 255, 100);
+        const sf::Color message_color_item        = sf::Color(160, 82, 45);
+
+        const std::size_t turns_per_health_increase = 20;
+        const std::size_t turns_per_mana_increase   = 7;
 
         // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
-        sf::Vector2i map_size_max = { 41, 23 };
+        const sf::Vector2i map_size_max = { 41, 23 };
     };
 
 } // namespace castlecrawl

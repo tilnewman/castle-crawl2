@@ -243,7 +243,7 @@ namespace castlecrawl
             t_context.sfx.play("hit");
         }
 
-        t_context.turn.advance(turnDelay);
+        t_context.turn.advance(t_context, turnDelay);
         t_context.state.setChangePending(nextState);
     }
 
