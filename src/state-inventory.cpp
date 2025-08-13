@@ -46,6 +46,7 @@ namespace castlecrawl
         , m_arcValueText{ util::SfmlDefaults::instance().font() }
         , m_healthText{ util::SfmlDefaults::instance().font() }
         , m_manaText{ util::SfmlDefaults::instance().font() }
+        , m_levelText{ util::SfmlDefaults::instance().font() }
         , m_goldText{ util::SfmlDefaults::instance().font() }
         , m_armorText{ util::SfmlDefaults::instance().font() }
         , m_weaponText{ util::SfmlDefaults::instance().font() }
@@ -131,28 +132,37 @@ namespace castlecrawl
 
         //
 
-        std::string manaStr{ "Mana: " };
-        manaStr += std::to_string(t_context.player.mana().current());
-        manaStr += '/';
-        manaStr += std::to_string(t_context.player.mana().normal());
-
-        m_manaText = t_context.fonts.makeText(FontSize::Medium, manaStr, sf::Color(180, 150, 255));
-
-        util::centerInside(m_manaText, m_statRectangle.getGlobalBounds());
-        m_manaText.move({ -padLarge, -(m_manaText.getGlobalBounds().size.y * 2.0f) });
-        m_manaText.move({ -padLarge, -pad });
-
-        //
-
         std::string healthStr{ "Health: " };
         healthStr += std::to_string(t_context.player.health().current());
         healthStr += '/';
         healthStr += std::to_string(t_context.player.health().normal());
 
         m_healthText =
-            t_context.fonts.makeText(FontSize::Medium, healthStr, sf::Color(255, 180, 180));
+            t_context.fonts.makeText(FontSize::Small, healthStr, sf::Color(255, 180, 180));
 
-        m_healthText.setPosition({ m_manaText.getPosition().x, (util::bottom(m_manaText) + pad) });
+        util::centerInside(m_healthText, m_statRectangle.getGlobalBounds());
+        m_healthText.move({ -padLarge, -(m_healthText.getGlobalBounds().size.y * 3.0f) });
+        m_healthText.move({ -padLarge, 0.0f });
+
+        //
+
+        std::string manaStr{ "Mana: " };
+        manaStr += std::to_string(t_context.player.mana().current());
+        manaStr += '/';
+        manaStr += std::to_string(t_context.player.mana().normal());
+
+        m_manaText = t_context.fonts.makeText(FontSize::Small, manaStr, sf::Color(180, 150, 255));
+
+        m_manaText.setPosition(
+            { m_healthText.getPosition().x, (util::bottom(m_healthText) + pad) });
+
+        //
+
+        std::string levelStr{ "Level: " };
+        levelStr += std::to_string(t_context.player.level());
+
+        m_levelText = t_context.fonts.makeText(FontSize::Small, levelStr, sf::Color(255, 255, 255));
+        m_levelText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_manaText) + pad) });
 
         //
 
@@ -160,22 +170,23 @@ namespace castlecrawl
         goldStr += std::to_string(t_context.player.gold());
 
         m_goldText = t_context.fonts.makeText(
-            FontSize::Medium, goldStr, t_context.config.message_color_coins);
+            FontSize::Small, goldStr, t_context.config.message_color_coins);
 
-        m_goldText.setPosition({ m_manaText.getPosition().x, (util::bottom(m_healthText) + pad) });
+        m_goldText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_levelText) + pad) });
 
         //
 
         std::string armorStr{ "Armor: " };
         armorStr += std::to_string(t_context.player.armor().get());
-        m_armorText = t_context.fonts.makeText(FontSize::Medium, armorStr);
-        m_armorText.setPosition({ m_manaText.getPosition().x, (util::bottom(m_goldText) + pad) });
+        m_armorText = t_context.fonts.makeText(FontSize::Small, armorStr);
+        m_armorText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_goldText) + pad) });
 
         //
 
         m_weaponText = t_context.fonts.makeText(FontSize::Small, "", sf::Color(220, 220, 220));
 
-        m_weaponText.setPosition({ m_manaText.getPosition().x, (util::bottom(m_armorText) + pad) });
+        m_weaponText.setPosition(
+            { m_healthText.getPosition().x, (util::bottom(m_armorText) + pad) });
 
         //
 
@@ -276,6 +287,7 @@ namespace castlecrawl
 
         t_target.draw(m_healthText, t_states);
         t_target.draw(m_manaText, t_states);
+        t_target.draw(m_levelText, t_states);
         t_target.draw(m_goldText, t_states);
         t_target.draw(m_armorText, t_states);
         t_target.draw(m_weaponText, t_states);

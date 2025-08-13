@@ -23,6 +23,7 @@ namespace castlecrawl
         [[nodiscard]] inline Stat & accuracy() noexcept { return m_accuracy; }
         [[nodiscard]] inline Stat & luck() noexcept { return m_luck; }
         [[nodiscard]] inline Stat & arcane() noexcept { return m_arcane; }
+
         [[nodiscard]] inline Stat & health() noexcept { return m_health; }
         [[nodiscard]] inline Stat & mana() noexcept { return m_mana; }
 

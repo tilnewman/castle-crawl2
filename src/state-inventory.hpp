@@ -74,6 +74,7 @@ namespace castlecrawl
         //
         sf::Text m_healthText;
         sf::Text m_manaText;
+        sf::Text m_levelText;
         sf::Text m_goldText;
         sf::Text m_armorText;
         sf::Text m_weaponText;
