@@ -241,9 +241,7 @@ namespace castlecrawl
 
         //
 
-        updateItemDescText(t_context);
-        updateEquipHintText(t_context);
-        updateWeaponText(t_context);
+        updateAllAfterListboxChange(t_context);
     }
 
     void StateInventory::update(const Context & t_context, const float t_frameTimeSec)
@@ -251,7 +249,7 @@ namespace castlecrawl
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
 
-        const float errorTextFadeDuration{ 3.0f };
+        const float errorTextFadeDuration{ 4.25f };
         m_errorTextElapsedSec += t_frameTimeSec;
         if (m_errorTextElapsedSec < errorTextFadeDuration)
         {
@@ -319,50 +317,67 @@ namespace castlecrawl
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
         {
-            if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
+            if (!m_unListboxUPtr->getFocus())
             {
-                const item::Item itemCopy{ t_context.player.inventory().unItems().at(
-                    m_unListboxUPtr->selectedIndex()) };
+                showErrorText(
+                    t_context, "First press the left arrow key to select an unequipped item.");
 
-                const std::string resultStr{ t_context.player.inventory().equip(
-                    m_unListboxUPtr->selectedIndex()) };
+                t_context.sfx.play("error-1");
+                return;
+            }
 
-                if (resultStr.empty())
-                {
-                    updateAllAfterListboxChange(t_context);
+            if (m_unListboxUPtr->empty())
+            {
+                showErrorText(t_context, "You have no unequipped items to equip.");
+                t_context.sfx.play("error-1");
+                return;
+            }
 
-                    if (itemCopy.isWeapon())
-                    {
-                        t_context.sfx.play("equip-blade");
-                    }
-                    else
-                    {
-                        t_context.sfx.play("equip-armor");
-                    }
-                }
-                else
-                {
-                    showErrorText(t_context, resultStr);
-                    t_context.sfx.play("error-1");
-                }
+            const item::Item itemCopy{ t_context.player.inventory().unItems().at(
+                m_unListboxUPtr->selectedIndex()) };
+
+            const std::string resultStr{ t_context.player.inventory().equip(
+                m_unListboxUPtr->selectedIndex()) };
+
+            if (!resultStr.empty())
+            {
+                showErrorText(t_context, resultStr);
+                t_context.sfx.play("error-1");
+                return;
+            }
+
+            updateAllAfterListboxChange(t_context);
+
+            if (itemCopy.isWeapon())
+            {
+                t_context.sfx.play("equip-blade");
             }
             else
             {
-                t_context.sfx.play("error-1");
+                t_context.sfx.play("equip-armor");
             }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::U)
         {
-            if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
+            if (!m_eqListboxUPtr->getFocus())
             {
-                t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
-                updateAllAfterListboxChange(t_context);
-                t_context.sfx.play("cloth.ogg");
-            }
-            else
-            {
+                showErrorText(
+                    t_context, "First press the right arrow key to select an equipped item.");
+
                 t_context.sfx.play("error-1");
+                return;
             }
+
+            if (m_eqListboxUPtr->empty())
+            {
+                showErrorText(t_context, "You have no equipped items to unequip.");
+                t_context.sfx.play("error-1");
+                return;
+            }
+
+            t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
+            updateAllAfterListboxChange(t_context);
+            t_context.sfx.play("cloth.ogg");
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::S)
         {
@@ -456,7 +471,7 @@ namespace castlecrawl
     {
         m_errorTextElapsedSec = 0.0f;
         m_errorText.setString(t_message);
-        m_errorText.setFillColor(sf::Color::Red);
+        m_errorText.setFillColor(sf::Color(255,100,100));
 
         m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
