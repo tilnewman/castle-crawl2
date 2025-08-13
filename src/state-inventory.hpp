@@ -39,9 +39,13 @@ namespace castlecrawl
         void updateStatText(const Context & t_context);
         void updateEquipHintText(const Context & t_context);
         void updateWeaponText(const Context & t_context);
+        void showErrorText(const Context & t_context, const std::string & t_message);
+        void updateAllAfterListboxChange(const Context & t_context);
 
         [[nodiscard]] const std::string
             equipHintMessage(const Context & t_context, const item::Item & t_unEquipItem) const;
+
+        void swapItems(const Context & t_context);
 
       private:
         sf::RectangleShape m_fadeRectangle;

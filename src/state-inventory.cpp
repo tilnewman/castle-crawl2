@@ -281,36 +281,34 @@ namespace castlecrawl
         {
             if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
             {
+                const item::Item itemCopy{ t_context.player.inventory().unItems().at(
+                    m_unListboxUPtr->selectedIndex()) };
+
                 const std::string resultStr{ t_context.player.inventory().equip(
                     m_unListboxUPtr->selectedIndex()) };
 
                 if (resultStr.empty())
                 {
-                    t_context.player.updateEquipEffects();
-                    m_unListboxUPtr->redraw();
-                    m_eqListboxUPtr->redraw();
-                    updateStatText(t_context);
-                    updateItemDescText(t_context);
-                    updateEquipHintText(t_context);
-                    updateWeaponText(t_context);
-                    t_context.sfx.play("equip.ogg");
+                    updateAllAfterListboxChange(t_context);
+
+                    if (itemCopy.isWeapon())
+                    {
+                        t_context.sfx.play("equip-blade");
+                    }
+                    else
+                    {
+                        t_context.sfx.play("equip-armor");
+                    }
                 }
                 else
                 {
-                    m_errorTextElapsedSec = 0.0f;
-                    m_errorText.setString(resultStr);
-                    m_errorText.setFillColor(sf::Color::Red);
-
-                    m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
-                                               (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                              (util::bottom(m_itemDescText) + 20.0f) });
-
-                    t_context.sfx.play("error-1.ogg");
+                    showErrorText(t_context, resultStr);
+                    t_context.sfx.play("error-1");
                 }
             }
             else
             {
-                t_context.sfx.play("error-1.ogg");
+                t_context.sfx.play("error-1");
             }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::U)
@@ -318,35 +316,29 @@ namespace castlecrawl
             if (m_eqListboxUPtr->getFocus() && !m_eqListboxUPtr->empty())
             {
                 t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
-                t_context.player.updateEquipEffects();
-                m_unListboxUPtr->redraw();
-                m_eqListboxUPtr->redraw();
-                updateStatText(t_context);
-                updateItemDescText(t_context);
-                updateEquipHintText(t_context);
-                updateWeaponText(t_context);
+                updateAllAfterListboxChange(t_context);
                 t_context.sfx.play("cloth.ogg");
             }
             else
             {
-                t_context.sfx.play("error-1.ogg");
+                t_context.sfx.play("error-1");
             }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::S)
+        {
+            swapItems(t_context);
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::D)
         {
             if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
             {
                 t_context.player.inventory().remove(m_unListboxUPtr->selectedIndex());
-                t_context.player.updateEquipEffects();
-                m_unListboxUPtr->redraw();
-                updateStatText(t_context);
-                updateItemDescText(t_context);
-                updateEquipHintText(t_context);
-                t_context.sfx.play("drop.ogg");
+                updateAllAfterListboxChange(t_context);
+                t_context.sfx.play("drop");
             }
             else
             {
-                t_context.sfx.play("error-1.ogg");
+                t_context.sfx.play("error-1");
             }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
@@ -355,8 +347,7 @@ namespace castlecrawl
             {
                 m_unListboxUPtr->setFocus(true);
                 m_eqListboxUPtr->setFocus(false);
-                updateItemDescText(t_context);
-                updateEquipHintText(t_context);
+                updateAllAfterListboxChange(t_context);
                 t_context.sfx.play("tick-on");
             }
         }
@@ -366,8 +357,7 @@ namespace castlecrawl
             {
                 m_unListboxUPtr->setFocus(false);
                 m_eqListboxUPtr->setFocus(true);
-                updateItemDescText(t_context);
-                updateEquipHintText(t_context);
+                updateAllAfterListboxChange(t_context);
                 t_context.sfx.play("tick-on");
             }
         }
@@ -382,8 +372,7 @@ namespace castlecrawl
                 m_eqListboxUPtr->selectPrev();
             }
 
-            updateItemDescText(t_context);
-            updateEquipHintText(t_context);
+            updateAllAfterListboxChange(t_context);
             t_context.sfx.play("tick-on");
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
@@ -397,10 +386,31 @@ namespace castlecrawl
                 m_eqListboxUPtr->selectNext();
             }
 
-            updateItemDescText(t_context);
-            updateEquipHintText(t_context);
+            updateAllAfterListboxChange(t_context);
             t_context.sfx.play("tick-on");
         }
+    }
+
+    void StateInventory::updateAllAfterListboxChange(const Context & t_context)
+    {
+        t_context.player.updateEquipEffects();
+        m_unListboxUPtr->redraw();
+        m_eqListboxUPtr->redraw();
+        updateStatText(t_context);
+        updateItemDescText(t_context);
+        updateEquipHintText(t_context);
+        updateWeaponText(t_context);
+    }
+
+    void StateInventory::showErrorText(const Context & t_context, const std::string & t_message)
+    {
+        m_errorTextElapsedSec = 0.0f;
+        m_errorText.setString(t_message);
+        m_errorText.setFillColor(sf::Color::Red);
+
+        m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
+                                  (util::bottom(m_itemDescText) + 20.0f) });
     }
 
     void StateInventory::updateItemDescText(const Context & t_context)
@@ -548,6 +558,134 @@ namespace castlecrawl
         }
 
         return "";
+    }
+
+    void StateInventory::swapItems(const Context & t_context)
+    {
+        if (!m_unListboxUPtr->getFocus())
+        {
+            showErrorText(t_context, "You can only swap unequipped items.");
+            t_context.sfx.play("error-1");
+            return;
+        }
+
+        if (m_unListboxUPtr->empty())
+        {
+            showErrorText(t_context, "You have no unequipped items to swap.");
+            t_context.sfx.play("error-1");
+            return;
+        }
+
+        if (m_eqListboxUPtr->empty())
+        {
+            showErrorText(t_context, "You have no equipped items to swap.");
+            t_context.sfx.play("error-1");
+            return;
+        }
+
+        const item::Item unEqItem{ t_context.player.inventory().unItems().at(
+            m_unListboxUPtr->selectedIndex()) };
+
+        std::optional<item::Item> eqItemOpt;
+
+        if (unEqItem.isWeapon())
+        {
+            for (const item::Item & item : t_context.player.inventory().eqItems())
+            {
+                if (item.isWeapon())
+                {
+                    eqItemOpt = item;
+                    break;
+                }
+            }
+
+            if (!eqItemOpt.has_value())
+            {
+                showErrorText(t_context, "You can't swap because there is no equippped weapon.");
+
+                t_context.sfx.play("error-1");
+                return;
+            }
+        }
+        else if (unEqItem.isArmor())
+        {
+            for (const item::Item & item : t_context.player.inventory().eqItems())
+            {
+                if (item.isArmor() && (item.armorType() == unEqItem.armorType()))
+                {
+                    eqItemOpt = item;
+                    break;
+                }
+            }
+
+            if (!eqItemOpt.has_value())
+            {
+                std::string message{ "You can't swap because there is no equippped " };
+                message += item::toString(unEqItem.armorType());
+                message += '.';
+
+                showErrorText(t_context, message);
+                t_context.sfx.play("error-1");
+                return;
+            }
+        }
+        else
+        {
+            showErrorText(t_context, "You can only swap weapons and armor items.");
+            t_context.sfx.play("error-1");
+            return;
+        }
+
+        std::size_t eqIndex{ 0 };
+        for (; eqIndex < t_context.player.inventory().eqItems().size(); ++eqIndex)
+        {
+            if (eqItemOpt.value().name() ==
+                t_context.player.inventory().eqItems().at(eqIndex).name())
+            {
+                break;
+            }
+        }
+
+        t_context.player.inventory().unequip(eqIndex);
+
+        const std::string equipMessage{ t_context.player.inventory().equip(
+            m_unListboxUPtr->selectedIndex()) };
+
+        {
+            bool didSelectNextSucceed{ true };
+            while (didSelectNextSucceed)
+            {
+                didSelectNextSucceed = m_unListboxUPtr->selectNext();
+            }
+        }
+
+        if (!equipMessage.empty())
+        {
+            t_context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
+            updateAllAfterListboxChange(t_context);
+            showErrorText(t_context, equipMessage);
+            t_context.sfx.play("error-1");
+            return;
+        }
+
+        {
+            bool didSelectNextSucceed{ true };
+            while (didSelectNextSucceed)
+            {
+                didSelectNextSucceed = m_eqListboxUPtr->selectNext();
+            }
+        }
+
+        updateAllAfterListboxChange(t_context);
+        
+        if (unEqItem.isWeapon())
+        {
+            t_context.sfx.play("equip-blade");
+        }
+        else
+        {
+            t_context.sfx.play("equip-armor");
+        }
     }
 
 } // namespace castlecrawl
