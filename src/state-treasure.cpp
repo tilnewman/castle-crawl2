@@ -68,11 +68,13 @@ namespace castlecrawl
         if (m_treasure.gold > 0)
         {
             descStr += std::to_string(m_treasure.gold);
-            descStr += " gold and ";
+            descStr += " gold";
         }
 
-        descStr += std::to_string(m_treasure.items.size());
-        descStr += " items";
+        if (m_treasure.gold > 0 && !m_treasure.items.empty())
+        {
+            descStr += " and ";
+        }
 
         if (m_treasure.items.empty())
         {
@@ -80,21 +82,25 @@ namespace castlecrawl
         }
         else
         {
-            descStr += ":";
+            descStr += std::to_string(m_treasure.items.size());
+            descStr += " items:";
         }
 
         m_descText = t_context.fonts.makeText(FontSize::Large, descStr);
 
         m_descText.setPosition(
             { ((boardRect.size.x * 0.5f) - (m_descText.getGlobalBounds().size.x * 0.5f)),
-              (util::bottom(m_titleText) + pad) });
+              (util::bottom(m_titleText) + (pad * 4.0f)) });
 
         //
 
-        m_helpText = t_context.fonts.makeText(
-            FontSize::Small,
-            "(Press Enter to take items then Escape when finished)",
-            sf::Color(200, 200, 200));
+        std::string helpStr{ "(Press Enter to take items then Escape when finished)" };
+        if (m_treasure.items.empty())
+        {
+            helpStr = "(Press Enter or Escape to return to the game)";
+        }
+
+        m_helpText = t_context.fonts.makeText(FontSize::Small, helpStr, sf::Color(200, 200, 200));
 
         m_helpText.setStyle(sf::Text::Italic);
 
@@ -134,66 +140,66 @@ namespace castlecrawl
         t_target.draw(m_fadeRectangle, t_states);
         t_target.draw(m_titleText, t_states);
         t_target.draw(m_descText, t_states);
+        t_target.draw(m_helpText, t_states);
 
         if (!m_itemListboxUPtr->empty())
         {
             t_target.draw(*m_itemListboxUPtr, t_states);
             t_target.draw(m_itemDescText, t_states);
-            t_target.draw(m_helpText, t_states);
         }
     }
 
     void StateTreasure::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+        const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>();
+        if (!keyPtr)
         {
-            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            return;
+        }
+
+        if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+        {
+            t_context.state.setChangePending(State::Play);
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
+        {
+            if (m_itemListboxUPtr->selectPrev())
+            {
+                updateItemDescText(t_context);
+                t_context.sfx.play("tick-on");
+            }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+        {
+            if (m_itemListboxUPtr->selectNext())
+            {
+                updateItemDescText(t_context);
+                t_context.sfx.play("tick-on");
+            }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Enter)
+        {
+            if (m_itemListboxUPtr->empty())
             {
                 t_context.state.setChangePending(State::Play);
+                return;
             }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
-            {
-                if (m_itemListboxUPtr->selectPrev())
-                {
-                    t_context.sfx.play("tick-on");
-                }
 
+            const std::size_t index{ m_itemListboxUPtr->selectedIndex() };
+            if (index < m_treasure.items.size())
+            {
+                t_context.player.inventory().add(m_treasure.items.at(index));
+
+                m_treasure.items.erase(
+                    std::begin(m_treasure.items) + static_cast<std::ptrdiff_t>(index));
+
+                m_itemListboxUPtr->redraw();
                 updateItemDescText(t_context);
-            }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
-            {
-                if (m_itemListboxUPtr->selectNext())
+                t_context.sfx.play("equip-armor");
+
+                if (m_treasure.items.empty())
                 {
-                    t_context.sfx.play("tick-on");
-                }
-
-                updateItemDescText(t_context);
-            }
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::Enter)
-            {
-                if (m_itemListboxUPtr->empty())
-                {
-                    t_context.sfx.play("error-1.ogg");
-                }
-                else
-                {
-                    const std::size_t index = m_itemListboxUPtr->selectedIndex();
-                    if (index < m_treasure.items.size())
-                    {
-                        t_context.player.inventory().add(m_treasure.items.at(index));
-
-                        m_treasure.items.erase(
-                            std::begin(m_treasure.items) + static_cast<std::ptrdiff_t>(index));
-
-                        m_itemListboxUPtr->redraw();
-                        updateItemDescText(t_context);
-                        t_context.sfx.play("equip.ogg");
-
-                        if (m_treasure.items.empty())
-                        {
-                            t_context.state.setChangePending(State::Play);
-                        }
-                    }
+                    t_context.state.setChangePending(State::Play);
                 }
             }
         }

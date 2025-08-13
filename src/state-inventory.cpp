@@ -372,7 +372,7 @@ namespace castlecrawl
 
             t_context.player.inventory().unequip(m_eqListboxUPtr->selectedIndex());
             updateAllAfterListboxChange(t_context);
-            t_context.sfx.play("cloth.ogg");
+            t_context.sfx.play("cloth");
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::S)
         {
