@@ -249,7 +249,7 @@ namespace castlecrawl
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
 
-        const float errorTextFadeDuration{ 4.25f };
+        const float errorTextFadeDuration{ 5.0f };
         m_errorTextElapsedSec += t_frameTimeSec;
         if (m_errorTextElapsedSec < errorTextFadeDuration)
         {
@@ -322,14 +322,12 @@ namespace castlecrawl
                 showErrorText(
                     t_context, "First press the left arrow key to select an unequipped item.");
 
-                t_context.sfx.play("error-1");
                 return;
             }
 
             if (m_unListboxUPtr->empty())
             {
                 showErrorText(t_context, "You have no unequipped items to equip.");
-                t_context.sfx.play("error-1");
                 return;
             }
 
@@ -342,7 +340,6 @@ namespace castlecrawl
             if (!resultStr.empty())
             {
                 showErrorText(t_context, resultStr);
-                t_context.sfx.play("error-1");
                 return;
             }
 
@@ -364,14 +361,12 @@ namespace castlecrawl
                 showErrorText(
                     t_context, "First press the right arrow key to select an equipped item.");
 
-                t_context.sfx.play("error-1");
                 return;
             }
 
             if (m_eqListboxUPtr->empty())
             {
                 showErrorText(t_context, "You have no equipped items to unequip.");
-                t_context.sfx.play("error-1");
                 return;
             }
 
@@ -385,16 +380,23 @@ namespace castlecrawl
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::D)
         {
-            if (m_unListboxUPtr->getFocus() && !m_unListboxUPtr->empty())
+            if (!m_unListboxUPtr->getFocus())
             {
-                t_context.player.inventory().remove(m_unListboxUPtr->selectedIndex());
-                updateAllAfterListboxChange(t_context);
-                t_context.sfx.play("drop");
+                showErrorText(
+                    t_context, "Only unequipped items can be dropped.  Unequip this item first.");
+
+                return;
             }
-            else
+
+            if (m_unListboxUPtr->empty())
             {
-                t_context.sfx.play("error-1");
+                showErrorText(t_context, "You have no unequipped items to drop.");
+                return;
             }
+
+            t_context.player.inventory().remove(m_unListboxUPtr->selectedIndex());
+            updateAllAfterListboxChange(t_context);
+            t_context.sfx.play("drop");
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
         {
@@ -471,11 +473,13 @@ namespace castlecrawl
     {
         m_errorTextElapsedSec = 0.0f;
         m_errorText.setString(t_message);
-        m_errorText.setFillColor(sf::Color(255,100,100));
+        m_errorText.setFillColor(sf::Color(255, 100, 100));
 
         m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
                                   (util::bottom(m_itemDescText) + 20.0f) });
+
+        t_context.sfx.play("error-1");
     }
 
     void StateInventory::updateItemDescText(const Context & t_context)
@@ -630,21 +634,18 @@ namespace castlecrawl
         if (!m_unListboxUPtr->getFocus())
         {
             showErrorText(t_context, "You can only swap unequipped items.");
-            t_context.sfx.play("error-1");
             return;
         }
 
         if (m_unListboxUPtr->empty())
         {
             showErrorText(t_context, "You have no unequipped items to swap.");
-            t_context.sfx.play("error-1");
             return;
         }
 
         if (m_eqListboxUPtr->empty())
         {
             showErrorText(t_context, "You have no equipped items to swap.");
-            t_context.sfx.play("error-1");
             return;
         }
 
@@ -667,8 +668,6 @@ namespace castlecrawl
             if (!eqItemOpt.has_value())
             {
                 showErrorText(t_context, "You can't swap because there is no equippped weapon.");
-
-                t_context.sfx.play("error-1");
                 return;
             }
         }
@@ -690,14 +689,12 @@ namespace castlecrawl
                 message += '.';
 
                 showErrorText(t_context, message);
-                t_context.sfx.play("error-1");
                 return;
             }
         }
         else
         {
             showErrorText(t_context, "You can only swap weapons and armor items.");
-            t_context.sfx.play("error-1");
             return;
         }
 
@@ -729,7 +726,6 @@ namespace castlecrawl
             t_context.player.inventory().equip(m_unListboxUPtr->selectedIndex());
             updateAllAfterListboxChange(t_context);
             showErrorText(t_context, equipMessage);
-            t_context.sfx.play("error-1");
             return;
         }
 
