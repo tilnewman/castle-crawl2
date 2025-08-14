@@ -21,6 +21,8 @@
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
+#include <iostream>
+
 namespace castlecrawl
 {
 
@@ -63,20 +65,21 @@ namespace castlecrawl
         const sf::FloatRect screenRect{ t_context.layout.screenRect() };
         const float pad{ screenRect.size.x * 0.0025f };
         const float padLarge{ pad * 10.0f };
-        const sf::FloatRect botRect = t_context.layout.botRect();
+        const sf::FloatRect botRect   = t_context.layout.botRect();
+        const sf::Color statTextColor = sf::Color(220, 220, 220);
 
         //
 
-        m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Strength");
-        m_dexTitleText = t_context.fonts.makeText(FontSize::Medium, "Dexterity");
-        m_accTitleText = t_context.fonts.makeText(FontSize::Medium, "Accuracy");
-        m_lckTitleText = t_context.fonts.makeText(FontSize::Medium, "Luck");
-        m_arcTitleText = t_context.fonts.makeText(FontSize::Medium, "Arcane");
+        m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Strength", statTextColor);
+        m_dexTitleText = t_context.fonts.makeText(FontSize::Medium, "Dexterity", statTextColor);
+        m_accTitleText = t_context.fonts.makeText(FontSize::Medium, "Accuracy", statTextColor);
+        m_lckTitleText = t_context.fonts.makeText(FontSize::Medium, "Luck", statTextColor);
+        m_arcTitleText = t_context.fonts.makeText(FontSize::Medium, "Arcane", statTextColor);
 
         m_strTitleText.setPosition(
             { (screenRect.size.x * 0.25f), (botRect.position.y + padLarge) });
 
-        const float statTextVertPad = 5.0f; // TODO make this based on m_strTitleText height
+        const float statTextVertPad{ m_strTitleText.getGlobalBounds().size.y * 0.167f };
 
         m_dexTitleText.setPosition(
             { m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad) });
@@ -92,11 +95,11 @@ namespace castlecrawl
 
         //
 
-        m_strValueText = t_context.fonts.makeText(FontSize::Medium, "");
-        m_dexValueText = t_context.fonts.makeText(FontSize::Medium, "");
-        m_accValueText = t_context.fonts.makeText(FontSize::Medium, "");
-        m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "");
-        m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "");
+        m_strValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
+        m_dexValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
+        m_accValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
+        m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
+        m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
 
         const float valueTextHorizPos{ (util::right(m_dexTitleText) + (padLarge * 0.3f)) };
 
@@ -126,9 +129,8 @@ namespace castlecrawl
         m_statRectangle.setPosition(
             { (m_strTitleText.getPosition().x - pad), (m_strTitleText.getPosition().y - pad) });
 
-        m_statRectangle.setSize(
-            { (screenRect.size.x - (m_statRectangle.getPosition().x * 2.0f)),
-              (util::bottom(m_arcValueText) - m_strTitleText.getPosition().y) + (pad * 2.0f) });
+        m_statRectangle.setSize({ (screenRect.size.x - (m_statRectangle.getPosition().x * 2.0f)),
+                                  (screenRect.size.y * 0.134f) });
 
         //
 
@@ -563,12 +565,10 @@ namespace castlecrawl
 
         const item::Item & weapon{ eqWeaponOpt.value() };
 
-        std::string weaponStr{ weapon.name() };
-        weaponStr += " weapon does [";
+        std::string weaponStr{ "Weapon Damage: " };
         weaponStr += std::to_string(weapon.damageMin());
-        weaponStr += ", ";
+        weaponStr += " to ";
         weaponStr += std::to_string(weapon.damageMax());
-        weaponStr += "] damage.";
 
         m_weaponText.setString(weaponStr);
     }
