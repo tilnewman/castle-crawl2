@@ -37,6 +37,24 @@ namespace castlecrawl
 
     void TurnKeeper::advance(const Context & t_context, const float t_delaySec)
     {
+        turnDurationActions(t_context);
+
+        int nextTurnNumber = (static_cast<int>(m_owner) + 1);
+        if (nextTurnNumber > static_cast<int>(TurnOwner::Npc))
+        {
+            nextTurnNumber = 0;
+        }
+
+        m_owner = static_cast<TurnOwner>(nextTurnNumber);
+
+        m_delaySec   = t_delaySec;
+        m_elapsedSec = 0.0f;
+    }
+
+    void TurnKeeper::reset() { m_owner = TurnOwner::Player; }
+
+    void TurnKeeper::turnDurationActions(const Context & t_context)
+    {
         if (isPlayerTurn())
         {
             if ((m_turnCount % t_context.config.turns_per_health_increase) == 0)
@@ -53,20 +71,6 @@ namespace castlecrawl
 
             ++m_turnCount;
         }
-
-        int nextTurnNumber = (static_cast<int>(m_owner) + 1);
-        if (nextTurnNumber > static_cast<int>(TurnOwner::Npc))
-        {
-            nextTurnNumber = 0;
-        }
-
-        m_owner = static_cast<TurnOwner>(nextTurnNumber);
-
-        m_delaySec   = t_delaySec;
-        m_elapsedSec = 0.0f;
-        
     }
-
-    void TurnKeeper::reset() { m_owner = TurnOwner::Player; }
 
 } // namespace castlecrawl

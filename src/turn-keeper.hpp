@@ -61,6 +61,9 @@ namespace castlecrawl
         void update(const Context & t_context, const float t_elapsedTimeSec);
 
       private:
+        void turnDurationActions(const Context & t_context);
+
+      private:
         TurnOwner m_owner;
         float m_elapsedSec;
         float m_delaySec;
