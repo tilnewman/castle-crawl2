@@ -27,7 +27,19 @@ namespace castlecrawl
         , m_arrowSpriteDown{ m_arrowTexture }
         , m_arrowSpriteLeft{ m_arrowTexture }
         , m_arrowSpriteRight{ m_arrowTexture }
+        , m_alphaBouncer{ uint8_t(64), uint8_t(127), 85.0f }
     {}
+
+    void DirectionSelectDisplay::update(const Context &, const float t_elapsedSec)
+    {
+        sf::Color color{ m_arrowSpriteUp.getColor() };
+        color.a = m_alphaBouncer.update(t_elapsedSec);
+
+        m_arrowSpriteUp.setColor(color);
+        m_arrowSpriteDown.setColor(color);
+        m_arrowSpriteLeft.setColor(color);
+        m_arrowSpriteRight.setColor(color);
+    }
 
     void DirectionSelectDisplay::setup(const Context & t_context)
     {
@@ -40,7 +52,7 @@ namespace castlecrawl
 
         const sf::Color fillColor{ 0, 255, 255, 16 };
         const sf::Color outlineColor{ 0, 255, 255, 32 };
-        const sf::Color arrowColor{ 100, 255, 255, 92 };
+        const sf::Color arrowColor{ 100, 255, 255, 64 };
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
@@ -163,10 +175,10 @@ namespace castlecrawl
     void DirectionSelectDisplay::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         // it might look better without these rectangles, so skip drawing for now
-        t_target.draw(m_topRectangle, t_states);
-        t_target.draw(m_botRectangle, t_states);
-        t_target.draw(m_leftRectangle, t_states);
-        t_target.draw(m_rightRectangle, t_states);
+        // t_target.draw(m_topRectangle, t_states);
+        // t_target.draw(m_botRectangle, t_states);
+        // t_target.draw(m_leftRectangle, t_states);
+        // t_target.draw(m_rightRectangle, t_states);
 
         t_target.draw(m_arrowSpriteUp, t_states);
         t_target.draw(m_arrowSpriteDown, t_states);

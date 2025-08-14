@@ -42,6 +42,7 @@ namespace castlecrawl
     {
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_frameTimeSec);
+        m_directionSelectDisplay.update(t_context, t_frameTimeSec);
     }
 
     void StateFight::draw(

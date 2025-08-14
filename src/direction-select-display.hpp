@@ -3,6 +3,8 @@
 //
 // direction-select-display.hpp
 //
+#include "value-bouncer.hpp"
+
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -20,6 +22,7 @@ namespace castlecrawl
         DirectionSelectDisplay();
 
         void setup(const Context & t_context);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 
       private:
@@ -32,6 +35,7 @@ namespace castlecrawl
         sf::Sprite m_arrowSpriteDown;
         sf::Sprite m_arrowSpriteLeft;
         sf::Sprite m_arrowSpriteRight;
+        ValueBouncer<uint8_t> m_alphaBouncer;
     };
 
 } // namespace castlecrawl
