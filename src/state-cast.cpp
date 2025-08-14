@@ -69,6 +69,10 @@ namespace castlecrawl
         : m_bgFadeRectangle{}
         , m_titleText{ util::SfmlDefaults::instance().font() }
         , m_fireRectangleUPtr{}
+        , m_iceRectangleUPtr{}
+        , m_energyRectangleUPtr{}
+        , m_gripRectangleUPtr{}
+        , m_fearRectangleUPtr{}
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -82,15 +86,64 @@ namespace castlecrawl
         // title
         m_titleText = t_context.fonts.makeText(FontSize::Huge, "Cast Spell");
 
+        const float pad{ botRect.size.y * 0.05f };
+
         m_titleText.setPosition(
             { ((botRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
-              (botRect.position.y + (botRect.size.y * 0.05f)) });
+              (botRect.position.y + pad) });
 
         // spell category rectangles
-        const sf::FloatRect fireCategoryRect{ { 500.0f, 500.0f }, { 300.0f, 200.0f } };
+        const sf::Color fireColor{ 255, 192, 192 };
+        const sf::Color iceColor{ 192, 192, 255 };
+        const sf::Color energyColor{ 192, 240, 240 };
+        const sf::Color gripColor{ 225, 175, 130 };
+        const sf::Color fearColor{ 190, 150, 240 };
+
+        const float categoryRectsPosTop{ util::bottom(m_titleText) + pad };
+        const float categoryRectsPosBottom{ util::bottom(botRect) - pad };
+        const float categoryRectsHeight{ (categoryRectsPosBottom - categoryRectsPosTop) / 6.0f };
+        const float categoryRectsWidth{ botRect.size.x * 0.15f };
+        const float categoryRectPosLeft{ botRect.size.x * 0.2f };
+
+        const sf::Vector2f categoryRectSize{ categoryRectsWidth, categoryRectsHeight };
 
         m_fireRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
-            t_context, "Fire Spells", sf::Color(255, 192, 192), fireCategoryRect);
+            t_context,
+            "Fire Spells",
+            fireColor,
+            sf::FloatRect{ { categoryRectPosLeft, categoryRectsPosTop }, categoryRectSize });
+
+        m_iceRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
+            t_context,
+            "Ice Spells",
+            iceColor,
+            sf::FloatRect{
+                { categoryRectPosLeft, (util::bottom(m_fireRectangleUPtr->rectangle) + 1.0f) },
+                categoryRectSize });
+
+        m_energyRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
+            t_context,
+            "Energy Spells",
+            energyColor,
+            sf::FloatRect{
+                { categoryRectPosLeft, (util::bottom(m_iceRectangleUPtr->rectangle) + 1.0f) },
+                categoryRectSize });
+
+        m_gripRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
+            t_context,
+            "Grip Spells",
+            gripColor,
+            sf::FloatRect{
+                { categoryRectPosLeft, (util::bottom(m_energyRectangleUPtr->rectangle) + 1.0f) },
+                categoryRectSize });
+
+        m_fearRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
+            t_context,
+            "Fear Spells",
+            fearColor,
+            sf::FloatRect{
+                { categoryRectPosLeft, (util::bottom(m_gripRectangleUPtr->rectangle) + 1.0f) },
+                categoryRectSize });
     }
 
     void StateCast::update(const Context & t_context, const float t_elapsedSec)
@@ -112,7 +165,12 @@ namespace castlecrawl
 
         t_target.draw(m_bgFadeRectangle, t_states);
         t_target.draw(m_titleText, t_states);
+
         m_fireRectangleUPtr->draw(t_target, t_states);
+        m_iceRectangleUPtr->draw(t_target, t_states);
+        m_energyRectangleUPtr->draw(t_target, t_states);
+        m_gripRectangleUPtr->draw(t_target, t_states);
+        m_fearRectangleUPtr->draw(t_target, t_states);
     }
 
     void StateCast::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -124,6 +182,18 @@ namespace castlecrawl
 
             m_fireRectangleUPtr->setFocus(
                 m_fireRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+
+            m_iceRectangleUPtr->setFocus(
+                m_iceRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+
+            m_energyRectangleUPtr->setFocus(
+                m_energyRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+
+            m_gripRectangleUPtr->setFocus(
+                m_gripRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+
+            m_fearRectangleUPtr->setFocus(
+                m_fearRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
         }
         else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {

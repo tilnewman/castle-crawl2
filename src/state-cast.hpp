@@ -59,6 +59,11 @@ namespace castlecrawl
         sf::RectangleShape m_bgFadeRectangle;
         sf::Text m_titleText;
         std::unique_ptr<SpellCategoryRectangle> m_fireRectangleUPtr;
+        std::unique_ptr<SpellCategoryRectangle> m_iceRectangleUPtr;
+        std::unique_ptr<SpellCategoryRectangle> m_energyRectangleUPtr;
+        std::unique_ptr<SpellCategoryRectangle> m_gripRectangleUPtr;
+        std::unique_ptr<SpellCategoryRectangle> m_fearRectangleUPtr;
+
     };
 
 } // namespace castlecrawl
