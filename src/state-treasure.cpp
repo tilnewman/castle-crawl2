@@ -48,7 +48,7 @@ namespace castlecrawl
         const sf::FloatRect boardRect{ t_context.layout.botRect() };
         const float pad{ boardRect.size.y * 0.015f };
 
-        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
+        m_fadeRectangle.setFillColor(t_context.config.stage_background_color);
         m_fadeRectangle.setPosition(boardRect.position);
         m_fadeRectangle.setSize(boardRect.size);
 

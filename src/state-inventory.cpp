@@ -232,7 +232,7 @@ namespace castlecrawl
 
         //
 
-        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 190));
+        m_fadeRectangle.setFillColor(t_context.config.stage_background_color);
         m_fadeRectangle.setSize(screenRect.size);
 
         //
