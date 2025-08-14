@@ -36,8 +36,8 @@ namespace castlecrawl
         const sf::Color message_color_poison      = sf::Color(100, 255, 100);
         const sf::Color message_color_item        = sf::Color(160, 82, 45);
 
-        const std::size_t turns_per_health_increase = 20;
-        const std::size_t turns_per_mana_increase   = 7;
+        const std::size_t turns_per_health_increase = 36;
+        const std::size_t turns_per_mana_increase   = 12;
 
         // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
         const sf::Vector2i map_size_max = { 41, 23 };
