@@ -157,10 +157,19 @@ namespace castlecrawl
 
         stoneSoupCredit.vertPosition(tileCredit.bottom() + vertSpacer);
 
+        Credit & gameIconsCredit = m_credits.emplace_back(
+            t_context,
+            "Game Icons",
+            "Images",
+            "www.game-icons.net",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        gameIconsCredit.vertPosition(stoneSoupCredit.bottom() + vertSpacer);
+
         Credit & fontCredit = m_credits.emplace_back(
             t_context, "Gentium-Plus", "Font", "SIL Open Font License", "www.scripts.sil.org/ofl");
 
-        fontCredit.vertPosition(stoneSoupCredit.bottom() + vertSpacer);
+        fontCredit.vertPosition(gameIconsCredit.bottom() + vertSpacer);
 
         Credit & doorSfxCredit = m_credits.emplace_back(
             t_context,

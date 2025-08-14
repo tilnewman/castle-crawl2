@@ -9,7 +9,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 #include <memory>
 
@@ -22,6 +24,25 @@ namespace castlecrawl
     struct SpellCategoryRectangle
     {
         SpellCategoryRectangle(
+            const Context & t_context,
+            const std::string & t_name,
+            const sf::Color & t_color,
+            const sf::FloatRect & t_screenRegion);
+
+        void setFocus(const bool t_hasFocus);
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
+
+        sf::Text text;
+        sf::Color color;
+        sf::RectangleShape rectangle;
+        bool has_focus;
+    };
+
+    //
+
+    struct SpellRectangle
+    {
+        SpellRectangle(
             const Context & t_context,
             const std::string & t_name,
             const sf::Color & t_color,
@@ -63,7 +84,16 @@ namespace castlecrawl
         std::unique_ptr<SpellCategoryRectangle> m_energyRectangleUPtr;
         std::unique_ptr<SpellCategoryRectangle> m_gripRectangleUPtr;
         std::unique_ptr<SpellCategoryRectangle> m_fearRectangleUPtr;
-
+        sf::Texture m_fireTexture;
+        sf::Texture m_iceTexture;
+        sf::Texture m_energyTexture;
+        sf::Texture m_gripTexture;
+        sf::Texture m_fearTexture;
+        sf::Sprite m_fireSprite;
+        sf::Sprite m_iceSprite;
+        sf::Sprite m_energySprite;
+        sf::Sprite m_gripSprite;
+        sf::Sprite m_fearSprite;
     };
 
 } // namespace castlecrawl

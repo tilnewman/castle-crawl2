@@ -17,6 +17,7 @@
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "state-manager.hpp"
+#include "texture-loader.hpp"
 #include "top-panel.hpp"
 
 namespace castlecrawl
@@ -73,6 +74,16 @@ namespace castlecrawl
         , m_energyRectangleUPtr{}
         , m_gripRectangleUPtr{}
         , m_fearRectangleUPtr{}
+        , m_fireTexture{}
+        , m_iceTexture{}
+        , m_energyTexture{}
+        , m_gripTexture{}
+        , m_fearTexture{}
+        , m_fireSprite{ m_fireTexture }
+        , m_iceSprite{ m_iceTexture }
+        , m_energySprite{ m_energyTexture }
+        , m_gripSprite{ m_gripTexture }
+        , m_fearSprite{ m_fearTexture }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -91,6 +102,28 @@ namespace castlecrawl
         m_titleText.setPosition(
             { ((botRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
               (botRect.position.y + pad) });
+
+        // spell category images
+        util::TextureLoader::load(
+            m_fireTexture, (t_context.config.media_path / "image" / "fire-icon.png"), false);
+
+        util::TextureLoader::load(
+            m_iceTexture, (t_context.config.media_path / "image" / "ice-icon.png"), false);
+
+        util::TextureLoader::load(
+            m_energyTexture, (t_context.config.media_path / "image" / "energy-icon.png"), false);
+
+        util::TextureLoader::load(
+            m_gripTexture, (t_context.config.media_path / "image" / "grip-icon.png"), false);
+
+        util::TextureLoader::load(
+            m_fearTexture, (t_context.config.media_path / "image" / "fear-icon.png"), false);
+
+        m_fireSprite.setTexture(m_fireTexture, true);
+        m_iceSprite.setTexture(m_iceTexture, true);
+        m_energySprite.setTexture(m_energyTexture, true);
+        m_gripSprite.setTexture(m_gripTexture, true);
+        m_fearSprite.setTexture(m_fearTexture, true);
 
         // spell category rectangles
         const sf::Color fireColor{ 255, 192, 192 };
