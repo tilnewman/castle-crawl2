@@ -135,7 +135,7 @@ namespace castlecrawl
             "SFML",
             "Simple Fast Multimedia Library",
             "www.sfml-dev.org",
-            "zlib/png license");
+            "www.opensource.org/license/Zlib");
 
         sfmlCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
 
@@ -150,8 +150,8 @@ namespace castlecrawl
 
         Credit & stoneSoupCredit = m_credits.emplace_back(
             t_context,
-            "Chris Hamons",
-            "Stone Soup's Dungeon Crawl Tiles",
+            "Chris Hamons Stone Soup Dungeon Crawl Tiles",
+            "Images",
             "wwww.opengameart.org/content/dungeon-crawl-32x32-tiles",
             "www.creativecommons.org/publicdomain/zero/1.0");
 
@@ -238,7 +238,6 @@ namespace castlecrawl
                 {
                     credit.update(0.1f);
                 }
-
             }
         }
     }
