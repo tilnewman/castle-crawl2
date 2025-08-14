@@ -41,11 +41,15 @@ namespace castlecrawl
         sf::Text name_text1;
         sf::Text name_text2;
         sf::Text name_text3;
+        sf::FloatRect name_rect1;
+        sf::FloatRect name_rect2;
+        sf::FloatRect name_rect3;
+        sf::FloatRect full_rect;
         sf::Color color;
         bool has_focus;
 
         static inline const sf::Color name_color_focus_on  = sf::Color(230, 230, 230);
-        static inline const sf::Color name_color_focus_off = sf::Color(170, 170, 170);
+        static inline const sf::Color name_color_focus_off = sf::Color(127, 127, 127);
     };
 
     //

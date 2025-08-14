@@ -16,6 +16,7 @@
 #include "player-display.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
+#include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "texture-loader.hpp"
 #include "top-panel.hpp"
@@ -40,6 +41,10 @@ namespace castlecrawl
               FontSize::Medium, t_spellName2, name_color_focus_on) }
         , name_text3{ t_context.fonts.makeText(
               FontSize::Medium, t_spellName3, name_color_focus_on) }
+        , name_rect1{}
+        , name_rect2{}
+        , name_rect3{}
+        , full_rect{}
         , color{ t_color }
         , has_focus{ false }
     {
@@ -65,11 +70,30 @@ namespace castlecrawl
             { (t_position.x - (name_text1.getGlobalBounds().size.x * 0.5f)),
               (util::bottom(title_text) + title_text.getGlobalBounds().size.y) });
 
+        const sf::Vector2f nameRectSize{ imageRect.size.x,
+                                         (name_text1.getGlobalBounds().size.y + pad) };
+
+        name_rect1 = sf::FloatRect(
+            { imageRect.position.x, (name_text1.getGlobalBounds().position.y - (pad * 0.5f)) },
+            nameRectSize);
+
         name_text2.setPosition({ (t_position.x - (name_text2.getGlobalBounds().size.x * 0.5f)),
                                  (util::bottom(name_text1) + pad) });
 
+        name_rect2 = sf::FloatRect(
+            { imageRect.position.x, (name_text2.getGlobalBounds().position.y - (pad * 0.5f)) },
+            nameRectSize);
+
         name_text3.setPosition({ (t_position.x - (name_text3.getGlobalBounds().size.x * 0.5f)),
                                  (util::bottom(name_text2) + pad) });
+
+        name_rect3 = sf::FloatRect(
+            { imageRect.position.x, (name_text3.getGlobalBounds().position.y - (pad * 0.5f)) },
+            nameRectSize);
+
+        full_rect = sf::FloatRect(
+            imageRect.position,
+            { imageRect.size.x, ((util::bottom(name_rect3) - imageRect.position.y) + pad) });
 
         setFocus(false);
     }
@@ -98,8 +122,33 @@ namespace castlecrawl
 
     void SpellCategoryRectangle::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
+        if (has_focus)
+        {
+            sf::RectangleShape rectangle;
+            rectangle.setFillColor(sf::Color(16, 16, 16));
+            rectangle.setOutlineColor(sf::Color(92,92,92));
+            rectangle.setOutlineThickness(1.0f);
+            rectangle.setPosition(full_rect.position);
+            rectangle.setSize(full_rect.size);
+
+            t_target.draw(rectangle, t_states);
+        }
+
         t_target.draw(sprite, t_states);
         t_target.draw(title_text, t_states);
+
+        if (has_focus)
+        {
+            sf::RectangleShape rectangle;
+            rectangle.setFillColor(sf::Color(32, 32, 32));
+            rectangle.setOutlineColor(sf::Color::White);
+            rectangle.setOutlineThickness(1.0f);
+            rectangle.setPosition(name_rect1.position);
+            rectangle.setSize(name_rect1.size);
+
+            t_target.draw(rectangle, t_states);
+        }
+
         t_target.draw(name_text1, t_states);
         t_target.draw(name_text2, t_states);
         t_target.draw(name_text3, t_states);
@@ -155,7 +204,7 @@ namespace castlecrawl
         util::TextureLoader::load(
             m_fearTexture, (t_context.config.media_path / "image" / "fear-icon.png"), true);
 
-        // spell category rectangles
+        // spell category columbs
         const sf::Color fireColor{ 255, 192, 192 };
         const sf::Color iceColor{ 192, 192, 255 };
         const sf::Color energyColor{ 192, 240, 240 };
@@ -214,6 +263,8 @@ namespace castlecrawl
             "Heart Attack",
             fearColor,
             sf::Vector2f{ (categoryColumbWidth * 5.0f), categoryPositionTop });
+
+        m_fireRectangleUPtr->setFocus(true);
     }
 
     void StateCast::update(const Context & t_context, const float t_elapsedSec)
@@ -245,31 +296,68 @@ namespace castlecrawl
 
     void StateCast::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (const auto * mouseMovePtr = t_event.getIf<sf::Event::MouseMoved>())
+        const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>();
+        if (!keyPtr)
         {
-            const sf::Vector2f mousePos{ static_cast<float>(mouseMovePtr->position.x),
-                                         static_cast<float>(mouseMovePtr->position.y) };
-
-            m_fireRectangleUPtr->setFocus(
-                m_fireRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
-
-            m_iceRectangleUPtr->setFocus(
-                m_iceRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
-
-            m_energyRectangleUPtr->setFocus(
-                m_energyRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
-
-            m_gripRectangleUPtr->setFocus(
-                m_gripRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
-
-            m_fearRectangleUPtr->setFocus(
-                m_fearRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
+            return;
         }
-        else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+
+        if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
         {
-            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            t_context.state.setChangePending(State::Play);
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
+        {
+            if (m_fireRectangleUPtr->has_focus)
             {
-                t_context.state.setChangePending(State::Play);
+                m_fireRectangleUPtr->setFocus(false);
+                m_iceRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                m_iceRectangleUPtr->setFocus(false);
+                m_energyRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                m_energyRectangleUPtr->setFocus(false);
+                m_gripRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                m_gripRectangleUPtr->setFocus(false);
+                m_fearRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
+        {
+            if (m_fearRectangleUPtr->has_focus)
+            {
+                m_fearRectangleUPtr->setFocus(false);
+                m_gripRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                m_gripRectangleUPtr->setFocus(false);
+                m_energyRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                m_energyRectangleUPtr->setFocus(false);
+                m_iceRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                m_iceRectangleUPtr->setFocus(false);
+                m_fireRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
             }
         }
     }
