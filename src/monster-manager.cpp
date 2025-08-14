@@ -112,4 +112,19 @@ namespace castlecrawl
         return wereAnyRemoved;
     }
 
+    std::size_t MonsterManager::highestUniqueId() const
+    {
+        std::size_t highestUniqueId{ 0 };
+
+        for (const Monster & monster : m_monsters)
+        {
+            if (monster.uniqueId() > highestUniqueId)
+            {
+                highestUniqueId = monster.uniqueId();
+            }
+        }
+
+        return highestUniqueId;
+    }
+
 } // namespace castlecrawl

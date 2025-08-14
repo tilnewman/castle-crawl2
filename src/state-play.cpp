@@ -77,7 +77,7 @@ namespace castlecrawl
                 delayAfterTurn = t_context.config.turn_delay_after_nonplayer_attack;
             }
 
-            if (m_monsterUniqueId >= t_context.monsters.count())
+            if (m_monsterUniqueId > t_context.monsters.highestUniqueId())
             {
                 m_monsterUniqueId = 0;
                 t_context.turn.advance(t_context, delayAfterTurn);

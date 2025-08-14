@@ -42,6 +42,8 @@ namespace castlecrawl
 
         [[nodiscard]] inline std::size_t count() const { return m_monsters.size(); }
 
+        [[nodiscard]] std::size_t highestUniqueId() const;
+
       private:
         // these IDs are only unique to each map
         std::size_t m_nextUniqueId;
