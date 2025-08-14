@@ -181,7 +181,7 @@ namespace castlecrawl
             { m_healthText.getPosition().x, (util::bottom(m_armorText) + pad) });
 
         // instruction text
-        const sf::Color instTextColor{ sf::Color(200, 200, 230) };
+        const sf::Color instTextColor{ sf::Color(170, 170, 200) };
 
         m_instructionText1 = t_context.fonts.makeText(
             FontSize::Small, "Use arrow keys to navigate item boxes.", instTextColor);
@@ -206,7 +206,7 @@ namespace castlecrawl
         m_instructionText4.setStyle(sf::Text::Italic);
         m_instructionText5.setStyle(sf::Text::Italic);
 
-        const float instTextHorizCenterPos{ screenRect.size.x * 0.75f };
+        const float instTextHorizCenterPos{ screenRect.size.x * 0.66f };
 
         m_instructionText1.setPosition(
             { (instTextHorizCenterPos - (m_instructionText1.getGlobalBounds().size.x * 0.5f)),
