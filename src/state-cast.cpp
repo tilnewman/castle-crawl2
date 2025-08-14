@@ -25,20 +25,51 @@ namespace castlecrawl
 
     SpellCategoryRectangle::SpellCategoryRectangle(
         const Context & t_context,
-        const std::string & t_name,
+        const sf::Texture & t_texture,
+        const std::string & t_title,
+        const std::string & t_spellName1,
+        const std::string & t_spellName2,
+        const std::string & t_spellName3,
         const sf::Color & t_color,
-        const sf::FloatRect & t_screenRegion)
-        : text{ t_context.fonts.makeText(FontSize::Medium, t_name, t_color) }
+        const sf::Vector2f & t_position)
+        : sprite{ t_texture }
+        , title_text{ t_context.fonts.makeText(FontSize::Large, t_title, t_color) }
+        , name_text1{ t_context.fonts.makeText(
+              FontSize::Medium, t_spellName1, name_color_focus_on) }
+        , name_text2{ t_context.fonts.makeText(
+              FontSize::Medium, t_spellName2, name_color_focus_on) }
+        , name_text3{ t_context.fonts.makeText(
+              FontSize::Medium, t_spellName3, name_color_focus_on) }
         , color{ t_color }
-        , rectangle{}
         , has_focus{ false }
     {
-        rectangle.setPosition(t_screenRegion.position);
-        rectangle.setSize(t_screenRegion.size);
-        rectangle.setOutlineThickness(1.0f);
-        rectangle.setOutlineColor(t_color);
+        const sf::FloatRect botRect{ t_context.layout.botRect() };
+        const float imageSize{ botRect.size.x / 7.0f };
 
-        util::centerInside(text, rectangle.getGlobalBounds());
+        const sf::FloatRect imageRect{ { (t_position.x - (imageSize * 0.5f)), t_position.y },
+                                       { imageSize, imageSize } };
+
+        util::fitAndCenterInside(sprite, imageRect);
+
+        sprite.setColor(t_color);
+
+        title_text.setStyle(sf::Text::Underlined);
+
+        title_text.setPosition(
+            { (t_position.x - (title_text.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(imageRect) + (title_text.getGlobalBounds().size.y * 0.5f)) });
+
+        const float pad{ title_text.getGlobalBounds().size.y * 0.2f };
+
+        name_text1.setPosition(
+            { (t_position.x - (name_text1.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(title_text) + title_text.getGlobalBounds().size.y) });
+
+        name_text2.setPosition({ (t_position.x - (name_text2.getGlobalBounds().size.x * 0.5f)),
+                                 (util::bottom(name_text1) + pad) });
+
+        name_text3.setPosition({ (t_position.x - (name_text3.getGlobalBounds().size.x * 0.5f)),
+                                 (util::bottom(name_text2) + pad) });
 
         setFocus(false);
     }
@@ -46,22 +77,32 @@ namespace castlecrawl
     void SpellCategoryRectangle::setFocus(const bool t_hasFocus)
     {
         has_focus = t_hasFocus;
+
         if (has_focus)
         {
-            rectangle.setFillColor(sf::Color(color.r, color.g, color.b, 64));
-            text.setFillColor(color);
+            sprite.setColor(color);
+            title_text.setFillColor(color);
+            name_text1.setFillColor(name_color_focus_on);
+            name_text2.setFillColor(name_color_focus_on);
+            name_text3.setFillColor(name_color_focus_on);
         }
         else
         {
-            rectangle.setFillColor(sf::Color(color.r, color.g, color.b, 32));
-            text.setFillColor(color - sf::Color(100, 100, 100, 0));
+            sprite.setColor(color - sf::Color(100, 100, 100, 0));
+            title_text.setFillColor(color - sf::Color(100, 100, 100, 0));
+            name_text1.setFillColor(name_color_focus_off);
+            name_text2.setFillColor(name_color_focus_off);
+            name_text3.setFillColor(name_color_focus_off);
         }
     }
 
     void SpellCategoryRectangle::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        t_target.draw(rectangle, t_states);
-        t_target.draw(text, t_states);
+        t_target.draw(sprite, t_states);
+        t_target.draw(title_text, t_states);
+        t_target.draw(name_text1, t_states);
+        t_target.draw(name_text2, t_states);
+        t_target.draw(name_text3, t_states);
     }
 
     //
@@ -79,11 +120,6 @@ namespace castlecrawl
         , m_energyTexture{}
         , m_gripTexture{}
         , m_fearTexture{}
-        , m_fireSprite{ m_fireTexture }
-        , m_iceSprite{ m_iceTexture }
-        , m_energySprite{ m_energyTexture }
-        , m_gripSprite{ m_gripTexture }
-        , m_fearSprite{ m_fearTexture }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -105,25 +141,19 @@ namespace castlecrawl
 
         // spell category images
         util::TextureLoader::load(
-            m_fireTexture, (t_context.config.media_path / "image" / "fire-icon.png"), false);
+            m_fireTexture, (t_context.config.media_path / "image" / "fire-icon.png"), true);
 
         util::TextureLoader::load(
-            m_iceTexture, (t_context.config.media_path / "image" / "ice-icon.png"), false);
+            m_iceTexture, (t_context.config.media_path / "image" / "ice-icon.png"), true);
 
         util::TextureLoader::load(
-            m_energyTexture, (t_context.config.media_path / "image" / "energy-icon.png"), false);
+            m_energyTexture, (t_context.config.media_path / "image" / "energy-icon.png"), true);
 
         util::TextureLoader::load(
-            m_gripTexture, (t_context.config.media_path / "image" / "grip-icon.png"), false);
+            m_gripTexture, (t_context.config.media_path / "image" / "grip-icon.png"), true);
 
         util::TextureLoader::load(
-            m_fearTexture, (t_context.config.media_path / "image" / "fear-icon.png"), false);
-
-        m_fireSprite.setTexture(m_fireTexture, true);
-        m_iceSprite.setTexture(m_iceTexture, true);
-        m_energySprite.setTexture(m_energyTexture, true);
-        m_gripSprite.setTexture(m_gripTexture, true);
-        m_fearSprite.setTexture(m_fearTexture, true);
+            m_fearTexture, (t_context.config.media_path / "image" / "fear-icon.png"), true);
 
         // spell category rectangles
         const sf::Color fireColor{ 255, 192, 192 };
@@ -132,51 +162,58 @@ namespace castlecrawl
         const sf::Color gripColor{ 225, 175, 130 };
         const sf::Color fearColor{ 190, 150, 240 };
 
-        const float categoryRectsPosTop{ util::bottom(m_titleText) + pad };
-        const float categoryRectsPosBottom{ util::bottom(botRect) - pad };
-        const float categoryRectsHeight{ (categoryRectsPosBottom - categoryRectsPosTop) / 6.0f };
-        const float categoryRectsWidth{ botRect.size.x * 0.15f };
-        const float categoryRectPosLeft{ botRect.size.x * 0.2f };
-
-        const sf::Vector2f categoryRectSize{ categoryRectsWidth, categoryRectsHeight };
+        const float categoryColumbWidth{ botRect.size.x / 6.0f };
+        const float categoryPositionTop{ util::bottom(m_titleText) + pad };
 
         m_fireRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
+            m_fireTexture,
             "Fire Spells",
+            "Spark",
+            "Flare",
+            "Fireball",
             fireColor,
-            sf::FloatRect{ { categoryRectPosLeft, categoryRectsPosTop }, categoryRectSize });
+            sf::Vector2f{ (categoryColumbWidth * 1.0f), categoryPositionTop });
 
         m_iceRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
+            m_iceTexture,
             "Ice Spells",
+            "Frostbite",
+            "Freezing Wind",
+            "Ice Shards",
             iceColor,
-            sf::FloatRect{
-                { categoryRectPosLeft, (util::bottom(m_fireRectangleUPtr->rectangle) + 1.0f) },
-                categoryRectSize });
+            sf::Vector2f{ (categoryColumbWidth * 2.0f), categoryPositionTop });
 
         m_energyRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
+            m_energyTexture,
             "Energy Spells",
+            "Zap",
+            "Jolt",
+            "Lightning",
             energyColor,
-            sf::FloatRect{
-                { categoryRectPosLeft, (util::bottom(m_iceRectangleUPtr->rectangle) + 1.0f) },
-                categoryRectSize });
+            sf::Vector2f{ (categoryColumbWidth * 3.0f), categoryPositionTop });
 
         m_gripRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
+            m_gripTexture,
             "Grip Spells",
+            "Slow",
+            "Stun",
+            "Immobalize",
             gripColor,
-            sf::FloatRect{
-                { categoryRectPosLeft, (util::bottom(m_energyRectangleUPtr->rectangle) + 1.0f) },
-                categoryRectSize });
+            sf::Vector2f{ (categoryColumbWidth * 4.0f), categoryPositionTop });
 
         m_fearRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
+            m_fearTexture,
             "Fear Spells",
+            "Scare",
+            "Terrorize",
+            "Heart Attack",
             fearColor,
-            sf::FloatRect{
-                { categoryRectPosLeft, (util::bottom(m_gripRectangleUPtr->rectangle) + 1.0f) },
-                categoryRectSize });
+            sf::Vector2f{ (categoryColumbWidth * 5.0f), categoryPositionTop });
     }
 
     void StateCast::update(const Context & t_context, const float t_elapsedSec)
@@ -214,19 +251,19 @@ namespace castlecrawl
                                          static_cast<float>(mouseMovePtr->position.y) };
 
             m_fireRectangleUPtr->setFocus(
-                m_fireRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+                m_fireRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
 
             m_iceRectangleUPtr->setFocus(
-                m_iceRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+                m_iceRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
 
             m_energyRectangleUPtr->setFocus(
-                m_energyRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+                m_energyRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
 
             m_gripRectangleUPtr->setFocus(
-                m_gripRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+                m_gripRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
 
             m_fearRectangleUPtr->setFocus(
-                m_fearRectangleUPtr->rectangle.getGlobalBounds().contains(mousePos));
+                m_fearRectangleUPtr->sprite.getGlobalBounds().contains(mousePos));
         }
         else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {

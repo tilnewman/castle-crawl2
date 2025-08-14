@@ -25,36 +25,27 @@ namespace castlecrawl
     {
         SpellCategoryRectangle(
             const Context & t_context,
-            const std::string & t_name,
+            const sf::Texture & t_texture,
+            const std::string & t_title,
+            const std::string & t_spellName1,
+            const std::string & t_spellName2,
+            const std::string & t_spellName3,
             const sf::Color & t_color,
-            const sf::FloatRect & t_screenRegion);
+            const sf::Vector2f & t_position);
 
         void setFocus(const bool t_hasFocus);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
-        sf::Text text;
+        sf::Sprite sprite;
+        sf::Text title_text;
+        sf::Text name_text1;
+        sf::Text name_text2;
+        sf::Text name_text3;
         sf::Color color;
-        sf::RectangleShape rectangle;
         bool has_focus;
-    };
 
-    //
-
-    struct SpellRectangle
-    {
-        SpellRectangle(
-            const Context & t_context,
-            const std::string & t_name,
-            const sf::Color & t_color,
-            const sf::FloatRect & t_screenRegion);
-
-        void setFocus(const bool t_hasFocus);
-        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
-
-        sf::Text text;
-        sf::Color color;
-        sf::RectangleShape rectangle;
-        bool has_focus;
+        static inline const sf::Color name_color_focus_on  = sf::Color(230, 230, 230);
+        static inline const sf::Color name_color_focus_off = sf::Color(170, 170, 170);
     };
 
     //
@@ -89,11 +80,6 @@ namespace castlecrawl
         sf::Texture m_energyTexture;
         sf::Texture m_gripTexture;
         sf::Texture m_fearTexture;
-        sf::Sprite m_fireSprite;
-        sf::Sprite m_iceSprite;
-        sf::Sprite m_energySprite;
-        sf::Sprite m_gripSprite;
-        sf::Sprite m_fearSprite;
     };
 
 } // namespace castlecrawl
