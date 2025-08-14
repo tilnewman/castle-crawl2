@@ -52,6 +52,11 @@ namespace castlecrawl
         , m_goldText{ util::SfmlDefaults::instance().font() }
         , m_armorText{ util::SfmlDefaults::instance().font() }
         , m_weaponText{ util::SfmlDefaults::instance().font() }
+        , m_instructionText1{ util::SfmlDefaults::instance().font() }
+        , m_instructionText2{ util::SfmlDefaults::instance().font() }
+        , m_instructionText3{ util::SfmlDefaults::instance().font() }
+        , m_instructionText4{ util::SfmlDefaults::instance().font() }
+        , m_instructionText5{ util::SfmlDefaults::instance().font() }
         , m_statRectangle{}
     {}
 
@@ -60,15 +65,42 @@ namespace castlecrawl
         m_unListboxUPtr = std::make_unique<Listbox>(t_context.player.inventory().unItems());
         m_eqListboxUPtr = std::make_unique<Listbox>(t_context.player.inventory().eqItems());
 
-        //
-
+        // setup constants used throughout
         const sf::FloatRect screenRect{ t_context.layout.screenRect() };
         const float pad{ screenRect.size.x * 0.0025f };
         const float padLarge{ pad * 10.0f };
-        const sf::FloatRect botRect   = t_context.layout.botRect();
-        const sf::Color statTextColor = sf::Color(220, 220, 220);
+        const sf::FloatRect botRect = t_context.layout.botRect();
 
-        //
+        // establish how tall the stats rows will be
+        m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Dy");
+
+        const float statRowHeight{ m_strTitleText.getGlobalBounds().size.y +
+                                   (m_strTitleText.getGlobalBounds().size.y * 0.17f) };
+
+        // setup the stats box background rectangle
+        m_statRectangle.setFillColor(sf::Color(255, 255, 255, 32));
+        m_statRectangle.setOutlineColor(sf::Color(255, 255, 255, 64));
+        m_statRectangle.setOutlineThickness(2.0f);
+
+        m_statRectangle.setPosition(
+            { (screenRect.size.x * 0.25f), (botRect.position.y + padLarge) });
+
+        m_statRectangle.setSize(
+            { (screenRect.size.x * 0.25f), ((statRowHeight * 5.0f) + (pad * 2.0f)) });
+
+        // place the stats text
+        const sf::Color statTextColor{ sf::Color(200, 200, 200) };
+
+        const float statTextPosHoriz{ m_statRectangle.getPosition().x + pad };
+
+        const auto positionStatTextOnRow =
+            [&](sf::Text & t_text, const float t_row, const float t_posHoriz) {
+                float posVert{ m_statRectangle.getPosition().y + pad };
+                posVert += (t_row * statRowHeight);
+                posVert -= (statRowHeight * 0.5f);
+                posVert -= (t_text.getGlobalBounds().size.y * 0.5f);
+                t_text.setPosition({ t_posHoriz, posVert });
+            };
 
         m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Strength", statTextColor);
         m_dexTitleText = t_context.fonts.makeText(FontSize::Medium, "Dexterity", statTextColor);
@@ -76,64 +108,28 @@ namespace castlecrawl
         m_lckTitleText = t_context.fonts.makeText(FontSize::Medium, "Luck", statTextColor);
         m_arcTitleText = t_context.fonts.makeText(FontSize::Medium, "Arcane", statTextColor);
 
-        m_strTitleText.setPosition(
-            { (screenRect.size.x * 0.25f), (botRect.position.y + padLarge) });
+        positionStatTextOnRow(m_strTitleText, 1.0f, statTextPosHoriz);
+        positionStatTextOnRow(m_dexTitleText, 2.0f, statTextPosHoriz);
+        positionStatTextOnRow(m_accTitleText, 3.0f, statTextPosHoriz);
+        positionStatTextOnRow(m_lckTitleText, 4.0f, statTextPosHoriz);
+        positionStatTextOnRow(m_arcTitleText, 5.0f, statTextPosHoriz);
 
-        const float statTextVertPad{ m_strTitleText.getGlobalBounds().size.y * 0.167f };
+        m_strValueText = t_context.fonts.makeText(FontSize::Medium, "1", statTextColor);
+        m_dexValueText = t_context.fonts.makeText(FontSize::Medium, "1", statTextColor);
+        m_accValueText = t_context.fonts.makeText(FontSize::Medium, "1", statTextColor);
+        m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "1", statTextColor);
+        m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "1", statTextColor);
 
-        m_dexTitleText.setPosition(
-            { m_strTitleText.getPosition().x, (util::bottom(m_strTitleText) + statTextVertPad) });
+        const float statValueTextPosHoriz{ util::right(m_dexTitleText.getGlobalBounds()) +
+                                           (padLarge * 0.2f) };
 
-        m_accTitleText.setPosition(
-            { m_strTitleText.getPosition().x, (util::bottom(m_dexTitleText) + statTextVertPad) });
-
-        m_lckTitleText.setPosition(
-            { m_strTitleText.getPosition().x, (util::bottom(m_accTitleText) + statTextVertPad) });
-
-        m_arcTitleText.setPosition(
-            { m_strTitleText.getPosition().x, (util::bottom(m_lckTitleText) + statTextVertPad) });
-
-        //
-
-        m_strValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
-        m_dexValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
-        m_accValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
-        m_lckValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
-        m_arcValueText = t_context.fonts.makeText(FontSize::Medium, "", statTextColor);
-
-        const float valueTextHorizPos{ (util::right(m_dexTitleText) + (padLarge * 0.3f)) };
-
-        m_strValueText.setPosition(
-            { valueTextHorizPos, m_strTitleText.getGlobalBounds().position.y - 7.0f });
-
-        m_dexValueText.setPosition(
-            { valueTextHorizPos, m_dexTitleText.getGlobalBounds().position.y - 7.0f });
-
-        m_accValueText.setPosition(
-            { valueTextHorizPos, m_accTitleText.getGlobalBounds().position.y - 7.0f });
-
-        m_lckValueText.setPosition(
-            { valueTextHorizPos, m_lckTitleText.getGlobalBounds().position.y - 7.0f });
-
-        m_arcValueText.setPosition(
-            { valueTextHorizPos, m_arcTitleText.getGlobalBounds().position.y - 7.0f });
-
-        updateStatText(t_context);
+        positionStatTextOnRow(m_strValueText, 1.0f, statValueTextPosHoriz);
+        positionStatTextOnRow(m_dexValueText, 2.0f, statValueTextPosHoriz);
+        positionStatTextOnRow(m_accValueText, 3.0f, statValueTextPosHoriz);
+        positionStatTextOnRow(m_lckValueText, 4.0f, statValueTextPosHoriz);
+        positionStatTextOnRow(m_arcValueText, 5.0f, statValueTextPosHoriz);
 
         //
-
-        m_statRectangle.setFillColor(sf::Color(255, 255, 255, 32));
-        m_statRectangle.setOutlineColor(sf::Color(255, 255, 255, 64));
-        m_statRectangle.setOutlineThickness(2.0f);
-
-        m_statRectangle.setPosition(
-            { (m_strTitleText.getPosition().x - pad), (m_strTitleText.getPosition().y - pad) });
-
-        m_statRectangle.setSize({ (screenRect.size.x - (m_statRectangle.getPosition().x * 2.0f)),
-                                  (screenRect.size.y * 0.134f) });
-
-        //
-
         std::string healthStr{ "Health: " };
         healthStr += std::to_string(t_context.player.health().current());
         healthStr += '/';
@@ -142,12 +138,10 @@ namespace castlecrawl
         m_healthText =
             t_context.fonts.makeText(FontSize::Small, healthStr, sf::Color(255, 180, 180));
 
-        util::centerInside(m_healthText, m_statRectangle.getGlobalBounds());
-        m_healthText.move({ -padLarge, -(m_healthText.getGlobalBounds().size.y * 3.0f) });
-        m_healthText.move({ -padLarge, 0.0f });
+        m_healthText.setPosition(
+            { (util::right(m_dexValueText) + padLarge), (m_statRectangle.getPosition().y + pad) });
 
         //
-
         std::string manaStr{ "Mana: " };
         manaStr += std::to_string(t_context.player.mana().current());
         manaStr += '/';
@@ -159,7 +153,6 @@ namespace castlecrawl
             { m_healthText.getPosition().x, (util::bottom(m_healthText) + pad) });
 
         //
-
         std::string levelStr{ "Level: " };
         levelStr += std::to_string(t_context.player.level());
 
@@ -167,7 +160,6 @@ namespace castlecrawl
         m_levelText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_manaText) + pad) });
 
         //
-
         std::string goldStr{ "Gold: " };
         goldStr += std::to_string(t_context.player.gold());
 
@@ -177,21 +169,66 @@ namespace castlecrawl
         m_goldText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_levelText) + pad) });
 
         //
-
         std::string armorStr{ "Armor: " };
         armorStr += std::to_string(t_context.player.armor().get());
         m_armorText = t_context.fonts.makeText(FontSize::Small, armorStr);
         m_armorText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_goldText) + pad) });
 
         //
-
         m_weaponText = t_context.fonts.makeText(FontSize::Small, "", sf::Color(220, 220, 220));
 
         m_weaponText.setPosition(
             { m_healthText.getPosition().x, (util::bottom(m_armorText) + pad) });
 
-        //
+        // instruction text
+        const sf::Color instTextColor{ sf::Color(200, 200, 230) };
 
+        m_instructionText1 = t_context.fonts.makeText(
+            FontSize::Small, "Use arrow keys to navigate item boxes.", instTextColor);
+
+        m_instructionText2 = t_context.fonts.makeText(
+            FontSize::Small, "Press 'E' to equip, and 'U' to unequip items.", instTextColor);
+
+        m_instructionText3 = t_context.fonts.makeText(
+            FontSize::Small, "Press 'D' to drop unequipped items.", instTextColor);
+
+        m_instructionText4 = t_context.fonts.makeText(
+            FontSize::Small,
+            "Press 'S' to swap an unequipped item with the equipped one.",
+            instTextColor);
+
+        m_instructionText5 = t_context.fonts.makeText(
+            FontSize::Small, "Press 'U' to use unequipped items.", instTextColor);
+
+        m_instructionText1.setStyle(sf::Text::Italic);
+        m_instructionText2.setStyle(sf::Text::Italic);
+        m_instructionText3.setStyle(sf::Text::Italic);
+        m_instructionText4.setStyle(sf::Text::Italic);
+        m_instructionText5.setStyle(sf::Text::Italic);
+
+        const float instTextHorizCenterPos{ screenRect.size.x * 0.75f };
+
+        m_instructionText1.setPosition(
+            { (instTextHorizCenterPos - (m_instructionText1.getGlobalBounds().size.x * 0.5f)),
+              (m_statRectangle.getPosition().y + (padLarge * 0.5f)) });
+
+        m_instructionText2.setPosition(
+            { (instTextHorizCenterPos - (m_instructionText2.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_instructionText1) + pad) });
+
+        m_instructionText3.setPosition(
+            { (instTextHorizCenterPos - (m_instructionText3.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_instructionText2) + pad) });
+
+        m_instructionText4.setPosition(
+            { (instTextHorizCenterPos - (m_instructionText4.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_instructionText3) + pad) });
+
+        m_instructionText5.setPosition(
+            { (instTextHorizCenterPos - (m_instructionText5.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_instructionText4) + pad) });
+
+        //
         m_unListboxUPtr->setup(
             t_context, FontSize::Medium, t_context.items.textExtents().longest_name, 16);
 
@@ -209,16 +246,13 @@ namespace castlecrawl
         m_eqListboxUPtr->setFocus(false);
 
         //
-
         m_itemDescText = t_context.fonts.makeText(FontSize::Small, "");
 
         //
-
         m_itemHintText = t_context.fonts.makeText(FontSize::Small, "");
         m_itemHintText.setFillColor(sf::Color(255, 240, 140));
 
         //
-
         m_unTitleText = t_context.fonts.makeText(
             FontSize::Small, "Unequipped Items:", sf::Color(255, 255, 255, 160));
 
@@ -233,16 +267,13 @@ namespace castlecrawl
                                     m_unTitleText.getGlobalBounds().position.y });
 
         //
-
         m_fadeRectangle.setFillColor(t_context.config.stage_background_color);
         m_fadeRectangle.setSize(screenRect.size);
 
         //
-
         m_errorText = t_context.fonts.makeText(FontSize::Medium, "");
 
         //
-
         updateAllAfterListboxChange(t_context);
     }
 
@@ -303,6 +334,12 @@ namespace castlecrawl
         t_target.draw(m_accValueText, t_states);
         t_target.draw(m_lckValueText, t_states);
         t_target.draw(m_arcValueText, t_states);
+
+        t_target.draw(m_instructionText1, t_states);
+        t_target.draw(m_instructionText2, t_states);
+        t_target.draw(m_instructionText3, t_states);
+        t_target.draw(m_instructionText4, t_states);
+        t_target.draw(m_instructionText5, t_states);
     }
 
     void StateInventory::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -559,7 +596,7 @@ namespace castlecrawl
 
         if (!eqWeaponOpt.has_value())
         {
-            m_weaponText.setString("No weapon is equipped! Your fists only do [1, 2] damage.");
+            m_weaponText.setString("Weapon Damage: 1 to 2 (fists)");
             return;
         }
 
