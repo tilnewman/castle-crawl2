@@ -37,6 +37,7 @@ namespace castlecrawl
         sf::Sprite m_lightningSprite;
         bool m_willShowLightning;
         float m_timerSec;
+        float m_imageAlpha;
         bool m_isFadingIn;
         bool m_isFadingOut;
     };

@@ -22,6 +22,7 @@ namespace castlecrawl
         , m_lightningSprite{ m_lightningTexture }
         , m_willShowLightning{ false }
         , m_timerSec{ 0.0f }
+        , m_imageAlpha{ 0.0f }
         , m_isFadingIn{ true }
         , m_isFadingOut{ false }
     {}
@@ -62,36 +63,30 @@ namespace castlecrawl
 
         if (m_isFadingIn)
         {
-            const float fadeInDuration{ 3.0f };
-            if (m_timerSec < fadeInDuration)
-            {
-                sf::Color color{ m_castleSprite.getColor() };
+            m_imageAlpha += (t_frameTimeSec * 50.0f);
 
-                color.a = static_cast<uint8_t>(util::map(m_timerSec, 0.0f, fadeInDuration, 0, 255));
+            sf::Color color{ m_castleSprite.getColor() };
+            color.a = static_cast<uint8_t>(m_imageAlpha);
+            m_castleSprite.setColor(color);
 
-                m_castleSprite.setColor(color);
-            }
-            else
+            if (255 == color.a)
             {
                 m_isFadingIn = false;
                 m_timerSec   = 0.0f;
+                m_imageAlpha = 255.0f;
             }
         }
         else if (m_isFadingOut)
         {
-            const float fadeOutDuration{ 1.0f };
-            if (m_timerSec > fadeOutDuration)
+            m_imageAlpha -= (t_frameTimeSec * 150.0f);
+
+            sf::Color color{ m_castleSprite.getColor() };
+            color.a = static_cast<uint8_t>(m_imageAlpha);
+            m_castleSprite.setColor(color);
+
+            if (0 == color.a)
             {
                 t_context.state.setChangePending(State::Play);
-            }
-            else
-            {
-                sf::Color color{ m_castleSprite.getColor() };
-
-                color.a = static_cast<uint8_t>(
-                    255 - util::map(m_timerSec, 0.0f, fadeOutDuration, 0, 255));
-
-                m_castleSprite.setColor(color);
             }
         }
         else
@@ -143,6 +138,11 @@ namespace castlecrawl
             if (keyPtr->scancode == sf::Keyboard::Scancode::E)
             {
                 t_context.state.setChangePending(State::Editor);
+            }
+            else if (m_isFadingIn)
+            {
+                m_isFadingIn  = false;
+                m_isFadingOut = true;
             }
             else if (!m_isFadingIn && !m_isFadingOut)
             {
