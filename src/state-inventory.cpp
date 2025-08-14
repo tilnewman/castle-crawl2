@@ -7,6 +7,7 @@
 
 #include "animation-manager.hpp"
 #include "context.hpp"
+#include "font.hpp"
 #include "framerate-text.hpp"
 #include "inventory.hpp"
 #include "item-factory.hpp"

@@ -6,6 +6,7 @@
 #include "state-manager.hpp"
 
 #include "check-macros.hpp"
+#include "state-cast.hpp"
 #include "state-credits.hpp"
 #include "state-death.hpp"
 #include "state-editor.hpp"
@@ -60,6 +61,7 @@ namespace castlecrawl
             case State::Death:      { return std::make_unique<StateDeath>(); }
             case State::Credits:    { return std::make_unique<StateCredits>(); }
             case State::Editor:     { return std::make_unique<StateEditor>(); }
+            case State::Cast:       { return std::make_unique<StateCast>(); }
             default:
             {
                 throw std::runtime_error("Error: state-manager::factory() called with unknown state!");

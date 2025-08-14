@@ -160,6 +160,13 @@ namespace castlecrawl
                     t_context.turn.advance(t_context);
                 }
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::C)
+            {
+                if (t_context.turn.isPlayerTurn())
+                {
+                    t_context.state.setChangePending(State::Cast);
+                }
+            }
             // todo remove after testing
             else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
             {
