@@ -35,16 +35,17 @@ namespace castlecrawl
         const sf::Vector2f & t_position)
         : sprite{ t_texture }
         , title_text{ t_context.fonts.makeText(FontSize::Large, t_title, t_color) }
-        , name_text1{ t_context.fonts.makeText(
-              FontSize::Medium, t_spellName1, name_color_focus_on) }
-        , name_text2{ t_context.fonts.makeText(
-              FontSize::Medium, t_spellName2, name_color_focus_on) }
-        , name_text3{ t_context.fonts.makeText(
-              FontSize::Medium, t_spellName3, name_color_focus_on) }
-        , name_rect1{}
-        , name_rect2{}
-        , name_rect3{}
+        , spell_text1{ t_context.fonts.makeText(
+              FontSize::Medium, t_spellName1, spell_color_focus_on) }
+        , spell_text2{ t_context.fonts.makeText(
+              FontSize::Medium, t_spellName2, spell_color_focus_on) }
+        , spell_text3{ t_context.fonts.makeText(
+              FontSize::Medium, t_spellName3, spell_color_focus_on) }
+        , spell_rect1{}
+        , spell_rect2{}
+        , spell_rect3{}
         , full_rect{}
+        , spell_index{ 0 }
         , color{ t_color }
         , has_focus{ false }
     {
@@ -66,34 +67,34 @@ namespace castlecrawl
 
         const float pad{ title_text.getGlobalBounds().size.y * 0.2f };
 
-        name_text1.setPosition(
-            { (t_position.x - (name_text1.getGlobalBounds().size.x * 0.5f)),
+        spell_text1.setPosition(
+            { (t_position.x - (spell_text1.getGlobalBounds().size.x * 0.5f)),
               (util::bottom(title_text) + title_text.getGlobalBounds().size.y) });
 
         const sf::Vector2f nameRectSize{ imageRect.size.x,
-                                         (name_text1.getGlobalBounds().size.y + pad) };
+                                         (spell_text1.getGlobalBounds().size.y + pad) };
 
-        name_rect1 = sf::FloatRect(
-            { imageRect.position.x, (name_text1.getGlobalBounds().position.y - (pad * 0.5f)) },
+        spell_rect1 = sf::FloatRect(
+            { imageRect.position.x, (spell_text1.getGlobalBounds().position.y - (pad * 0.5f)) },
             nameRectSize);
 
-        name_text2.setPosition({ (t_position.x - (name_text2.getGlobalBounds().size.x * 0.5f)),
-                                 (util::bottom(name_text1) + pad) });
+        spell_text2.setPosition({ (t_position.x - (spell_text2.getGlobalBounds().size.x * 0.5f)),
+                                  (util::bottom(spell_text1) + pad) });
 
-        name_rect2 = sf::FloatRect(
-            { imageRect.position.x, (name_text2.getGlobalBounds().position.y - (pad * 0.5f)) },
+        spell_rect2 = sf::FloatRect(
+            { imageRect.position.x, (spell_text2.getGlobalBounds().position.y - (pad * 0.5f)) },
             nameRectSize);
 
-        name_text3.setPosition({ (t_position.x - (name_text3.getGlobalBounds().size.x * 0.5f)),
-                                 (util::bottom(name_text2) + pad) });
+        spell_text3.setPosition({ (t_position.x - (spell_text3.getGlobalBounds().size.x * 0.5f)),
+                                  (util::bottom(spell_text2) + pad) });
 
-        name_rect3 = sf::FloatRect(
-            { imageRect.position.x, (name_text3.getGlobalBounds().position.y - (pad * 0.5f)) },
+        spell_rect3 = sf::FloatRect(
+            { imageRect.position.x, (spell_text3.getGlobalBounds().position.y - (pad * 0.5f)) },
             nameRectSize);
 
         full_rect = sf::FloatRect(
             imageRect.position,
-            { imageRect.size.x, ((util::bottom(name_rect3) - imageRect.position.y) + pad) });
+            { imageRect.size.x, ((util::bottom(spell_rect3) - imageRect.position.y) + pad) });
 
         setFocus(false);
     }
@@ -106,17 +107,17 @@ namespace castlecrawl
         {
             sprite.setColor(color);
             title_text.setFillColor(color);
-            name_text1.setFillColor(name_color_focus_on);
-            name_text2.setFillColor(name_color_focus_on);
-            name_text3.setFillColor(name_color_focus_on);
+            spell_text1.setFillColor(spell_color_focus_on);
+            spell_text2.setFillColor(spell_color_focus_on);
+            spell_text3.setFillColor(spell_color_focus_on);
         }
         else
         {
             sprite.setColor(color - sf::Color(100, 100, 100, 0));
             title_text.setFillColor(color - sf::Color(100, 100, 100, 0));
-            name_text1.setFillColor(name_color_focus_off);
-            name_text2.setFillColor(name_color_focus_off);
-            name_text3.setFillColor(name_color_focus_off);
+            spell_text1.setFillColor(spell_color_focus_off);
+            spell_text2.setFillColor(spell_color_focus_off);
+            spell_text3.setFillColor(spell_color_focus_off);
         }
     }
 
@@ -126,7 +127,7 @@ namespace castlecrawl
         {
             sf::RectangleShape rectangle;
             rectangle.setFillColor(sf::Color(16, 16, 16));
-            rectangle.setOutlineColor(sf::Color(92,92,92));
+            rectangle.setOutlineColor(sf::Color(92, 92, 92));
             rectangle.setOutlineThickness(1.0f);
             rectangle.setPosition(full_rect.position);
             rectangle.setSize(full_rect.size);
@@ -139,19 +140,34 @@ namespace castlecrawl
 
         if (has_focus)
         {
+            const sf::FloatRect currentSpellRect = [&]() {
+                if (0 == spell_index)
+                {
+                    return spell_rect1;
+                }
+                else if (1 == spell_index)
+                {
+                    return spell_rect2;
+                }
+                else
+                {
+                    return spell_rect3;
+                }
+            }();
+
             sf::RectangleShape rectangle;
             rectangle.setFillColor(sf::Color(32, 32, 32));
             rectangle.setOutlineColor(sf::Color::White);
             rectangle.setOutlineThickness(1.0f);
-            rectangle.setPosition(name_rect1.position);
-            rectangle.setSize(name_rect1.size);
+            rectangle.setPosition(currentSpellRect.position);
+            rectangle.setSize(currentSpellRect.size);
 
             t_target.draw(rectangle, t_states);
         }
 
-        t_target.draw(name_text1, t_states);
-        t_target.draw(name_text2, t_states);
-        t_target.draw(name_text3, t_states);
+        t_target.draw(spell_text1, t_states);
+        t_target.draw(spell_text2, t_states);
+        t_target.draw(spell_text3, t_states);
     }
 
     //
@@ -305,6 +321,106 @@ namespace castlecrawl
         if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
         {
             t_context.state.setChangePending(State::Play);
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
+        {
+            const auto indexDecrement = [](SpellCategoryRectangle & scr) {
+                if (scr.spell_index == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    --scr.spell_index;
+                    return true;
+                }
+            };
+
+            if (m_fireRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_fireRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_iceRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_energyRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_gripRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_fearRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_fearRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+        }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+        {
+            const auto indexIncrement = [](SpellCategoryRectangle & scr) {
+                if (scr.spell_index == 2)
+                {
+                    return false;
+                }
+                else
+                {
+                    ++scr.spell_index;
+                    return true;
+                }
+            };
+
+            if (m_fireRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_fireRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_iceRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_energyRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_gripRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_fearRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_fearRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
         {
