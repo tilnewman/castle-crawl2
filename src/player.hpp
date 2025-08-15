@@ -5,6 +5,7 @@
 //
 #include "condition.hpp"
 #include "inventory.hpp"
+#include "spells.hpp"
 #include "stat.hpp"
 #include "strong-types.hpp"
 
@@ -49,9 +50,12 @@ namespace castlecrawl
         }
 
         [[nodiscard]] bool hasCondition(const Condition t_condition) const;
-
         void addCondition(const Condition t_condition);
         void removeCondition(const Condition t_condition);
+
+        [[nodiscard]] inline const std::vector<Spell> spells() const { return m_spells; }
+        [[nodiscard]] bool hasSpell(const Spell t_spell) const;
+        void addSpell(const Spell t_spell);
 
       private:
         constexpr static int statMin     = 1;
@@ -75,8 +79,8 @@ namespace castlecrawl
 
         item::Inventory m_inventory;
         item::EquipEffect m_equipEffects;
-
         std::vector<Condition> m_conditions;
+        std::vector<Spell> m_spells;
     };
 
 } // namespace castlecrawl

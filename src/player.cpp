@@ -22,6 +22,8 @@ namespace castlecrawl
         , m_gold{ 0 }
         , m_inventory{}
         , m_equipEffects{}
+        , m_conditions{}
+        , m_spells{ Spell::Spark, Spell::Frostbite, Spell::Zap } // spells known when game begins
     {}
 
     void Player::updateEquipEffects()
@@ -56,10 +58,24 @@ namespace castlecrawl
             m_conditions.push_back(t_condition);
         }
     }
-    
+
     void Player::removeCondition(const Condition t_condition)
-    { 
+    {
         std::erase(m_conditions, t_condition);
+    }
+
+    bool Player::hasSpell(const Spell t_spell) const
+    {
+        const auto foundIter{ std::find(std::begin(m_spells), std::end(m_spells), t_spell) };
+        return (foundIter != std::end(m_spells));
+    }
+
+    void Player::addSpell(const Spell t_spell)
+    {
+        if (!hasSpell(t_spell))
+        {
+            m_spells.push_back(t_spell);
+        }
     }
 
 } // namespace castlecrawl

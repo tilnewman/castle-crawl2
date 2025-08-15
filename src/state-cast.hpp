@@ -35,7 +35,7 @@ namespace castlecrawl
             const sf::Color & t_color,
             const sf::Vector2f & t_position);
 
-        void setFocus(const bool t_hasFocus);
+        void setFocus(const Context & t_context, const bool t_hasFocus);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         SpellCategory category;
@@ -51,9 +51,6 @@ namespace castlecrawl
         std::size_t spell_index;
         sf::Color color;
         bool has_focus;
-
-        static inline const sf::Color spell_color_focus_on  = sf::Color(230, 230, 230);
-        static inline const sf::Color spell_color_focus_off = sf::Color(127, 127, 127);
     };
 
     //
@@ -82,13 +79,10 @@ namespace castlecrawl
         void handleKeystrokesAfterSpellSelection(
             const Context & t_context, const sf::Event::KeyPressed & t_key);
 
-        void pickCategoryAndIndexThenCast(const Context & t_context, const MapPos_t & t_mapPos);
+        void castSpell(const Context & t_context, const MapPos_t & t_mapPos, const Spell t_spell);
 
-        void castSpell(
-            const Context & t_context,
-            const MapPos_t & t_mapPos,
-            const Spell t_spell);
-
+        [[nodiscard]] Spell selectedSpell() const;
+        
       private:
         sf::RectangleShape m_bgFadeRectangle;
         sf::Text m_titleText;
