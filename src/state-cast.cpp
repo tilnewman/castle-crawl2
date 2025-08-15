@@ -13,6 +13,7 @@
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
+#include "maps.hpp"
 #include "monster-manager.hpp"
 #include "player-display.hpp"
 #include "sfml-defaults.hpp"
@@ -186,6 +187,8 @@ namespace castlecrawl
         , m_energyTexture{}
         , m_gripTexture{}
         , m_fearTexture{}
+        , m_hasSpellBeenSelected{ false }
+        , m_directionSelectDisplay{}
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -282,49 +285,43 @@ namespace castlecrawl
             sf::Vector2f{ (categoryColumbWidth * 5.0f), categoryPositionTop });
 
         m_fireRectangleUPtr->setFocus(true);
+
+        //
+        m_directionSelectDisplay.setup(t_context);
     }
 
     void StateCast::update(const Context & t_context, const float t_elapsedSec)
     {
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_elapsedSec);
+        m_directionSelectDisplay.update(t_context, t_elapsedSec);
     }
 
     void StateCast::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
+        t_target.draw(t_context.top_panel, t_states);
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.monsters.drawHealthLines(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
-
-        {
-            const sf::FloatRect botRect{ t_context.layout.botRect() };
-            const float animSize{ botRect.size.x * 0.05f };
-            const float animPosVert{ (util::bottom(botRect) - animSize) - 10.0f };
-            const float animPosHoriz{ (botRect.size.x * 0.5f) - (animSize * 0.5f) };
-            const sf::FloatRect animRect{ { (animPosHoriz), animPosVert }, { animSize, animSize } };
-            sf::RectangleShape rectangle;
-            rectangle.setPosition(animRect.position);
-            rectangle.setSize(animRect.size);
-            rectangle.setOutlineThickness(1.0f);
-            rectangle.setOutlineColor(sf::Color::White);
-            rectangle.setFillColor(sf::Color::Transparent);
-            t_target.draw(rectangle, t_states);
-        }
-
         t_context.anim.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
 
-        t_target.draw(t_context.top_panel, t_states);
+        if (m_hasSpellBeenSelected)
+        {
+            m_directionSelectDisplay.draw(t_target, t_states);
+        }
+        else
+        {
+            t_target.draw(m_bgFadeRectangle, t_states);
+            t_target.draw(m_titleText, t_states);
 
-        t_target.draw(m_bgFadeRectangle, t_states);
-        t_target.draw(m_titleText, t_states);
-
-        m_fireRectangleUPtr->draw(t_target, t_states);
-        m_iceRectangleUPtr->draw(t_target, t_states);
-        m_energyRectangleUPtr->draw(t_target, t_states);
-        m_gripRectangleUPtr->draw(t_target, t_states);
-        m_fearRectangleUPtr->draw(t_target, t_states);
+            m_fireRectangleUPtr->draw(t_target, t_states);
+            m_iceRectangleUPtr->draw(t_target, t_states);
+            m_energyRectangleUPtr->draw(t_target, t_states);
+            m_gripRectangleUPtr->draw(t_target, t_states);
+            m_fearRectangleUPtr->draw(t_target, t_states);
+        }
     }
 
     void StateCast::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -338,202 +335,92 @@ namespace castlecrawl
         if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
         {
             t_context.state.setChangePending(State::Play);
+            return;
         }
-        else if (keyPtr->scancode == sf::Keyboard::Scancode::Up)
+
+        if (m_hasSpellBeenSelected)
         {
-            const auto indexDecrement = [](SpellCategoryRectangle & scr) {
-                if (scr.spell_index == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    --scr.spell_index;
-                    return true;
-                }
-            };
-
-            if (m_fireRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_fireRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_iceRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_energyRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_gripRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_fearRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_fearRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
+            handleKeystrokesAfterSpellSelection(t_context, *keyPtr);
         }
-        else if (keyPtr->scancode == sf::Keyboard::Scancode::Down)
+        else
         {
-            const auto indexIncrement = [](SpellCategoryRectangle & scr) {
-                if (scr.spell_index == 2)
-                {
-                    return false;
-                }
-                else
-                {
-                    ++scr.spell_index;
-                    return true;
-                }
-            };
-
-            if (m_fireRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_fireRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_iceRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_energyRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_gripRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
-
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_fearRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_fearRectangleUPtr))
-                {
-                    playAnimationDemo(
-                        t_context, SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
-                    t_context.sfx.play("tick-on");
-                }
-            }
-        }
-        else if (keyPtr->scancode == sf::Keyboard::Scancode::Right)
-        {
-            if (m_fireRectangleUPtr->has_focus)
-            {
-                m_fireRectangleUPtr->setFocus(false);
-                m_iceRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                m_iceRectangleUPtr->setFocus(false);
-                m_energyRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                m_energyRectangleUPtr->setFocus(false);
-                m_gripRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                m_gripRectangleUPtr->setFocus(false);
-                m_fearRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-        }
-        else if (keyPtr->scancode == sf::Keyboard::Scancode::Left)
-        {
-            if (m_fearRectangleUPtr->has_focus)
-            {
-                m_fearRectangleUPtr->setFocus(false);
-                m_gripRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                m_gripRectangleUPtr->setFocus(false);
-                m_energyRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                m_energyRectangleUPtr->setFocus(false);
-                m_iceRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                m_iceRectangleUPtr->setFocus(false);
-                m_fireRectangleUPtr->setFocus(true);
-                t_context.sfx.play("tick-on");
-            }
+            handleKeystrokesBeforeSpellSelection(t_context, *keyPtr);
         }
     }
 
-    void StateCast::playAnimationDemo(
-        const Context & t_context,
-        const SpellCategory & t_spellCategory,
-        const std::size_t t_spellIndex) const
+    void StateCast::handleKeystrokesAfterSpellSelection(
+        const Context & t_context, const sf::Event::KeyPressed & t_key)
     {
-        const sf::FloatRect botRect{ t_context.layout.botRect() };
-        const float animSize{ botRect.size.x * 0.05f };
-        const float animPosVert{ (util::bottom(botRect) - animSize) - 10.0f };
-        const float animPosHoriz{ (botRect.size.x * 0.5f) - (animSize * 0.5f) };
-        const sf::FloatRect animRect{ { (animPosHoriz), animPosVert }, { animSize, animSize } };
+        const MapPos_t mapPos{ t_context.player_display.position() };
+        const MapPos_t upPos{ mapPos.x, (mapPos.y - 1) };
+        const MapPos_t downPos{ mapPos.x, (mapPos.y + 1) };
+        const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
+        const MapPos_t rightPos{ (mapPos.x + 1), mapPos.y };
+
+        if ((t_key.scancode == sf::Keyboard::Scancode::Up) &&
+            t_context.maps.current().isPosValid(upPos))
+        {
+            pickCategoryAndIndex(t_context, upPos);
+        }
+        else if (
+            (t_key.scancode == sf::Keyboard::Scancode::Down) &&
+            t_context.maps.current().isPosValid(downPos))
+        {
+            pickCategoryAndIndex(t_context, downPos);
+        }
+        else if (
+            (t_key.scancode == sf::Keyboard::Scancode::Left) &&
+            t_context.maps.current().isPosValid(leftPos))
+        {
+            pickCategoryAndIndex(t_context, leftPos);
+        }
+        else if (
+            (t_key.scancode == sf::Keyboard::Scancode::Right) &&
+            t_context.maps.current().isPosValid(rightPos))
+        {
+            pickCategoryAndIndex(t_context, rightPos);
+        }
+        else
+        {
+            t_context.sfx.play("error-1");
+        }
+    }
+
+    void StateCast::pickCategoryAndIndex(const Context & t_context, const MapPos_t & t_mapPos)
+    {
+        if (m_fireRectangleUPtr->has_focus)
+        {
+            castSpell(t_context, t_mapPos, SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
+        }
+        else if (m_iceRectangleUPtr->has_focus)
+        {
+            castSpell(t_context, t_mapPos, SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
+        }
+        else if (m_energyRectangleUPtr->has_focus)
+        {
+            castSpell(
+                t_context, t_mapPos, SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
+        }
+        else if (m_gripRectangleUPtr->has_focus)
+        {
+            castSpell(t_context, t_mapPos, SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
+        }
+        else if (m_fearRectangleUPtr->has_focus)
+        {
+            castSpell(t_context, t_mapPos, SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
+        }
+    }
+
+    void StateCast::castSpell(
+        const Context & t_context,
+        const MapPos_t & t_mapPos,
+        const SpellCategory t_spellCategory,
+        const std::size_t t_spellIndex)
+    {
+        const sf::Vector2f screenPos{ t_context.maps.current().mapPosToScreenPos(
+            t_context, t_mapPos) };
+
+        const sf::FloatRect animRect{ screenPos, t_context.layout.cellSize() };
 
         if (t_spellCategory == SpellCategory::Fire)
         {
@@ -621,6 +508,171 @@ namespace castlecrawl
             else if (t_spellIndex == 2)
             {
                 t_context.anim.player().play("spell", animRect, config);
+            }
+        }
+
+        t_context.state.setChangePending(State::Play);
+    }
+
+    void StateCast::handleKeystrokesBeforeSpellSelection(
+        const Context & t_context, const sf::Event::KeyPressed & t_key)
+    {
+        if (t_key.scancode == sf::Keyboard::Scancode::Enter)
+        {
+            m_hasSpellBeenSelected = true;
+        }
+        else if (t_key.scancode == sf::Keyboard::Scancode::Up)
+        {
+            const auto indexDecrement = [](SpellCategoryRectangle & scr) {
+                if (scr.spell_index == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    --scr.spell_index;
+                    return true;
+                }
+            };
+
+            if (m_fireRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_fireRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_iceRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_energyRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_gripRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_fearRectangleUPtr->has_focus)
+            {
+                if (indexDecrement(*m_fearRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+        }
+        else if (t_key.scancode == sf::Keyboard::Scancode::Down)
+        {
+            const auto indexIncrement = [](SpellCategoryRectangle & scr) {
+                if (scr.spell_index == 2)
+                {
+                    return false;
+                }
+                else
+                {
+                    ++scr.spell_index;
+                    return true;
+                }
+            };
+
+            if (m_fireRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_fireRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_iceRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_energyRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_gripRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+            else if (m_fearRectangleUPtr->has_focus)
+            {
+                if (indexIncrement(*m_fearRectangleUPtr))
+                {
+                    t_context.sfx.play("tick-on");
+                }
+            }
+        }
+        else if (t_key.scancode == sf::Keyboard::Scancode::Right)
+        {
+            if (m_fireRectangleUPtr->has_focus)
+            {
+                m_fireRectangleUPtr->setFocus(false);
+                m_iceRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                m_iceRectangleUPtr->setFocus(false);
+                m_energyRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                m_energyRectangleUPtr->setFocus(false);
+                m_gripRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                m_gripRectangleUPtr->setFocus(false);
+                m_fearRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+        }
+        else if (t_key.scancode == sf::Keyboard::Scancode::Left)
+        {
+            if (m_fearRectangleUPtr->has_focus)
+            {
+                m_fearRectangleUPtr->setFocus(false);
+                m_gripRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                m_gripRectangleUPtr->setFocus(false);
+                m_energyRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                m_energyRectangleUPtr->setFocus(false);
+                m_iceRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                m_iceRectangleUPtr->setFocus(false);
+                m_fireRectangleUPtr->setFocus(true);
+                t_context.sfx.play("tick-on");
             }
         }
     }

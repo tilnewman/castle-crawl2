@@ -3,6 +3,7 @@
 //
 // state-cast.hpp
 //
+#include "direction-select-display.hpp"
 #include "spells.hpp"
 #include "state.hpp"
 
@@ -74,10 +75,19 @@ namespace castlecrawl
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        void playAnimationDemo(
+        void handleKeystrokesBeforeSpellSelection(
+            const Context & t_context, const sf::Event::KeyPressed & t_key);
+
+        void handleKeystrokesAfterSpellSelection(
+            const Context & t_context, const sf::Event::KeyPressed & t_key);
+
+        void pickCategoryAndIndex(const Context & t_context, const MapPos_t & t_mapPos);
+
+        void castSpell(
             const Context & t_context,
-            const SpellCategory & t_spellCategory,
-            const std::size_t t_spellIndex) const;
+            const MapPos_t & t_mapPos,
+            const SpellCategory t_spellCategory,
+            const std::size_t t_spellIndex);
 
       private:
         sf::RectangleShape m_bgFadeRectangle;
@@ -92,6 +102,8 @@ namespace castlecrawl
         sf::Texture m_energyTexture;
         sf::Texture m_gripTexture;
         sf::Texture m_fearTexture;
+        bool m_hasSpellBeenSelected;
+        DirectionSelectDisplay m_directionSelectDisplay;
     };
 
 } // namespace castlecrawl

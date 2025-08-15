@@ -90,7 +90,6 @@ namespace castlecrawl
         const Context & t_context, const sf::Keyboard::Scancode t_key)
     {
         const MapPos_t mapPos{ t_context.player_display.position() };
-
         const MapPos_t upPos{ mapPos.x, (mapPos.y - 1) };
         const MapPos_t downPos{ mapPos.x, (mapPos.y + 1) };
         const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
@@ -124,7 +123,7 @@ namespace castlecrawl
         }
         else
         {
-            t_context.sfx.play("error-1.ogg");
+            t_context.sfx.play("error-1");
         }
     }
 
