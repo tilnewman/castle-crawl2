@@ -86,7 +86,7 @@ namespace castlecrawl
         void showErrorMessage(const Context & t_context);
 
         void updateDescription(const Context & t_context);
-        
+
       private:
         sf::RectangleShape m_bgFadeRectangle;
         sf::Text m_titleText;
@@ -105,6 +105,8 @@ namespace castlecrawl
         sf::Text m_errorText;
         float m_errorTimerSec;
         sf::Text m_descriptionText;
+
+        static inline Spell m_prevCastSpell{ Spell::Spark };
     };
 
 } // namespace castlecrawl

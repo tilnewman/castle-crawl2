@@ -24,7 +24,6 @@
 #include "texture-loader.hpp"
 #include "top-panel.hpp"
 
-
 namespace castlecrawl
 {
 
@@ -344,8 +343,84 @@ namespace castlecrawl
 
         m_descriptionText.setStyle(sf::Text::Italic);
 
+        // select the prev cast spell so that recasting is trivial
+        if (m_prevCastSpell == Spell::Spark)
+        {
+            m_fireRectangleUPtr->setFocus(t_context, true);
+            m_fireRectangleUPtr->spell_index = 0;
+        }
+        else if (m_prevCastSpell == Spell::Flare)
+        {
+            m_fireRectangleUPtr->setFocus(t_context, true);
+            m_fireRectangleUPtr->spell_index = 1;
+        }
+        else if (m_prevCastSpell == Spell::Fireball)
+        {
+            m_fireRectangleUPtr->setFocus(t_context, true);
+            m_fireRectangleUPtr->spell_index = 2;
+        }
+        else if (m_prevCastSpell == Spell::Frostbite)
+        {
+            m_iceRectangleUPtr->setFocus(t_context, true);
+            m_iceRectangleUPtr->spell_index = 0;
+        }
+        else if (m_prevCastSpell == Spell::FreezingWind)
+        {
+            m_iceRectangleUPtr->setFocus(t_context, true);
+            m_iceRectangleUPtr->spell_index = 1;
+        }
+        else if (m_prevCastSpell == Spell::IceShards)
+        {
+            m_iceRectangleUPtr->setFocus(t_context, true);
+            m_iceRectangleUPtr->spell_index = 2;
+        }
+        else if (m_prevCastSpell == Spell::Zap)
+        {
+            m_energyRectangleUPtr->setFocus(t_context, true);
+            m_energyRectangleUPtr->spell_index = 0;
+        }
+        else if (m_prevCastSpell == Spell::Jolt)
+        {
+            m_energyRectangleUPtr->setFocus(t_context, true);
+            m_energyRectangleUPtr->spell_index = 1;
+        }
+        else if (m_prevCastSpell == Spell::Lightning)
+        {
+            m_energyRectangleUPtr->setFocus(t_context, true);
+            m_energyRectangleUPtr->spell_index = 2;
+        }
+        else if (m_prevCastSpell == Spell::Slow)
+        {
+            m_gripRectangleUPtr->setFocus(t_context, true);
+            m_gripRectangleUPtr->spell_index = 0;
+        }
+        else if (m_prevCastSpell == Spell::Stun)
+        {
+            m_gripRectangleUPtr->setFocus(t_context, true);
+            m_gripRectangleUPtr->spell_index = 1;
+        }
+        else if (m_prevCastSpell == Spell::Immobillize)
+        {
+            m_gripRectangleUPtr->setFocus(t_context, true);
+            m_gripRectangleUPtr->spell_index = 2;
+        }
+        else if (m_prevCastSpell == Spell::Scare)
+        {
+            m_fearRectangleUPtr->setFocus(t_context, true);
+            m_fearRectangleUPtr->spell_index = 0;
+        }
+        else if (m_prevCastSpell == Spell::Terrorize)
+        {
+            m_fearRectangleUPtr->setFocus(t_context, true);
+            m_fearRectangleUPtr->spell_index = 1;
+        }
+        else // if (m_prevCastSpell == Spell::HeartAttack)
+        {
+            m_fearRectangleUPtr->setFocus(t_context, true);
+            m_fearRectangleUPtr->spell_index = 2;
+        }
+
         // initial setup
-        m_fireRectangleUPtr->setFocus(t_context, true);
         m_directionSelectDisplay.setup(t_context);
         updateDescription(t_context);
     }
@@ -585,9 +660,12 @@ namespace castlecrawl
     {
         if (t_key.scancode == sf::Keyboard::Scancode::Enter)
         {
-            if (t_context.player.hasSpell(selectedSpell()))
+            const Spell spell{ selectedSpell() };
+            if (t_context.player.hasSpell(spell))
             {
                 m_hasSpellBeenSelected = true;
+                m_prevCastSpell        = spell;
+                // TODO sfx?
             }
             else
             {
@@ -776,7 +854,7 @@ namespace castlecrawl
         {
             description += "A low power but less predictable energy attack spell doing ";
         }
-        //TODO finish this and give all spells a description.
+        // TODO finish this and give all spells a description.
 
         const sf::Vector2i damageMinMax{ toDamageMinMax(spell) };
         if ((damageMinMax.x < damageMinMax.y) && !description.empty())

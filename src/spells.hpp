@@ -123,6 +123,35 @@ namespace castlecrawl
         // clang-format on
     }
 
+    [[nodiscard]] inline constexpr SpellCategory toCategory(const Spell t_spell) noexcept
+    {
+        // clang-format off
+        switch(t_spell)
+        {
+            case Spell::Scare:          
+            case Spell::Terrorize:      
+            case Spell::HeartAttack:    { return SpellCategory::Fear;  }
+                                                
+            case Spell::Slow:           
+            case Spell::Stun:           
+            case Spell::Immobillize:    { return SpellCategory::Grip;  }
+                                               
+            case Spell::Zap:            
+            case Spell::Jolt:           
+            case Spell::Lightning:      { return SpellCategory::Energy; }
+                                               
+            case Spell::Spark:          
+            case Spell::Flare:          
+            case Spell::Fireball:       { return SpellCategory::Fire;  }
+                                             
+            case Spell::Frostbite:   
+            case Spell::FreezingWind:
+            case Spell::IceShards:             
+            default:                    { return SpellCategory::Ice;  }      
+        }
+        // clang-format on
+    }
+
     [[nodiscard]] inline const sf::Vector2i toDamageMinMax(const Spell t_spell) noexcept
     {
         // clang-format off
