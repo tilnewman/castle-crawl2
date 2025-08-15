@@ -36,6 +36,12 @@ namespace castlecrawl
         const sf::Color message_color_poison      = sf::Color(100, 255, 100);
         const sf::Color message_color_item        = sf::Color(160, 82, 45);
 
+        const sf::Color spell_color_fire   = sf::Color(255, 192, 192);
+        const sf::Color spell_color_ice    = sf::Color(192, 192, 255);
+        const sf::Color spell_color_energy = sf::Color(192, 240, 240);
+        const sf::Color spell_color_grip   = sf::Color(225, 175, 130);
+        const sf::Color spell_color_fear   = sf::Color(190, 150, 240);
+
         const std::size_t turns_per_health_increase = 36;
         const std::size_t turns_per_mana_increase   = 12;
 

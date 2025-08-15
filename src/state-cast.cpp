@@ -29,14 +29,18 @@ namespace castlecrawl
     SpellCategoryRectangle::SpellCategoryRectangle(
         const Context & t_context,
         const sf::Texture & t_texture,
-        const std::string & t_title,
+        const SpellCategory t_category,
         const std::string & t_spellName1,
         const std::string & t_spellName2,
         const std::string & t_spellName3,
         const sf::Color & t_color,
         const sf::Vector2f & t_position)
-        : sprite{ t_texture }
-        , title_text{ t_context.fonts.makeText(FontSize::Large, t_title, t_color) }
+        : category{ t_category }
+        , sprite{ t_texture }
+        , title_text{ t_context.fonts.makeText(
+              FontSize::Large,
+              std::string(spellCategoryToName(t_category)).append(" Spells"),
+              t_color) }
         , spell_text1{ t_context.fonts.makeText(
               FontSize::Medium, t_spellName1, spell_color_focus_on) }
         , spell_text2{ t_context.fonts.makeText(
@@ -225,63 +229,57 @@ namespace castlecrawl
             m_fearTexture, (t_context.config.media_path / "image" / "fear-icon.png"), true);
 
         // spell category columbs
-        const sf::Color fireColor{ 255, 192, 192 };
-        const sf::Color iceColor{ 192, 192, 255 };
-        const sf::Color energyColor{ 192, 240, 240 };
-        const sf::Color gripColor{ 225, 175, 130 };
-        const sf::Color fearColor{ 190, 150, 240 };
-
         const float categoryColumbWidth{ botRect.size.x / 6.0f };
         const float categoryPositionTop{ util::bottom(m_titleText) + pad };
 
         m_fireRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
             m_fireTexture,
-            "Fire Spells",
+            SpellCategory::Fire,
             "Spark",
             "Flare",
             "Fireball",
-            fireColor,
+            t_context.config.spell_color_fire,
             sf::Vector2f{ (categoryColumbWidth * 1.0f), categoryPositionTop });
 
         m_iceRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
             m_iceTexture,
-            "Ice Spells",
+            SpellCategory::Ice,
             "Frostbite",
             "Freezing Wind",
             "Ice Shards",
-            iceColor,
+            t_context.config.spell_color_ice,
             sf::Vector2f{ (categoryColumbWidth * 2.0f), categoryPositionTop });
 
         m_energyRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
             m_energyTexture,
-            "Energy Spells",
+            SpellCategory::Energy,
             "Zap",
             "Jolt",
             "Lightning",
-            energyColor,
+            t_context.config.spell_color_energy,
             sf::Vector2f{ (categoryColumbWidth * 3.0f), categoryPositionTop });
 
         m_gripRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
             m_gripTexture,
-            "Grip Spells",
+            SpellCategory::Grip,
             "Slow",
             "Stun",
             "Immobalize",
-            gripColor,
+            t_context.config.spell_color_grip,
             sf::Vector2f{ (categoryColumbWidth * 4.0f), categoryPositionTop });
 
         m_fearRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
             m_fearTexture,
-            "Fear Spells",
+            SpellCategory::Fear,
             "Scare",
             "Terrorize",
             "Heart Attack",
-            fearColor,
+            t_context.config.spell_color_fear,
             sf::Vector2f{ (categoryColumbWidth * 5.0f), categoryPositionTop });
 
         m_fireRectangleUPtr->setFocus(true);
@@ -360,25 +358,25 @@ namespace castlecrawl
         if ((t_key.scancode == sf::Keyboard::Scancode::Up) &&
             t_context.maps.current().isPosValid(upPos))
         {
-            pickCategoryAndIndex(t_context, upPos);
+            pickCategoryAndIndexThenCast(t_context, upPos);
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Down) &&
             t_context.maps.current().isPosValid(downPos))
         {
-            pickCategoryAndIndex(t_context, downPos);
+            pickCategoryAndIndexThenCast(t_context, downPos);
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Left) &&
             t_context.maps.current().isPosValid(leftPos))
         {
-            pickCategoryAndIndex(t_context, leftPos);
+            pickCategoryAndIndexThenCast(t_context, leftPos);
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Right) &&
             t_context.maps.current().isPosValid(rightPos))
         {
-            pickCategoryAndIndex(t_context, rightPos);
+            pickCategoryAndIndexThenCast(t_context, rightPos);
         }
         else
         {
@@ -386,129 +384,127 @@ namespace castlecrawl
         }
     }
 
-    void StateCast::pickCategoryAndIndex(const Context & t_context, const MapPos_t & t_mapPos)
+    void StateCast::pickCategoryAndIndexThenCast(
+        const Context & t_context, const MapPos_t & t_mapPos)
     {
         if (m_fireRectangleUPtr->has_focus)
         {
-            castSpell(t_context, t_mapPos, SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
+            castSpell(
+                t_context,
+                t_mapPos,
+                toSpell(SpellCategory::Fire, m_fireRectangleUPtr->spell_index));
         }
         else if (m_iceRectangleUPtr->has_focus)
         {
-            castSpell(t_context, t_mapPos, SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
+            castSpell(
+                t_context, t_mapPos, toSpell(SpellCategory::Ice, m_iceRectangleUPtr->spell_index));
         }
         else if (m_energyRectangleUPtr->has_focus)
         {
             castSpell(
-                t_context, t_mapPos, SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
+                t_context,
+                t_mapPos,
+                toSpell(SpellCategory::Energy, m_energyRectangleUPtr->spell_index));
         }
         else if (m_gripRectangleUPtr->has_focus)
         {
-            castSpell(t_context, t_mapPos, SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
+            castSpell(
+                t_context,
+                t_mapPos,
+                toSpell(SpellCategory::Grip, m_gripRectangleUPtr->spell_index));
         }
         else if (m_fearRectangleUPtr->has_focus)
         {
-            castSpell(t_context, t_mapPos, SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
+            castSpell(
+                t_context,
+                t_mapPos,
+                toSpell(SpellCategory::Fear, m_fearRectangleUPtr->spell_index));
         }
     }
 
     void StateCast::castSpell(
-        const Context & t_context,
-        const MapPos_t & t_mapPos,
-        const SpellCategory t_spellCategory,
-        const std::size_t t_spellIndex)
+        const Context & t_context, const MapPos_t & t_mapPos, const Spell t_spell)
     {
         const sf::Vector2f screenPos{ t_context.maps.current().mapPosToScreenPos(
             t_context, t_mapPos) };
 
         const sf::FloatRect animRect{ screenPos, t_context.layout.cellSize() };
 
-        if (t_spellCategory == SpellCategory::Fire)
+        if (t_spell == Spell::Spark)
         {
-            if (t_spellIndex == 0)
-            {
-                t_context.anim.player().play("spark", util::scaleRectInPlaceCopy(animRect, 1.25f));
-            }
-            else if (t_spellIndex == 1)
-            {
-                t_context.anim.player().play("flare", util::scaleRectInPlaceCopy(animRect, 1.25f));
-            }
-            else if (t_spellIndex == 2)
-            {
-                t_context.anim.player().play(
-                    "fireball", util::scaleRectInPlaceCopy(animRect, 1.5f));
-            }
+            t_context.anim.player().play("spark", util::scaleRectInPlaceCopy(animRect, 1.25f));
         }
-        else if (t_spellCategory == SpellCategory::Ice)
+        else if (t_spell == Spell::Flare)
         {
-            if (t_spellIndex == 0)
-            {
-                util::AnimConfig config(0.5f);
+            t_context.anim.player().play("flare", util::scaleRectInPlaceCopy(animRect, 1.25f));
+        }
+        else if (t_spell == Spell::Fireball)
+        {
+            t_context.anim.player().play("fireball", util::scaleRectInPlaceCopy(animRect, 1.5f));
+        }
+        else if (t_spell == Spell::Frostbite)
+        {
+            util::AnimConfig config(0.5f);
 
-                t_context.anim.player().play(
-                    "frostbite", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
-            }
-            else if (t_spellIndex == 1)
-            {
-                t_context.anim.player().play(
-                    "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f));
-            }
-            else if (t_spellIndex == 2)
-            {
-                t_context.anim.player().play(
-                    "ice-shards", util::scaleRectInPlaceCopy(animRect, 2.0f));
-            }
+            t_context.anim.player().play(
+                "frostbite", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
         }
-        else if (t_spellCategory == SpellCategory::Energy)
+        else if (t_spell == Spell::FreezingWind)
         {
-            if (t_spellIndex == 0)
-            {
-                util::AnimConfig config(0.5f);
-                t_context.anim.player().play(
-                    "frostbite", util::scaleRectInPlaceCopy(animRect, 2.0f), config);
-            }
-            else if (t_spellIndex == 1)
-            {
-                t_context.anim.player().play("jolt", animRect);
-            }
-            else if (t_spellIndex == 2)
-            {
-                t_context.anim.player().play(
-                    "lightning", util::scaleRectInPlaceCopy(animRect, 2.0f));
-            }
+            t_context.anim.player().play(
+                "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f));
         }
-        else if (t_spellCategory == SpellCategory::Grip)
+        else if (t_spell == Spell::IceShards)
         {
-            util::AnimConfig config(0.75f, sf::Color(255, 205, 160));
+            t_context.anim.player().play("ice-shards", util::scaleRectInPlaceCopy(animRect, 2.0f));
+        }
+        else if (t_spell == Spell::Zap)
+        {
+            util::AnimConfig config(0.5f, t_context.config.spell_color_energy);
 
-            if (t_spellIndex == 0)
-            {
-                t_context.anim.player().play("orb-charge", animRect, config);
-            }
-            else if (t_spellIndex == 1)
-            {
-                t_context.anim.player().play("orb-charge", animRect, config);
-            }
-            else if (t_spellIndex == 2)
-            {
-                t_context.anim.player().play("orb-charge", animRect, config);
-            }
+            // use frostbite anim for zap because it looks good enough for now
+            t_context.anim.player().play(
+                "frostbite", util::scaleRectInPlaceCopy(animRect, 2.0f), config);
         }
-        else if (t_spellCategory == SpellCategory::Fear)
+        else if (t_spell == Spell::Jolt)
         {
-            util::AnimConfig config(1.75f, sf::Color(205, 165, 255));
-
-            if (t_spellIndex == 0)
-            {
-                t_context.anim.player().play("spell", animRect, config);
-            }
-            else if (t_spellIndex == 1)
-            {
-                t_context.anim.player().play("spell", animRect, config);
-            }
-            else if (t_spellIndex == 2)
-            {
-                t_context.anim.player().play("spell", animRect, config);
-            }
+            util::AnimConfig config(1.25f, t_context.config.spell_color_energy);
+            t_context.anim.player().play("jolt", animRect, config);
+        }
+        else if (t_spell == Spell::Lightning)
+        {
+            util::AnimConfig config(1.25f, t_context.config.spell_color_energy);
+            t_context.anim.player().play("lightning", util::scaleRectInPlaceCopy(animRect, 2.0f));
+        }
+        else if (t_spell == Spell::Slow)
+        {
+            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            t_context.anim.player().play("orb-charge", animRect, config);
+        }
+        else if (t_spell == Spell::Stun)
+        {
+            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            t_context.anim.player().play("orb-charge", animRect, config);
+        }
+        else if (t_spell == Spell::Immobillize)
+        {
+            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            t_context.anim.player().play("orb-charge", animRect, config);
+        }
+        else if (t_spell == Spell::Scare)
+        {
+            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            t_context.anim.player().play("spell", animRect, config);
+        }
+        else if (t_spell == Spell::Terrorize)
+        {
+            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            t_context.anim.player().play("spell", animRect, config);
+        }
+        else // if (t_spell == Spell::HeartAttack)
+        {
+            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            t_context.anim.player().play("spell", animRect, config);
         }
 
         t_context.state.setChangePending(State::Play);

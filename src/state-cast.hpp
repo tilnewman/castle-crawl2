@@ -28,7 +28,7 @@ namespace castlecrawl
         SpellCategoryRectangle(
             const Context & t_context,
             const sf::Texture & t_texture,
-            const std::string & t_title,
+            const SpellCategory t_category,
             const std::string & t_spellName1,
             const std::string & t_spellName2,
             const std::string & t_spellName3,
@@ -38,6 +38,7 @@ namespace castlecrawl
         void setFocus(const bool t_hasFocus);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
+        SpellCategory category;
         sf::Sprite sprite;
         sf::Text title_text;
         sf::Text spell_text1;
@@ -81,13 +82,12 @@ namespace castlecrawl
         void handleKeystrokesAfterSpellSelection(
             const Context & t_context, const sf::Event::KeyPressed & t_key);
 
-        void pickCategoryAndIndex(const Context & t_context, const MapPos_t & t_mapPos);
+        void pickCategoryAndIndexThenCast(const Context & t_context, const MapPos_t & t_mapPos);
 
         void castSpell(
             const Context & t_context,
             const MapPos_t & t_mapPos,
-            const SpellCategory t_spellCategory,
-            const std::size_t t_spellIndex);
+            const Spell t_spell);
 
       private:
         sf::RectangleShape m_bgFadeRectangle;

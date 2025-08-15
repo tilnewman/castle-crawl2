@@ -17,7 +17,8 @@ namespace castlecrawl
         Grip
     };
 
-    inline constexpr std::string_view spellCategoryToName(const SpellCategory t_spellCategroy) noexcept
+    [[nodiscard]] inline constexpr std::string_view
+        spellCategoryToName(const SpellCategory t_spellCategroy) noexcept
     {
         // clang-format off
         switch(t_spellCategroy)
@@ -31,7 +32,8 @@ namespace castlecrawl
         }
         // clang-format on
     }
-        //
+
+    //
 
     enum class Spell
     {
@@ -61,7 +63,7 @@ namespace castlecrawl
         IceShards
     };
 
-    inline constexpr std::string_view spellToName(const Spell t_spell) noexcept
+    [[nodiscard]] inline constexpr std::string_view spellToName(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
@@ -90,7 +92,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline constexpr int spellToManaCost(const Spell t_spell) noexcept
+    [[nodiscard]] inline constexpr int spellToManaCost(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
@@ -101,7 +103,7 @@ namespace castlecrawl
                                                 
             case Spell::Slow:           { return 3;  }
             case Spell::Stun:           { return 6;  }
-            case Spell::Immobillize:     { return 10; }
+            case Spell::Immobillize:    { return 10; }
                                                
             case Spell::Zap:            { return 3;  }
             case Spell::Jolt:           { return 6;  }
@@ -117,6 +119,85 @@ namespace castlecrawl
             default:                    { return 8;  }      
         }
         // clang-format on
+    }
+
+    [[nodiscard]] constexpr Spell toSpell(const SpellCategory t_category, const std::size_t t_index)
+    {
+        if (t_category == SpellCategory::Fire)
+        {
+            if (t_index == 0)
+            {
+                return Spell::Spark;
+            }
+            else if (t_index == 1)
+            {
+                return Spell::Flare;
+            }
+            else
+            {
+                return Spell::Fireball;
+            }
+        }
+        else if (t_category == SpellCategory::Ice)
+        {
+            if (t_index == 0)
+            {
+                return Spell::Frostbite;
+            }
+            else if (t_index == 1)
+            {
+                return Spell::FreezingWind;
+            }
+            else
+            {
+                return Spell::IceShards;
+            }
+        }
+        else if (t_category == SpellCategory::Energy)
+        {
+            if (t_index == 0)
+            {
+                return Spell::Zap;
+            }
+            else if (t_index == 1)
+            {
+                return Spell::Jolt;
+            }
+            else
+            {
+                return Spell::Lightning;
+            }
+        }
+        else if (t_category == SpellCategory::Grip)
+        {
+            if (t_index == 0)
+            {
+                return Spell::Slow;
+            }
+            else if (t_index == 1)
+            {
+                return Spell::Stun;
+            }
+            else
+            {
+                return Spell::Immobillize;
+            }
+        }
+        else // if (t_category == SpellCategory::Fear)
+        {
+            if (t_index == 0)
+            {
+                return Spell::Scare;
+            }
+            else if (t_index == 1)
+            {
+                return Spell::Terrorize;
+            }
+            else
+            {
+                return Spell::HeartAttack;
+            }
+        }
     }
 
 } // namespace castlecrawl
