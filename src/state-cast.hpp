@@ -84,6 +84,8 @@ namespace castlecrawl
         [[nodiscard]] Spell selectedSpell() const;
 
         void showErrorMessage(const Context & t_context);
+
+        void updateDescription(const Context & t_context);
         
       private:
         sf::RectangleShape m_bgFadeRectangle;
@@ -102,6 +104,7 @@ namespace castlecrawl
         DirectionSelectDisplay m_directionSelectDisplay;
         sf::Text m_errorText;
         float m_errorTimerSec;
+        sf::Text m_descriptionText;
     };
 
 } // namespace castlecrawl

@@ -3,6 +3,8 @@
 //
 // spells.hpp
 //
+#include <SFML/System/Vector2.hpp>
+
 #include <string_view>
 
 namespace castlecrawl
@@ -117,6 +119,36 @@ namespace castlecrawl
             case Spell::FreezingWind:   { return 4;  }
             case Spell::IceShards:             
             default:                    { return 8;  }      
+        }
+        // clang-format on
+    }
+
+    [[nodiscard]] inline const sf::Vector2i toDamageMinMax(const Spell t_spell) noexcept
+    {
+        // clang-format off
+        switch(t_spell)
+        {  
+            case Spell::Zap:            { return {  1,  5 };  }
+            case Spell::Jolt:           { return {  6, 12 };  }
+            case Spell::Lightning:      { return { 16, 30 };  }
+
+            case Spell::Spark:          { return {  2,  4 };  }
+            case Spell::Flare:          { return {  8, 12 };  }
+            case Spell::Fireball:       { return { 20, 28 };  }
+
+            case Spell::Frostbite:      { return {  2,  4 };  }
+            case Spell::FreezingWind:   { return {  7, 13 };  }    
+            case Spell::IceShards:      { return { 22, 26 };  }  
+
+            case Spell::Scare:      
+            case Spell::Terrorize:  
+            case Spell::HeartAttack:    { return { 26, 36 };  } 
+   
+            case Spell::Slow:       
+            case Spell::Stun:       
+            case Spell::Immobillize:
+
+            default:                    { return { 0, 0 };    }   
         }
         // clang-format on
     }

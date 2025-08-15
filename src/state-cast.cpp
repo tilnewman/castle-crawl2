@@ -24,6 +24,7 @@
 #include "texture-loader.hpp"
 #include "top-panel.hpp"
 
+
 namespace castlecrawl
 {
 
@@ -244,6 +245,7 @@ namespace castlecrawl
         , m_directionSelectDisplay{}
         , m_errorText{ util::SfmlDefaults::instance().font() }
         , m_errorTimerSec{ 0.0f }
+        , m_descriptionText{ util::SfmlDefaults::instance().font() }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -333,13 +335,19 @@ namespace castlecrawl
             t_context.config.spell_color_fear,
             sf::Vector2f{ (categoryColumbWidth * 5.0f), categoryPositionTop });
 
-        m_fireRectangleUPtr->setFocus(t_context, true);
-
-        //
+        // error text
         m_errorText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Red);
 
-        //
+        // description text
+        m_descriptionText =
+            t_context.fonts.makeText(FontSize::Medium, "", sf::Color(220, 220, 220));
+
+        m_descriptionText.setStyle(sf::Text::Italic);
+
+        // initial setup
+        m_fireRectangleUPtr->setFocus(t_context, true);
         m_directionSelectDisplay.setup(t_context);
+        updateDescription(t_context);
     }
 
     void StateCast::update(const Context & t_context, const float t_elapsedSec)
@@ -393,6 +401,7 @@ namespace castlecrawl
             m_gripRectangleUPtr->draw(t_target, t_states);
             m_fearRectangleUPtr->draw(t_target, t_states);
 
+            t_target.draw(m_descriptionText, t_states);
             t_target.draw(m_errorText, t_states);
         }
     }
@@ -635,6 +644,8 @@ namespace castlecrawl
                     t_context.sfx.play("tick-on");
                 }
             }
+
+            updateDescription(t_context);
         }
         else if (t_key.scancode == sf::Keyboard::Scancode::Down)
         {
@@ -685,6 +696,8 @@ namespace castlecrawl
                     t_context.sfx.play("tick-on");
                 }
             }
+
+            updateDescription(t_context);
         }
         else if (t_key.scancode == sf::Keyboard::Scancode::Right)
         {
@@ -712,6 +725,8 @@ namespace castlecrawl
                 m_fearRectangleUPtr->setFocus(t_context, true);
                 t_context.sfx.play("tick-on");
             }
+
+            updateDescription(t_context);
         }
         else if (t_key.scancode == sf::Keyboard::Scancode::Left)
         {
@@ -739,7 +754,45 @@ namespace castlecrawl
                 m_fireRectangleUPtr->setFocus(t_context, true);
                 t_context.sfx.play("tick-on");
             }
+
+            updateDescription(t_context);
         }
+    }
+
+    void StateCast::updateDescription(const Context & t_context)
+    {
+        const Spell spell{ selectedSpell() };
+
+        std::string description;
+        if (spell == Spell::Spark)
+        {
+            description += "A weak but consistent fire attack spell that does ";
+        }
+        else if (spell == Spell::Frostbite)
+        {
+            description += "A weak but consistent ice attack spell that does ";
+        }
+        else if (spell == Spell::Zap)
+        {
+            description += "A low power but less predictable energy attack spell doing ";
+        }
+        //TODO finish this and give all spells a description.
+
+        const sf::Vector2i damageMinMax{ toDamageMinMax(spell) };
+        if ((damageMinMax.x < damageMinMax.y) && !description.empty())
+        {
+            description += std::to_string(damageMinMax.x);
+            description += " to ";
+            description += std::to_string(damageMinMax.y);
+            description += " damage.";
+        }
+
+        m_descriptionText.setString(description);
+        util::setOriginToPosition(m_errorText);
+
+        m_descriptionText.setPosition({ ((t_context.layout.botRect().size.x * 0.5f) -
+                                         (m_descriptionText.getGlobalBounds().size.x * 0.5f)),
+                                        (t_context.layout.botRect().size.y * 0.8f) });
     }
 
     void StateCast::showErrorMessage(const Context & t_context)
@@ -749,7 +802,7 @@ namespace castlecrawl
 
         m_errorText.setPosition({ ((t_context.layout.botRect().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (t_context.layout.botRect().size.y * 0.9f) });
+                                  (t_context.layout.botRect().size.y * 0.95f) });
 
         m_errorTimerSec = 0.0f;
     }
