@@ -8,6 +8,31 @@
 namespace castlecrawl
 {
 
+    enum class SpellCategory
+    {
+        Fire,
+        Ice,
+        Energy,
+        Fear,
+        Grip
+    };
+
+    inline constexpr std::string_view spellCategoryToName(const SpellCategory t_spellCategroy) noexcept
+    {
+        // clang-format off
+        switch(t_spellCategroy)
+        {
+            case SpellCategory::Fire:   { return "Fire"; }
+            case SpellCategory::Ice:    { return "Ice"; }
+            case SpellCategory::Energy: { return "Energy"; }
+            case SpellCategory::Fear:   { return "Fear"; }
+            case SpellCategory::Grip:
+            default:                    { return "Grip"; }
+        }
+        // clang-format on
+    }
+        //
+
     enum class Spell
     {
         // Fear

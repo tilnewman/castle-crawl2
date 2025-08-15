@@ -3,6 +3,7 @@
 //
 // state-cast.hpp
 //
+#include "spells.hpp"
 #include "state.hpp"
 
 #include <SFML/Graphics/Color.hpp>
@@ -71,6 +72,12 @@ namespace castlecrawl
             sf::RenderStates t_states) const final;
 
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
+
+      private:
+        void playAnimationDemo(
+            const Context & t_context,
+            const SpellCategory & t_spellCategory,
+            const std::size_t t_spellIndex) const;
 
       private:
         sf::RectangleShape m_bgFadeRectangle;

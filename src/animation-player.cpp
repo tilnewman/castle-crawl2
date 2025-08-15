@@ -327,7 +327,8 @@ namespace util
         const sf::Vector2i frameSize{ t_cache.frame_size };
 
         Image image;
-
+        image.filename = t_fileEntry.path().filename().string();
+       
         if (!image.texture.loadFromFile(t_fileEntry.path().string()))
         {
             std::cerr << "AnimationPlayer Error:  Found a supported file: \""

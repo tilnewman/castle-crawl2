@@ -6,6 +6,7 @@
 #include "state-cast.hpp"
 
 #include "animation-manager.hpp"
+#include "animation-player.hpp"
 #include "context.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
@@ -295,6 +296,22 @@ namespace castlecrawl
         t_context.map_display.draw(t_context, t_target, t_states);
         t_context.monsters.drawHealthLines(t_context, t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
+
+        {
+            const sf::FloatRect botRect{ t_context.layout.botRect() };
+            const float animSize{ botRect.size.x * 0.05f };
+            const float animPosVert{ (util::bottom(botRect) - animSize) - 10.0f };
+            const float animPosHoriz{ (botRect.size.x * 0.5f) - (animSize * 0.5f) };
+            const sf::FloatRect animRect{ { (animPosHoriz), animPosVert }, { animSize, animSize } };
+            sf::RectangleShape rectangle;
+            rectangle.setPosition(animRect.position);
+            rectangle.setSize(animRect.size);
+            rectangle.setOutlineThickness(1.0f);
+            rectangle.setOutlineColor(sf::Color::White);
+            rectangle.setFillColor(sf::Color::Transparent);
+            t_target.draw(rectangle, t_states);
+        }
+
         t_context.anim.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);
 
@@ -340,6 +357,9 @@ namespace castlecrawl
             {
                 if (indexDecrement(*m_fireRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -347,6 +367,9 @@ namespace castlecrawl
             {
                 if (indexDecrement(*m_iceRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -354,6 +377,9 @@ namespace castlecrawl
             {
                 if (indexDecrement(*m_energyRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -361,6 +387,9 @@ namespace castlecrawl
             {
                 if (indexDecrement(*m_gripRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -368,6 +397,9 @@ namespace castlecrawl
             {
                 if (indexDecrement(*m_fearRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -390,6 +422,9 @@ namespace castlecrawl
             {
                 if (indexIncrement(*m_fireRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -397,6 +432,9 @@ namespace castlecrawl
             {
                 if (indexIncrement(*m_iceRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -404,6 +442,9 @@ namespace castlecrawl
             {
                 if (indexIncrement(*m_energyRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -411,6 +452,9 @@ namespace castlecrawl
             {
                 if (indexIncrement(*m_gripRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
+
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -418,6 +462,8 @@ namespace castlecrawl
             {
                 if (indexIncrement(*m_fearRectangleUPtr))
                 {
+                    playAnimationDemo(
+                        t_context, SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
                     t_context.sfx.play("tick-on");
                 }
             }
@@ -474,6 +520,107 @@ namespace castlecrawl
                 m_iceRectangleUPtr->setFocus(false);
                 m_fireRectangleUPtr->setFocus(true);
                 t_context.sfx.play("tick-on");
+            }
+        }
+    }
+
+    void StateCast::playAnimationDemo(
+        const Context & t_context,
+        const SpellCategory & t_spellCategory,
+        const std::size_t t_spellIndex) const
+    {
+        const sf::FloatRect botRect{ t_context.layout.botRect() };
+        const float animSize{ botRect.size.x * 0.05f };
+        const float animPosVert{ (util::bottom(botRect) - animSize) - 10.0f };
+        const float animPosHoriz{ (botRect.size.x * 0.5f) - (animSize * 0.5f) };
+        const sf::FloatRect animRect{ { (animPosHoriz), animPosVert }, { animSize, animSize } };
+
+        if (t_spellCategory == SpellCategory::Fire)
+        {
+            if (t_spellIndex == 0)
+            {
+                t_context.anim.player().play("spark", util::scaleRectInPlaceCopy(animRect, 1.25f));
+            }
+            else if (t_spellIndex == 1)
+            {
+                t_context.anim.player().play("flare", util::scaleRectInPlaceCopy(animRect, 1.25f));
+            }
+            else if (t_spellIndex == 2)
+            {
+                t_context.anim.player().play(
+                    "fireball", util::scaleRectInPlaceCopy(animRect, 1.5f));
+            }
+        }
+        else if (t_spellCategory == SpellCategory::Ice)
+        {
+            if (t_spellIndex == 0)
+            {
+                util::AnimConfig config(0.5f);
+
+                t_context.anim.player().play(
+                    "frostbite", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
+            }
+            else if (t_spellIndex == 1)
+            {
+                t_context.anim.player().play(
+                    "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f));
+            }
+            else if (t_spellIndex == 2)
+            {
+                t_context.anim.player().play(
+                    "ice-shards", util::scaleRectInPlaceCopy(animRect, 2.0f));
+            }
+        }
+        else if (t_spellCategory == SpellCategory::Energy)
+        {
+            if (t_spellIndex == 0)
+            {
+                util::AnimConfig config(0.5f);
+                t_context.anim.player().play(
+                    "frostbite", util::scaleRectInPlaceCopy(animRect, 2.0f), config);
+            }
+            else if (t_spellIndex == 1)
+            {
+                t_context.anim.player().play("jolt", animRect);
+            }
+            else if (t_spellIndex == 2)
+            {
+                t_context.anim.player().play(
+                    "lightning", util::scaleRectInPlaceCopy(animRect, 2.0f));
+            }
+        }
+        else if (t_spellCategory == SpellCategory::Grip)
+        {
+            util::AnimConfig config(0.75f, sf::Color(255, 205, 160));
+
+            if (t_spellIndex == 0)
+            {
+                t_context.anim.player().play("orb-charge", animRect, config);
+            }
+            else if (t_spellIndex == 1)
+            {
+                t_context.anim.player().play("orb-charge", animRect, config);
+            }
+            else if (t_spellIndex == 2)
+            {
+                t_context.anim.player().play("orb-charge", animRect, config);
+            }
+        }
+        else if (t_spellCategory == SpellCategory::Fear)
+        {
+            util::AnimConfig config(1.75f, sf::Color(205, 165, 255));
+
+            if (t_spellIndex == 0)
+            {
+                t_context.anim.player().play("spell", animRect, config);
+            }
+            else if (t_spellIndex == 1)
+            {
+                t_context.anim.player().play("spell", animRect, config);
+            }
+            else if (t_spellIndex == 2)
+            {
+                t_context.anim.player().play("spell", animRect, config);
             }
         }
     }
