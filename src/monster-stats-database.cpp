@@ -320,7 +320,7 @@ namespace castlecrawl
                           .luck               = 14,
                           .is_flying          = true,
                           .spell_attack_ratio = 0.111f,
-                          .spells             = { Spell::Immobalize } }));
+                          .spells             = { Spell::Immobillize } }));
 
         //
         // slimes
@@ -531,7 +531,7 @@ namespace castlecrawl
                           .luck               = 2,
                           .spell_attack_ratio = 0.0932f,
                           .break_attack_ratio = 0.002f,
-                          .spells             = { Spell::Immobalize } }));
+                          .spells             = { Spell::Immobillize } }));
 
         m_imageStatsMap.insert(std::make_pair(
             TileImage::FireGiant,

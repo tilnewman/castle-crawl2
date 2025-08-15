@@ -15,7 +15,7 @@ namespace castlecrawl
         Terrorized,
         Slowed,
         Stunned,
-        Immobalized
+        Immobillized
     };
 
     [[nodiscard]] constexpr inline std::string_view conditionToName(const Condition & t_condition)
@@ -28,8 +28,8 @@ namespace castlecrawl
             case Condition::Terrorized:     { return "Terrorized"; }
             case Condition::Slowed:         { return "Slowed"; }
             case Condition::Stunned:        { return "Stunned"; }
-            case Condition::Immobalized:
-            default:                        { return "Immobalized"; }
+            case Condition::Immobillized:
+            default:                        { return "Immobillized"; }
         }
         // clang-format on
     }

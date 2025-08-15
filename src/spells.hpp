@@ -18,7 +18,7 @@ namespace castlecrawl
         // Grip
         Slow,
         Stun,
-        Immobalize,
+        Immobillize,
 
         // Energy
         Zap,
@@ -47,7 +47,7 @@ namespace castlecrawl
 
             case Spell::Slow:           { return "Slow"; }
             case Spell::Stun:           { return "Stun"; }
-            case Spell::Immobalize:     { return "Immobalize"; }
+            case Spell::Immobillize:    { return "Immobillize"; }
 
             case Spell::Zap:            { return "Zap"; }
             case Spell::Jolt:           { return "Jolt"; }
@@ -76,7 +76,7 @@ namespace castlecrawl
                                                 
             case Spell::Slow:           { return 3;  }
             case Spell::Stun:           { return 6;  }
-            case Spell::Immobalize:     { return 10; }
+            case Spell::Immobillize:     { return 10; }
                                                
             case Spell::Zap:            { return 3;  }
             case Spell::Jolt:           { return 6;  }
