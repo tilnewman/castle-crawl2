@@ -199,7 +199,7 @@ namespace castlecrawl
             instTextColor);
 
         m_instructionText5 = t_context.fonts.makeText(
-            FontSize::Small, "Press 'U' to use unequipped items.", instTextColor);
+            FontSize::Small, "Press 'Enter' to use unequipped items.", instTextColor);
 
         m_instructionText1.setStyle(sf::Text::Italic);
         m_instructionText2.setStyle(sf::Text::Italic);
