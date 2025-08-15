@@ -244,6 +244,8 @@ namespace castlecrawl
         , m_fearTexture{}
         , m_hasSpellBeenSelected{ false }
         , m_directionSelectDisplay{}
+        , m_errorText{ util::SfmlDefaults::instance().font() }
+        , m_errorTimerSec{ 0.0f }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -336,6 +338,9 @@ namespace castlecrawl
         m_fireRectangleUPtr->setFocus(t_context, true);
 
         //
+        m_errorText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Red);
+
+        //
         m_directionSelectDisplay.setup(t_context);
     }
 
@@ -344,6 +349,25 @@ namespace castlecrawl
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_elapsedSec);
         m_directionSelectDisplay.update(t_context, t_elapsedSec);
+
+        if (!m_hasSpellBeenSelected && !m_errorText.getString().isEmpty())
+        {
+            m_errorTimerSec += t_elapsedSec;
+            const float errorTextDurationSec{ 5.0f };
+            if (m_errorTimerSec < errorTextDurationSec)
+            {
+                const int alpha{ 255 -
+                                 util::map(m_errorTimerSec, 0.0f, errorTextDurationSec, 0, 255) };
+
+                sf::Color color{ m_errorText.getFillColor() };
+                color.a = static_cast<uint8_t>(alpha);
+                m_errorText.setFillColor(color);
+            }
+            else
+            {
+                m_errorText.setString("");
+            }
+        }
     }
 
     void StateCast::draw(
@@ -370,6 +394,8 @@ namespace castlecrawl
             m_energyRectangleUPtr->draw(t_target, t_states);
             m_gripRectangleUPtr->draw(t_target, t_states);
             m_fearRectangleUPtr->draw(t_target, t_states);
+
+            t_target.draw(m_errorText, t_states);
         }
     }
 
@@ -558,6 +584,7 @@ namespace castlecrawl
             }
             else
             {
+                showErrorMessage(t_context);
                 t_context.sfx.play("error-1");
             }
         }
@@ -715,6 +742,18 @@ namespace castlecrawl
                 t_context.sfx.play("tick-on");
             }
         }
+    }
+
+    void StateCast::showErrorMessage(const Context & t_context)
+    {
+        m_errorText.setString("You haven't learned that spell yet.");
+        util::setOriginToPosition(m_errorText);
+
+        m_errorText.setPosition({ ((t_context.layout.botRect().size.x * 0.5f) -
+                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
+                                  (t_context.layout.botRect().size.y * 0.9f) });
+
+        m_errorTimerSec = 0.0f;
     }
 
 } // namespace castlecrawl
