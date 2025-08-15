@@ -39,9 +39,7 @@ namespace castlecrawl
         : category{ t_category }
         , sprite{ t_texture }
         , title_text{ t_context.fonts.makeText(
-              FontSize::Large,
-              std::string(spellCategoryToName(t_category)).append(" Spells"),
-              t_color) }
+              FontSize::Large, std::string(toString(t_category)).append(" Spells"), t_color) }
         , spell_text1{ t_context.fonts.makeText(FontSize::Medium, t_spellName1) }
         , spell_text2{ t_context.fonts.makeText(FontSize::Medium, t_spellName2) }
         , spell_text3{ t_context.fonts.makeText(FontSize::Medium, t_spellName3) }

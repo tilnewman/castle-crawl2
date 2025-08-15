@@ -48,7 +48,7 @@ namespace castlecrawl
             std::string message   = std::to_string(fps) + "FPS, ";
             message += std::to_string(t_context.anim.particleCount());
             message += " Particles, ";
-            message += turnOwnerToName(t_context.turn.owner());
+            message += toString(t_context.turn.owner());
             message += "'s Turn";
 
             m_text.setString(message);

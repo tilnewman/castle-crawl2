@@ -23,7 +23,7 @@ namespace castlecrawl
         BreatheFire
     };
 
-    inline constexpr std::string_view creatureActionToName(const CreatureAction t_action) noexcept
+    inline constexpr std::string_view toString(const CreatureAction t_action) noexcept
     {
         // clang-format off
         switch(t_action)
@@ -36,8 +36,8 @@ namespace castlecrawl
             case CreatureAction::PoisonBite:     { return "PoisonBite";  }
             case CreatureAction::BreakWeapon:    { return "BreakWeapon"; }
             case CreatureAction::DevourArmor:    { return "DevourArmor"; }
-            case CreatureAction::BreatheFire:    
-            default:                            { return "BreatheFire"; }
+            case CreatureAction::BreatheFire:    { return "BreatheFire"; }
+            default:            { return "unknown_CreatureAction_error"; }
         }
         // clang-format on
     }

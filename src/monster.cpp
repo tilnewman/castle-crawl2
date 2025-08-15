@@ -60,10 +60,10 @@ namespace castlecrawl
         if (action == CreatureAction::CastSpell)
         {
             const Spell spellToCast{ t_context.random.from(spellsThatCanBeCast) };
-            m_mana -= spellToManaCost(spellToCast);
+            m_mana -= toManaCost(spellToCast);
 
             std::string actionMessage{ " Casts " };
-            actionMessage += spellToName(spellToCast);
+            actionMessage += toString(spellToCast);
 
             t_context.anim.risingText().add(
                 t_context, actionMessage, t_context.config.message_color_cast_spell, mapPosition());
@@ -294,7 +294,7 @@ namespace castlecrawl
 
         for (const Spell spell : m_stats.spells)
         {
-            if (spellToManaCost(spell) <= m_mana)
+            if (toManaCost(spell) <= m_mana)
             {
                 spells.push_back(spell);
             }

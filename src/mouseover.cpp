@@ -78,7 +78,7 @@ namespace castlecrawl
         }
         else if ((mapCell.object_char != ' ') && (mapCell.object_char != '.'))
         {
-            message = tileImageToName(charToTileImage(mapCell.object_char));
+            message = toString(charToTileImage(mapCell.object_char));
         }
 
         if (message.empty())

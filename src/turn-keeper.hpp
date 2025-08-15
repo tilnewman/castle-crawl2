@@ -22,19 +22,18 @@ namespace castlecrawl
         NpcDelay
     };
 
-    [[nodiscard]] inline constexpr std::string_view
-        turnOwnerToName(const TurnOwner t_turnOwner) noexcept
+    [[nodiscard]] inline constexpr std::string_view toString(const TurnOwner t_turnOwner) noexcept
     {
         // clang-format off
         switch (t_turnOwner)
         {
-            case TurnOwner::Player:         { return "Player"; }
-            case TurnOwner::PlayerDelay:    { return "PlayerDelay"; }
-            case TurnOwner::Monster:        { return "Monster"; }
+            case TurnOwner::Player:         { return "Player";       }
+            case TurnOwner::PlayerDelay:    { return "PlayerDelay";  }
+            case TurnOwner::Monster:        { return "Monster";      }
             case TurnOwner::MonsterDelay:   { return "MonsterDelay"; }
-            case TurnOwner::Npc:            { return "Npc"; }
-            case TurnOwner::NpcDelay:       
-            default:                        { return "NpcDelay"; }
+            case TurnOwner::Npc:            { return "Npc";          }
+            case TurnOwner::NpcDelay:       { return "NpcDelay";     }
+            default:             { return "unknown_TurnOwner_error"; }
         }
         // clang-format on
     }

@@ -351,7 +351,7 @@ namespace castlecrawl
                     {
                         const TileImage newTileImage = button.screenPosToTileImage(mousePos);
                         const char newMapChar        = tileImageToChar(newTileImage);
-                        editMap(t_context, newMapChar, std::string(tileImageToName(newTileImage)));
+                        editMap(t_context, newMapChar, std::string(toString(newTileImage)));
                     }
                 };
 

@@ -1326,7 +1326,7 @@ namespace castlecrawl
 
             for (const auto & pair : m_imageStatsMap)
             {
-                csvFileStream << tileImageToName(pair.first) << ',';
+                csvFileStream << toString(pair.first) << ',';
                 csvFileStream << pair.second.value() << ',';
                 csvFileStream << pair.second.health_max << ',';
                 csvFileStream << pair.second.armor << ',';
@@ -1376,7 +1376,7 @@ namespace castlecrawl
 
                 for (const Spell spell : pair.second.spells)
                 {
-                    csvFileStream << spellToName(spell) << '/';
+                    csvFileStream << toString(spell) << '/';
                 }
                 csvFileStream << '\n';
             }
@@ -1429,7 +1429,7 @@ namespace castlecrawl
             }
 
             MonsterValue value;
-            value.name  = tileImageToName(pair.first);
+            value.name  = toString(pair.first);
             value.value = pair.second.value();
             values.push_back(value);
 
@@ -1475,13 +1475,13 @@ namespace castlecrawl
     {
         M_CHECK(
             isTileImageMonster(t_tileImage),
-            "MonsterStatsDatabase query was not a monster: " << tileImageToName(t_tileImage));
+            "MonsterStatsDatabase query was not a monster: " << toString(t_tileImage));
 
         const auto foundIter = m_imageStatsMap.find(t_tileImage);
 
         M_CHECK(
             (foundIter != std::end(m_imageStatsMap)),
-            "MonsterStatsDatabase failed to find this monster: " << tileImageToName(t_tileImage));
+            "MonsterStatsDatabase failed to find this monster: " << toString(t_tileImage));
 
         return foundIter->second;
     }
@@ -1509,7 +1509,7 @@ namespace castlecrawl
         {
             const TileImage & tileImage = pair.first;
             const MonsterStats & stats  = pair.second;
-            const std::string_view name = tileImageToName(pair.first);
+            const std::string_view name = toString(pair.first);
 
             M_CHECK(
                 isTileImageMonster(tileImage),

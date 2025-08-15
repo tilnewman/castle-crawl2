@@ -1477,7 +1477,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    constexpr inline const std::string_view tileImageToName(const TileImage tileImage)
+    constexpr inline const std::string_view toString(const TileImage tileImage)
     {
         // clang-format off
         switch (tileImage)

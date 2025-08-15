@@ -18,17 +18,17 @@ namespace castlecrawl
     };
 
     [[nodiscard]] inline constexpr std::string_view
-        spellCategoryToName(const SpellCategory t_spellCategroy) noexcept
+        toString(const SpellCategory t_spellCategroy) noexcept
     {
         // clang-format off
         switch(t_spellCategroy)
         {
-            case SpellCategory::Fire:   { return "Fire"; }
-            case SpellCategory::Ice:    { return "Ice"; }
-            case SpellCategory::Energy: { return "Energy"; }
-            case SpellCategory::Fear:   { return "Fear"; }
-            case SpellCategory::Grip:
-            default:                    { return "Grip"; }
+            case SpellCategory::Fire:    { return "Fire";   }
+            case SpellCategory::Ice:     { return "Ice";    }
+            case SpellCategory::Energy:  { return "Energy"; }
+            case SpellCategory::Fear:    { return "Fear";   }
+            case SpellCategory::Grip:    { return "Grip";   }
+            default:{ return "unknown_SpellCategory_error"; }
         }
         // clang-format on
     }
@@ -63,36 +63,36 @@ namespace castlecrawl
         IceShards
     };
 
-    [[nodiscard]] inline constexpr std::string_view spellToName(const Spell t_spell) noexcept
+    [[nodiscard]] inline constexpr std::string_view toString(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
         {
-            case Spell::Scare:          { return "Scare"; }
-            case Spell::Terrorize:      { return "Terrorize"; }
-            case Spell::HeartAttack:    { return "Heart Attack"; }
+            case Spell::Scare:          { return "Scare";         }
+            case Spell::Terrorize:      { return "Terrorize";     }
+            case Spell::HeartAttack:    { return "Heart Attack";  }
 
-            case Spell::Slow:           { return "Slow"; }
-            case Spell::Stun:           { return "Stun"; }
-            case Spell::Immobillize:    { return "Immobillize"; }
+            case Spell::Slow:           { return "Slow";          }
+            case Spell::Stun:           { return "Stun";          }
+            case Spell::Immobillize:    { return "Immobillize";   }
 
-            case Spell::Zap:            { return "Zap"; }
-            case Spell::Jolt:           { return "Jolt"; }
-            case Spell::Lightning:      { return "Lightning"; }
+            case Spell::Zap:            { return "Zap";           }
+            case Spell::Jolt:           { return "Jolt";          }
+            case Spell::Lightning:      { return "Lightning";     }
 
-            case Spell::Spark:          { return "Spark"; }
-            case Spell::Flare:          { return "Flare"; }
-            case Spell::Fireball:       { return "Fireball"; }
+            case Spell::Spark:          { return "Spark";         }
+            case Spell::Flare:          { return "Flare";         }
+            case Spell::Fireball:       { return "Fireball";      }
 
-            case Spell::Frostbite:      { return "Frostbite"; }
+            case Spell::Frostbite:      { return "Frostbite";     }
             case Spell::FreezingWind:   { return "Freezing Wind"; }
-            case Spell::IceShards:
-            default:                    { return "Ice Shards"; }         
+            case Spell::IceShards:      { return "Ice Shards";    }  
+            default:              { return "unknown_Spell_error"; }
         }
         // clang-format on
     }
 
-    [[nodiscard]] inline constexpr int spellToManaCost(const Spell t_spell) noexcept
+    [[nodiscard]] inline constexpr int toManaCost(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
