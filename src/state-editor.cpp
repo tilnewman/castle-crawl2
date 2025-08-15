@@ -247,12 +247,12 @@ namespace castlecrawl
               TileImage::Madman,       TileImage::Fungosite });
     }
 
-    void StateEditor::update(const Context & t_context, const float t_frameTimeSec)
+    void StateEditor::update(const Context & t_context, const float t_elapsedSec)
     {
         updateHelpText(t_context);
-        updateFadeText(t_frameTimeSec);
-        m_mouseover.update(t_context, t_frameTimeSec);
-        t_context.anim.update(t_context, t_frameTimeSec);
+        updateFadeText(t_elapsedSec);
+        m_mouseover.update(t_context, t_elapsedSec);
+        t_context.anim.update(t_context, t_elapsedSec);
         t_context.framerate.update(t_context);
     }
 

@@ -29,9 +29,9 @@ namespace castlecrawl
         , sprite{ util::SfmlDefaults::instance().texture() }
     {}
 
-    void DustParticleEffect::update(const Context &, const float t_frameTimeSec)
+    void DustParticleEffect::update(const Context &, const float t_elapsedSec)
     {
-        age_sec += t_frameTimeSec;
+        age_sec += t_elapsedSec;
         if (age_sec > age_max_sec)
         {
             is_alive = false;
@@ -48,7 +48,7 @@ namespace castlecrawl
             const float scale = util::map(age_sec, 0.0f, age_max_sec, 1.0f, scale_at_age_max);
             sprite.setScale({ scale, scale });
 
-            sprite.rotate(sf::degrees(rotate_speed * t_frameTimeSec));
+            sprite.rotate(sf::degrees(rotate_speed * t_elapsedSec));
         }
     }
 
@@ -69,11 +69,11 @@ namespace castlecrawl
         util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "smoke.png"), true);
     }
 
-    void DustParticleManager::update(const Context & t_context, const float t_frameTimeSec)
+    void DustParticleManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (DustParticleEffect & effect : m_effects)
         {
-            effect.update(t_context, t_frameTimeSec);
+            effect.update(t_context, t_elapsedSec);
         }
 
         std::erase_if(

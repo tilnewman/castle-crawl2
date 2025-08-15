@@ -20,7 +20,7 @@ namespace castlecrawl
 
         void reset();
 
-        void update(const Context & t_context, const float t_frameTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
 
         void handleMouseMovedEvent(const sf::Vector2i & t_newPos);
 

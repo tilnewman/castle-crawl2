@@ -27,9 +27,9 @@ namespace castlecrawl
         , sprite{ util::SfmlDefaults::instance().texture() }
     {}
 
-    void SparkleParticle::update(const Context &, const float t_frameTimeSec)
+    void SparkleParticle::update(const Context &, const float t_elapsedSec)
     {
-        age_sec += t_frameTimeSec;
+        age_sec += t_elapsedSec;
         if (age_sec > age_max_sec)
         {
             is_alive = false;
@@ -52,7 +52,7 @@ namespace castlecrawl
             sprite.setScale({ frameScale, frameScale });
         }
 
-        sprite.rotate(sf::degrees(rotation_speed * t_frameTimeSec));
+        sprite.rotate(sf::degrees(rotation_speed * t_elapsedSec));
     }
 
     void SparkleParticle::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -68,11 +68,11 @@ namespace castlecrawl
         , particles{}
     {}
 
-    void SparkleParticleEffect::update(const Context & t_context, const float t_frameTimeSec)
+    void SparkleParticleEffect::update(const Context & t_context, const float t_elapsedSec)
     {
         for (SparkleParticle & particle : particles)
         {
-            particle.update(t_context, t_frameTimeSec);
+            particle.update(t_context, t_elapsedSec);
 
             if (!particle.is_alive)
             {
@@ -129,11 +129,11 @@ namespace castlecrawl
         util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "star.png"), true);
     }
 
-    void SparkleParticleManager::update(const Context & t_context, const float t_frameTimeSec)
+    void SparkleParticleManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (SparkleParticleEffect & effect : m_effects)
         {
-            effect.update(t_context, t_frameTimeSec);
+            effect.update(t_context, t_elapsedSec);
         }
     }
 

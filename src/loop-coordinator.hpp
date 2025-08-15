@@ -47,7 +47,7 @@ namespace castlecrawl
         void handleEvents();
         void handleEvent(const sf::Event & t_event);
         void draw();
-        void update(const float t_frameTimeSec);
+        void update(const float t_elapsedSec);
         void setupRenderWindow(sf::VideoMode & t_videoMode);
 
       private:

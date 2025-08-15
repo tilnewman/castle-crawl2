@@ -25,7 +25,7 @@ namespace castlecrawl
             const sf::FloatRect & t_rect);
 
         // returns true only if the update transitioned from isFading() to !isFading()
-        bool update(const float t_frameTimeSec);
+        bool update(const float t_elapsedSec);
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         [[nodiscard]] inline bool isFading() const { return (m_timerSec < m_durationSec); }

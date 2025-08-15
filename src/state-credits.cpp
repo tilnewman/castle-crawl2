@@ -68,13 +68,13 @@ namespace castlecrawl
               util::bottom(m_licenseText) + m_vertPad });
     }
 
-    void Credit::update(const float t_frameTimeSec)
+    void Credit::update(const float t_elapsedSec)
     {
         const float scrollSpeed = 30.0f;
-        m_nameText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
-        m_descText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
-        m_licenseText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
-        m_extraText.move({ 0.0f, -(t_frameTimeSec * scrollSpeed) });
+        m_nameText.move({ 0.0f, -(t_elapsedSec * scrollSpeed) });
+        m_descText.move({ 0.0f, -(t_elapsedSec * scrollSpeed) });
+        m_licenseText.move({ 0.0f, -(t_elapsedSec * scrollSpeed) });
+        m_extraText.move({ 0.0f, -(t_elapsedSec * scrollSpeed) });
     }
 
     void Credit::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -208,11 +208,11 @@ namespace castlecrawl
         gameOverSfxCredit.vertPosition(stepsSfxCredit.bottom() + vertSpacer);
     }
 
-    void StateCredits::update(const Context & t_context, const float t_frameTimeSec)
+    void StateCredits::update(const Context & t_context, const float t_elapsedSec)
     {
         for (Credit & credit : m_credits)
         {
-            credit.update(t_frameTimeSec);
+            credit.update(t_elapsedSec);
         }
 
         Credit & lastCredit = m_credits.back();

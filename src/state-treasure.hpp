@@ -26,7 +26,7 @@ namespace castlecrawl
 
         virtual void onEnter(const Context & t_context) final;
         [[nodiscard]] virtual State which() const final { return State::Treasure; }
-        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
+        virtual void update(const Context & t_context, const float t_elapsedSec) final;
 
         virtual void draw(
             const Context & t_context,

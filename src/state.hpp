@@ -66,7 +66,7 @@ namespace castlecrawl
 
         virtual void onEnter(const Context & t_context)                            = 0;
         virtual void onExit(const Context & t_context)                             = 0;
-        virtual void update(const Context & t_context, const float t_frameTimeSec) = 0;
+        virtual void update(const Context & t_context, const float t_elapsedSec) = 0;
 
         virtual void draw(
             const Context & t_context,

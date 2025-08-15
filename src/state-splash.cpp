@@ -57,13 +57,13 @@ namespace castlecrawl
                                          (m_lightningSprite.getGlobalBounds().size.y * 0.15f)) });
     }
 
-    void StateSplash::update(const Context & t_context, const float t_frameTimeSec)
+    void StateSplash::update(const Context & t_context, const float t_elapsedSec)
     {
-        m_timerSec += t_frameTimeSec;
+        m_timerSec += t_elapsedSec;
 
         if (m_isFadingIn)
         {
-            m_imageAlpha += (t_frameTimeSec * 50.0f);
+            m_imageAlpha += (t_elapsedSec * 50.0f);
 
             sf::Color color{ m_castleSprite.getColor() };
             color.a = static_cast<uint8_t>(m_imageAlpha);
@@ -78,7 +78,7 @@ namespace castlecrawl
         }
         else if (m_isFadingOut)
         {
-            m_imageAlpha -= (t_frameTimeSec * 150.0f);
+            m_imageAlpha -= (t_elapsedSec * 150.0f);
 
             sf::Color color{ m_castleSprite.getColor() };
             color.a = static_cast<uint8_t>(m_imageAlpha);

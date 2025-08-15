@@ -23,7 +23,7 @@ namespace castlecrawl
         void setup(const Context & t_context);
         [[nodiscard]] inline MapPos_t position() const { return m_mapPos; }
         void position(const Context & t_context, const MapPos_t & t_newPosition);
-        void update(const Context & t_context, const float t_frameTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         inline void shake() { m_isShaking = true; }
         void bloodSplatStart(const Context & t_context);
         void bloodSplatStop() { m_splatTimeSec = 0.0f; }

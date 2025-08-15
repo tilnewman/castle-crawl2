@@ -278,13 +278,13 @@ namespace castlecrawl
         updateAllAfterListboxChange(t_context);
     }
 
-    void StateInventory::update(const Context & t_context, const float t_frameTimeSec)
+    void StateInventory::update(const Context & t_context, const float t_elapsedSec)
     {
         t_context.framerate.update(t_context);
-        t_context.anim.update(t_context, t_frameTimeSec);
+        t_context.anim.update(t_context, t_elapsedSec);
 
         const float errorTextFadeDuration{ 5.0f };
-        m_errorTextElapsedSec += t_frameTimeSec;
+        m_errorTextElapsedSec += t_elapsedSec;
         if (m_errorTextElapsedSec < errorTextFadeDuration)
         {
             sf::Color color{ m_errorText.getFillColor() };

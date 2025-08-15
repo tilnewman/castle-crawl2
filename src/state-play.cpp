@@ -37,13 +37,13 @@ namespace castlecrawl
 
     void StatePlay::onEnter(const Context &) {}
 
-    void StatePlay::update(const Context & t_context, const float t_frameTimeSec)
+    void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        m_mouseover.update(t_context, t_frameTimeSec);
-        t_context.player_display.update(t_context, t_frameTimeSec);
+        m_mouseover.update(t_context, t_elapsedSec);
+        t_context.player_display.update(t_context, t_elapsedSec);
         t_context.framerate.update(t_context);
-        t_context.anim.update(t_context, t_frameTimeSec);
-        t_context.turn.update(t_context, t_frameTimeSec);
+        t_context.anim.update(t_context, t_elapsedSec);
+        t_context.turn.update(t_context, t_elapsedSec);
 
         if (t_context.turn.owner() == TurnOwner::Player)
         {

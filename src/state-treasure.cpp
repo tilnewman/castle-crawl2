@@ -122,10 +122,10 @@ namespace castlecrawl
         updateItemDescText(t_context);
     }
 
-    void StateTreasure::update(const Context & t_context, const float t_frameTimeSec)
+    void StateTreasure::update(const Context & t_context, const float t_elapsedSec)
     {
         t_context.framerate.update(t_context);
-        t_context.anim.update(t_context, t_frameTimeSec);
+        t_context.anim.update(t_context, t_elapsedSec);
     }
 
     void StateTreasure::draw(

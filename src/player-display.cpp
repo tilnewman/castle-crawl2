@@ -46,12 +46,12 @@ namespace castlecrawl
         m_sprite.setPosition(m_screenPos);
     }
 
-    void PlayerDisplay::update(const Context & t_context, const float t_frameTimeSec)
+    void PlayerDisplay::update(const Context & t_context, const float t_elapsedSec)
     {
         if (m_isShaking)
         {
-            m_shaker.update(t_frameTimeSec);
-            m_shakeTimeSec += t_frameTimeSec;
+            m_shaker.update(t_elapsedSec);
+            m_shakeTimeSec += t_elapsedSec;
 
             const float shakeDurationSec{ 0.5f };
             if (m_shakeTimeSec > shakeDurationSec)
@@ -63,7 +63,7 @@ namespace castlecrawl
 
         m_sprite.setPosition({ (m_screenPos.x + m_shaker.adjustment()), m_screenPos.y });
 
-        m_splatTimeSec -= t_frameTimeSec;
+        m_splatTimeSec -= t_elapsedSec;
         if (m_splatTimeSec < 0.0f)
         {
             m_splatTimeSec = 0.0f;

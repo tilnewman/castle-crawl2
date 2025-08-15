@@ -230,14 +230,14 @@ namespace castlecrawl
         m_renderWindow.display();
     }
 
-    void LoopCoordinator::update(const float t_frameTimeSec)
+    void LoopCoordinator::update(const float t_elapsedSec)
     {
         if (m_stateManagerUPtr->isChangePending())
         {
             m_stateManagerUPtr->change(*m_contextUPtr);
         }
 
-        m_stateManagerUPtr->current().update(*m_contextUPtr, t_frameTimeSec);
+        m_stateManagerUPtr->current().update(*m_contextUPtr, t_elapsedSec);
     }
 
     void LoopCoordinator::setupRenderWindow(sf::VideoMode & t_videoMode)

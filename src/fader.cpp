@@ -55,11 +55,11 @@ namespace castlecrawl
         m_rectangle.setSize(t_rect.size);
     }
 
-    bool Fader::update(const float t_frameTimeSec)
+    bool Fader::update(const float t_elapsedSec)
     {
         const bool isFadingBefore = isFading();
 
-        m_timerSec += t_frameTimeSec;
+        m_timerSec += t_elapsedSec;
         if (m_timerSec > m_durationSec)
         {
             m_timerSec = m_durationSec;

@@ -24,7 +24,7 @@ namespace castlecrawl
     {
         SparkleParticle();
 
-        void update(const Context & t_context, const float t_frameTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         bool is_alive;
@@ -41,7 +41,7 @@ namespace castlecrawl
     {
         SparkleParticleEffect();
 
-        void update(const Context & t_context, const float t_frameTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void resetParticle(const Context & t_context, SparkleParticle & particle) const;
 
@@ -57,7 +57,7 @@ namespace castlecrawl
         SparkleParticleManager();
 
         void setup(const GameConfig & t_config);
-        void update(const Context & t_context, const float t_frameTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const MapPos_t & t_mapPos);

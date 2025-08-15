@@ -13,7 +13,7 @@ namespace castlecrawl
         Shaker();
 
         void setup(const float t_range, float t_speed);
-        float update(const float t_frameTimeSec);
+        float update(const float t_elapsedSec);
         [[nodiscard]] inline float adjustment() const { return m_current; }
 
       private:

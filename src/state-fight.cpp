@@ -38,11 +38,11 @@ namespace castlecrawl
         m_directionSelectDisplay.setup(t_context);
     }
 
-    void StateFight::update(const Context & t_context, const float t_frameTimeSec)
+    void StateFight::update(const Context & t_context, const float t_elapsedSec)
     {
         t_context.framerate.update(t_context);
-        t_context.anim.update(t_context, t_frameTimeSec);
-        m_directionSelectDisplay.update(t_context, t_frameTimeSec);
+        t_context.anim.update(t_context, t_elapsedSec);
+        m_directionSelectDisplay.update(t_context, t_elapsedSec);
     }
 
     void StateFight::draw(

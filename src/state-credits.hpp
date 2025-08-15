@@ -29,7 +29,7 @@ namespace castlecrawl
             const std::string & t_license = "",
             const std::string & t_extra   = "");
 
-        void update(const float t_frameTimeSec);
+        void update(const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void vertPosition(const float t_pos);
         [[nodiscard]] float bottom() const;
@@ -52,7 +52,7 @@ namespace castlecrawl
 
         virtual void onEnter(const Context & t_context) final;
         [[nodiscard]] virtual State which() const final { return State::Credits; }
-        virtual void update(const Context & t_context, const float t_frameTimeSec) final;
+        virtual void update(const Context & t_context, const float t_elapsedSec) final;
 
         virtual void draw(
             const Context & t_context,
