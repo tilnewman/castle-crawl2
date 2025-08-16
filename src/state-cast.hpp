@@ -83,7 +83,7 @@ namespace castlecrawl
 
         [[nodiscard]] Spell selectedSpell() const;
 
-        void showErrorMessage(const Context & t_context);
+        void showErrorMessage(const Context & t_context, const std::string & t_message);
 
         void updateDescription(const Context & t_context);
 
@@ -105,6 +105,7 @@ namespace castlecrawl
         sf::Text m_errorText;
         float m_errorTimerSec;
         sf::Text m_descriptionText;
+        sf::Text m_instructionText;
 
         static inline Spell m_prevCastSpell{ Spell::Spark };
     };

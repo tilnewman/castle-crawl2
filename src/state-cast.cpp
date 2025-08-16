@@ -52,7 +52,7 @@ namespace castlecrawl
         , has_focus{ false }
     {
         const sf::FloatRect botRect{ t_context.layout.botRect() };
-        const float imageSize{ botRect.size.x / 7.0f };
+        const float imageSize{ botRect.size.x / 7.5f };
 
         const sf::FloatRect imageRect{ { (t_position.x - (imageSize * 0.5f)), t_position.y },
                                        { imageSize, imageSize } };
@@ -245,6 +245,7 @@ namespace castlecrawl
         , m_errorText{ util::SfmlDefaults::instance().font() }
         , m_errorTimerSec{ 0.0f }
         , m_descriptionText{ util::SfmlDefaults::instance().font() }
+        , m_instructionText{ util::SfmlDefaults::instance().font() }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -264,6 +265,18 @@ namespace castlecrawl
             { ((botRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
               (botRect.position.y + pad) });
 
+        // instruction text
+        m_instructionText = t_context.fonts.makeText(
+            FontSize::Small,
+            "Use the arrow keys to select a spell then press Enter, or press Escape to exit.",
+            sf::Color(160, 160, 160));
+
+        m_instructionText.setStyle(sf::Text::Italic);
+
+        m_instructionText.setPosition(
+            { ((botRect.size.x * 0.5f) - (m_instructionText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_titleText) + (pad * 0.25f)) });
+
         // spell category images
         util::TextureLoader::load(
             m_fireTexture, (t_context.config.media_path / "image" / "fire-icon.png"), true);
@@ -282,7 +295,7 @@ namespace castlecrawl
 
         // spell category columbs
         const float categoryColumbWidth{ botRect.size.x / 6.0f };
-        const float categoryPositionTop{ util::bottom(m_titleText) + pad };
+        const float categoryPositionTop{ util::bottom(m_titleText) + (pad * 1.5f) };
 
         m_fireRectangleUPtr = std::make_unique<SpellCategoryRectangle>(
             t_context,
@@ -476,6 +489,7 @@ namespace castlecrawl
             m_gripRectangleUPtr->draw(t_target, t_states);
             m_fearRectangleUPtr->draw(t_target, t_states);
 
+            t_target.draw(m_instructionText, t_states);
             t_target.draw(m_descriptionText, t_states);
             t_target.draw(m_errorText, t_states);
         }
@@ -539,7 +553,7 @@ namespace castlecrawl
         }
         else
         {
-            t_context.sfx.play("error-1");
+            t_context.sfx.play("error-2");
         }
     }
 
@@ -652,6 +666,9 @@ namespace castlecrawl
             t_context.anim.player().play("spell", animRect, config);
         }
 
+        t_context.player.mana().adjCurrent(-toManaCost(t_spell));
+        t_context.top_panel.update(t_context);
+
         t_context.state.setChangePending(State::Play);
     }
 
@@ -661,17 +678,24 @@ namespace castlecrawl
         if (t_key.scancode == sf::Keyboard::Scancode::Enter)
         {
             const Spell spell{ selectedSpell() };
-            if (t_context.player.hasSpell(spell))
+            if (!t_context.player.hasSpell(spell))
             {
-                m_hasSpellBeenSelected = true;
-                m_prevCastSpell        = spell;
-                // TODO sfx?
+                showErrorMessage(t_context, "You haven't learned that spell yet.");
+                t_context.sfx.play("error-2");
+                return;
             }
-            else
+
+            if (t_context.player.mana().current() < toManaCost(spell))
             {
-                showErrorMessage(t_context);
-                t_context.sfx.play("error-1");
+                showErrorMessage(t_context, "You don't have enough mana to cast that spell.");
+                t_context.sfx.play("error-2");
+                return;
             }
+
+            m_hasSpellBeenSelected = true;
+            m_prevCastSpell        = spell;
+            t_context.sfx.play("magic-1");
+            return;
         }
         else if (t_key.scancode == sf::Keyboard::Scancode::Up)
         {
@@ -844,21 +868,26 @@ namespace castlecrawl
         std::string description;
         if (spell == Spell::Spark)
         {
-            description += "A weak but consistent fire attack spell that does ";
+            description += "A weak but consistent fire attack spell ";
         }
         else if (spell == Spell::Frostbite)
         {
-            description += "A weak but consistent ice attack spell that does ";
+            description += "A weak but consistent ice attack spell ";
         }
         else if (spell == Spell::Zap)
         {
-            description += "A low power but less predictable energy attack spell doing ";
+            description += "A low power but less predictable energy attack spell ";
         }
         // TODO finish this and give all spells a description.
+
+        description += "that costs ";
+        description += std::to_string(toManaCost(spell));
+        description += " mana ";
 
         const sf::Vector2i damageMinMax{ toDamageMinMax(spell) };
         if ((damageMinMax.x < damageMinMax.y) && !description.empty())
         {
+            description += "and does ";
             description += std::to_string(damageMinMax.x);
             description += " to ";
             description += std::to_string(damageMinMax.y);
@@ -873,14 +902,14 @@ namespace castlecrawl
                                         (t_context.layout.botRect().size.y * 0.8f) });
     }
 
-    void StateCast::showErrorMessage(const Context & t_context)
+    void StateCast::showErrorMessage(const Context & t_context, const std::string & t_message)
     {
-        m_errorText.setString("You haven't learned that spell yet.");
+        m_errorText.setString(t_message);
         util::setOriginToPosition(m_errorText);
 
         m_errorText.setPosition({ ((t_context.layout.botRect().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (t_context.layout.botRect().size.y * 0.95f) });
+                                  (t_context.layout.botRect().size.y * 0.925f) });
 
         m_errorTimerSec = 0.0f;
     }
