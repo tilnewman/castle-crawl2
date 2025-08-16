@@ -94,6 +94,12 @@ namespace castlecrawl
             { imageRect.position.x, (spell_text3.getGlobalBounds().position.y - (pad * 0.5f)) },
             nameRectSize);
 
+        // this is a hack, this is only a hack of the code to fix a draw bug I can't explain
+        if (SpellCategory::Fear == category)
+        {
+            spell_rect3.position.y += (pad * 0.9f);
+        }
+
         full_rect = sf::FloatRect(
             imageRect.position,
             { imageRect.size.x, ((util::bottom(spell_rect3) - imageRect.position.y) + pad) });
