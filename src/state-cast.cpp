@@ -23,6 +23,7 @@
 #include "state-manager.hpp"
 #include "texture-loader.hpp"
 #include "top-panel.hpp"
+#include "turn-keeper.hpp"
 
 namespace castlecrawl
 {
@@ -476,7 +477,7 @@ namespace castlecrawl
         if (m_isAnimatingCategorySelection)
         {
             m_gategoryAnimTimerSec += t_elapsedSec;
-            const float categoryAnimDuration{ 1.5f };
+            const float categoryAnimDuration{ 0.5f };
             if (m_gategoryAnimTimerSec < categoryAnimDuration)
             {
                 const int alpha{
@@ -490,7 +491,7 @@ namespace castlecrawl
                 const float scale{ util::map(
                     m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 1.0f, 3.0f) };
 
-                m_categroyAnimSprite.setScale({scale, scale});
+                m_categroyAnimSprite.setScale({ scale, scale });
             }
             else
             {
@@ -711,6 +712,20 @@ namespace castlecrawl
         t_context.player.mana().adjCurrent(-toManaCost(t_spell));
         t_context.top_panel.update(t_context);
 
+        // apply damage the monster (if any is at t_mapPos)
+        if (isTileImageMonster(
+                charToTileImage(t_context.maps.current().cell(t_mapPos).object_char)))
+        {
+            const sf::Vector2i damageMinMax{ toDamageMinMax(t_spell) };
+            if (damageMinMax.x < damageMinMax.y)
+            {
+                const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
+                t_context.monsters.damage(t_mapPos, damage);
+            }
+        }
+
+        t_context.turn.advance(t_context, 1.5f);
+
         t_context.state.setChangePending(State::Play);
     }
 
@@ -760,7 +775,7 @@ namespace castlecrawl
                 (m_categroyAnimSprite.getGlobalBounds().size * 0.5f));
 
             util::setOriginToCenter(m_categroyAnimSprite);
-            
+
             m_isAnimatingCategorySelection = true;
             m_prevCastSpell                = spell;
             t_context.sfx.play("magic-1");
