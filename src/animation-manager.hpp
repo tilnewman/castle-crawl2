@@ -39,7 +39,7 @@ namespace castlecrawl
         [[nodiscard]] inline FlatSmokeAnimManager & flatSmoke() { return *m_flatSmokeUPtr; }
         [[nodiscard]] inline util::AnimationPlayer & player() { return *m_playerUPtr; }
 
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void clear();
 

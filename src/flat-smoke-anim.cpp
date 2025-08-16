@@ -47,11 +47,11 @@ namespace castlecrawl
             true);
     }
 
-    void FlatSmokeAnimManager::update(const Context & t_context, const float t_elapsedTimeSec)
+    void FlatSmokeAnimManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (FlatSmokeAnim & animation : m_animations)
         {
-            animation.elapsed_sec += t_elapsedTimeSec;
+            animation.elapsed_sec += t_elapsedSec;
             if (animation.elapsed_sec > m_timeBetweenFramesSec)
             {
                 animation.elapsed_sec -= m_timeBetweenFramesSec;

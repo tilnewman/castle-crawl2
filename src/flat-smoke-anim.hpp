@@ -42,7 +42,7 @@ namespace castlecrawl
         FlatSmokeAnimManager();
 
         void setup(const GameConfig & t_config);
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         inline void clear() { m_animations.clear(); }

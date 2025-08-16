@@ -142,11 +142,11 @@ namespace util
         createAnimation(nameMatchingIndexes, t_bounds, t_config);
     }
 
-    void AnimationPlayer::update(const float t_elapsedTimeSec)
+    void AnimationPlayer::update(const float t_elapsedSec)
     {
         for (Animation & anim : m_animations)
         {
-            updateAnimation(anim, t_elapsedTimeSec);
+            updateAnimation(anim, t_elapsedSec);
         }
     }
 
@@ -461,14 +461,14 @@ namespace util
         return indexes;
     }
 
-    void AnimationPlayer::updateAnimation(Animation & t_anim, const float t_elapsedTimeSec) const
+    void AnimationPlayer::updateAnimation(Animation & t_anim, const float t_elapsedSec) const
     {
         if (!t_anim.is_playing)
         {
             return;
         }
 
-        t_anim.sec_elapsed += t_elapsedTimeSec;
+        t_anim.sec_elapsed += t_elapsedSec;
 
         const ImageCache & cache{ *m_imageCaches.at(t_anim.cache_index) };
         const float frameCount{ static_cast<float>(cache.frame_count) };

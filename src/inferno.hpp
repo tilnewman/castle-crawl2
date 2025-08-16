@@ -25,7 +25,7 @@ namespace castlecrawl
         InfernoAnimation(
             const Context & t_context, const sf::Texture & t_texture, const MapPos_t & t_mapPos);
 
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         [[nodiscard]] const sf::IntRect frameRect(const std::size_t t_index) const;
 
@@ -47,7 +47,7 @@ namespace castlecrawl
         InfernoAnimationManager();
 
         void setup(const GameConfig & t_config);
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const Context & t_context, const MapPos_t & t_mapPos);

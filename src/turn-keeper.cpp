@@ -22,12 +22,12 @@ namespace castlecrawl
         , m_turnCount{ 1 }
     {}
 
-    void TurnKeeper::update(const Context & t_context, const float t_elapsedTimeSec)
+    void TurnKeeper::update(const Context & t_context, const float t_elapsedSec)
     {
         if ((m_owner == TurnOwner::PlayerDelay) || (m_owner == TurnOwner::MonsterDelay) ||
             (m_owner == TurnOwner::NpcDelay))
         {
-            m_elapsedSec += t_elapsedTimeSec;
+            m_elapsedSec += t_elapsedSec;
             if (m_elapsedSec > m_delaySec)
             {
                 advance(t_context, 0.0f);

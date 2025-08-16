@@ -47,9 +47,9 @@ namespace castlecrawl
             true);
     }
 
-    void CampfireAnimationManager::update(const Context &, const float t_elapsedTimeSec)
+    void CampfireAnimationManager::update(const Context &, const float t_elapsedSec)
     {
-        m_frameTimeSec += t_elapsedTimeSec;
+        m_frameTimeSec += t_elapsedSec;
 
         const float timePerFrameSec = 0.1f;
         if (m_frameTimeSec > timePerFrameSec)

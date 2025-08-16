@@ -43,9 +43,9 @@ namespace castlecrawl
         }
     }
 
-    void InfernoAnimation::update(const Context &, const float t_elapsedTimeSec)
+    void InfernoAnimation::update(const Context &, const float t_elapsedSec)
     {
-        frame_time_sec += t_elapsedTimeSec;
+        frame_time_sec += t_elapsedSec;
         if (frame_time_sec > time_between_frames_sec)
         {
             frame_time_sec -= time_between_frames_sec;
@@ -93,11 +93,11 @@ namespace castlecrawl
             false);
     }
 
-    void InfernoAnimationManager::update(const Context & t_context, const float t_elapsedTimeSec)
+    void InfernoAnimationManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (InfernoAnimation & animation : m_animations)
         {
-            animation.update(t_context, t_elapsedTimeSec);
+            animation.update(t_context, t_elapsedSec);
         }
     }
 

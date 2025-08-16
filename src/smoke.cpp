@@ -33,17 +33,17 @@ namespace castlecrawl
         reset(t_context);
     }
 
-    void SmokeParticle::update(const Context & t_context, const float t_elapsedTimeSec)
+    void SmokeParticle::update(const Context & t_context, const float t_elapsedSec)
     {
-        // these calculations are sensitive to slow frame rates that increase t_elapsedTimeSec
-        const float elapsedTimeClamped = std::min(t_elapsedTimeSec, (1.0f / 120.0f));
+        // these calculations are sensitive to slow frame rates that increase t_elapsedSec
+        const float elapsedTimeClamped = std::min(t_elapsedSec, (1.0f / 120.0f));
 
         sprite.move({ 0.0f, -(move_speed * elapsedTimeClamped) });
 
         const float scale{ 1.0f + (scale_speed * elapsedTimeClamped) };
         sprite.scale({ scale, scale });
 
-        alpha_reduction_timer_sec += t_elapsedTimeSec;
+        alpha_reduction_timer_sec += t_elapsedSec;
         if (alpha_reduction_timer_sec > alpha_reduction_interval_sec)
         {
             alpha_reduction_timer_sec -= alpha_reduction_interval_sec;
@@ -114,11 +114,11 @@ namespace castlecrawl
         }
     }
 
-    void SmokeEffect::update(const Context & t_context, const float t_elapsedTimeSec)
+    void SmokeEffect::update(const Context & t_context, const float t_elapsedSec)
     {
         for (SmokeParticle & particle : particles)
         {
-            particle.update(t_context, t_elapsedTimeSec);
+            particle.update(t_context, t_elapsedSec);
         }
     }
 
@@ -142,11 +142,11 @@ namespace castlecrawl
         util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "smoke.png"), true);
     }
 
-    void SmokeEffectManager::update(const Context & t_context, const float t_elapsedTimeSec)
+    void SmokeEffectManager::update(const Context & t_context, const float t_elapsedSec)
     {
         for (SmokeEffect & effect : m_effects)
         {
-            effect.update(t_context, t_elapsedTimeSec);
+            effect.update(t_context, t_elapsedSec);
         }
     }
 

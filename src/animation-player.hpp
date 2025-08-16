@@ -146,7 +146,7 @@ namespace util
         }
 
         void stop(const std::string & t_name);
-        void update(const float t_elapsedTimeSec);
+        void update(const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
         void stopAll();
         void reset();
@@ -181,7 +181,7 @@ namespace util
 
         Animation & getAvailableAnimation();
 
-        void updateAnimation(Animation & t_anim, const float t_elapsedTimeSec) const;
+        void updateAnimation(Animation & t_anim, const float t_elapsedSec) const;
 
         void setAnimationFrame(Animation & t_anim, const std::size_t t_newFrameIndex) const;
 

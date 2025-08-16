@@ -34,16 +34,16 @@ namespace castlecrawl
         m_playerUPtr->loadAll();
     }
 
-    void AnimationManager::update(const Context & t_context, const float t_elapsedTimeSec)
+    void AnimationManager::update(const Context & t_context, const float t_elapsedSec)
     {
-        m_dustManagerUPtr->update(t_context, t_elapsedTimeSec);
-        m_sparkleManagerUPtr->update(t_context, t_elapsedTimeSec);
-        m_campfiresUPtr->update(t_context, t_elapsedTimeSec);
-        m_smokeEffectManagerUPtr->update(t_context, t_elapsedTimeSec);
-        m_infernoManagerUPtr->update(t_context, t_elapsedTimeSec);
-        m_risingUPtr->update(t_context, t_elapsedTimeSec);
-        m_flatSmokeUPtr->update(t_context, t_elapsedTimeSec);
-        m_playerUPtr->update(t_elapsedTimeSec);
+        m_dustManagerUPtr->update(t_context, t_elapsedSec);
+        m_sparkleManagerUPtr->update(t_context, t_elapsedSec);
+        m_campfiresUPtr->update(t_context, t_elapsedSec);
+        m_smokeEffectManagerUPtr->update(t_context, t_elapsedSec);
+        m_infernoManagerUPtr->update(t_context, t_elapsedSec);
+        m_risingUPtr->update(t_context, t_elapsedSec);
+        m_flatSmokeUPtr->update(t_context, t_elapsedSec);
+        m_playerUPtr->update(t_elapsedSec);
     }
 
     void AnimationManager::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const

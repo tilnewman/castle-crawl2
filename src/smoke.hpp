@@ -28,7 +28,7 @@ namespace castlecrawl
             const sf::IntRect & t_textureRect,
             const MapPos_t & t_mapPos);
 
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void reset(const Context & t_context);
 
@@ -50,7 +50,7 @@ namespace castlecrawl
             const sf::IntRect & t_textureRect,
             const MapPos_t & t_mapPos);
 
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         std::vector<SmokeParticle> particles;
@@ -64,7 +64,7 @@ namespace castlecrawl
         SmokeEffectManager();
 
         void setup(const GameConfig & t_config);
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
         void add(const Context & t_context, const MapPos_t & t_mapPos);

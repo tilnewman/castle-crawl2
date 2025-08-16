@@ -52,13 +52,13 @@ namespace castlecrawl
         util::centerInside(m_titleText, screenRect);
     }
 
-    void StateDeath::update(const Context & t_context, const float t_elapsedTimeSec)
+    void StateDeath::update(const Context & t_context, const float t_elapsedSec)
     {
-        t_context.anim.update(t_context, t_elapsedTimeSec);
+        t_context.anim.update(t_context, t_elapsedSec);
 
         if (m_fadeRedRectangle.getFillColor().a < 255)
         {
-            m_fadeRedTimeSec += t_elapsedTimeSec;
+            m_fadeRedTimeSec += t_elapsedSec;
             if (m_fadeRedTimeSec > 0.035f)
             {
                 m_fadeRedTimeSec = 0.0f;
@@ -69,7 +69,7 @@ namespace castlecrawl
         }
         else if (m_fadeBlackRectangle.getFillColor().a < 255)
         {
-            m_fadeBlackTimeSec += t_elapsedTimeSec;
+            m_fadeBlackTimeSec += t_elapsedSec;
             if (m_fadeBlackTimeSec > 0.005f)
             {
                 m_fadeBlackTimeSec = 0.0f;

@@ -57,7 +57,7 @@ namespace castlecrawl
         void advance(const Context & t_context, const float t_delaySec = 0.0f);
         void reset();
 
-        void update(const Context & t_context, const float t_elapsedTimeSec);
+        void update(const Context & t_context, const float t_elapsedSec);
 
       private:
         void turnDurationActions(const Context & t_context);

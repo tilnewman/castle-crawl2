@@ -724,10 +724,10 @@ namespace castlecrawl
         }
     }
 
-    void StateEditor::updateFadeText(const float t_elapsedTimeSec)
+    void StateEditor::updateFadeText(const float t_elapsedSec)
     {
         const float fadeTimeSec = 3.0f;
-        m_fadeTextTimerSec += t_elapsedTimeSec;
+        m_fadeTextTimerSec += t_elapsedSec;
         if (m_fadeTextTimerSec < fadeTimeSec)
         {
             const int alpha = (255 - util::map(m_fadeTextTimerSec, 0.0f, fadeTimeSec, 0, 255));
