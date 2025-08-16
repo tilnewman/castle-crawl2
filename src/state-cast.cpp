@@ -252,6 +252,9 @@ namespace castlecrawl
         , m_errorTimerSec{ 0.0f }
         , m_descriptionText{ util::SfmlDefaults::instance().font() }
         , m_instructionText{ util::SfmlDefaults::instance().font() }
+        , m_categroyAnimSprite{ util::SfmlDefaults::instance().texture() }
+        , m_isAnimatingCategorySelection{ false }
+        , m_gategoryAnimTimerSec{ 0.0f }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -469,6 +472,31 @@ namespace castlecrawl
                 m_errorText.setString("");
             }
         }
+
+        if (m_isAnimatingCategorySelection)
+        {
+            m_gategoryAnimTimerSec += t_elapsedSec;
+            const float categoryAnimDuration{ 1.5f };
+            if (m_gategoryAnimTimerSec < categoryAnimDuration)
+            {
+                const int alpha{
+                    255 - util::map(m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 0, 255)
+                };
+
+                sf::Color color{ m_categroyAnimSprite.getColor() };
+                color.a = static_cast<uint8_t>(alpha);
+                m_categroyAnimSprite.setColor(color);
+
+                const float scale{ util::map(
+                    m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 1.0f, 3.0f) };
+
+                m_categroyAnimSprite.setScale({scale, scale});
+            }
+            else
+            {
+                m_hasSpellBeenSelected = true;
+            }
+        }
     }
 
     void StateCast::draw(
@@ -499,6 +527,13 @@ namespace castlecrawl
             t_target.draw(m_instructionText, t_states);
             t_target.draw(m_descriptionText, t_states);
             t_target.draw(m_errorText, t_states);
+
+            if (m_isAnimatingCategorySelection)
+            {
+                t_states.blendMode = sf::BlendAdd;
+                t_target.draw(m_categroyAnimSprite, t_states);
+                t_states.blendMode = sf::BlendAlpha;
+            }
         }
     }
 
@@ -699,8 +734,35 @@ namespace castlecrawl
                 return;
             }
 
-            m_hasSpellBeenSelected = true;
-            m_prevCastSpell        = spell;
+            if (m_fireRectangleUPtr->has_focus)
+            {
+                m_categroyAnimSprite = m_fireRectangleUPtr->sprite;
+            }
+            else if (m_iceRectangleUPtr->has_focus)
+            {
+                m_categroyAnimSprite = m_iceRectangleUPtr->sprite;
+            }
+            else if (m_energyRectangleUPtr->has_focus)
+            {
+                m_categroyAnimSprite = m_energyRectangleUPtr->sprite;
+            }
+            else if (m_gripRectangleUPtr->has_focus)
+            {
+                m_categroyAnimSprite = m_gripRectangleUPtr->sprite;
+            }
+            else // if (m_fearRectangleUPtr->has_focus)
+            {
+                m_categroyAnimSprite = m_fearRectangleUPtr->sprite;
+            }
+
+            m_categroyAnimSprite.setPosition(
+                m_categroyAnimSprite.getGlobalBounds().position +
+                (m_categroyAnimSprite.getGlobalBounds().size * 0.5f));
+
+            util::setOriginToCenter(m_categroyAnimSprite);
+            
+            m_isAnimatingCategorySelection = true;
+            m_prevCastSpell                = spell;
             t_context.sfx.play("magic-1");
             return;
         }
