@@ -348,7 +348,8 @@ namespace castlecrawl
             sf::Vector2f{ (categoryColumbWidth * 5.0f), categoryPositionTop });
 
         // error text
-        m_errorText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Red);
+        m_errorText =
+            t_context.fonts.makeText(FontSize::Large, "", t_context.config.error_message_color);
 
         // description text
         m_descriptionText =

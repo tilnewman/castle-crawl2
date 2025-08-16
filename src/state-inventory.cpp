@@ -513,13 +513,13 @@ namespace castlecrawl
     {
         m_errorTextElapsedSec = 0.0f;
         m_errorText.setString(t_message);
-        m_errorText.setFillColor(sf::Color(255, 100, 100));
+        m_errorText.setFillColor(t_context.config.error_message_color);
 
         m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (util::bottom(m_itemDescText) + 20.0f) });
+                                  (util::bottom(m_itemDescText) + 40.0f) });
 
-        t_context.sfx.play("error-1");
+        t_context.sfx.play("error-2");
     }
 
     void StateInventory::updateItemDescText(const Context & t_context)
