@@ -81,11 +81,13 @@ namespace castlecrawl
 
         void castSpell(const Context & t_context, const MapPos_t & t_mapPos, const Spell t_spell);
 
-        [[nodiscard]] Spell selectedSpell() const;
+        [[nodiscard]] Spell selectedSpell(const Context & t_context);
 
         void showErrorMessage(const Context & t_context, const std::string & t_message);
 
         void updateDescription(const Context & t_context);
+
+        std::unique_ptr<SpellCategoryRectangle> & focusedCategory(const Context & t_context);
 
       private:
         sf::RectangleShape m_bgFadeRectangle;

@@ -574,25 +574,25 @@ namespace castlecrawl
         if ((t_key.scancode == sf::Keyboard::Scancode::Up) &&
             t_context.maps.current().isPosValid(upPos))
         {
-            castSpell(t_context, upPos, selectedSpell());
+            castSpell(t_context, upPos, selectedSpell(t_context));
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Down) &&
             t_context.maps.current().isPosValid(downPos))
         {
-            castSpell(t_context, downPos, selectedSpell());
+            castSpell(t_context, downPos, selectedSpell(t_context));
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Left) &&
             t_context.maps.current().isPosValid(leftPos))
         {
-            castSpell(t_context, leftPos, selectedSpell());
+            castSpell(t_context, leftPos, selectedSpell(t_context));
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Right) &&
             t_context.maps.current().isPosValid(rightPos))
         {
-            castSpell(t_context, rightPos, selectedSpell());
+            castSpell(t_context, rightPos, selectedSpell(t_context));
         }
         else
         {
@@ -600,28 +600,9 @@ namespace castlecrawl
         }
     }
 
-    Spell StateCast::selectedSpell() const
+    Spell StateCast::selectedSpell(const Context & t_context)
     {
-        if (m_fireRectangleUPtr->has_focus)
-        {
-            return toSpell(SpellCategory::Fire, m_fireRectangleUPtr->spell_index);
-        }
-        else if (m_iceRectangleUPtr->has_focus)
-        {
-            return toSpell(SpellCategory::Ice, m_iceRectangleUPtr->spell_index);
-        }
-        else if (m_energyRectangleUPtr->has_focus)
-        {
-            return toSpell(SpellCategory::Energy, m_energyRectangleUPtr->spell_index);
-        }
-        else if (m_gripRectangleUPtr->has_focus)
-        {
-            return toSpell(SpellCategory::Grip, m_gripRectangleUPtr->spell_index);
-        }
-        else // if (m_fearRectangleUPtr->has_focus)
-        {
-            return toSpell(SpellCategory::Fear, m_fearRectangleUPtr->spell_index);
-        }
+        return toSpell(SpellCategory::Fire, focusedCategory(t_context)->spell_index);
     }
 
     void StateCast::castSpell(
@@ -734,12 +715,41 @@ namespace castlecrawl
         t_context.state.setChangePending(State::Play);
     }
 
+    std::unique_ptr<SpellCategoryRectangle> & StateCast::focusedCategory(const Context & t_context)
+    {
+        if (m_fireRectangleUPtr->has_focus)
+        {
+            return m_fireRectangleUPtr;
+        }
+        else if (m_iceRectangleUPtr->has_focus)
+        {
+            return m_iceRectangleUPtr;
+        }
+        else if (m_energyRectangleUPtr->has_focus)
+        {
+            return m_energyRectangleUPtr;
+        }
+        else if (m_gripRectangleUPtr->has_focus)
+        {
+            return m_gripRectangleUPtr;
+        }
+        else if (m_fearRectangleUPtr->has_focus)
+        {
+            return m_fearRectangleUPtr;
+        }
+        else
+        {
+            m_fireRectangleUPtr->setFocus(t_context, true);
+            return m_fireRectangleUPtr;
+        }
+    }
+
     void StateCast::handleKeystrokesBeforeSpellSelection(
         const Context & t_context, const sf::Event::KeyPressed & t_key)
     {
         if (t_key.scancode == sf::Keyboard::Scancode::Enter)
         {
-            const Spell spell{ selectedSpell() };
+            const Spell spell{ selectedSpell(t_context) };
             if (!t_context.player.hasSpell(spell))
             {
                 showErrorMessage(t_context, "You haven't learned that spell yet.");
@@ -754,26 +764,7 @@ namespace castlecrawl
                 return;
             }
 
-            if (m_fireRectangleUPtr->has_focus)
-            {
-                m_categroyAnimSprite = m_fireRectangleUPtr->sprite;
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                m_categroyAnimSprite = m_iceRectangleUPtr->sprite;
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                m_categroyAnimSprite = m_energyRectangleUPtr->sprite;
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                m_categroyAnimSprite = m_gripRectangleUPtr->sprite;
-            }
-            else // if (m_fearRectangleUPtr->has_focus)
-            {
-                m_categroyAnimSprite = m_fearRectangleUPtr->sprite;
-            }
+            m_categroyAnimSprite = focusedCategory(t_context)->sprite;
 
             m_categroyAnimSprite.setPosition(
                 m_categroyAnimSprite.getGlobalBounds().position +
@@ -800,40 +791,9 @@ namespace castlecrawl
                 }
             };
 
-            if (m_fireRectangleUPtr->has_focus)
+            if (indexDecrement(*focusedCategory(t_context)))
             {
-                if (indexDecrement(*m_fireRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_iceRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_energyRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_gripRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_fearRectangleUPtr->has_focus)
-            {
-                if (indexDecrement(*m_fearRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
+                t_context.sfx.play("tick-on");
             }
 
             updateDescription(t_context);
@@ -852,40 +812,9 @@ namespace castlecrawl
                 }
             };
 
-            if (m_fireRectangleUPtr->has_focus)
+            if (indexIncrement(*focusedCategory(t_context)))
             {
-                if (indexIncrement(*m_fireRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_iceRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_iceRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_energyRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_energyRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_gripRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_gripRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
-            }
-            else if (m_fearRectangleUPtr->has_focus)
-            {
-                if (indexIncrement(*m_fearRectangleUPtr))
-                {
-                    t_context.sfx.play("tick-on");
-                }
+                t_context.sfx.play("tick-on");
             }
 
             updateDescription(t_context);
@@ -952,7 +881,7 @@ namespace castlecrawl
 
     void StateCast::updateDescription(const Context & t_context)
     {
-        const Spell spell{ selectedSpell() };
+        const Spell spell{ selectedSpell(t_context) };
 
         std::string description;
         if (spell == Spell::Spark)
