@@ -721,11 +721,16 @@ namespace castlecrawl
             {
                 const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
                 t_context.monsters.damage(t_mapPos, damage);
+
+                std::string message{ std::to_string(damage) };
+                message += " dmg";
+
+                t_context.anim.risingText().add(
+                    t_context, message, t_context.config.message_color_cast_spell, t_mapPos);
             }
         }
 
         t_context.turn.advance(t_context, 1.5f);
-
         t_context.state.setChangePending(State::Play);
     }
 
