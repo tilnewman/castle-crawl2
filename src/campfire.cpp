@@ -36,7 +36,7 @@ namespace castlecrawl
         : m_texture{}
         , m_animations{}
         , m_frameTimeSec{ 0.0f }
-        , m_frameCount{ 8 }
+        , m_frameCount{ 9 }
     {}
 
     void CampfireAnimationManager::setup(const GameConfig & t_config)
@@ -51,7 +51,7 @@ namespace castlecrawl
     {
         m_frameTimeSec += t_elapsedSec;
 
-        const float timePerFrameSec = 0.1f;
+        const float timePerFrameSec{ 0.1f };
         if (m_frameTimeSec > timePerFrameSec)
         {
             m_frameTimeSec -= timePerFrameSec;
@@ -80,15 +80,15 @@ namespace castlecrawl
 
     void CampfireAnimationManager::add(const Context & t_context, const MapPos_t & t_mapPos)
     {
-        const std::size_t frameIndex = t_context.random.zeroToOneLessThan(m_frameCount);
+        const std::size_t frameIndex{ t_context.random.zeroToOneLessThan(m_frameCount) };
 
-        CampfireAnimation & animation =
-            m_animations.emplace_back(t_mapPos, frameIndex, m_texture, frameRect(frameIndex));
+        CampfireAnimation & animation{ m_animations.emplace_back(
+            t_mapPos, frameIndex, m_texture, frameRect(frameIndex)) };
 
-        const sf::Vector2f screenPos =
-            t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos);
+        const sf::Vector2f screenPos{ t_context.maps.current().mapPosToScreenPos(
+            t_context, t_mapPos) };
 
-        const sf::Vector2f cellSize = t_context.layout.cellSize();
+        const sf::Vector2f cellSize{ t_context.layout.cellSize() };
 
         util::centerInside(animation.sprite, { screenPos, cellSize });
 
@@ -116,7 +116,8 @@ namespace castlecrawl
             case 4: { return sf::IntRect{ {32, 32}, {32, 32} }; }
             case 5: { return sf::IntRect{ {64, 32}, {32, 32} }; }
             case 6: { return sf::IntRect{ { 0, 64}, {32, 32} }; }
-            default:{ return sf::IntRect{ {32, 64}, {32, 32} }; }
+            case 7: { return sf::IntRect{ {32, 64}, {32, 32} }; }
+            default:{ return sf::IntRect{ {64, 64}, {32, 32} }; }
         }
         // clang-format on
     }
