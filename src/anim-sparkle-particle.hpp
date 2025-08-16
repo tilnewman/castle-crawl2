@@ -1,7 +1,7 @@
-#ifndef SPARKLE_PARTICLE_HPP_INCLUDE
-#define SPARKLE_PARTICLE_HPP_INCLUDE
+#ifndef ANIM_SPARKLE_PARTICLE_HPP_INCLUDE
+#define ANIM_SPARKLE_PARTICLE_HPP_INCLUDE
 //
-// sparkle-particle.hpp
+// anim-sparkle-particle.hpp
 //
 #include "map-types.hpp"
 
@@ -71,4 +71,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // SPARKLE_PARTICLE_HPP_INCLUDE
+#endif // ANIM_SPARKLE_PARTICLE_HPP_INCLUDE

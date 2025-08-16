@@ -3,15 +3,15 @@
 //
 // animation-manager.hpp
 //
+#include "anim-campfire.hpp"
+#include "anim-dust-particle.hpp"
+#include "anim-flat-smoke.hpp"
+#include "anim-inferno.hpp"
+#include "anim-rising-text.hpp"
+#include "anim-smoke.hpp"
+#include "anim-sparkle-particle.hpp"
 #include "animation-player.hpp"
-#include "campfire.hpp"
-#include "dust-particle.hpp"
-#include "flat-smoke-anim.hpp"
-#include "inferno.hpp"
 #include "random.hpp"
-#include "rising-text-anim.hpp"
-#include "smoke.hpp"
-#include "sparkle-particle.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

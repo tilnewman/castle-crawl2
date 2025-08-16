@@ -1,9 +1,9 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// fader.cpp
+// anim-fader.cpp
 //
-#include "fader.hpp"
+#include "anim-fader.hpp"
 
 #include "color-range.hpp"
 #include "sfml-util.hpp"
@@ -57,7 +57,7 @@ namespace castlecrawl
 
     bool Fader::update(const float t_elapsedSec)
     {
-        const bool isFadingBefore = isFading();
+        const bool isFadingBefore{ isFading() };
 
         m_timerSec += t_elapsedSec;
         if (m_timerSec > m_durationSec)
@@ -65,9 +65,9 @@ namespace castlecrawl
             m_timerSec = m_durationSec;
         }
 
-        const bool isFadingAfter = isFading();
+        const bool isFadingAfter{ isFading() };
 
-        const float ratio(m_timerSec / m_durationSec);
+        const float ratio{ m_timerSec / m_durationSec };
 
         if (m_isFadingIn)
         {

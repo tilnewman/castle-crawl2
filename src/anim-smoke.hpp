@@ -1,7 +1,7 @@
-#ifndef SMOKE_HPP_INCLUDED
-#define SMOKE_HPP_INCLUDED
+#ifndef ANIM_SMOKE_HPP_INCLUDED
+#define ANIM_SMOKE_HPP_INCLUDED
 //
-// smoke.hpp
+// anim-smoke.hpp
 //
 #include "map-types.hpp"
 
@@ -82,4 +82,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // SMOKE_HPP_INCLUDED
+#endif // ANIM_SMOKE_HPP_INCLUDED

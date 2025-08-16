@@ -1,10 +1,11 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// campfire.cpp
+// anim-campfire.cpp
 //
-#include "campfire.hpp"
+#include "anim-campfire.hpp"
 
+#include "anim-smoke.hpp"
 #include "animation-manager.hpp"
 #include "context.hpp"
 #include "game-config.hpp"
@@ -12,7 +13,6 @@
 #include "maps.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
-#include "smoke.hpp"
 #include "texture-loader.hpp"
 
 #include <algorithm>

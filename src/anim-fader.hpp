@@ -1,7 +1,7 @@
-#ifndef FADER_HPP_INCLUDED
-#define FADER_HPP_INCLUDED
+#ifndef ANIM_FADER_HPP_INCLUDED
+#define ANIM_FADER_HPP_INCLUDED
 //
-// fader.hpp
+// anim-fader.hpp
 //
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -41,4 +41,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // FADER_HPP_INCLUDED
+#endif // ANIM_FADER_HPP_INCLUDED

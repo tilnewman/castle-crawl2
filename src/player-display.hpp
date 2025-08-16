@@ -3,8 +3,8 @@
 //
 // player-display.hpp
 //
+#include "anim-shaker.hpp"
 #include "map-types.hpp"
-#include "shaker.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

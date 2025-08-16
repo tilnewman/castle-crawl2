@@ -1,9 +1,9 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// rising-text-anim.cpp
+// anim-rising-text.cpp
 //
-#include "rising-text-anim.hpp"
+#include "anim-rising-text.hpp"
 
 #include "context.hpp"
 #include "font.hpp"
@@ -22,10 +22,10 @@ namespace castlecrawl
         , screen_pos{ 0.0f, 0.0f }
         , text{ t_text }
     {
-        const sf::Vector2f cellScreenPos =
-            t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos);
+        const sf::Vector2f cellScreenPos{ t_context.maps.current().mapPosToScreenPos(
+            t_context, t_mapPos) };
 
-        const sf::Vector2f cellSize = t_context.layout.cellSize();
+        const sf::Vector2f cellSize{ t_context.layout.cellSize() };
 
         util::centerInside(text, { cellScreenPos, cellSize });
         text.move({ 0.0f, -cellSize.y });
@@ -41,23 +41,23 @@ namespace castlecrawl
 
     void RisingTextAnimationManager::update(const Context & t_context, const float t_elapsedSec)
     {
-        const float ageMaxSec     = 3.0f;
-        const float vertTravelMax = (t_context.layout.cellSize().y * 2.25f);
+        const float ageMaxSec{ 3.0f };
+        const float vertTravelMax{ (t_context.layout.cellSize().y * 2.25f) };
 
         for (RisingTextAnimation & animation : m_animations)
         {
             animation.age_sec += t_elapsedSec;
             if (animation.age_sec < ageMaxSec)
             {
-                const float vertMove =
-                    util::map(animation.age_sec, 0.0f, ageMaxSec, 0.0f, vertTravelMax);
+                const float vertMove{ util::map(
+                    animation.age_sec, 0.0f, ageMaxSec, 0.0f, vertTravelMax) };
 
                 animation.text.setPosition(
                     { animation.screen_pos.x, (animation.screen_pos.y - vertMove) });
 
-                const int alpha = (255 - util::map(animation.age_sec, 0.0f, ageMaxSec, 0, 255));
-                sf::Color color = animation.text.getFillColor();
-                color.a         = static_cast<uint8_t>(alpha);
+                const int alpha{ (255 - util::map(animation.age_sec, 0.0f, ageMaxSec, 0, 255)) };
+                sf::Color color{ animation.text.getFillColor() };
+                color.a = static_cast<uint8_t>(alpha);
                 animation.text.setFillColor(color);
             }
             else

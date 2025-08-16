@@ -8,7 +8,7 @@
 #include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "dust-particle.hpp"
+#include "anim-dust-particle.hpp"
 #include "fight-util.hpp"
 #include "framerate-text.hpp"
 #include "inventory.hpp"

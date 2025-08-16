@@ -1,7 +1,7 @@
-#ifndef INFERNO_HPP_INCLUDED
-#define INFERNO_HPP_INCLUDED
+#ifndef ANIM_INFERNO_HPP_INCLUDED
+#define ANIM_INFERNO_HPP_INCLUDED
 //
-// inferno.hpp
+// anim-inferno.hpp
 //
 #include "map-types.hpp"
 
@@ -61,4 +61,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // INFERNO_HPP_INCLUDED
+#endif // ANIM_INFERNO_HPP_INCLUDED

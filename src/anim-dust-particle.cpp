@@ -1,9 +1,9 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// dust-particle.cpp
+// anim-dust-particle.cpp
 //
-#include "dust-particle.hpp"
+#include "anim-dust-particle.hpp"
 
 #include "context.hpp"
 #include "game-config.hpp"

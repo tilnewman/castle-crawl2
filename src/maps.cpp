@@ -6,16 +6,12 @@
 #include "maps.hpp"
 
 #include "animation-manager.hpp"
-#include "campfire.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "inferno.hpp"
 #include "map-display.hpp"
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
-#include "smoke.hpp"
-#include "sparkle-particle.hpp"
 #include "tile-image-enum.hpp"
 
 namespace castlecrawl
@@ -115,10 +111,7 @@ namespace castlecrawl
         }
     }
 
-    void Maps::unloadAnimations(const Context & t_context)
-    {
-        t_context.anim.clear();
-    }
+    void Maps::unloadAnimations(const Context & t_context) { t_context.anim.clear(); }
 
     void Maps::forceMapForEditting(const Context & t_context, const Map t_map)
     {

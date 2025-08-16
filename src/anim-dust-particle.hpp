@@ -1,13 +1,12 @@
-#ifndef DUST_PARTICLE_HPP_INCLUDED
-#define DUST_PARTICLE_HPP_INCLUDED
+#ifndef ANIM_DUST_PARTICLE_HPP_INCLUDED
+#define ANIM_DUST_PARTICLE_HPP_INCLUDED
 //
-// dust-particle.hpp
+// anim-dust-particle.hpp
 //
 #include "map-types.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-
 #include <SFML/Graphics/Color.hpp>
 
 #include <vector>
@@ -57,4 +56,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // DUST_PARTICLE_HPP_INCLUDED
+#endif // ANIM_DUST_PARTICLE_HPP_INCLUDED

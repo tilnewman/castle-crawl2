@@ -13,7 +13,6 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
-#include "rising-text-anim.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"

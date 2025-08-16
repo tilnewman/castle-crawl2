@@ -1,7 +1,7 @@
-#ifndef RISING_TEXT_ANIM_HPP_INCLUDED
-#define RISING_TEXT_ANIM_HPP_INCLUDED
+#ifndef ANIM_RISING_TEXT_HPP_INCLUDED
+#define ANIM_RISING_TEXT_HPP_INCLUDED
 //
-// rising-text-anim.hpp
+// anim-rising-text.hpp
 //
 #include "map-types.hpp"
 
@@ -53,4 +53,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // RISING_TEXT_ANIM_HPP_INCLUDED
+#endif // ANIM_RISING_TEXT_HPP_INCLUDED

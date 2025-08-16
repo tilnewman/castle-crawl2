@@ -1,7 +1,7 @@
-#ifndef SHAKER_HPP_INCLUDED
-#define SHAKER_HPP_INCLUDED
+#ifndef ANIM_SHAKER_HPP_INCLUDED
+#define ANIM_SHAKER_HPP_INCLUDED
 //
-// shaker.hpp
+// anim-shaker.hpp
 //
 
 namespace castlecrawl
@@ -25,4 +25,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // STATE_HPP_INCLUDED
+#endif // ANIM_STATE_HPP_INCLUDED

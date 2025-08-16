@@ -1,9 +1,9 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// flat-smoke-anim.cpp
+// anim-flat-smoke.cpp
 //
-#include "flat-smoke-anim.hpp"
+#include "anim-flat-smoke.hpp"
 
 #include "context.hpp"
 #include "layout.hpp"
