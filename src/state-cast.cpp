@@ -480,7 +480,7 @@ namespace castlecrawl
             if (m_gategoryAnimTimerSec < categoryAnimDuration)
             {
                 const int alpha{
-                    255 - util::map(m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 0, 255)
+                    255 - util::map(m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 192, 255)
                 };
 
                 sf::Color color{ m_categroyAnimSprite.getColor() };
