@@ -603,7 +603,8 @@ namespace castlecrawl
 
     Spell StateCast::selectedSpell(const Context & t_context)
     {
-        return toSpell(SpellCategory::Fire, focusedCategory(t_context)->spell_index);
+        auto & categoryRectangleUPtr{ focusedCategory(t_context) };
+        return toSpell(categoryRectangleUPtr->category, categoryRectangleUPtr->spell_index);
     }
 
     void StateCast::castSpell(
@@ -704,7 +705,11 @@ namespace castlecrawl
                 const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
 
                 fight::damageMonster(
-                    t_context, damage, fight::RollResult{}, t_mapPos, t_context.config.message_color_cast_spell);
+                    t_context,
+                    damage,
+                    fight::RollResult{},
+                    t_mapPos,
+                    t_context.config.message_color_cast_spell);
             }
         }
 
