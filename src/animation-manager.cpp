@@ -20,6 +20,7 @@ namespace castlecrawl
         , m_risingUPtr{ std::make_unique<RisingTextAnimationManager>() }
         , m_flatSmokeUPtr{ std::make_unique<FlatSmokeAnimManager>() }
         , m_musicalNotesUPtr{ std::make_unique<MusicAnimationManager>() }
+        , m_crossbonesUPtr{ std::make_unique<CrossbonesAnimationManager>() }
         , m_playerUPtr{ std::make_unique<util::AnimationPlayer>(t_random, t_pathStr) }
     {}
 
@@ -33,6 +34,7 @@ namespace castlecrawl
         // m_risingUPtr has no setup() function
         m_flatSmokeUPtr->setup(t_config);
         m_musicalNotesUPtr->setup(t_config);
+        m_crossbonesUPtr->setup(t_config);
         m_playerUPtr->loadAll();
     }
 
@@ -46,6 +48,7 @@ namespace castlecrawl
         m_risingUPtr->update(t_context, t_elapsedSec);
         m_flatSmokeUPtr->update(t_context, t_elapsedSec);
         m_musicalNotesUPtr->update(t_context, t_elapsedSec);
+        m_crossbonesUPtr->update(t_context, t_elapsedSec);
         m_playerUPtr->update(t_elapsedSec);
     }
 
@@ -60,6 +63,7 @@ namespace castlecrawl
         m_risingUPtr->draw(t_target, t_states);
         m_flatSmokeUPtr->draw(t_target, t_states);
         m_musicalNotesUPtr->draw(t_target, t_states);
+        m_crossbonesUPtr->draw(t_target, t_states);
         m_playerUPtr->draw(t_target, t_states);
     }
 
@@ -73,6 +77,7 @@ namespace castlecrawl
         m_risingUPtr->clear();
         m_flatSmokeUPtr->clear();
         m_musicalNotesUPtr->clear();
+        m_crossbonesUPtr->clear();
         m_playerUPtr->stopAll();
     }
 
@@ -83,7 +88,8 @@ namespace castlecrawl
             m_dustManagerUPtr->particleCount() + m_sparkleManagerUPtr->particleCount() +
             m_campfiresUPtr->particleCount() + m_smokeEffectManagerUPtr->particleCount() +
             m_infernoManagerUPtr->particleCount() + m_risingUPtr->particleCount() +
-            m_flatSmokeUPtr->particleCount() + m_musicalNotesUPtr->particleCount());
+            m_flatSmokeUPtr->particleCount() + m_musicalNotesUPtr->particleCount() +
+            m_crossbonesUPtr->particleCount());
     }
 
 } // namespace castlecrawl

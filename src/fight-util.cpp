@@ -148,6 +148,8 @@ namespace castlecrawl::fight
 
             t_context.player.experinceAdj(monsterValue);
             t_context.top_panel.update(t_context);
+
+            t_context.anim.crossbones().add(t_context, t_monsterMapPos);
         }
 
         const sf::Color messageColor{ (didMonsterDie) ? t_context.config.message_color_attack_kill
