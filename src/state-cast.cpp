@@ -8,6 +8,7 @@
 #include "animation-manager.hpp"
 #include "animation-player.hpp"
 #include "context.hpp"
+#include "fight-util.hpp"
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
@@ -701,27 +702,9 @@ namespace castlecrawl
             if (damageMinMax.x < damageMinMax.y)
             {
                 const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
-                const bool didMonsterDie{ t_context.monsters.damage(t_mapPos, damage) };
 
-                std::string message{ std::to_string(damage) };
-                message += " dmg";
-
-                if (didMonsterDie)
-                {
-                    const int monsterValue{ t_context.monsters.stats(t_mapPos).value() };
-
-                    message += " KILLED +";
-                    message += std::to_string(monsterValue);
-                    message += "xp";
-
-                    t_context.player.experinceAdj(monsterValue);
-                }
-
-                const sf::Color messageColor{ (didMonsterDie)
-                                                  ? t_context.config.message_color_attack_kill
-                                                  : t_context.config.message_color_cast_spell };
-
-                t_context.anim.risingText().add(t_context, message, messageColor, t_mapPos);
+                fight::damageMonster(
+                    t_context, damage, fight::RollResult{}, t_mapPos, t_context.config.message_color_cast_spell);
             }
         }
 

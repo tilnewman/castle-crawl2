@@ -189,7 +189,7 @@ namespace castlecrawl
 
             const MonsterStats monsterStats{ t_context.monsters.stats(t_pos) };
 
-            const RollResult rollResult{ rollRivalStats(
+            const fight::RollResult rollResult{ fight::rollRivalStats(
                 t_context,
                 player.accuracy().current(),
                 monsterStats.dexterity,
@@ -197,44 +197,18 @@ namespace castlecrawl
 
             if (rollResult.result)
             {
-                t_context.sfx.play("hit");
-
                 int damage{ t_context.random.fromTo(weaponDamageMinMax.x, weaponDamageMinMax.y) };
                 if (rollResult.critical)
                 {
                     damage *= 2;
                 }
 
-                const bool didMonsterDie{ t_context.monsters.damage(t_pos, damage) };
-
-                std::string message{ std::to_string(damage) };
-                message += " dmg";
-                if (rollResult.lucky)
-                {
-                    message += " lucky!";
-                }
-                else if (rollResult.critical)
-                {
-                    message += " critical!";
-                }
-
-                if (didMonsterDie)
-                {
-                    const int monsterValue{ monsterStats.value() };
-
-                    message += " KILLED +";
-                    message += std::to_string(monsterValue);
-                    message += "xp";
-
-                    t_context.player.experinceAdj(monsterValue);
-                }
-
-                const sf::Color messageColor{ (didMonsterDie)
-                                                  ? t_context.config.message_color_attack_kill
-                                                  : t_context.config.message_color_attack_hit };
-
-                t_context.anim.risingText().add(
-                    t_context, message, messageColor, t_context.player_display.position());
+                fight::damageMonster(
+                    t_context,
+                    damage,
+                    rollResult,
+                    t_pos,
+                    t_context.config.message_color_attack_hit);
             }
             else
             {

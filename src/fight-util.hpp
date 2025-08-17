@@ -6,11 +6,15 @@
 #include "map-types.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/System/Vector2.hpp>
 
 namespace castlecrawl
 {
-
     struct Context;
+}
+
+namespace castlecrawl::fight
+{
 
     struct HealthBarRectangles
     {
@@ -20,6 +24,8 @@ namespace castlecrawl
 
     [[nodiscard]] const HealthBarRectangles makeCreatureHealthBars(
         const Context & t_context, const float t_healthRatio, const MapPos_t & t_mapPos);
+
+    //
 
     struct RollResult
     {
@@ -34,6 +40,15 @@ namespace castlecrawl
         const int t_challengerValue,
         const int t_defenderValue,
         const int t_challengerLuckValue = 0);
+
+    //
+
+    void damageMonster(
+        const Context & t_context,
+        const int t_damage,
+        const RollResult & t_rollResult,
+        const MapPos_t & t_monsterMapPos,
+        const sf::Color & t_messageColor);
 
 } // namespace castlecrawl
 

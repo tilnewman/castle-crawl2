@@ -55,7 +55,7 @@ namespace castlecrawl
         {
             if (monster.healthRatio() < 1.0f)
             {
-                const auto rectangles{ makeCreatureHealthBars(
+                const auto rectangles{ fight::makeCreatureHealthBars(
                     t_context, monster.healthRatio(), monster.mapPosition()) };
 
                 t_target.draw(rectangles.background, t_states);

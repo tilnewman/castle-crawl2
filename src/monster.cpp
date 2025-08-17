@@ -154,7 +154,7 @@ namespace castlecrawl
 
     void Monster::attackPlayer(const Context & t_context)
     {
-        const RollResult roll{ rollRivalStats(
+        const fight::RollResult roll{ fight::rollRivalStats(
             t_context, m_stats.accuracy, t_context.player.dexterity().current(), m_stats.luck) };
 
         if (!roll.result)
