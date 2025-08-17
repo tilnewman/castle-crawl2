@@ -26,6 +26,7 @@ namespace castlecrawl
         , m_conditions{}
         , m_spells{ Spell::Spark, Spell::Frostbite, Spell::Zap } // spells known when game begins
         , m_spellLastCast{ Spell::Spark }
+        , m_spellLastCastPos{ -1, -1 } // both are negative to be invalid
     {}
 
     void Player::updateEquipEffects()

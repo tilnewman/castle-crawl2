@@ -8,6 +8,7 @@
 #include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "fight-util.hpp"
 #include "framerate-text.hpp"
 #include "health-bar.hpp"
 #include "keys.hpp"
@@ -164,6 +165,25 @@ namespace castlecrawl
                 if (t_context.turn.isPlayerTurn())
                 {
                     t_context.state.setChangePending(State::Cast);
+                }
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::R)
+            {
+                if (t_context.turn.isPlayerTurn())
+                {
+                    const Spell lastCastSpell{ t_context.player.spellLastCast() };
+                    if (t_context.player.mana().current() < toManaCost(lastCastSpell))
+                    {
+                        return;
+                    }
+
+                    const MapPos_t lastCastSpellPos{ t_context.player.spellLastCastPos() };
+                    if ((lastCastSpellPos.x < 0) && (lastCastSpellPos.y < 0))
+                    {
+                        return;
+                    }
+
+                    fight::castSpell(t_context, lastCastSpell, lastCastSpellPos);
                 }
             }
             // todo remove after testing

@@ -5,6 +5,7 @@
 //
 #include "condition.hpp"
 #include "inventory.hpp"
+#include "map-types.hpp"
 #include "spells.hpp"
 #include "stat.hpp"
 #include "strong-types.hpp"
@@ -67,7 +68,13 @@ namespace castlecrawl
         void addSpell(const Spell t_spell);
 
         [[nodiscard]] inline Spell spellLastCast() const { return m_spellLastCast; }
-        inline void setSpellLastCast(const Spell t_spell) { m_spellLastCast = t_spell; }
+        [[nodiscard]] inline MapPos_t spellLastCastPos() const { return m_spellLastCastPos; }
+
+        inline void setSpellLastCast(const Spell t_spell, const MapPos_t & t_mapPos)
+        {
+            m_spellLastCast    = t_spell;
+            m_spellLastCastPos = t_mapPos;
+        }
 
       private:
         constexpr static int statMin     = 1;
@@ -96,6 +103,7 @@ namespace castlecrawl
         std::vector<Spell> m_spells;
 
         Spell m_spellLastCast;
+        MapPos_t m_spellLastCastPos;
     };
 
 } // namespace castlecrawl

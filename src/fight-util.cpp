@@ -15,6 +15,7 @@
 #include "random.hpp"
 #include "sound-player.hpp"
 #include "top-panel.hpp"
+#include "turn-keeper.hpp"
 
 #include <algorithm>
 
@@ -156,6 +157,116 @@ namespace castlecrawl::fight
             t_context, message, messageColor, t_context.player_display.position());
 
         t_context.sfx.play("hit");
+    }
+
+    void castSpell(const Context & t_context, const Spell t_spell, const MapPos_t & t_mapPos)
+    {
+        const sf::Vector2f screenPos{ t_context.maps.current().mapPosToScreenPos(
+            t_context, t_mapPos) };
+
+        const sf::FloatRect animRect{ screenPos, t_context.layout.cellSize() };
+
+        if (t_spell == Spell::Spark)
+        {
+            t_context.anim.player().play("spark", util::scaleRectInPlaceCopy(animRect, 1.25f));
+        }
+        else if (t_spell == Spell::Flare)
+        {
+            t_context.anim.player().play("flare", util::scaleRectInPlaceCopy(animRect, 1.25f));
+        }
+        else if (t_spell == Spell::Fireball)
+        {
+            t_context.anim.player().play("fireball", util::scaleRectInPlaceCopy(animRect, 1.5f));
+        }
+        else if (t_spell == Spell::Frostbite)
+        {
+            util::AnimConfig config(0.5f);
+
+            t_context.anim.player().play(
+                "frostbite", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
+        }
+        else if (t_spell == Spell::FreezingWind)
+        {
+            t_context.anim.player().play(
+                "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f));
+        }
+        else if (t_spell == Spell::IceShards)
+        {
+            t_context.anim.player().play("ice-shards", util::scaleRectInPlaceCopy(animRect, 2.0f));
+        }
+        else if (t_spell == Spell::Zap)
+        {
+            util::AnimConfig config(0.5f, t_context.config.spell_color_energy);
+
+            // use frostbite anim for zap because it looks good enough for now
+            t_context.anim.player().play(
+                "frostbite", util::scaleRectInPlaceCopy(animRect, 2.0f), config);
+        }
+        else if (t_spell == Spell::Jolt)
+        {
+            util::AnimConfig config(1.25f, t_context.config.spell_color_energy);
+            t_context.anim.player().play("jolt", animRect, config);
+        }
+        else if (t_spell == Spell::Lightning)
+        {
+            util::AnimConfig config(1.25f, t_context.config.spell_color_energy);
+            t_context.anim.player().play("lightning", util::scaleRectInPlaceCopy(animRect, 2.0f));
+        }
+        else if (t_spell == Spell::Slow)
+        {
+            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            t_context.anim.player().play("orb-charge", animRect, config);
+        }
+        else if (t_spell == Spell::Stun)
+        {
+            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            t_context.anim.player().play("orb-charge", animRect, config);
+        }
+        else if (t_spell == Spell::Immobillize)
+        {
+            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            t_context.anim.player().play("orb-charge", animRect, config);
+        }
+        else if (t_spell == Spell::Scare)
+        {
+            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            t_context.anim.player().play("spell", animRect, config);
+        }
+        else if (t_spell == Spell::Terrorize)
+        {
+            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            t_context.anim.player().play("spell", animRect, config);
+        }
+        else // if (t_spell == Spell::HeartAttack)
+        {
+            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            t_context.anim.player().play("spell", animRect, config);
+        }
+
+        t_context.player.setSpellLastCast(t_spell, t_mapPos);
+
+        t_context.player.mana().adjCurrent(-toManaCost(t_spell));
+        t_context.top_panel.update(t_context);
+
+        // apply damage the monster (if any is at t_mapPos)
+        if (isTileImageMonster(
+                charToTileImage(t_context.maps.current().cell(t_mapPos).object_char)))
+        {
+            const sf::Vector2i damageMinMax{ toDamageMinMax(t_spell) };
+            if (damageMinMax.x < damageMinMax.y)
+            {
+                const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
+
+                fight::damageMonster(
+                    t_context,
+                    damage,
+                    fight::RollResult{},
+                    t_mapPos,
+                    t_context.config.message_color_cast_spell);
+            }
+        }
+
+        t_context.turn.advance(t_context, 1.5f);
     }
 
 } // namespace castlecrawl::fight

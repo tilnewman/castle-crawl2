@@ -4,6 +4,7 @@
 // fight-util.hpp
 //
 #include "map-types.hpp"
+#include "spells.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -50,6 +51,8 @@ namespace castlecrawl::fight
         const MapPos_t & t_monsterMapPos,
         const sf::Color & t_messageColor);
 
-} // namespace castlecrawl
+    void castSpell(const Context & t_context, const Spell t_spell, const MapPos_t & t_mapPos);
+
+} // namespace castlecrawl::fight
 
 #endif // FIGHT_UTIL_HPP_INCLUDED
