@@ -149,7 +149,7 @@ namespace castlecrawl
         m_playerUPtr->inventory().equip(0);
         m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Gauntlets").value());
         m_playerUPtr->inventory().equip(0);
-        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Bronze Dagger").value());
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Bronze Handaxe").value());
         m_playerUPtr->inventory().equip(0);
     }
 

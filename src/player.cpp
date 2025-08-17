@@ -19,7 +19,7 @@ namespace castlecrawl
         , m_health{ healthStart, 0, healthStart }
         , m_mana{ manaStart, 0, manaStart }
         , m_level{ 1 }
-        , m_experience{0}
+        , m_experience{ 0 }
         , m_gold{ 0 }
         , m_inventory{}
         , m_equipEffects{}
@@ -77,6 +77,11 @@ namespace castlecrawl
         {
             m_spells.push_back(t_spell);
         }
+    }
+
+    int Player::experienceForLevel(const int t_level) const
+    {
+        return std::clamp((((t_level - 2) * 100) + ((t_level - 1) * 200)), 0, 10'000);
     }
 
 } // namespace castlecrawl

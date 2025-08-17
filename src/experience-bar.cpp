@@ -27,12 +27,16 @@ namespace castlecrawl
         rect.position.x = ((topRect.size.x - rect.size.x) - 5.0f);
 
         m_statBar.setup(
-            t_context, rect, sf::Color(160, 160, 190), t_context.player.experience(), 300);
+            t_context,
+            rect,
+            sf::Color(160, 160, 190),
+            t_context.player.experience(),
+            t_context.player.experienceForNextLevel());
     }
 
     void ExperienceBar::update(const Context & t_context)
     {
-        m_statBar.setMaxValue(t_context, 300);
+        m_statBar.setMaxValue(t_context, t_context.player.experienceForNextLevel());
         m_statBar.setCurrentValue(t_context, t_context.player.experience());
     }
 
