@@ -23,6 +23,7 @@
 #include "top-panel.hpp"
 
 #include <iostream>
+#include <sstream>
 
 namespace castlecrawl
 {
@@ -153,11 +154,15 @@ namespace castlecrawl
         m_manaText.setPosition(
             { m_healthText.getPosition().x, (util::bottom(m_healthText) + pad) });
 
-        //
-        std::string levelStr{ "Level: " };
-        levelStr += std::to_string(t_context.player.level());
+        // level and experience text
+        std::stringstream ss;
+        ss.imbue(std::locale("")); // this puts commas into the numbers automatically
+        ss << "Level/XP: ";
+        ss << std::to_string(t_context.player.level());
+        ss << " / ";
+        ss << std::to_string(t_context.player.experience());
 
-        m_levelText = t_context.fonts.makeText(FontSize::Small, levelStr, sf::Color(255, 255, 255));
+        m_levelText = t_context.fonts.makeText(FontSize::Small, ss.str(), sf::Color(255, 255, 255));
         m_levelText.setPosition({ m_healthText.getPosition().x, (util::bottom(m_manaText) + pad) });
 
         //

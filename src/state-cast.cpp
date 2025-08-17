@@ -701,13 +701,27 @@ namespace castlecrawl
             if (damageMinMax.x < damageMinMax.y)
             {
                 const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
-                t_context.monsters.damage(t_mapPos, damage);
+                const bool didMonsterDie{ t_context.monsters.damage(t_mapPos, damage) };
 
                 std::string message{ std::to_string(damage) };
                 message += " dmg";
 
-                t_context.anim.risingText().add(
-                    t_context, message, t_context.config.message_color_cast_spell, t_mapPos);
+                if (didMonsterDie)
+                {
+                    const int monsterValue{ t_context.monsters.stats(t_mapPos).value() };
+
+                    message += " KILLED +";
+                    message += std::to_string(monsterValue);
+                    message += "xp";
+
+                    t_context.player.experinceAdj(monsterValue);
+                }
+
+                const sf::Color messageColor{ (didMonsterDie)
+                                                  ? t_context.config.message_color_attack_kill
+                                                  : t_context.config.message_color_cast_spell };
+
+                t_context.anim.risingText().add(t_context, message, messageColor, t_mapPos);
             }
         }
 

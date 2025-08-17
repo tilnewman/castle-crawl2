@@ -30,6 +30,7 @@ namespace castlecrawl
         const float turn_delay_after_nonplayer_move   = 0.0f;
         const float turn_delay_after_nonplayer_attack = 1.5f;
 
+        const sf::Color message_color_attack_kill = sf::Color(255, 32, 32);
         const sf::Color message_color_attack_miss = sf::Color(255, 200, 100);
         const sf::Color message_color_attack_hit  = sf::Color(255, 200, 200);
         const sf::Color message_color_cast_spell  = sf::Color(220, 100, 220);

@@ -5,10 +5,10 @@
 //
 #include "state-fight.hpp"
 
+#include "anim-dust-particle.hpp"
 #include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "anim-dust-particle.hpp"
 #include "fight-util.hpp"
 #include "framerate-text.hpp"
 #include "inventory.hpp"
@@ -205,7 +205,7 @@ namespace castlecrawl
                     damage *= 2;
                 }
 
-                t_context.monsters.damage(t_pos, damage);
+                const bool didMonsterDie{ t_context.monsters.damage(t_pos, damage) };
 
                 std::string message{ std::to_string(damage) };
                 message += " dmg";
@@ -218,11 +218,23 @@ namespace castlecrawl
                     message += " critical!";
                 }
 
+                if (didMonsterDie)
+                {
+                    const int monsterValue{ monsterStats.value() };
+
+                    message += " KILLED +";
+                    message += std::to_string(monsterValue);
+                    message += "xp";
+
+                    t_context.player.experinceAdj(monsterValue);
+                }
+
+                const sf::Color messageColor{ (didMonsterDie)
+                                                  ? t_context.config.message_color_attack_kill
+                                                  : t_context.config.message_color_attack_hit };
+
                 t_context.anim.risingText().add(
-                    t_context,
-                    message,
-                    t_context.config.message_color_attack_hit,
-                    t_context.player_display.position());
+                    t_context, message, messageColor, t_context.player_display.position());
             }
             else
             {

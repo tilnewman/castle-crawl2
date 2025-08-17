@@ -29,11 +29,13 @@ namespace castlecrawl
         [[nodiscard]] inline Stat & mana() noexcept { return m_mana; }
 
         [[nodiscard]] inline int level() const noexcept { return m_level; }
+        [[nodiscard]] inline int experience() const noexcept { return m_experience; }
         [[nodiscard]] inline int gold() const noexcept { return m_gold; }
 
         [[nodiscard]] inline Armor_t armor() const noexcept { return m_inventory.armorRating(); }
 
         inline void levelAdj(const int t_adj) { m_level += t_adj; }
+        inline void experinceAdj(const int t_ad) { m_experience += t_ad; }
         inline void goldAdj(const int t_adj) { m_gold += t_adj; }
 
         [[nodiscard]] inline item::Inventory & inventory() noexcept { return m_inventory; }
@@ -75,6 +77,7 @@ namespace castlecrawl
         Stat m_mana;
 
         int m_level;
+        int m_experience;
         int m_gold;
 
         item::Inventory m_inventory;

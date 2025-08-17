@@ -19,6 +19,7 @@ namespace castlecrawl
         , m_health{ healthStart, 0, healthStart }
         , m_mana{ manaStart, 0, manaStart }
         , m_level{ 1 }
+        , m_experience{0}
         , m_gold{ 0 }
         , m_inventory{}
         , m_equipEffects{}
