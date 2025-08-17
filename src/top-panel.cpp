@@ -15,20 +15,21 @@ namespace castlecrawl
 {
 
     TopPanel::TopPanel()
-        : m_titleTexture()
-        , m_titleSprite(m_titleTexture)
-        , m_healthBar()
-        , m_manaBar()
+        : m_titleTexture{}
+        , m_titleSprite{ m_titleTexture }
+        , m_healthBar{}
+        , m_manaBar{}
+        , m_experienceBar{}
     {}
 
     void TopPanel::setup(const Context & t_context)
     {
         util::TextureLoader::load(
-            m_titleTexture, (t_context.config.media_path / "image/title.png"), true);
+            m_titleTexture, (t_context.config.media_path / "image" / "title.png"), true);
 
         m_titleSprite.setTexture(m_titleTexture, true);
 
-        const sf::FloatRect topRect = t_context.layout.topRect();
+        const sf::FloatRect topRect{ t_context.layout.topRect() };
 
         util::fit(m_titleSprite, { (topRect.size.x * 0.3f), topRect.size.y });
 
@@ -37,12 +38,14 @@ namespace castlecrawl
 
         m_healthBar.setup(t_context);
         m_manaBar.setup(t_context);
+        m_experienceBar.setup(t_context);
     }
 
     void TopPanel::update(const Context & t_context)
     {
         m_healthBar.update(t_context);
         m_manaBar.update(t_context);
+        m_experienceBar.setup(t_context);
     }
 
     void TopPanel::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -50,6 +53,7 @@ namespace castlecrawl
         t_target.draw(m_titleSprite, t_states);
         t_target.draw(m_healthBar, t_states);
         t_target.draw(m_manaBar, t_states);
+        t_target.draw(m_experienceBar, t_states);
     }
 
 } // namespace castlecrawl

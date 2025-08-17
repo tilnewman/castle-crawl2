@@ -14,6 +14,7 @@
 #include "player.hpp"
 #include "random.hpp"
 #include "sound-player.hpp"
+#include "top-panel.hpp"
 
 #include <algorithm>
 
@@ -145,6 +146,7 @@ namespace castlecrawl::fight
             message += "xp";
 
             t_context.player.experinceAdj(monsterValue);
+            t_context.top_panel.update(t_context);
         }
 
         const sf::Color messageColor{ (didMonsterDie) ? t_context.config.message_color_attack_kill
@@ -153,7 +155,7 @@ namespace castlecrawl::fight
         t_context.anim.risingText().add(
             t_context, message, messageColor, t_context.player_display.position());
 
-         t_context.sfx.play("hit");
+        t_context.sfx.play("hit");
     }
 
-} // namespace castlecrawl
+} // namespace castlecrawl::fight

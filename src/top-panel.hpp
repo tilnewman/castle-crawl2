@@ -3,6 +3,7 @@
 //
 // top-panel.hpp
 //
+#include "experience-bar.hpp"
 #include "health-bar.hpp"
 #include "mana-bar.hpp"
 #include "state.hpp"
@@ -31,6 +32,7 @@ namespace castlecrawl
         sf::Sprite m_titleSprite;
         HealthBar m_healthBar;
         ManaBar m_manaBar;
+        ExperienceBar m_experienceBar;
     };
 
 } // namespace castlecrawl

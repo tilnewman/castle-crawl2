@@ -24,6 +24,7 @@ namespace castlecrawl
             const Context & t_context,
             const sf::FloatRect & t_region,
             const sf::Color & t_color,
+            const int t_currentValue,
             const int t_maxValue);
 
         void setCurrentValue(const Context & t_context, const int t_newValue);

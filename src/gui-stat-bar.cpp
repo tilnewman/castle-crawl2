@@ -29,12 +29,14 @@ namespace castlecrawl
         const Context & t_context,
         const sf::FloatRect & t_region,
         const sf::Color & t_color,
+        const int t_currentValue,
         const int t_maxValue)
     {
+        m_current = t_currentValue;
         m_max = t_maxValue;
 
         m_outerRectangle.setFillColor(sf::Color::Transparent);
-        m_outerRectangle.setOutlineThickness(2.0f);
+        m_outerRectangle.setOutlineThickness(1.0f);
         m_outerRectangle.setOutlineColor(t_color);
         m_outerRectangle.setSize(t_region.size);
         m_outerRectangle.setPosition(t_region.position);
@@ -46,7 +48,7 @@ namespace castlecrawl
         m_innerRectangle.setSize(t_region.size - sf::Vector2f{ 2.0f, 2.0f });
 
         m_color = t_color;
-        setCurrentValue(t_context, t_maxValue);
+        setCurrentValue(t_context, t_currentValue);
     }
 
     void StatBar::setCurrentValue(const Context & t_context, const int t_newValue)
@@ -78,8 +80,12 @@ namespace castlecrawl
     {
         std::string str;
         str += std::to_string(m_current);
-        str += " / ";
-        str += std::to_string(m_max);
+        
+        if (m_max > 0)
+        {
+            str += " / ";
+            str += std::to_string(m_max);
+        }
 
         m_text =
             t_context.fonts.makeText(FontSize::Small, str, (m_color + sf::Color(100, 100, 100, 0)));

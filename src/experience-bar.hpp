@@ -1,7 +1,7 @@
-#ifndef HEALTH_BAR_HPP_INCLUDED
-#define HEALTH_BAR_HPP_INCLUDED
+#ifndef EXPERIENCE_BAR_HPP_INCLUDED
+#define EXPERIENCE_BAR_HPP_INCLUDED
 //
-// health-bar.hpp
+// experience-bar.hpp
 //
 #include "gui-stat-bar.hpp"
 
@@ -9,10 +9,10 @@ namespace castlecrawl
 {
     struct Context;
 
-    class HealthBar : public sf::Drawable
+    class ExperienceBar : public sf::Drawable
     {
       public:
-        HealthBar();
+        ExperienceBar();
 
         void setup(const Context & t_context);
         void update(const Context & t_context);
@@ -24,4 +24,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // HEALTH_BAR_HPP_INCLUDED
+#endif // EXPERIENCE_BAR_HPP_INCLUDED

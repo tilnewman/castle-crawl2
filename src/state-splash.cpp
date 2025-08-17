@@ -32,7 +32,7 @@ namespace castlecrawl
         const sf::FloatRect screenRect = t_context.layout.screenRect();
 
         util::TextureLoader::load(
-            m_castleTexture, (t_context.config.media_path / "image/splash.png"), true);
+            m_castleTexture, (t_context.config.media_path / "image" / "splash.png"), true);
 
         m_castleSprite.setTexture(m_castleTexture, true);
 
@@ -45,7 +45,7 @@ namespace castlecrawl
         //
 
         util::TextureLoader::load(
-            m_lightningTexture, (t_context.config.media_path / "image/lightning.png"), true);
+            m_lightningTexture, (t_context.config.media_path / "image" / "lightning.png"), true);
 
         m_lightningSprite.setTexture(m_lightningTexture, true);
 

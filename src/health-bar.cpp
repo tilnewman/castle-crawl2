@@ -18,16 +18,20 @@ namespace castlecrawl
 
     void HealthBar::setup(const Context & t_context)
     {
-        const sf::FloatRect topRect = t_context.layout.topRect();
+        const sf::FloatRect topRect{ t_context.layout.topRect() };
 
         sf::FloatRect healthBarRect;
         healthBarRect.size.y     = (topRect.size.y * 0.1f);
         healthBarRect.position.y = ((topRect.size.y - healthBarRect.size.y) - 3.0f);
-        healthBarRect.size.x     = (topRect.size.x * 0.25f);
+        healthBarRect.size.x     = (topRect.size.x * 0.275f);
         healthBarRect.position.x = ((topRect.size.x * 0.5f) - (healthBarRect.size.x * 0.5f));
 
         m_statBar.setup(
-            t_context, healthBarRect, sf::Color(160, 0, 0), t_context.player.health().max());
+            t_context,
+            healthBarRect,
+            sf::Color(160, 0, 0),
+            t_context.player.health().current(),
+            t_context.player.health().max());
     }
 
     void HealthBar::update(const Context & t_context)

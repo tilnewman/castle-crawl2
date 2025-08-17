@@ -45,7 +45,7 @@ namespace castlecrawl
         const sf::Color spell_color_fear   = sf::Color(210, 170, 240);
 
         const std::size_t turns_per_health_increase = 36;
-        const std::size_t turns_per_mana_increase   = 12;
+        const std::size_t turns_per_mana_increase   = 24;
 
         // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
         const sf::Vector2i map_size_max = { 41, 23 };

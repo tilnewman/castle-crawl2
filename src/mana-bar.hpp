@@ -1,5 +1,5 @@
-#ifndef MANABAR_HPP_INCLUDED
-#define MANABAR_HPP_INCLUDED
+#ifndef MANA_BAR_HPP_INCLUDED
+#define MANA_BAR_HPP_INCLUDED
 //
 // mana-bar.hpp
 //
@@ -24,4 +24,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // MANABAR_HPP_INCLUDED
+#endif // MANA_BAR_HPP_INCLUDED
