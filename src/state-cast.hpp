@@ -111,8 +111,6 @@ namespace castlecrawl
         sf::Sprite m_categroyAnimSprite;
         bool m_isAnimatingCategorySelection;
         float m_gategoryAnimTimerSec;
-
-        static inline Spell m_prevCastSpell{ Spell::Spark };
     };
 
 } // namespace castlecrawl

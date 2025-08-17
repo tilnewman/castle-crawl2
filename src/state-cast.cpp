@@ -369,77 +369,78 @@ namespace castlecrawl
         m_descriptionText.setStyle(sf::Text::Italic);
 
         // select the prev cast spell so that recasting is trivial
-        if (m_prevCastSpell == Spell::Spark)
+        const Spell spellLastCast{ t_context.player.spellLastCast() };
+        if (spellLastCast == Spell::Spark)
         {
             m_fireRectangleUPtr->setFocus(t_context, true);
             m_fireRectangleUPtr->spell_index = 0;
         }
-        else if (m_prevCastSpell == Spell::Flare)
+        else if (spellLastCast == Spell::Flare)
         {
             m_fireRectangleUPtr->setFocus(t_context, true);
             m_fireRectangleUPtr->spell_index = 1;
         }
-        else if (m_prevCastSpell == Spell::Fireball)
+        else if (spellLastCast == Spell::Fireball)
         {
             m_fireRectangleUPtr->setFocus(t_context, true);
             m_fireRectangleUPtr->spell_index = 2;
         }
-        else if (m_prevCastSpell == Spell::Frostbite)
+        else if (spellLastCast == Spell::Frostbite)
         {
             m_iceRectangleUPtr->setFocus(t_context, true);
             m_iceRectangleUPtr->spell_index = 0;
         }
-        else if (m_prevCastSpell == Spell::FreezingWind)
+        else if (spellLastCast == Spell::FreezingWind)
         {
             m_iceRectangleUPtr->setFocus(t_context, true);
             m_iceRectangleUPtr->spell_index = 1;
         }
-        else if (m_prevCastSpell == Spell::IceShards)
+        else if (spellLastCast == Spell::IceShards)
         {
             m_iceRectangleUPtr->setFocus(t_context, true);
             m_iceRectangleUPtr->spell_index = 2;
         }
-        else if (m_prevCastSpell == Spell::Zap)
+        else if (spellLastCast == Spell::Zap)
         {
             m_energyRectangleUPtr->setFocus(t_context, true);
             m_energyRectangleUPtr->spell_index = 0;
         }
-        else if (m_prevCastSpell == Spell::Jolt)
+        else if (spellLastCast == Spell::Jolt)
         {
             m_energyRectangleUPtr->setFocus(t_context, true);
             m_energyRectangleUPtr->spell_index = 1;
         }
-        else if (m_prevCastSpell == Spell::Lightning)
+        else if (spellLastCast == Spell::Lightning)
         {
             m_energyRectangleUPtr->setFocus(t_context, true);
             m_energyRectangleUPtr->spell_index = 2;
         }
-        else if (m_prevCastSpell == Spell::Slow)
+        else if (spellLastCast == Spell::Slow)
         {
             m_gripRectangleUPtr->setFocus(t_context, true);
             m_gripRectangleUPtr->spell_index = 0;
         }
-        else if (m_prevCastSpell == Spell::Stun)
+        else if (spellLastCast == Spell::Stun)
         {
             m_gripRectangleUPtr->setFocus(t_context, true);
             m_gripRectangleUPtr->spell_index = 1;
         }
-        else if (m_prevCastSpell == Spell::Immobillize)
+        else if (spellLastCast == Spell::Immobillize)
         {
             m_gripRectangleUPtr->setFocus(t_context, true);
             m_gripRectangleUPtr->spell_index = 2;
         }
-        else if (m_prevCastSpell == Spell::Scare)
+        else if (spellLastCast == Spell::Scare)
         {
             m_fearRectangleUPtr->setFocus(t_context, true);
             m_fearRectangleUPtr->spell_index = 0;
         }
-        else if (m_prevCastSpell == Spell::Terrorize)
+        else if (spellLastCast == Spell::Terrorize)
         {
             m_fearRectangleUPtr->setFocus(t_context, true);
             m_fearRectangleUPtr->spell_index = 1;
         }
-        else // if (m_prevCastSpell == Spell::HeartAttack)
+        else // if (spellLastCast == Spell::HeartAttack)
         {
             m_fearRectangleUPtr->setFocus(t_context, true);
             m_fearRectangleUPtr->spell_index = 2;
@@ -692,6 +693,8 @@ namespace castlecrawl
             t_context.anim.player().play("spell", animRect, config);
         }
 
+        t_context.player.setSpellLastCast(t_spell);
+
         t_context.player.mana().adjCurrent(-toManaCost(t_spell));
         t_context.top_panel.update(t_context);
 
@@ -775,7 +778,6 @@ namespace castlecrawl
             util::setOriginToCenter(m_categroyAnimSprite);
 
             m_isAnimatingCategorySelection = true;
-            m_prevCastSpell                = spell;
             t_context.sfx.play("magic-1");
             return;
         }

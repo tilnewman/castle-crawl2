@@ -25,6 +25,7 @@ namespace castlecrawl
         , m_equipEffects{}
         , m_conditions{}
         , m_spells{ Spell::Spark, Spell::Frostbite, Spell::Zap } // spells known when game begins
+        , m_spellLastCast{ Spell::Spark }
     {}
 
     void Player::updateEquipEffects()

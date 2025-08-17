@@ -66,6 +66,9 @@ namespace castlecrawl
         [[nodiscard]] bool hasSpell(const Spell t_spell) const;
         void addSpell(const Spell t_spell);
 
+        [[nodiscard]] inline Spell spellLastCast() const { return m_spellLastCast; }
+        inline void setSpellLastCast(const Spell t_spell) { m_spellLastCast = t_spell; }
+
       private:
         constexpr static int statMin     = 1;
         constexpr static int statMax     = 100;
@@ -91,6 +94,8 @@ namespace castlecrawl
         item::EquipEffect m_equipEffects;
         std::vector<Condition> m_conditions;
         std::vector<Spell> m_spells;
+
+        Spell m_spellLastCast;
     };
 
 } // namespace castlecrawl
