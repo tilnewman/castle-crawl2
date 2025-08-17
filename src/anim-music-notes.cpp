@@ -38,7 +38,9 @@ namespace castlecrawl
             sprite,
             util::scaleRectInPlaceCopy(mapScreenRect, t_context.random.fromTo(0.25f, 0.75f)));
 
-        // TODO random vary the starting position a bit
+        sprite.move({ t_context.random.fromTo(
+                          -(mapScreenRect.size.x * 0.4f), (mapScreenRect.size.x * 0.4f)),
+                      0.0f });
     }
 
     bool NoteParticle::update(const Context &, const float t_elapsedSec)
@@ -52,8 +54,6 @@ namespace castlecrawl
             sprite.setColor(color);
 
             sprite.move({ 0.0f, -(speed * t_elapsedSec) });
-
-            // TODO sway back and forth
             return false;
         }
         else
