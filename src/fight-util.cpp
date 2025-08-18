@@ -226,7 +226,7 @@ namespace castlecrawl::fight
             util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
             t_context.anim.player().play("orb-charge", animRect, config);
         }
-        else if (t_spell == Spell::Immobillize)
+        else if (t_spell == Spell::Immobilize)
         {
             util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
             t_context.anim.player().play("orb-charge", animRect, config);

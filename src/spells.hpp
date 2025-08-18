@@ -47,7 +47,7 @@ namespace castlecrawl
         // Grip
         Slow,
         Stun,
-        Immobillize,
+        Immobilize,
 
         // Energy
         Zap,
@@ -76,7 +76,7 @@ namespace castlecrawl
 
             case Spell::Slow:           { return "Slow";          }
             case Spell::Stun:           { return "Stun";          }
-            case Spell::Immobillize:    { return "Immobillize";   }
+            case Spell::Immobilize:     { return "Immobilize";   }
 
             case Spell::Zap:            { return "Zap";           }
             case Spell::Jolt:           { return "Jolt";          }
@@ -105,7 +105,7 @@ namespace castlecrawl
                                                 
             case Spell::Slow:           { return 3;  }
             case Spell::Stun:           { return 6;  }
-            case Spell::Immobillize:    { return 10; }
+            case Spell::Immobilize:     { return 10; }
                                                
             case Spell::Zap:            { return 3;  }
             case Spell::Jolt:           { return 6;  }
@@ -134,7 +134,7 @@ namespace castlecrawl
                                                 
             case Spell::Slow:           
             case Spell::Stun:           
-            case Spell::Immobillize:    { return SpellCategory::Grip;  }
+            case Spell::Immobilize:     { return SpellCategory::Grip;  }
                                                
             case Spell::Zap:            
             case Spell::Jolt:           
@@ -175,7 +175,7 @@ namespace castlecrawl
    
             case Spell::Slow:       
             case Spell::Stun:       
-            case Spell::Immobillize:
+            case Spell::Immobilize:
 
             default:                    { return { 0, 0 };    }   
         }
@@ -241,7 +241,7 @@ namespace castlecrawl
             }
             else
             {
-                return Spell::Immobillize;
+                return Spell::Immobilize;
             }
         }
         else // if (t_category == SpellCategory::Fear)

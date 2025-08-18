@@ -425,7 +425,7 @@ namespace castlecrawl
             m_gripRectangleUPtr->setFocus(t_context, true);
             m_gripRectangleUPtr->spell_index = 1;
         }
-        else if (spellLastCast == Spell::Immobillize)
+        else if (spellLastCast == Spell::Immobilize)
         {
             m_gripRectangleUPtr->setFocus(t_context, true);
             m_gripRectangleUPtr->spell_index = 2;
