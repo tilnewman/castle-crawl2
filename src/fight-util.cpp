@@ -157,8 +157,6 @@ namespace castlecrawl::fight
 
         t_context.anim.risingText().add(
             t_context, message, messageColor, t_context.player_display.position());
-
-        t_context.sfx.play("hit");
     }
 
     void castSpell(const Context & t_context, const Spell t_spell, const MapPos_t & t_mapPos)
@@ -265,10 +263,12 @@ namespace castlecrawl::fight
                     fight::RollResult{},
                     t_mapPos,
                     t_context.config.message_color_cast_spell);
+
+                // TODO play sfx for the spell
             }
         }
 
-        t_context.turn.advance(t_context, 1.5f);
+        t_context.turn.advance(t_context, t_context.config.turn_delay_after_player_attack);
     }
 
 } // namespace castlecrawl::fight

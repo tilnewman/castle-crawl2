@@ -209,6 +209,8 @@ namespace castlecrawl
                     rollResult,
                     t_pos,
                     t_context.config.message_color_attack_hit);
+
+                t_context.sfx.play("hit");
             }
             else
             {

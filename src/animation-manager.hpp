@@ -40,6 +40,7 @@ namespace castlecrawl
         [[nodiscard]] inline RisingTextAnimationManager & risingText() { return *m_risingUPtr; }
         [[nodiscard]] inline FlatSmokeAnimManager & flatSmoke() { return *m_flatSmokeUPtr; }
         [[nodiscard]] inline MusicAnimationManager & musicalNotes() { return *m_musicalNotesUPtr; }
+        
         [[nodiscard]] inline CrossbonesAnimationManager & crossbones()
         {
             return *m_crossbonesUPtr;

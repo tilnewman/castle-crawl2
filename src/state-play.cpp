@@ -174,12 +174,14 @@ namespace castlecrawl
                     const Spell lastCastSpell{ t_context.player.spellLastCast() };
                     if (t_context.player.mana().current() < toManaCost(lastCastSpell))
                     {
+                        t_context.sfx.play("error-2");
                         return;
                     }
 
                     const MapPos_t lastCastSpellPos{ t_context.player.spellLastCastPos() };
                     if ((lastCastSpellPos.x < 0) && (lastCastSpellPos.y < 0))
                     {
+                        t_context.sfx.play("error-2");
                         return;
                     }
 
