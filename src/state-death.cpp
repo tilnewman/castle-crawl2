@@ -40,7 +40,7 @@ namespace castlecrawl
         t_context.music.stopAll();
         t_context.sfx.play("game-over.ogg");
 
-        const sf::FloatRect screenRect = t_context.layout.screenRect();
+        const sf::FloatRect screenRect{ t_context.layout.screenRect() };
 
         m_fadeRedRectangle.setFillColor(sf::Color(255, 0, 0, 0));
         m_fadeRedRectangle.setSize(screenRect.size);
@@ -65,6 +65,10 @@ namespace castlecrawl
                 sf::Color color  = m_fadeRedRectangle.getFillColor();
                 ++color.a;
                 m_fadeRedRectangle.setFillColor(color);
+
+                color = m_titleText.getFillColor();
+                color -= sf::Color(1, 1, 1, 0);
+                m_titleText.setFillColor(color);
             }
         }
         else if (m_fadeBlackRectangle.getFillColor().a < 255)
