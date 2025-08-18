@@ -576,25 +576,25 @@ namespace castlecrawl
         if ((t_key.scancode == sf::Keyboard::Scancode::Up) &&
             t_context.maps.current().isPosValid(upPos))
         {
-            castSpell(t_context, upPos, selectedSpell(t_context));
+            castSpell(t_context, upPos, selectedSpell(t_context), t_key.scancode);
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Down) &&
             t_context.maps.current().isPosValid(downPos))
         {
-            castSpell(t_context, downPos, selectedSpell(t_context));
+            castSpell(t_context, downPos, selectedSpell(t_context), t_key.scancode);
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Left) &&
             t_context.maps.current().isPosValid(leftPos))
         {
-            castSpell(t_context, leftPos, selectedSpell(t_context));
+            castSpell(t_context, leftPos, selectedSpell(t_context), t_key.scancode);
         }
         else if (
             (t_key.scancode == sf::Keyboard::Scancode::Right) &&
             t_context.maps.current().isPosValid(rightPos))
         {
-            castSpell(t_context, rightPos, selectedSpell(t_context));
+            castSpell(t_context, rightPos, selectedSpell(t_context), t_key.scancode);
         }
         else
         {
@@ -609,9 +609,12 @@ namespace castlecrawl
     }
 
     void StateCast::castSpell(
-        const Context & t_context, const MapPos_t & t_mapPos, const Spell t_spell)
+        const Context & t_context,
+        const MapPos_t & t_mapPos,
+        const Spell t_spell,
+        const sf::Keyboard::Scancode & t_direction)
     {
-        fight::castSpell(t_context, t_spell, t_mapPos);
+        fight::castSpell(t_context, t_spell, t_mapPos, t_direction);
         t_context.state.setChangePending(State::Play);
     }
 

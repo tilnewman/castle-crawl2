@@ -14,6 +14,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 #include <memory>
 
@@ -79,7 +80,11 @@ namespace castlecrawl
         void handleKeystrokesAfterSpellSelection(
             const Context & t_context, const sf::Event::KeyPressed & t_key);
 
-        void castSpell(const Context & t_context, const MapPos_t & t_mapPos, const Spell t_spell);
+        void castSpell(
+            const Context & t_context,
+            const MapPos_t & t_mapPos,
+            const Spell t_spell,
+            const sf::Keyboard::Scancode & t_direction);
 
         [[nodiscard]] Spell selectedSpell(const Context & t_context);
 

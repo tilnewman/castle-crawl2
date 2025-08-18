@@ -178,14 +178,22 @@ namespace castlecrawl
                         return;
                     }
 
-                    const MapPos_t lastCastSpellPos{ t_context.player.spellLastCastPos() };
-                    if ((lastCastSpellPos.x < 0) && (lastCastSpellPos.y < 0))
+                    const sf::Keyboard::Scancode lastCastSpellDir{
+                        t_context.player.spellLastCastDir()
+                    };
+
+                    if (!util::keys::isArrow(lastCastSpellDir))
                     {
                         t_context.sfx.play("error-2");
                         return;
                     }
 
-                    fight::castSpell(t_context, lastCastSpell, lastCastSpellPos);
+                    fight::castSpell(
+                        t_context,
+                        lastCastSpell,
+                        util::keys::moveIfDir(
+                            t_context.player_display.position(), lastCastSpellDir),
+                        lastCastSpellDir);
                 }
             }
             // todo remove after testing

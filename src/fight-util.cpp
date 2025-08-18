@@ -159,7 +159,11 @@ namespace castlecrawl::fight
             t_context, message, messageColor, t_context.player_display.position());
     }
 
-    void castSpell(const Context & t_context, const Spell t_spell, const MapPos_t & t_mapPos)
+    void castSpell(
+        const Context & t_context,
+        const Spell t_spell,
+        const MapPos_t & t_mapPos,
+        const sf::Keyboard::Scancode t_direction)
     {
         const sf::Vector2f screenPos{ t_context.maps.current().mapPosToScreenPos(
             t_context, t_mapPos) };
@@ -243,7 +247,7 @@ namespace castlecrawl::fight
             t_context.anim.player().play("spell", animRect, config);
         }
 
-        t_context.player.setSpellLastCast(t_spell, t_mapPos);
+        t_context.player.setSpellLastCast(t_spell, t_direction);
 
         t_context.player.mana().adjCurrent(-toManaCost(t_spell));
         t_context.top_panel.update(t_context);

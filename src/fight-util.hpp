@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 namespace castlecrawl
 {
@@ -51,7 +52,11 @@ namespace castlecrawl::fight
         const MapPos_t & t_monsterMapPos,
         const sf::Color & t_messageColor);
 
-    void castSpell(const Context & t_context, const Spell t_spell, const MapPos_t & t_mapPos);
+    void castSpell(
+        const Context & t_context,
+        const Spell t_spell,
+        const MapPos_t & t_mapPos,
+        const sf::Keyboard::Scancode t_direction);
 
 } // namespace castlecrawl::fight
 

@@ -5,12 +5,16 @@
 //
 #include "condition.hpp"
 #include "inventory.hpp"
+#include "keys.hpp"
 #include "map-types.hpp"
 #include "spells.hpp"
 #include "stat.hpp"
 #include "strong-types.hpp"
 
+#include <SFML/Window/Keyboard.hpp>
+
 #include <vector>
+
 
 namespace castlecrawl
 {
@@ -68,12 +72,16 @@ namespace castlecrawl
         void addSpell(const Spell t_spell);
 
         [[nodiscard]] inline Spell spellLastCast() const { return m_spellLastCast; }
-        [[nodiscard]] inline MapPos_t spellLastCastPos() const { return m_spellLastCastPos; }
 
-        inline void setSpellLastCast(const Spell t_spell, const MapPos_t & t_mapPos)
+        [[nodiscard]] inline sf::Keyboard::Scancode spellLastCastDir() const
+        {
+            return m_spellLastCastDir;
+        }
+
+        inline void setSpellLastCast(const Spell t_spell, const sf::Keyboard::Scancode t_dir)
         {
             m_spellLastCast    = t_spell;
-            m_spellLastCastPos = t_mapPos;
+            m_spellLastCastDir = t_dir;
         }
 
       private:
@@ -103,7 +111,7 @@ namespace castlecrawl
         std::vector<Spell> m_spells;
 
         Spell m_spellLastCast;
-        MapPos_t m_spellLastCastPos;
+        sf::Keyboard::Scancode m_spellLastCastDir;
     };
 
 } // namespace castlecrawl
