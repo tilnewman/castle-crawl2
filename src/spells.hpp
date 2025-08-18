@@ -94,6 +94,35 @@ namespace castlecrawl
         // clang-format on
     }
 
+    [[nodiscard]] inline constexpr std::string_view toSfxFilename(const Spell t_spell) noexcept
+    {
+        // clang-format off
+        switch(t_spell)
+        {
+            case Spell::Scare:          { return "spell-fear-scare";       }
+            case Spell::Terrorize:      { return "spell-fear-terrorize";   }
+            case Spell::HeartAttack:    { return "spell-fear-heartattack"; }
+
+            case Spell::Slow:           { return "spell-grip-slow";        }
+            case Spell::Stun:           { return "spell-grip-stun";        }
+            case Spell::Immobilize:     { return "spell-grip-immobilize";  }
+
+            case Spell::Zap:            { return "spell-energy-zap";       }
+            case Spell::Jolt:           { return "spell-energy-jolt";      }
+            case Spell::Lightning:      { return "spell-energy-lightning"; }
+
+            case Spell::Spark:          { return "spell-fire-spark";       }
+            case Spell::Flare:          { return "spell-fire-flare";       }
+            case Spell::Fireball:       { return "spell-fire-fireball";    }
+
+            case Spell::Frostbite:      { return "spell-ice-frostbite";    }
+            case Spell::FreezingWind:   { return "spell-ice-freezingwind"; }
+            case Spell::IceShards:      { return "spell-ice-iceshards";    }  
+            default:                    { return "unknown_Spell_error";    }
+        }
+        // clang-format on
+    }
+
     [[nodiscard]] inline constexpr int toManaCost(const Spell t_spell) noexcept
     {
         // clang-format off

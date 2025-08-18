@@ -676,7 +676,7 @@ namespace castlecrawl
             util::setOriginToCenter(m_categroyAnimSprite);
 
             m_isAnimatingCategorySelection = true;
-            t_context.sfx.play("magic-1");
+            t_context.sfx.play("gui-twing");
             return;
         }
         else if (t_key.scancode == sf::Keyboard::Scancode::Up)

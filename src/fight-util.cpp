@@ -267,11 +267,10 @@ namespace castlecrawl::fight
                     fight::RollResult{},
                     t_mapPos,
                     t_context.config.message_color_cast_spell);
-
-                // TODO play sfx for the spell
             }
         }
 
+        t_context.sfx.play(std::string(toSfxFilename(t_spell)));
         t_context.turn.advance(t_context, t_context.config.turn_delay_after_player_attack);
     }
 
