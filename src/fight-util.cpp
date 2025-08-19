@@ -176,23 +176,31 @@ namespace castlecrawl::fight
         }
         else if (t_spell == Spell::Flare)
         {
-            t_context.anim.player().play("flare", util::scaleRectInPlaceCopy(animRect, 1.25f));
+            util::AnimConfig config(2.5f);
+
+            t_context.anim.player().play(
+                "flare", util::scaleRectInPlaceCopy(animRect, 1.25f), config);
         }
         else if (t_spell == Spell::Fireball)
         {
-            t_context.anim.player().play("fireball", util::scaleRectInPlaceCopy(animRect, 1.5f));
+            util::AnimConfig config(3.0f);
+
+            t_context.anim.player().play(
+                "fireball", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
         }
         else if (t_spell == Spell::Frostbite)
         {
-            util::AnimConfig config(0.5f);
+            util::AnimConfig config(1.5f);
 
             t_context.anim.player().play(
                 "frostbite", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
         }
         else if (t_spell == Spell::FreezingWind)
         {
+            util::AnimConfig config(2.75f);
+
             t_context.anim.player().play(
-                "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f));
+                "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f), config);
         }
         else if (t_spell == Spell::IceShards)
         {
@@ -200,9 +208,9 @@ namespace castlecrawl::fight
         }
         else if (t_spell == Spell::Zap)
         {
-            util::AnimConfig config(0.5f, t_context.config.spell_color_energy);
+            util::AnimConfig config(1.0f, t_context.config.spell_color_energy);
 
-            // use frostbite anim for zap because it looks good enough for now
+            // use the frostbite anim for zap because it looks good enough for now
             t_context.anim.player().play(
                 "frostbite", util::scaleRectInPlaceCopy(animRect, 2.0f), config);
         }
@@ -223,17 +231,17 @@ namespace castlecrawl::fight
         }
         else if (t_spell == Spell::Stun)
         {
-            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            util::AnimConfig config(1.5f, t_context.config.spell_color_grip);
             t_context.anim.player().play("orb-charge", animRect, config);
         }
         else if (t_spell == Spell::Immobilize)
         {
-            util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
+            util::AnimConfig config(1.75f, t_context.config.spell_color_grip);
             t_context.anim.player().play("orb-charge", animRect, config);
         }
         else if (t_spell == Spell::Scare)
         {
-            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            util::AnimConfig config(3.25f, t_context.config.spell_color_fear);
             t_context.anim.player().play("spell", animRect, config);
         }
         else if (t_spell == Spell::Terrorize)
@@ -241,9 +249,9 @@ namespace castlecrawl::fight
             util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
             t_context.anim.player().play("spell", animRect, config);
         }
-        else // if (t_spell == Spell::HeartAttack)
+        else if (t_spell == Spell::HeartAttack)
         {
-            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
+            util::AnimConfig config(11.0f, t_context.config.spell_color_fear);
             t_context.anim.player().play("spell", animRect, config);
         }
 
