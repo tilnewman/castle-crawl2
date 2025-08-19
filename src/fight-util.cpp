@@ -165,46 +165,49 @@ namespace castlecrawl::fight
         const MapPos_t & t_mapPos,
         const sf::Keyboard::Scancode t_direction)
     {
-        const sf::Vector2f screenPos{ t_context.maps.current().mapPosToScreenPos(
-            t_context, t_mapPos) };
-
-        const sf::FloatRect animRect{ screenPos, t_context.layout.cellSize() };
+        sf::FloatRect animRect{ t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos),
+                                t_context.layout.cellSize() };
 
         if (t_spell == Spell::Spark)
         {
-            t_context.anim.player().play("spark", util::scaleRectInPlaceCopy(animRect, 1.25f));
+            t_context.anim.player().play("spark", util::scaleRectInPlaceCopy(animRect, 2.5f));
         }
         else if (t_spell == Spell::Flare)
         {
             util::AnimConfig config(2.5f);
 
+            animRect.position.y -= (animRect.size.y * 0.2f);
+
             t_context.anim.player().play(
-                "flare", util::scaleRectInPlaceCopy(animRect, 1.25f), config);
+                "flare", util::scaleRectInPlaceCopy(animRect, 1.75f), config);
         }
         else if (t_spell == Spell::Fireball)
         {
             util::AnimConfig config(3.0f);
 
             t_context.anim.player().play(
-                "fireball", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
+                "fireball", util::scaleRectInPlaceCopy(animRect, 2.5f), config);
         }
         else if (t_spell == Spell::Frostbite)
         {
             util::AnimConfig config(1.5f);
 
             t_context.anim.player().play(
-                "frostbite", util::scaleRectInPlaceCopy(animRect, 1.5f), config);
+                "frostbite", util::scaleRectInPlaceCopy(animRect, 2.25f), config);
         }
         else if (t_spell == Spell::FreezingWind)
         {
             util::AnimConfig config(2.75f);
 
-            t_context.anim.player().play(
-                "freezing-wind", util::scaleRectInPlaceCopy(animRect, 2.5f), config);
+            util::scaleRectInPlace(animRect, 3.0f);
+            animRect.size.y *= 2.0f;
+            animRect.position.y -= (animRect.size.y * 0.25f);
+
+            t_context.anim.player().play("freezing-wind", animRect, config);
         }
         else if (t_spell == Spell::IceShards)
         {
-            t_context.anim.player().play("ice-shards", util::scaleRectInPlaceCopy(animRect, 2.0f));
+            t_context.anim.player().play("ice-shards", util::scaleRectInPlaceCopy(animRect, 2.75f));
         }
         else if (t_spell == Spell::Zap)
         {
@@ -216,43 +219,61 @@ namespace castlecrawl::fight
         }
         else if (t_spell == Spell::Jolt)
         {
-            util::AnimConfig config(1.25f, t_context.config.spell_color_energy);
-            t_context.anim.player().play("jolt", animRect, config);
+            util::AnimConfig config(1.75f, t_context.config.spell_color_energy);
+
+            t_context.anim.player().play(
+                "jolt", util::scaleRectInPlaceCopy(animRect, 1.75f), config);
         }
         else if (t_spell == Spell::Lightning)
         {
-            util::AnimConfig config(1.25f, t_context.config.spell_color_energy);
-            t_context.anim.player().play("lightning", util::scaleRectInPlaceCopy(animRect, 2.0f));
+            util::AnimConfig config(2.0f, t_context.config.spell_color_energy);
+
+            util::scaleRectInPlace(animRect, { 3.5f, 3.0f });
+            animRect.position.y -= (animRect.size.y * 0.1f);
+
+            t_context.anim.player().play("lightning", animRect, config);
         }
         else if (t_spell == Spell::Slow)
         {
             util::AnimConfig config(0.75f, t_context.config.spell_color_grip);
-            t_context.anim.player().play("orb-charge", animRect, config);
+
+            t_context.anim.player().play(
+                "orb-charge", util::scaleRectInPlaceCopy(animRect, { 1.25f, 2.0f }), config);
         }
         else if (t_spell == Spell::Stun)
         {
             util::AnimConfig config(1.5f, t_context.config.spell_color_grip);
-            t_context.anim.player().play("orb-charge", animRect, config);
+
+            t_context.anim.player().play(
+                "orb-charge", util::scaleRectInPlaceCopy(animRect, { 1.25f, 2.0f }), config);
         }
         else if (t_spell == Spell::Immobilize)
         {
             util::AnimConfig config(1.75f, t_context.config.spell_color_grip);
-            t_context.anim.player().play("orb-charge", animRect, config);
+
+            t_context.anim.player().play(
+                "orb-charge", util::scaleRectInPlaceCopy(animRect, { 1.25f, 2.0f }), config);
         }
         else if (t_spell == Spell::Scare)
         {
-            util::AnimConfig config(3.25f, t_context.config.spell_color_fear);
-            t_context.anim.player().play("spell", animRect, config);
+            util::AnimConfig config(2.25f, t_context.config.spell_color_fear);
+
+            t_context.anim.player().play(
+                "spell", util::scaleRectInPlaceCopy(animRect, 1.75f), config);
         }
         else if (t_spell == Spell::Terrorize)
         {
-            util::AnimConfig config(1.75f, t_context.config.spell_color_fear);
-            t_context.anim.player().play("spell", animRect, config);
+            util::AnimConfig config(2.25f, t_context.config.spell_color_fear);
+
+            t_context.anim.player().play(
+                "spell", util::scaleRectInPlaceCopy(animRect, 1.75f), config);
         }
         else if (t_spell == Spell::HeartAttack)
         {
-            util::AnimConfig config(11.0f, t_context.config.spell_color_fear);
-            t_context.anim.player().play("spell", animRect, config);
+            util::AnimConfig config(8.0f, t_context.config.spell_color_fear);
+
+            t_context.anim.player().play(
+                "spell", util::scaleRectInPlaceCopy(animRect, 1.75f), config);
         }
 
         t_context.player.setSpellLastCast(t_spell, t_direction);
