@@ -28,6 +28,9 @@ namespace castlecrawl
         [[nodiscard]] constexpr int min() const noexcept { return m_min; }
         [[nodiscard]] constexpr int max() const noexcept { return m_max; }
 
+        constexpr void min(const int t_newMin) { m_min = t_newMin; }
+        constexpr void max(const int t_newMax) { m_max = t_newMax; }
+
         constexpr void adjCurrent(const int adjustment) noexcept
         {
             current(m_current + adjustment);
