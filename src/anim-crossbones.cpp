@@ -29,6 +29,8 @@ namespace castlecrawl
                                            t_context.layout.cellSize() };
 
         util::fitAndCenterInside(sprite, mapScreenRect);
+
+        sprite.setColor(sf::Color(255,255,255,127));
     }
 
     bool CrossbonesParticle::update(const Context &, const float t_elapsedSec)
