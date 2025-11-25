@@ -64,11 +64,6 @@ namespace castlecrawl
 
     void StateFight::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (t_context.turn.owner() != TurnOwner::Player)
-        {
-            return;
-        }
-
         if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
