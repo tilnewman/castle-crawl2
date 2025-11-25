@@ -48,7 +48,7 @@ namespace castlecrawl
         m_fadeBlackRectangle.setFillColor(sf::Color(0, 0, 0, 0));
         m_fadeBlackRectangle.setSize(screenRect.size);
 
-        m_titleText = t_context.fonts.makeText(FontSize::Huge, "You Died!", sf::Color::Red);
+        m_titleText = t_context.fonts.makeText(FontSize::Huge, "You Died", sf::Color::Red);
         util::centerInside(m_titleText, screenRect);
     }
 
