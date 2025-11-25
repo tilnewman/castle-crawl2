@@ -14,8 +14,6 @@
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
-#include <algorithm>
-
 namespace castlecrawl
 {
 
@@ -71,8 +69,8 @@ namespace castlecrawl
         rect.position.x = ((static_cast<int>(t_index) % 8) * 64);
         rect.position.y = ((static_cast<int>(t_index) / 8) * 64);
 
-        // the logic above is perfect, but a flaw in the art means we need to add one
-        // maybe someday I'll spend the hour in photoshop required to fix the art...
+        // The logic above is perfect, but a flaw in the art means we need to add one.
+        // Maybe someday I'll spend the hour in photoshop required to fix the art.
         ++rect.position.y;
 
         return rect;
