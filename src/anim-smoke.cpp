@@ -13,8 +13,6 @@
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
-#include <algorithm>
-
 namespace castlecrawl
 {
 
@@ -108,7 +106,7 @@ namespace castlecrawl
         const MapPos_t & t_mapPos)
         : particles{}
     {
-        for (std::size_t i{ 0 }; i < 30; ++i)
+        for (std::size_t i{ 0 }; i < 30; ++i) // 30 looks good :)
         {
             particles.emplace_back(t_context, t_texture, t_textureRect, t_mapPos);
         }
