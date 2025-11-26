@@ -41,9 +41,14 @@ namespace castlecrawl
         t_context.anim.update(t_context, t_elapsedSec);
         t_context.turn.update(t_context, t_elapsedSec);
 
+        updateTurn(t_context);
+    }
+
+    void StatePlay::updateTurn(const Context & t_context)
+    {
         if (t_context.turn.owner() == TurnOwner::Player)
         {
-            if (t_context.player.health().current() == 0)
+            if (t_context.player.health().current() <= 0)
             {
                 t_context.state.setChangePending(State::Death);
             }

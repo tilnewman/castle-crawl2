@@ -31,6 +31,8 @@ namespace castlecrawl
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
+        void updateTurn(const Context & t_context);
+
         [[nodiscard]] bool
             handlePlayerMove(const Context & t_context, const sf::Keyboard::Scancode t_key);
 
