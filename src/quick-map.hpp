@@ -11,7 +11,7 @@ namespace castlecrawl
     // QuickMaps are the maps found in the source code in maps.cpp. They are temporary
     // placeholders for real maps that are easy for humans to manage and are easily
     // convertible into real maps. This class is responsible for loading these temp
-    // maps, converting them into real maps, all in a way easy to maintain in code.
+    // maps, and then converting them into real maps.
     class QuickMap
     {
       public:

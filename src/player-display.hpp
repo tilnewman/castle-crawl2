@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Window/Keyboard.hpp>
 
 namespace castlecrawl
 {

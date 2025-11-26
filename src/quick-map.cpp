@@ -8,6 +8,7 @@
 #include "check-macros.hpp"
 
 #include <iostream>
+#include <string>
 
 namespace castlecrawl
 {

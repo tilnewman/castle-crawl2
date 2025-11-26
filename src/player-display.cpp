@@ -5,7 +5,6 @@
 //
 #include "player-display.hpp"
 
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "fight-util.hpp"
 #include "layout.hpp"
@@ -38,7 +37,8 @@ namespace castlecrawl
 
     void PlayerDisplay::position(const Context & t_context, const MapPos_t & t_newPosition)
     {
-        // assert player in a valid position? -no, because map transitions are invalid positions
+        // Assert player in a valid position?
+        // No, because map transitions are intentionally invalid positions.
 
         m_isShaking = false;
         m_mapPos    = t_newPosition;

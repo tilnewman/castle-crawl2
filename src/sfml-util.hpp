@@ -10,7 +10,6 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -598,7 +597,7 @@ namespace util
         centerInside(thing, rect);
     }
 
-    // quad making and appending
+    // triangle making and appending
 
     // colors not changed if color given is transparent
     template <typename Container_t>
@@ -609,6 +608,7 @@ namespace util
         Container_t & verts,
         const sf::Color & color = sf::Color::Transparent)
     {
+        // keep these offsets in sync with those in appendTriangleVerts() below
         // clang-format off
         verts[index + 0].position = pos;
         verts[index + 1].position = sf::Vector2f((pos.x + size.x),  pos.y          );
