@@ -3,7 +3,6 @@
 //
 // state-play.hpp
 //
-#include "gui-stat-bar.hpp"
 #include "mouseover.hpp"
 #include "state.hpp"
 

@@ -7,13 +7,11 @@
 
 #include "anim-dust-particle.hpp"
 #include "animation-manager.hpp"
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "fight-util.hpp"
 #include "framerate-text.hpp"
 #include "inventory.hpp"
 #include "item-factory.hpp"
-#include "layout.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"

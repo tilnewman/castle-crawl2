@@ -6,24 +6,17 @@
 #include "state-death.hpp"
 
 #include "animation-manager.hpp"
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "font.hpp"
-#include "framerate-text.hpp"
-#include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
-#include "map.hpp"
 #include "monster-manager.hpp"
 #include "music-player.hpp"
 #include "player-display.hpp"
-#include "player.hpp"
 #include "sfml-defaults.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
-
-#include <string>
 
 namespace castlecrawl
 {

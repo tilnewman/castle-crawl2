@@ -9,11 +9,12 @@
 #include "tile-select-button.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Texture.hpp>
 
 #include <string>
+#include <vector>
 
 namespace castlecrawl
 {
