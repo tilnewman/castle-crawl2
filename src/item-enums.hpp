@@ -3,8 +3,7 @@
 //
 // item-enums.hpp
 //
-#include <compare>
-#include <string>
+#include <string_view>
 
 #include <SFML/System/Vector2.hpp>
 

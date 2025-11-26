@@ -3,6 +3,7 @@
 //
 // map.hpp
 //
+#include <cmath>
 #include <string>
 #include <string_view>
 #include <vector>

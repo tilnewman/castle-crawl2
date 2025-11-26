@@ -19,7 +19,7 @@ namespace castlecrawl
     Map::Map()
         : m_name{ MapName::Level_1_BoilerRoom } // anything works here
         , m_map{}
-        , m_floor{ Floor::Dirt } // anything works here too
+        , m_floor{ Floor::Dirt } // anything works here
         , m_transitions{}
     {}
 

@@ -5,7 +5,6 @@
 //
 #include "map-types.hpp"
 #include "monster.hpp"
-#include "tile-image-enum.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

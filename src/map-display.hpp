@@ -3,7 +3,7 @@
 //
 // map-display.hpp
 //
-#include "map.hpp"
+#include "map-types.hpp"
 #include "tile-image-enum.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
