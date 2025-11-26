@@ -19,8 +19,7 @@ namespace castlecrawl
         Grip
     };
 
-    [[nodiscard]] inline constexpr std::string_view
-        toString(const SpellCategory t_spellCategroy) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const SpellCategory t_spellCategroy) noexcept
     {
         // clang-format off
         switch(t_spellCategroy)
@@ -65,7 +64,7 @@ namespace castlecrawl
         IceShards
     };
 
-    [[nodiscard]] inline constexpr std::string_view toString(const Spell t_spell) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
@@ -94,7 +93,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    [[nodiscard]] inline constexpr std::string_view toSfxFilename(const Spell t_spell) noexcept
+    [[nodiscard]] constexpr std::string_view toSfxFilename(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
@@ -123,7 +122,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    [[nodiscard]] inline constexpr int toManaCost(const Spell t_spell) noexcept
+    [[nodiscard]] constexpr int toManaCost(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
@@ -152,7 +151,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    [[nodiscard]] inline constexpr SpellCategory toCategory(const Spell t_spell) noexcept
+    [[nodiscard]] constexpr SpellCategory toCategory(const Spell t_spell) noexcept
     {
         // clang-format off
         switch(t_spell)
