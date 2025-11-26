@@ -290,19 +290,19 @@ namespace castlecrawl
 
         // spell category images
         util::TextureLoader::load(
-            m_fireTexture, (t_context.config.media_path / "image" / "fire-icon.png"), true);
+            m_fireTexture, (t_context.config.media_path / "image" / "spell-icon-fire.png"), true);
 
         util::TextureLoader::load(
-            m_iceTexture, (t_context.config.media_path / "image" / "ice-icon.png"), true);
+            m_iceTexture, (t_context.config.media_path / "image" / "spell-icon-ice.png"), true);
 
         util::TextureLoader::load(
-            m_energyTexture, (t_context.config.media_path / "image" / "energy-icon.png"), true);
+            m_energyTexture, (t_context.config.media_path / "image" / "spell-icon-energy.png"), true);
 
         util::TextureLoader::load(
-            m_gripTexture, (t_context.config.media_path / "image" / "grip-icon.png"), true);
+            m_gripTexture, (t_context.config.media_path / "image" / "spell-icon-grip.png"), true);
 
         util::TextureLoader::load(
-            m_fearTexture, (t_context.config.media_path / "image" / "fear-icon.png"), true);
+            m_fearTexture, (t_context.config.media_path / "image" / "spell-icon-fear.png"), true);
 
         // spell category columbs
         const float categoryColumbWidth{ botRect.size.x / 6.0f };

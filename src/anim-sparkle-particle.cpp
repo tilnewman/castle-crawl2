@@ -13,8 +13,6 @@
 #include "sfml-defaults.hpp"
 #include "texture-loader.hpp"
 
-#include <string>
-
 namespace castlecrawl
 {
 
