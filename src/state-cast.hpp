@@ -14,9 +14,11 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 #include <memory>
+#include <string>
 
 namespace castlecrawl
 {
@@ -92,7 +94,8 @@ namespace castlecrawl
 
         void updateDescription(const Context & t_context);
 
-        std::unique_ptr<SpellCategoryRectangle> & focusedCategory(const Context & t_context);
+        [[nodiscard]] std::unique_ptr<SpellCategoryRectangle> &
+            focusedCategory(const Context & t_context);
 
       private:
         sf::RectangleShape m_bgFadeRectangle;

@@ -6,7 +6,6 @@
 #include "state-cast.hpp"
 
 #include "animation-manager.hpp"
-#include "animation-player.hpp"
 #include "context.hpp"
 #include "fight-util.hpp"
 #include "font.hpp"
@@ -24,7 +23,6 @@
 #include "state-manager.hpp"
 #include "texture-loader.hpp"
 #include "top-panel.hpp"
-#include "turn-keeper.hpp"
 
 namespace castlecrawl
 {
@@ -296,7 +294,9 @@ namespace castlecrawl
             m_iceTexture, (t_context.config.media_path / "image" / "spell-icon-ice.png"), true);
 
         util::TextureLoader::load(
-            m_energyTexture, (t_context.config.media_path / "image" / "spell-icon-energy.png"), true);
+            m_energyTexture,
+            (t_context.config.media_path / "image" / "spell-icon-energy.png"),
+            true);
 
         util::TextureLoader::load(
             m_gripTexture, (t_context.config.media_path / "image" / "spell-icon-grip.png"), true);
