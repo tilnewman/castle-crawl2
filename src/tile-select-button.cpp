@@ -7,7 +7,6 @@
 
 #include "context.hpp"
 #include "layout.hpp"
-#include "maps.hpp"
 #include "sfml-util.hpp"
 #include "tile-images.hpp"
 
@@ -50,6 +49,8 @@ namespace castlecrawl
         const sf::Vector2f & t_screenPos,
         const std::vector<TileImage> & t_tileImages)
     {
+        m_tiles.clear();
+
         sf::Vector2f screenPos = t_screenPos;
         for (const TileImage & tileImage : t_tileImages)
         {
