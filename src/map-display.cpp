@@ -18,7 +18,8 @@ namespace castlecrawl
 {
 
     MapDisplay::MapDisplay()
-        : m_objectVerts{}
+        : m_backgroundRectangle()
+        , m_objectVerts{}
         , m_floorVerts{}
         , m_borderVerts{}
         , m_objectBuffer{ sf::PrimitiveType::Triangles, sf::VertexBuffer::Usage::Static }
@@ -31,6 +32,13 @@ namespace castlecrawl
         const sf::Vector2i mapSize = t_context.maps.current().size();
 
         t_context.layout.setupNewMap(mapSize);
+
+        m_backgroundRectangle.setPosition(t_context.layout.mapRect().position);
+        m_backgroundRectangle.setSize(t_context.layout.mapRect().size);
+        m_backgroundRectangle.setFillColor(t_context.config.map_background_color);
+        // m_backgroundRectangle.setOutlineThickness(1.0f);
+        // m_backgroundRectangle.setOutlineColor(sf::Color::Green);
+
         resetVertexVectors(mapSize);
         appendVerts(t_context);
         appendLiquidEdgeVerts(t_context);
@@ -40,8 +48,9 @@ namespace castlecrawl
     void MapDisplay::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
-        t_states.texture = &t_context.tile_images.texture();
+        t_target.draw(m_backgroundRectangle, t_states);
 
+        t_states.texture = &t_context.tile_images.texture();
         t_target.draw(m_floorBuffer, t_states);
         t_target.draw(m_borderBuffer); // no states here because edge verts are solid black
         t_target.draw(m_objectBuffer, t_states);
@@ -69,6 +78,9 @@ namespace castlecrawl
         sf::Sprite edgeSprite = t_context.tile_images.sprite(t_context, TileImage::Lava);
 
         // make floor border tile bigger to cover outside edges of walls with solid black
+        //
+        // This causes some verts to be drawn outside of the t_context.layout.mapRect(),
+        // so those verts will need to be adjusted after this loop -see below this loop.
         const float growScale = 0.25f;
 
         const float overlapDimm{ static_cast<float>(t_context.layout.cellSize().x) *
@@ -94,7 +106,7 @@ namespace castlecrawl
                     util::appendTriangleVerts(
                         edgeSprite.getGlobalBounds(),
                         m_borderVerts,
-                        t_context.config.background_color);
+                        t_context.config.map_background_color);
                 }
 
                 // floor tiles
@@ -124,6 +136,33 @@ namespace castlecrawl
 
             screenPos.x = t_context.layout.mapRect().position.x;
             screenPos.y += t_context.layout.cellSize().y;
+        }
+
+        // push border verts outside of t_context.layout.mapRect() back inside, see comment above
+        const sf::FloatRect bounds = m_backgroundRectangle.getGlobalBounds();
+        const float right          = util::right(bounds);
+        const float bottom         = util::bottom(bounds);
+        for (sf::Vertex & vert : m_borderVerts)
+        {
+            if (vert.position.x < bounds.position.x)
+            {
+                vert.position.x = bounds.position.x;
+            }
+
+            if (vert.position.x > right)
+            {
+                vert.position.x = right;
+            }
+
+            if (vert.position.y < bounds.position.y)
+            {
+                vert.position.y = bounds.position.y;
+            }
+
+            if (vert.position.y > bottom)
+            {
+                vert.position.y = bottom;
+            }
         }
     }
 

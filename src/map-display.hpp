@@ -6,6 +6,7 @@
 #include "map-types.hpp"
 #include "tile-image-enum.hpp"
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/VertexBuffer.hpp>
@@ -39,6 +40,8 @@ namespace castlecrawl
         [[nodiscard]] bool isFloorAdjacent(const Context & t_context, const MapPos_t t_pos) const;
 
       private:
+        sf::RectangleShape m_backgroundRectangle;
+
         VertVec_t m_objectVerts;
         VertVec_t m_floorVerts;
         VertVec_t m_borderVerts;

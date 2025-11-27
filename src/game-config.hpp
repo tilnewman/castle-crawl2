@@ -18,6 +18,7 @@ namespace castlecrawl
         std::filesystem::path media_path;
 
         const sf::Color background_color       = sf::Color::Black;
+        const sf::Color map_background_color   = sf::Color(16, 16, 16);
         const sf::Color stage_background_color = sf::Color(0, 0, 0, 200);
         const sf::Color error_message_color    = sf::Color(200, 100, 100);
         const float music_volume               = 40.0f;
