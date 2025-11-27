@@ -51,7 +51,7 @@ namespace castlecrawl
         , color{ t_color }
         , has_focus{ false }
     {
-        const sf::FloatRect botRect{ t_context.layout.botRect() };
+        const sf::FloatRect botRect{ t_context.layout.botRegion() };
         const float imageSize{ botRect.size.x / 7.5f };
 
         const sf::FloatRect imageRect{ { (t_position.x - (imageSize * 0.5f)), t_position.y },
@@ -260,7 +260,7 @@ namespace castlecrawl
     void StateCast::onEnter(const Context & t_context)
     {
         // background fade
-        const sf::FloatRect botRect{ t_context.layout.botRect() };
+        const sf::FloatRect botRect{ t_context.layout.botRegion() };
         m_bgFadeRectangle.setPosition(botRect.position);
         m_bgFadeRectangle.setSize(botRect.size);
         m_bgFadeRectangle.setFillColor(t_context.config.stage_background_color);
@@ -817,9 +817,9 @@ namespace castlecrawl
         m_descriptionText.setString(description);
         util::setOriginToPosition(m_errorText);
 
-        m_descriptionText.setPosition({ ((t_context.layout.botRect().size.x * 0.5f) -
+        m_descriptionText.setPosition({ ((t_context.layout.botRegion().size.x * 0.5f) -
                                          (m_descriptionText.getGlobalBounds().size.x * 0.5f)),
-                                        (t_context.layout.botRect().size.y * 0.8f) });
+                                        (t_context.layout.botRegion().size.y * 0.8f) });
     }
 
     void StateCast::showErrorMessage(const Context & t_context, const std::string & t_message)
@@ -827,9 +827,9 @@ namespace castlecrawl
         m_errorText.setString(t_message);
         util::setOriginToPosition(m_errorText);
 
-        m_errorText.setPosition({ ((t_context.layout.botRect().size.x * 0.5f) -
+        m_errorText.setPosition({ ((t_context.layout.botRegion().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (t_context.layout.botRect().size.y * 0.925f) });
+                                  (t_context.layout.botRegion().size.y * 0.925f) });
 
         m_errorTimerSec = 0.0f;
     }

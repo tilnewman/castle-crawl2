@@ -31,7 +31,7 @@ namespace castlecrawl
         , m_licenseText{ util::SfmlDefaults::instance().font() }
         , m_extraText{ util::SfmlDefaults::instance().font() }
     {
-        const sf::FloatRect screenRect = t_context.layout.screenRect();
+        const sf::FloatRect screenRect = t_context.layout.screenRegion();
         m_nameText                     = t_context.fonts.makeText(FontSize::Large, t_name);
 
         m_nameText.setPosition(
@@ -99,7 +99,7 @@ namespace castlecrawl
 
     void StateCredits::onEnter(const Context & t_context)
     {
-        const sf::FloatRect screenRect = t_context.layout.screenRect();
+        const sf::FloatRect screenRect = t_context.layout.screenRegion();
 
         util::TextureLoader::load(
             m_castleTexture, (t_context.config.media_path / "image" / "splash.png"), true);

@@ -67,10 +67,10 @@ namespace castlecrawl
         m_eqListboxUPtr = std::make_unique<Listbox>(t_context.player.inventory().eqItems());
 
         // setup constants used throughout
-        const sf::FloatRect screenRect{ t_context.layout.screenRect() };
+        const sf::FloatRect screenRect{ t_context.layout.screenRegion() };
         const float pad{ screenRect.size.x * 0.0025f };
         const float padLarge{ pad * 10.0f };
-        const sf::FloatRect botRect = t_context.layout.botRect();
+        const sf::FloatRect botRect = t_context.layout.botRegion();
 
         // establish how tall the stats rows will be
         m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Dy");
@@ -519,7 +519,7 @@ namespace castlecrawl
         m_errorText.setString(t_message);
         m_errorText.setFillColor(t_context.config.error_message_color);
 
-        m_errorText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+        m_errorText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
                                    (m_errorText.getGlobalBounds().size.x * 0.5f)),
                                   (util::bottom(m_itemDescText) + 40.0f) });
 
@@ -549,7 +549,7 @@ namespace castlecrawl
 
         m_itemDescText.setString(descStr);
 
-        m_itemDescText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+        m_itemDescText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
                                       (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
                                      util::bottom(*m_unListboxUPtr) });
     }
@@ -588,7 +588,7 @@ namespace castlecrawl
 
         m_itemHintText.setString(equipHintStr);
 
-        m_itemHintText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+        m_itemHintText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
                                       (m_itemHintText.getGlobalBounds().size.x * 0.5f)),
                                      (util::bottom(m_itemDescText) + 0.0f) });
     }

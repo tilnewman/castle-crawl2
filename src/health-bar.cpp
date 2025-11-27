@@ -18,7 +18,7 @@ namespace castlecrawl
 
     void HealthBar::setup(const Context & t_context)
     {
-        const sf::FloatRect topRect{ t_context.layout.topRect() };
+        const sf::FloatRect topRect{ t_context.layout.topRegion() };
 
         sf::FloatRect healthBarRect;
         healthBarRect.size.y     = (topRect.size.y * 0.1f);

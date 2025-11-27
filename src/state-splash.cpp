@@ -29,7 +29,7 @@ namespace castlecrawl
 
     void StateSplash::onEnter(const Context & t_context)
     {
-        const sf::FloatRect screenRect = t_context.layout.screenRect();
+        const sf::FloatRect screenRect = t_context.layout.screenRegion();
 
         util::TextureLoader::load(
             m_castleTexture, (t_context.config.media_path / "image" / "splash.png"), true);

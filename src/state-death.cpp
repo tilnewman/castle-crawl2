@@ -33,7 +33,7 @@ namespace castlecrawl
         t_context.music.stopAll();
         t_context.sfx.play("game-over.ogg");
 
-        const sf::FloatRect screenRect{ t_context.layout.screenRect() };
+        const sf::FloatRect screenRect{ t_context.layout.screenRegion() };
 
         m_fadeRedRectangle.setFillColor(sf::Color(255, 0, 0, 0));
         m_fadeRedRectangle.setSize(screenRect.size);

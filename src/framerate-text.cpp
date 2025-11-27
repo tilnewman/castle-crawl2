@@ -32,7 +32,8 @@ namespace castlecrawl
         m_text.setFillColor(sf::Color(255, 255, 255, 192));
 
         m_text.setPosition(
-            { 0.0f, (t_context.layout.botRect().position.y + t_context.layout.botRect().size.y) });
+            { 0.0f,
+              (t_context.layout.botRegion().position.y + t_context.layout.botRegion().size.y) });
     }
 
     void FramerateText::update(const Context & t_context)
@@ -54,7 +55,7 @@ namespace castlecrawl
 
             m_text.setPosition(
                 { 0.0f,
-                  (t_context.layout.botRect().position.y + t_context.layout.botRect().size.y) -
+                  (t_context.layout.botRegion().position.y + t_context.layout.botRegion().size.y) -
                       m_text.getGlobalBounds().size.y });
 
             m_frameCounter = 0.0f;

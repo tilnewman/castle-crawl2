@@ -715,9 +715,9 @@ namespace castlecrawl
 
             m_keyText.setString(keyText);
 
-            m_keyText.setPosition({ ((t_context.layout.topRect().size.x * 0.5f) -
+            m_keyText.setPosition({ ((t_context.layout.topRegion().size.x * 0.5f) -
                                      (m_keyText.getGlobalBounds().size.x * 0.5f)),
-                                    (t_context.layout.topRect().size.y - 25.0f) });
+                                    (t_context.layout.topRegion().size.y - 25.0f) });
         }
         else
         {
@@ -782,7 +782,7 @@ namespace castlecrawl
         m_fadeText.setFillColor(sf::Color::White);
 
         m_fadeText.setPosition(
-            { ((t_context.layout.topRect().size.x * 0.5f) -
+            { ((t_context.layout.topRegion().size.x * 0.5f) -
                (m_fadeText.getGlobalBounds().size.x * 0.5f)),
               (m_borderRectangle.getPosition().y - (m_fadeText.getGlobalBounds().size.y * 2.0f)) });
 

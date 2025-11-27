@@ -16,9 +16,9 @@ namespace castlecrawl
       public:
         Layout();
 
-        [[nodiscard]] inline sf::FloatRect screenRect() const { return m_screenRect; }
-        [[nodiscard]] inline sf::FloatRect topRect() const { return m_topRect; }
-        [[nodiscard]] inline sf::FloatRect botRect() const { return m_botRect; }
+        [[nodiscard]] inline sf::FloatRect screenRegion() const { return m_screenRect; }
+        [[nodiscard]] inline sf::FloatRect topRegion() const { return m_topRect; }
+        [[nodiscard]] inline sf::FloatRect botRegion() const { return m_botRect; }
         [[nodiscard]] inline sf::FloatRect mapRect() const { return m_mapRect; }
         [[nodiscard]] inline sf::Vector2f cellSize() const { return m_cellSize; }
         [[nodiscard]] inline sf::Vector2i cellCount() const { return m_cellCount; }

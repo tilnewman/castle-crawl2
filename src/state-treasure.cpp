@@ -43,7 +43,7 @@ namespace castlecrawl
 
         //
 
-        const sf::FloatRect boardRect{ t_context.layout.botRect() };
+        const sf::FloatRect boardRect{ t_context.layout.botRegion() };
         const float pad{ boardRect.size.y * 0.015f };
 
         m_fadeRectangle.setFillColor(t_context.config.stage_background_color);
@@ -216,7 +216,7 @@ namespace castlecrawl
             }
         }
 
-        m_itemDescText.setPosition({ ((t_context.layout.screenRect().size.x * 0.5f) -
+        m_itemDescText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
                                       (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
                                      util::bottom(*m_itemListboxUPtr) });
     }

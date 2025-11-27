@@ -28,7 +28,7 @@ namespace castlecrawl
 
         m_titleSprite.setTexture(m_titleTexture, true);
 
-        const sf::FloatRect topRect{ t_context.layout.topRect() };
+        const sf::FloatRect topRect{ t_context.layout.topRegion() };
 
         util::fit(m_titleSprite, { (topRect.size.x * 0.3f), topRect.size.y });
 

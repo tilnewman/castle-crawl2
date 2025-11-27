@@ -18,7 +18,7 @@ namespace castlecrawl
 
     void ExperienceBar::setup(const Context & t_context)
     {
-        const sf::FloatRect topRect{ t_context.layout.topRect() };
+        const sf::FloatRect topRect{ t_context.layout.topRegion() };
 
         sf::FloatRect rect;
         rect.size.y     = (topRect.size.y * 0.1f);
