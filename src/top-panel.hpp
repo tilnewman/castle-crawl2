@@ -6,7 +6,6 @@
 #include "experience-bar.hpp"
 #include "health-bar.hpp"
 #include "mana-bar.hpp"
-#include "state.hpp"
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
