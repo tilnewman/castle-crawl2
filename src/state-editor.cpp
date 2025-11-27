@@ -708,9 +708,10 @@ namespace castlecrawl
             const std::string keyText(
                 "Esc-Quit\nCNTRL-s-Save\nCNTRL-l-Load\nSpace-Bare Floor\nPeriod-Erase\n"
                 "f-Change-Flooring\nr-Rock\nR-Breakable Rock\nZ-Breakable Wood Wall\n"
-                "w-Water\nl-Lava\nb-Blood\ng-Slime\nd-Door\nD-Locked Door\nb-Barrel\n"
+                "w-Water\nl-Lava\ne-Blood\ng-Slime\nd-Door\nD-Locked Door\nb-Barrel\n"
                 "c-Chest\nC-Coins\nf-Water Fountain\nF-Blood Fountain\ns-Stairs Up\n"
-                "S-Stairs Down\np-Rock Point\nP-Altar\nT-Random Tree\nt-Random Block Wall");
+                "S-Stairs Down\nK-Rock Point\nj-Altar\nT-Random Tree\nt-Random Block\n"
+                "a-campfire\nA-Inferno");
 
             m_keyText.setString(keyText);
 
