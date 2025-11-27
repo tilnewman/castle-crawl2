@@ -7,7 +7,6 @@
 
 #include "context.hpp"
 #include "layout.hpp"
-#include "sfml-util.hpp"
 #include "tile-images.hpp"
 
 namespace castlecrawl

@@ -10,8 +10,6 @@
 #include "player.hpp"
 #include "top-panel.hpp"
 
-#include <iostream>
-
 namespace castlecrawl
 {
 
