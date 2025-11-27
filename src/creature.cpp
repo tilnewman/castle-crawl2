@@ -69,7 +69,7 @@ namespace castlecrawl
 
         if ((closestDistance == currentDistance) && t_context.random.boolean())
         {
-            // if moving won't get us any closer, then don't both moving about half the time
+            // if moving won't get us any closer, then don't bother moving about half the time
             return false;
         }
 

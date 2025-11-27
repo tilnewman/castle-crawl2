@@ -14,9 +14,6 @@
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
-#include <algorithm>
-#include <limits>
-
 namespace castlecrawl
 {
 

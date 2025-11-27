@@ -7,7 +7,6 @@
 
 #include "context.hpp"
 #include "font.hpp"
-#include "layout.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 

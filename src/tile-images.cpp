@@ -5,7 +5,6 @@
 //
 #include "tile-images.hpp"
 
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"

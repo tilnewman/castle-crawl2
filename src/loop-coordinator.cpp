@@ -12,7 +12,6 @@
 
 #include <SFML/Graphics/VertexBuffer.hpp>
 #include <SFML/System/Clock.hpp>
-#include <SFML/Window.hpp>
 
 #include <iostream>
 

@@ -13,8 +13,6 @@
 #include "sfml-util.hpp"
 #include "turn-keeper.hpp"
 
-#include <SFML/System/Time.hpp>
-
 #include <string>
 
 namespace castlecrawl

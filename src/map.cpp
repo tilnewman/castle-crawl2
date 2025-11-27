@@ -5,7 +5,6 @@
 //
 #include "map.hpp"
 
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
 #include "random.hpp"

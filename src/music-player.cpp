@@ -5,7 +5,6 @@
 //
 #include "music-player.hpp"
 
-#include <algorithm>
 #include <iostream>
 
 namespace util

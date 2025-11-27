@@ -16,8 +16,6 @@
 #include "state-splash.hpp"
 #include "state-treasure.hpp"
 
-#include <exception>
-
 namespace castlecrawl
 {
 

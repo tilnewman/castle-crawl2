@@ -6,11 +6,6 @@
 #include "npc-manager.hpp"
 
 #include "context.hpp"
-#include "maps.hpp"
-#include "player-display.hpp"
-#include "random.hpp"
-
-#include <algorithm>
 
 namespace castlecrawl
 {

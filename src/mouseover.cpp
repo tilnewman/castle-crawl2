@@ -7,7 +7,6 @@
 
 #include "context.hpp"
 #include "font.hpp"
-#include "layout.hpp"
 #include "maps.hpp"
 #include "player-display.hpp"
 #include "sfml-defaults.hpp"

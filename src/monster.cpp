@@ -6,15 +6,13 @@
 #include "monster.hpp"
 
 #include "animation-manager.hpp"
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "fight-util.hpp"
-#include "maps.hpp"
+#include "game-config.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
 #include "sound-player.hpp"
-#include "state-manager.hpp"
 #include "top-panel.hpp"
 
 #include <algorithm>

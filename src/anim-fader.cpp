@@ -5,7 +5,6 @@
 //
 #include "anim-fader.hpp"
 
-#include "color-range.hpp"
 #include "sfml-util.hpp"
 
 namespace castlecrawl

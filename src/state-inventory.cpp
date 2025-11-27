@@ -13,7 +13,6 @@
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
-#include "maps.hpp"
 #include "monster-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
