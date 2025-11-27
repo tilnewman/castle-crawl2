@@ -6,13 +6,11 @@
 #include "state-treasure.hpp"
 
 #include "animation-manager.hpp"
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "framerate-text.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
-#include "map.hpp"
 #include "monster-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
