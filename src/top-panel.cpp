@@ -5,7 +5,6 @@
 //
 #include "top-panel.hpp"
 
-#include "check-macros.hpp"
 #include "context.hpp"
 #include "layout.hpp"
 #include "sfml-util.hpp"
@@ -33,8 +32,9 @@ namespace castlecrawl
 
         util::fit(m_titleSprite, { (topRect.size.x * 0.3f), topRect.size.y });
 
-        m_titleSprite.setPosition(
-            { ((topRect.size.x * 0.5f) - (m_titleSprite.getGlobalBounds().size.x * 0.5f)), 0.0f });
+        // m_titleSprite.setPosition(
+        //     { ((topRect.size.x * 0.5f) - (m_titleSprite.getGlobalBounds().size.x * 0.5f)), 0.0f
+        //     });
 
         m_healthBar.setup(t_context);
         m_manaBar.setup(t_context);
