@@ -8,17 +8,18 @@
 #include "sfml-util.hpp"
 
 #include <algorithm>
+#include <cmath>
 
 namespace castlecrawl
 {
 
     Layout::Layout()
-        : m_screenRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
-        , m_topRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
-        , m_botRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
-        , m_mapRect{ { 0.0f, 0.0f }, { 0.0f, 0.0f } }
-        , m_cellSize{ 0.0f, 0.0f }
-        , m_cellCount{ 0, 0 }
+        : m_screenRect{}
+        , m_topRect{}
+        , m_botRect{}
+        , m_mapRect{}
+        , m_cellSize{}
+        , m_cellCount{}
     {}
 
     void Layout::setup(const GameConfig & t_config)
