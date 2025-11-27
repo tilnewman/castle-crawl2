@@ -52,6 +52,7 @@ namespace castlecrawl
             return (m_owner == TurnOwner::Player);
         }
 
+        // what is the number of this turn?
         [[nodiscard]] inline std::size_t turnCount() const noexcept { return m_turnCount; }
 
         void advance(const Context & t_context, const float t_delaySec = 0.0f);

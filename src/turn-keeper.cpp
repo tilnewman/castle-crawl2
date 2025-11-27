@@ -19,7 +19,7 @@ namespace castlecrawl
         : m_owner{ TurnOwner::Player }
         , m_elapsedSec{ 0.0f }
         , m_delaySec{ 0.0f }
-        , m_turnCount{ 1 }
+        , m_turnCount{ 1 } // why not zero?
     {}
 
     void TurnKeeper::update(const Context & t_context, const float t_elapsedSec)
@@ -40,7 +40,7 @@ namespace castlecrawl
         turnDurationActions(t_context);
 
         int nextTurnNumber = (static_cast<int>(m_owner) + 1);
-        if (nextTurnNumber > static_cast<int>(TurnOwner::Npc))
+        if (nextTurnNumber > static_cast<int>(TurnOwner::Npc)) // why not NpcDelay?
         {
             nextTurnNumber = 0;
         }
