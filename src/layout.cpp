@@ -5,13 +5,9 @@
 //
 #include "layout.hpp"
 
-#include "check-macros.hpp"
 #include "sfml-util.hpp"
 
 #include <algorithm>
-
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/Texture.hpp>
 
 namespace castlecrawl
 {
@@ -49,11 +45,11 @@ namespace castlecrawl
         m_cellCount = t_cellCountParam;
 
         const sf::Vector2f boardSizeOrig{ sf::Vector2i(m_cellSize) * t_cellCountParam };
-        const sf::Vector2f boardSize{std::floor(boardSizeOrig.x), std::floor(boardSizeOrig.y)};
+        const sf::Vector2f boardSize{ std::floor(boardSizeOrig.x), std::floor(boardSizeOrig.y) };
 
         const sf::Vector2f boardPosOrig{ util::center(m_botRect) - (boardSize / 2.0f) };
         const sf::Vector2f boardPos{ std::floor(boardPosOrig.x), std::floor(boardPosOrig.y) };
-        
+
         m_mapRect = sf::FloatRect(boardPos, boardSize);
     }
 
