@@ -35,6 +35,8 @@ namespace castlecrawl
       private:
         sf::Texture m_castleTexture;
         sf::Sprite m_castleSprite;
+        sf::Texture m_titleTexture;
+        sf::Sprite m_titleSprite;
         sf::Texture m_lightningTexture;
         sf::Sprite m_lightningSprite;
         bool m_willShowLightning;
