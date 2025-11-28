@@ -88,13 +88,14 @@ namespace castlecrawl
         m_miscButton.setup(
             t_context,
             { t_context.layout.mapRect().position.x, tileSelectButtonVertPos },
-            { TileImage::Barrel,     TileImage::Sign,          TileImage::Chest,
-              TileImage::Door,       TileImage::DoorLocked,    TileImage::Blood,
-              TileImage::Key,        TileImage::FountainWater, TileImage::FountainBlood,
-              TileImage::Water,      TileImage::Slime,         TileImage::Rock,
-              TileImage::RockWeak,   TileImage::Stair_Up,      TileImage::Stair_Down,
-              TileImage::Altar,      TileImage::Bag,           TileImage::Coffin,
-              TileImage::StoneSpire, TileImage::Lava,          TileImage::Coins });
+            { TileImage::Barrel,        TileImage::Sign,          TileImage::Chest,
+              TileImage::Door,          TileImage::DoorLocked,    TileImage::Key,
+              TileImage::FountainWater, TileImage::FountainBlood, TileImage::Water,
+              TileImage::Slime,         TileImage::Lava,          TileImage::Blood,
+              TileImage::Ice,           TileImage::Rock,          TileImage::RockWeak,
+              TileImage::Stair_Up,      TileImage::Stair_Down,    TileImage::Altar,
+              TileImage::Bag,           TileImage::Coffin,        TileImage::StoneSpire,
+              TileImage::Coins });
 
         m_doorwayButton.setup(
             t_context,
