@@ -3,13 +3,15 @@
 //
 // random.hpp
 //
-#include "sfml-util.hpp"
+#include "util.hpp"
 
 #include <algorithm>
-#include <cstdlib>
+#include <initializer_list>
+#include <iterator>
 #include <limits>
 #include <random>
 #include <stdexcept>
+#include <type_traits>
 
 namespace util
 {
@@ -43,7 +45,7 @@ namespace util
             }
 
             // this also handles the case where from==to
-            if (isRealClose(from, to))
+            if (util::isRealClose(from, to))
             {
                 return from;
             }

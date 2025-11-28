@@ -13,6 +13,7 @@
 #include "player-display.hpp"
 #include "player.hpp"
 #include "random.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "top-panel.hpp"
 #include "turn-keeper.hpp"

@@ -26,10 +26,12 @@
 #include "top-panel.hpp"
 #include "turn-keeper.hpp"
 
-#include <memory>
-#include <string>
-
+#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/VideoMode.hpp>
+
+#include <memory>
 
 namespace castlecrawl
 {

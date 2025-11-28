@@ -5,12 +5,12 @@
 //
 #include "tile-image-enum.hpp"
 
-#include <vector>
-
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+
+#include <vector>
 
 namespace castlecrawl
 {

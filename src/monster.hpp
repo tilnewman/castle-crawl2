@@ -4,7 +4,10 @@
 // monster.hpp
 //
 #include "creature.hpp"
+#include "map-types.hpp"
 #include "monster-stats-database.hpp"
+#include "spells.hpp"
+#include "tile-image-enum.hpp"
 
 #include <string>
 #include <vector>

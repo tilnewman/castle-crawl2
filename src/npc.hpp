@@ -4,6 +4,7 @@
 // npc.hpp
 //
 #include "creature.hpp"
+#include "map-types.hpp"
 
 namespace castlecrawl
 {

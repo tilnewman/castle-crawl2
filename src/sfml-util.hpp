@@ -5,17 +5,30 @@
 //
 #include "util.hpp"
 
-#include <sstream>
-#include <string>
-
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/PrimitiveType.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Vertex.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
+
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <initializer_list>
+#include <iterator>
+#include <ostream>
+#include <sstream>
+#include <string>
+#include <tuple>
+#include <type_traits>
+#include <vector>
 
 namespace sf
 {
@@ -185,8 +198,8 @@ namespace util
     {
         rect.position.x = std::floor(rect.position.x);
         rect.position.y = std::floor(rect.position.y);
-        rect.size.x = std::floor(rect.size.x);
-        rect.size.y = std::floor(rect.size.y);
+        rect.size.x     = std::floor(rect.size.x);
+        rect.size.y     = std::floor(rect.size.y);
     }
 
     template <typename T>
@@ -748,7 +761,7 @@ namespace util
     [[nodiscard]] inline sf::RectangleShape makeRectangleShape(
         const sf::FloatRect & rect,
         const bool willColorFill = false,
-        const sf::Color & color = sf::Color::White)
+        const sf::Color & color  = sf::Color::White)
     {
         sf::RectangleShape rs;
 
@@ -773,7 +786,7 @@ namespace util
         sf::RenderTarget & target,
         const sf::FloatRect & rect,
         const bool willColorFill = false,
-        const sf::Color & color = sf::Color::White)
+        const sf::Color & color  = sf::Color::White)
     {
         target.draw(makeRectangleShape(rect, willColorFill, color));
     }
@@ -781,7 +794,7 @@ namespace util
     [[nodiscard]] inline const sf::CircleShape makeCircleShape(
         const sf::Vector2f & position,
         const float radius,
-        const sf::Color & color = sf::Color::White,
+        const sf::Color & color      = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         sf::CircleShape cs;
@@ -797,7 +810,7 @@ namespace util
         sf::RenderTarget & target,
         const sf::Vector2f & position,
         const float radius,
-        const sf::Color & color = sf::Color::White,
+        const sf::Color & color      = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         target.draw(makeCircleShape(position, radius, color, pointCount));
@@ -805,7 +818,7 @@ namespace util
 
     [[nodiscard]] inline const sf::CircleShape makeCircleShape(
         const sf::FloatRect & rect,
-        const sf::Color & color = sf::Color::White,
+        const sf::Color & color      = sf::Color::White,
         const std::size_t pointCount = 32)
     {
         return makeCircleShape(

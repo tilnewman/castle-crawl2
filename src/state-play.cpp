@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "fight-util.hpp"
 #include "framerate-text.hpp"
+#include "game-config.hpp"
 #include "keys.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"

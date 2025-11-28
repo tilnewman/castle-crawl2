@@ -4,6 +4,7 @@
 // map.hpp
 //
 #include <cmath>
+#include <ostream>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -29,7 +30,7 @@ namespace castlecrawl
         return (std::abs(t_posB.x - t_posA.x) + std::abs(t_posB.y - t_posA.y));
     }
 
-    [[nodiscard]] inline int distance(const MapCell & t_cellA, const MapCell & t_cellB) 
+    [[nodiscard]] inline int distance(const MapCell & t_cellA, const MapCell & t_cellB)
     {
         return distance(t_cellA.position, t_cellB.position);
     }

@@ -5,8 +5,7 @@
 //
 #include "condition.hpp"
 #include "inventory.hpp"
-#include "keys.hpp"
-#include "map-types.hpp"
+#include "item-enums.hpp"
 #include "spells.hpp"
 #include "stat.hpp"
 #include "strong-types.hpp"
@@ -14,7 +13,6 @@
 #include <SFML/Window/Keyboard.hpp>
 
 #include <vector>
-
 
 namespace castlecrawl
 {

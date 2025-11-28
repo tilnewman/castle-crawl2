@@ -6,6 +6,8 @@
 #include "map-types.hpp"
 #include "tile-image-enum.hpp"
 
+#include <string_view>
+
 namespace castlecrawl
 {
     struct Context;

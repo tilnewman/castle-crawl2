@@ -3,14 +3,11 @@
 //
 // map.hpp
 //
-#include "game-config.hpp"
 #include "map-types.hpp"
-#include "quick-map.hpp"
-
-#include <string>
-#include <vector>
 
 #include <SFML/System/Vector2.hpp>
+
+#include <vector>
 
 namespace castlecrawl
 {

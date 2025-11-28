@@ -18,7 +18,7 @@ namespace castlecrawl
             , m_value{ m_min }
             , m_isRising{ true }
         {}
-
+        
         [[nodiscard]] inline T min() const noexcept { return static_cast<T>(m_min); }
         [[nodiscard]] inline T max() const noexcept { return static_cast<T>(m_max); }
         [[nodiscard]] inline float speed() const noexcept { return m_speed; }

@@ -6,14 +6,16 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "item.hpp"
-#include "sfml-util.hpp"
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Vertex.hpp>
-#include <SFML/Window/Event.hpp>
+
+#include <vector>
 
 namespace castlecrawl
 {

@@ -5,7 +5,6 @@
 //
 #include "map-types.hpp"
 #include "npc.hpp"
-#include "tile-image-enum.hpp"
 
 #include <vector>
 

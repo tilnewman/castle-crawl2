@@ -11,6 +11,7 @@
 #include "maps.hpp"
 #include "random.hpp"
 #include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
 namespace castlecrawl

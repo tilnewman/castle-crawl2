@@ -6,11 +6,9 @@
 #include "item-enums.hpp"
 #include "strong-types.hpp"
 
-#include <compare>
-#include <iosfwd>
 #include <string>
-#include <tuple>
 #include <vector>
+#include <ostream>
 
 namespace castlecrawl::item
 {

@@ -6,15 +6,15 @@
 #include "random.hpp"
 #include "util.hpp"
 
+#include <SFML/Graphics/Color.hpp>
+
 #include <algorithm>
 #include <array>
 #include <cmath>
-#include <cstddef>
-#include <cstdlib>
+#include <ostream>
+#include <sstream>
+#include <string>
 #include <vector>
-
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Window.hpp>
 
 namespace colors
 {
@@ -426,7 +426,7 @@ namespace colors
     struct ColorAtRatio
     {
         sf::Color color = sf::Color::Transparent;
-        float ratio = 0.0f;
+        float ratio     = 0.0f;
     };
 
     template <typename Container_t>
@@ -720,10 +720,10 @@ namespace colors
         {}
 
       public:
-        BlendCache(const BlendCache &) = default;
-        BlendCache(BlendCache &&) = default;
+        BlendCache(const BlendCache &)             = default;
+        BlendCache(BlendCache &&)                  = default;
         BlendCache & operator=(const BlendCache &) = default;
-        BlendCache & operator=(BlendCache &&) = default;
+        BlendCache & operator=(BlendCache &&)      = default;
 
         //
 

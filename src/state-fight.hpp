@@ -4,10 +4,13 @@
 // state-fight.hpp
 //
 #include "direction-select-display.hpp"
+#include "map-types.hpp"
 #include "state.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 namespace castlecrawl
 {

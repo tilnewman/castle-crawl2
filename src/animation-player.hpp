@@ -8,10 +8,13 @@
 
 #include <filesystem>
 #include <memory>
-#include <tuple>
+#include <string>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/BlendMode.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace util
 {
@@ -25,7 +28,7 @@ namespace util
 
         explicit AnimConfig(
             const float t_durationSec,
-            const sf::Color t_color = sf::Color::White,
+            const sf::Color t_color         = sf::Color::White,
             const sf::BlendMode t_blendMode = sf::BlendAlpha)
             : is_default(false)
             , duration_sec(t_durationSec)

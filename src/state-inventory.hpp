@@ -7,12 +7,14 @@
 #include "item.hpp"
 #include "state.hpp"
 
-#include <memory>
-
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Window/Event.hpp>
+
+#include <memory>
+#include <string>
 
 namespace castlecrawl
 {
@@ -55,7 +57,7 @@ namespace castlecrawl
 
         sf::Text m_eqTitleText;
         std::unique_ptr<Listbox> m_eqListboxUPtr;
-       
+
         sf::Text m_itemDescText;
         sf::Text m_itemHintText;
         sf::Text m_errorText;
@@ -66,26 +68,26 @@ namespace castlecrawl
         sf::Text m_accTitleText;
         sf::Text m_lckTitleText;
         sf::Text m_arcTitleText;
-        
+
         sf::Text m_strValueText;
         sf::Text m_dexValueText;
         sf::Text m_accValueText;
         sf::Text m_lckValueText;
         sf::Text m_arcValueText;
-        
+
         sf::Text m_healthText;
         sf::Text m_manaText;
         sf::Text m_levelText;
         sf::Text m_goldText;
         sf::Text m_armorText;
         sf::Text m_weaponText;
-        
+
         sf::Text m_instructionText1;
         sf::Text m_instructionText2;
         sf::Text m_instructionText3;
         sf::Text m_instructionText4;
         sf::Text m_instructionText5;
-        
+
         sf::RectangleShape m_statRectangle;
     };
 

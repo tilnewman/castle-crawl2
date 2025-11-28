@@ -6,6 +6,8 @@
 #include "game-config.hpp"
 #include "map-types.hpp"
 
+#include <SFML/System/Vector2.hpp>
+
 namespace castlecrawl
 {
     // QuickMaps are the maps found in the source code in maps.cpp. They are temporary

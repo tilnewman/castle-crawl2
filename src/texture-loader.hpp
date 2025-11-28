@@ -5,10 +5,12 @@
 //
 #include <filesystem>
 #include <iostream>
+#include <locale>
 #include <map>
 #include <sstream>
 #include <string>
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Texture.hpp>
 

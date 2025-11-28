@@ -5,6 +5,8 @@
 //
 #include "gui-listbox.hpp"
 
+#include "sfml-util.hpp"
+
 namespace castlecrawl
 {
 

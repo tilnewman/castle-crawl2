@@ -4,11 +4,14 @@
 // util.hpp
 //
 #include <algorithm>
-#include <cmath>
-#include <cstddef>
 #include <iomanip>
+#include <ios>
+#include <limits>
+#include <locale>
+#include <ostream>
 #include <sstream>
 #include <string>
+#include <type_traits>
 
 //
 //

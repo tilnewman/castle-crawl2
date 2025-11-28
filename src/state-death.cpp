@@ -14,6 +14,7 @@
 #include "music-player.hpp"
 #include "player-display.hpp"
 #include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"

@@ -5,12 +5,13 @@
 //
 #include "random.hpp"
 
+#include <SFML/Audio.hpp>
+
 #include <filesystem>
+#include <initializer_list>
 #include <memory>
 #include <string>
 #include <vector>
-
-#include <SFML/Audio.hpp>
 
 namespace util
 {

@@ -14,7 +14,7 @@ namespace castlecrawl
 
         void setup(const float t_range, float t_speed);
         float update(const float t_elapsedSec);
-        [[nodiscard]] inline float adjustment() const { return m_current; }
+        [[nodiscard]] constexpr float adjustment() const { return m_current; }
 
       private:
         float m_range;

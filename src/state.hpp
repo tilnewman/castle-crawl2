@@ -3,8 +3,6 @@
 //
 // state.hpp
 //
-#include "map-types.hpp"
-
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Window/Event.hpp>

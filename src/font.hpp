@@ -7,6 +7,8 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include <string>
+
 namespace castlecrawl
 {
     struct GameConfig;

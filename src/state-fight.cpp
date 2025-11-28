@@ -10,6 +10,7 @@
 #include "context.hpp"
 #include "fight-util.hpp"
 #include "framerate-text.hpp"
+#include "game-config.hpp"
 #include "inventory.hpp"
 #include "item-factory.hpp"
 #include "map-display.hpp"

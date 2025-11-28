@@ -7,6 +7,7 @@
 
 #include "context.hpp"
 #include "layout.hpp"
+#include "quick-map.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
 

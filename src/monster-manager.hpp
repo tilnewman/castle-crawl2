@@ -3,7 +3,9 @@
 //
 // monster-manager.hpp
 //
+#include "creature.hpp"
 #include "map-types.hpp"
+#include "monster-stats-database.hpp"
 #include "monster.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>

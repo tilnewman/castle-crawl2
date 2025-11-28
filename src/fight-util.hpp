@@ -6,8 +6,8 @@
 #include "map-types.hpp"
 #include "spells.hpp"
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace castlecrawl

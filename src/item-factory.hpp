@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Font.hpp>
 
 #include <optional>
+#include <string>
 
 namespace castlecrawl
 {

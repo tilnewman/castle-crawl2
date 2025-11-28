@@ -5,6 +5,10 @@
 //
 #include "gui-stat-bar.hpp"
 
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 namespace castlecrawl
 {
     struct Context;

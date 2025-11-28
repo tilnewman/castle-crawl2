@@ -3,7 +3,6 @@
 //
 // tile-image-enum.hpp
 //
-#include <cstddef>
 #include <string_view>
 
 #include <SFML/Graphics/Rect.hpp>
@@ -298,6 +297,7 @@ namespace castlecrawl
     }
 
     /*
+     *  It is handy to keep track of which characters are used and which are not:
             //case '\\':
             //case '`':
             //case '{':

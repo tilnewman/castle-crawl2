@@ -4,6 +4,7 @@
 // state-cast.hpp
 //
 #include "direction-select-display.hpp"
+#include "map-types.hpp"
 #include "spells.hpp"
 #include "state.hpp"
 

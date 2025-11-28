@@ -3,7 +3,6 @@
 //
 // strong-type.hpp
 //
-#include <compare>
 #include <ostream>
 #include <type_traits>
 
