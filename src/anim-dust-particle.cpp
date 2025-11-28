@@ -63,7 +63,8 @@ namespace castlecrawl
 
     void DustParticleManager::setup(const GameConfig & t_config)
     {
-        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "smoke.png"), true);
+        util::TextureLoader::load(
+            m_texture, (t_config.media_path / "image" / "particle-smoke.png"), true);
     }
 
     void DustParticleManager::update(const Context & t_context, const float t_elapsedSec)

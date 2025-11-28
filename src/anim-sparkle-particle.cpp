@@ -125,7 +125,8 @@ namespace castlecrawl
 
     void SparkleParticleManager::setup(const GameConfig & t_config)
     {
-        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "star.png"), true);
+        util::TextureLoader::load(
+            m_texture, (t_config.media_path / "image" / "particle-star.png"), true);
     }
 
     void SparkleParticleManager::update(const Context & t_context, const float t_elapsedSec)

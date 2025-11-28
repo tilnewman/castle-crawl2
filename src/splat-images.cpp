@@ -25,7 +25,8 @@ namespace castlecrawl
 
     void SplatImages::setup(const GameConfig & t_config)
     {
-        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "splat.png"), true);
+        util::TextureLoader::load(
+            m_texture, (t_config.media_path / "image" / "particle-blood.png"), true);
 
         m_sprite1.setTextureRect({ { 0, 0 }, { 64, 64 } });
         m_sprite2.setTextureRect({ { 64, 0 }, { 64, 64 } });

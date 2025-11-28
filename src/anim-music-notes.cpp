@@ -142,7 +142,8 @@ namespace castlecrawl
 
     void MusicAnimationManager::setup(const GameConfig & t_config)
     {
-        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "notes.png"), true);
+        util::TextureLoader::load(
+            m_texture, (t_config.media_path / "image" / "particle-note.png"), true);
     }
 
     void MusicAnimationManager::update(const Context & t_context, const float t_elapsedSec)

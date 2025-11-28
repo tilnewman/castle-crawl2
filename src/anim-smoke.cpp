@@ -137,7 +137,8 @@ namespace castlecrawl
 
     void SmokeEffectManager::setup(const GameConfig & t_config)
     {
-        util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "smoke.png"), true);
+        util::TextureLoader::load(
+            m_texture, (t_config.media_path / "image" / "particle-smoke.png"), true);
     }
 
     void SmokeEffectManager::update(const Context & t_context, const float t_elapsedSec)
@@ -185,7 +186,7 @@ namespace castlecrawl
     }
 
     std::size_t SmokeEffectManager::particleCount() const
-    { 
+    {
         std::size_t count = 0;
 
         for (const SmokeEffect & effect : m_effects)
