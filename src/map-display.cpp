@@ -36,8 +36,6 @@ namespace castlecrawl
         m_backgroundRectangle.setPosition(t_context.layout.mapRect().position);
         m_backgroundRectangle.setSize(t_context.layout.mapRect().size);
         m_backgroundRectangle.setFillColor(t_context.config.map_background_color);
-        // m_backgroundRectangle.setOutlineThickness(1.0f);
-        // m_backgroundRectangle.setOutlineColor(sf::Color::Green);
 
         resetVertexVectors(mapSize);
         appendVerts(t_context);
@@ -164,6 +162,18 @@ namespace castlecrawl
                 vert.position.y = bottom;
             }
         }
+
+        // add borders for all four edges
+        sf::FloatRect rect = t_context.layout.mapRect();
+        rect.size.y        = overlapDimm;
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        rect.position.y = (util::bottom(t_context.layout.mapRect()) - overlapDimm);
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        rect        = t_context.layout.mapRect();
+        rect.size.x = overlapDimm;
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        rect.position.x = (util::right(t_context.layout.mapRect()) - overlapDimm);
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
     }
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
