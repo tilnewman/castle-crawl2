@@ -152,13 +152,31 @@ namespace castlecrawl
 
     void StateSplash::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
+        bool willInterupt = false;
+
         if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::E)
             {
                 t_context.state.setChangePending(State::Editor);
             }
-            else if (m_isFadingIn)
+            else
+            {
+                willInterupt = true;
+            }
+        }
+
+        if (const auto buttonPtr = t_event.getIf<sf::Event::MouseButtonReleased>())
+        {
+            if (buttonPtr)
+            {
+                willInterupt = true;
+            }
+        }
+
+        if (willInterupt)
+        {
+            if (m_isFadingIn)
             {
                 m_isFadingIn  = false;
                 m_isFadingOut = true;
