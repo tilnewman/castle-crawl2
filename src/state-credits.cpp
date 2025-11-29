@@ -102,7 +102,7 @@ namespace castlecrawl
         const sf::FloatRect screenRect = t_context.layout.screenRegion();
 
         util::TextureLoader::load(
-            m_castleTexture, (t_context.config.media_path / "image" / "splash.png"), true);
+            m_castleTexture, (t_context.config.media_path / "image" / "castle.png"), true);
 
         m_castleSprite.setTexture(m_castleTexture, true);
         m_castleSprite.setColor(sf::Color(255, 255, 255, 32));
