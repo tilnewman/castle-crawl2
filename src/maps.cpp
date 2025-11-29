@@ -182,7 +182,7 @@ namespace castlecrawl
             MapTransitions_t {
                 { { 5, -1 }, MapName::Level_1_Cell,  { 5, 8 } },
                 { { 6, 21 }, MapName::Level_1_MainHall,  { 16, 1 } },
-                { { 34, 2 }, MapName::Level_1_Basement, { 1, 2 } }
+                { { 34, 2 }, MapName::Level_1_Basement, { 1, 4 } }
                 }
             );
 
@@ -423,20 +423,28 @@ namespace castlecrawl
             t_context,
             Floor::Stone,
             MapChars_t {
-                "...............",
-                "...............",
-                "i    bZ hhhhh..",
-                "....... h   h..",
-                "....c . h h h..",
-                ".... \x85. h6h h..",
-                "....  . hhh h..",
-                "....hD.     h..",
-                "..k   hhhhh h..",
-                "..k h       h..",
-                "...............",
-                "...............",
+                ".......................",
+                ".......................",
+                "....bbb         b......",
+                ".........       b......",
+                "i           hhhhh......",
+                ".... ...... h   h......",
+                "....   bbb. h h h......",
+                "....      . h h h......",
+                "....b     . h h h......",
+                "....bb    . h h h......",
+                "......... . h6h h......",
+                "......... . hhh h......",
+                ".........   H   h......",
+                ".........   hhhhh......",
+                ".........   h  bb......",
+                "....c   D   h  bb......",
+                "....~ \x85 .   h   b......",
+                "....    .   d  bb......",
+                ".......................",
+                "......................."
                 },
-            MapTransitions_t {{ { -1,  2 }, MapName::Level_1_CellBlock,  { 32, 2 } }}
+            MapTransitions_t {{ { -1,  4 }, MapName::Level_1_CellBlock,  { 32, 2 } }}
             );
 
         // clang-format on
