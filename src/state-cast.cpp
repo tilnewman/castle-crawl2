@@ -260,7 +260,7 @@ namespace castlecrawl
     void StateCast::onEnter(const Context & t_context)
     {
         // background fade
-        const sf::FloatRect botRect{ t_context.layout.botRegion() };
+        const sf::FloatRect botRect{ t_context.layout.screenRegion() };
         m_bgFadeRectangle.setPosition(botRect.position);
         m_bgFadeRectangle.setSize(botRect.size);
         m_bgFadeRectangle.setFillColor(t_context.config.stage_background_color);
