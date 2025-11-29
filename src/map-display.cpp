@@ -78,7 +78,7 @@ namespace castlecrawl
         // make floor border tile bigger to cover outside edges of walls with solid black
         //
         // This causes some verts to be drawn outside of the t_context.layout.mapRect(),
-        // so those verts will need to be adjusted after this loop -see below this loop.
+        // so those verts will need to be adjusted after this loop -see below.
         const float growScale = 0.25f;
 
         const float overlapDimm{ static_cast<float>(t_context.layout.cellSize().x) *
@@ -163,7 +163,7 @@ namespace castlecrawl
             }
         }
 
-        // add borders for all four edges
+        // add borders for all four sides
         sf::FloatRect rect = t_context.layout.mapRect();
         rect.size.y        = overlapDimm;
         util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
@@ -178,7 +178,7 @@ namespace castlecrawl
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
-        // liquid or ice anyway (anything that needs the liquid edges drawn around it)
+        // liquids, ice, etc. (anything that needs the stone edges drawn around it)
         auto isLiquid = [](const char ch) {
             return ((ch == 'l') || (ch == 'g') || (ch == 'G') || (ch == 'e') || (ch == 'C'));
         };
