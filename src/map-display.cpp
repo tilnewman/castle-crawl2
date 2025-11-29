@@ -136,7 +136,28 @@ namespace castlecrawl
             screenPos.y += t_context.layout.cellSize().y;
         }
 
+        addWallBorderVerts(overlapDimm, t_context);
+
         // push border verts outside of t_context.layout.mapRect() back inside, see comment above
+        clampBorderVertsToMapRect();
+    }
+
+    void MapDisplay::addWallBorderVerts(const float t_overlapDimm, const Context & t_context)
+    {
+        sf::FloatRect rect = t_context.layout.mapRect();
+        rect.size.y        = t_overlapDimm;
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        rect.position.y = (util::bottom(t_context.layout.mapRect()) - t_overlapDimm);
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        rect        = t_context.layout.mapRect();
+        rect.size.x = t_overlapDimm;
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        rect.position.x = (util::right(t_context.layout.mapRect()) - t_overlapDimm);
+        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+    }
+
+    void MapDisplay::clampBorderVertsToMapRect()
+    {
         const sf::FloatRect bounds = m_backgroundRectangle.getGlobalBounds();
         const float right          = util::right(bounds);
         const float bottom         = util::bottom(bounds);
@@ -162,18 +183,6 @@ namespace castlecrawl
                 vert.position.y = bottom;
             }
         }
-
-        // add borders for all four sides
-        sf::FloatRect rect = t_context.layout.mapRect();
-        rect.size.y        = overlapDimm;
-        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
-        rect.position.y = (util::bottom(t_context.layout.mapRect()) - overlapDimm);
-        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
-        rect        = t_context.layout.mapRect();
-        rect.size.x = overlapDimm;
-        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
-        rect.position.x = (util::right(t_context.layout.mapRect()) - overlapDimm);
-        util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
     }
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)

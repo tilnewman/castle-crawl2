@@ -30,6 +30,8 @@ namespace castlecrawl
         void appendVerts(const Context & t_context);
         void appendLiquidEdgeVerts(const Context & t_context);
         void resetVertexBuffers();
+        void clampBorderVertsToMapRect();
+        void addWallBorderVerts(const float t_overlapDimm, const Context & t_context);
 
         void appendTileVerts(
             const Context & t_context,
