@@ -260,10 +260,12 @@ namespace castlecrawl
     void StateCast::onEnter(const Context & t_context)
     {
         // background fade
-        const sf::FloatRect botRect{ t_context.layout.screenRegion() };
-        m_bgFadeRectangle.setPosition(botRect.position);
-        m_bgFadeRectangle.setSize(botRect.size);
+        const sf::FloatRect screenRect{ t_context.layout.screenRegion() };
+        m_bgFadeRectangle.setPosition(screenRect.position);
+        m_bgFadeRectangle.setSize(screenRect.size);
         m_bgFadeRectangle.setFillColor(t_context.config.stage_background_color);
+
+        const sf::FloatRect botRect{ t_context.layout.botRegion() };
 
         // title
         m_titleText = t_context.fonts.makeText(FontSize::Huge, "Cast Spell");
