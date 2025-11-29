@@ -147,11 +147,14 @@ namespace castlecrawl
         sf::FloatRect rect = t_context.layout.mapRect();
         rect.size.y        = t_overlapDimm;
         util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        
         rect.position.y = (util::bottom(t_context.layout.mapRect()) - t_overlapDimm);
         util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        
         rect        = t_context.layout.mapRect();
         rect.size.x = t_overlapDimm;
         util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
+        
         rect.position.x = (util::right(t_context.layout.mapRect()) - t_overlapDimm);
         util::appendTriangleVerts(rect, m_borderVerts, t_context.config.map_background_color);
     }
