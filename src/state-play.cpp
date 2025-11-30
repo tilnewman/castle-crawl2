@@ -55,7 +55,7 @@ namespace castlecrawl
             }
             else if (t_context.player.experience() > t_context.player.experienceForNextLevel())
             {
-                // TODO some fanfare is needed here
+                // TODO some fanfare and stat increases are needed here
                 t_context.player.levelAdj(1);
                 t_context.top_panel.update(t_context);
             }
