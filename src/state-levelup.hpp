@@ -79,6 +79,8 @@ namespace castlecrawl
         sf::RectangleShape m_bgFadeRectangle;
         sf::Text m_titleText;
         sf::Text m_subTitleText;
+        sf::Text m_healthText;
+        sf::Text m_manaText;
         sf::Text m_instructionText1;
         sf::Text m_instructionText2;
         sf::Text m_errorText;

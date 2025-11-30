@@ -147,6 +147,8 @@ namespace castlecrawl
         : m_bgFadeRectangle{}
         , m_titleText{ util::SfmlDefaults::instance().font() }
         , m_subTitleText{ util::SfmlDefaults::instance().font() }
+        , m_healthText{ util::SfmlDefaults::instance().font() }
+        , m_manaText{ util::SfmlDefaults::instance().font() }
         , m_instructionText1{ util::SfmlDefaults::instance().font() }
         , m_instructionText2{ util::SfmlDefaults::instance().font() }
         , m_errorText{ util::SfmlDefaults::instance().font() }
@@ -192,6 +194,45 @@ namespace castlecrawl
             { ((botRect.size.x * 0.5f) - (m_subTitleText.getGlobalBounds().size.x * 0.5f)),
               (util::bottom(m_titleText) + (pad * 0.25f)) });
 
+        // health increase text
+        const int healthBefore = t_context.player.health().current();
+        const int healthAdj    = (10 + (t_context.player.strength().current() / 5));
+        t_context.player.health().adjNormal(healthAdj);
+        t_context.player.health().adjCurrent(healthAdj);
+        const int healthAfter = t_context.player.health().current();
+
+        std::string healthStr = "Your health has increased from ";
+        healthStr += std::to_string(healthBefore);
+        healthStr += " to ";
+        healthStr += std::to_string(healthAfter);
+        healthStr += '.';
+
+        m_healthText =
+            t_context.fonts.makeText(FontSize::Small, healthStr, sf::Color(255, 200, 200));
+
+        m_healthText.setPosition(
+            { ((botRect.size.x * 0.5f) - (m_healthText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_subTitleText) + (pad * 0.75f)) });
+
+        // mana increase text
+        const int manaBefore = t_context.player.mana().current();
+        const int manaAdj    = (10 + (t_context.player.arcane().current() / 5));
+        t_context.player.mana().adjNormal(manaAdj);
+        t_context.player.mana().adjCurrent(manaAdj);
+        const int manaAfter = t_context.player.mana().current();
+
+        std::string manaStr = "Your mana has increased from ";
+        manaStr += std::to_string(manaBefore);
+        manaStr += " to ";
+        manaStr += std::to_string(manaAfter);
+        manaStr += '.';
+
+        m_manaText = t_context.fonts.makeText(FontSize::Small, manaStr, sf::Color(245, 200, 245));
+
+        m_manaText.setPosition(
+            { ((botRect.size.x * 0.5f) - (m_manaText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_healthText) + (pad * 0.15f)) });
+
         // navigation instruction text
         m_instructionText1 = t_context.fonts.makeText(
             FontSize::Small,
@@ -202,7 +243,7 @@ namespace castlecrawl
 
         m_instructionText1.setPosition(
             { ((botRect.size.x * 0.5f) - (m_instructionText1.getGlobalBounds().size.x * 0.5f)),
-              (util::bottom(m_subTitleText) + (pad * 0.75f)) });
+              (util::bottom(m_manaText) + (pad * 0.75f)) });
 
         // points remaining instruciton text
         m_instructionText2 = t_context.fonts.makeText(
@@ -282,6 +323,8 @@ namespace castlecrawl
         t_target.draw(m_bgFadeRectangle, t_states);
         t_target.draw(m_titleText, t_states);
         t_target.draw(m_subTitleText, t_states);
+        t_target.draw(m_healthText, t_states);
+        t_target.draw(m_manaText, t_states);
         t_target.draw(m_instructionText1, t_states);
         t_target.draw(m_instructionText2, t_states);
 
