@@ -3,24 +3,53 @@
 //
 // state-levelup.hpp
 //
+#include "stat.hpp"
 #include "state.hpp"
 
-#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Window/Keyboard.hpp>
 
-#include <memory>
 #include <string>
+#include <vector>
 
 namespace castlecrawl
 {
     struct Context;
+
+    //
+
+    class StatAwardBlock
+    {
+      public:
+        StatAwardBlock(
+            const Context & t_context, const std::string & t_name, const sf::FloatRect & t_rect);
+
+        // returns true on success
+        bool addPoint(const Context & t_context);
+        bool removePoint(const Context & t_context);
+
+        void select(const bool t_isSelected);
+
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
+
+      private:
+        Stat & stat(const Context & t_context) const;
+
+      public:
+        const static int m_perStatAwardPointMax = 5;
+
+      private:
+        sf::FloatRect m_rect;
+        sf::RectangleShape m_rectangle;
+        std::string m_name;
+        sf::Text m_nameText;
+        sf::Text m_valueText;
+        int m_awardedPoints;
+        bool m_isSelected;
+    };
 
     //
 
@@ -44,14 +73,20 @@ namespace castlecrawl
       private:
         void showErrorMessage(const Context & t_context, const std::string & t_message);
 
+        void updateDescriptionText(const Context & t_context);
+
       private:
         sf::RectangleShape m_bgFadeRectangle;
         sf::Text m_titleText;
         sf::Text m_subTitleText;
-        sf::Text m_instructionText;
+        sf::Text m_instructionText1;
+        sf::Text m_instructionText2;
         sf::Text m_errorText;
         float m_errorTimerSec;
-        bool haveAllStatPointsBeenAwarded;
+        int m_statPointsAwarded;
+        const int m_statPointsAwardedMax;
+        std::vector<StatAwardBlock> m_statBlocks;
+        std::size_t m_selectionIndex;
     };
 
 } // namespace castlecrawl
