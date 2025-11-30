@@ -285,7 +285,7 @@ namespace castlecrawl
             MapTransitions_t {
                 { { -1, 1 }, MapName::Level_1_MainHall,  { 32, 4 } },
                 { { 27, 5 }, MapName::Level_1_CoffinRoom, { 0,  9 } },
-                { { 19, -1 }, MapName::Level_1_LakeStronghold, { 13,  21 } }
+                { { 19, -1 }, MapName::Level_1_LakeStronghold, { 9,  21 } }
                 }
             );
 
@@ -326,10 +326,12 @@ namespace castlecrawl
             t_context,
             Floor::Stone,
             MapChars_t {
-                "ggggg.........................ggggggggggg",
-                "ggg  .......b          .......  ggggggggg",
-                "gg   .......           .......        ggg",
-                "g    ....bb.b          d     d          g",
+                "ggggggggggggggggggggggggggggggggggggggggg",
+                "ggggggggggggggggggggggggggggggggggggggggg",
+                "ggggg.......b          .......ggggggggggg",
+                "ggg  .......b          .bbbbb.  ggggggggg",
+                "gg   .......           .     .        ggg",
+                "g    ....bb.           d     d          g",
                 "..d......  ....        ....d........b   g",
                 ".. ......     d        ....        .bb  g",
                 ".. ......   ...        ....        ...  g",
@@ -346,11 +348,9 @@ namespace castlecrawl
                 "ggg  .... ...............bb     .........",
                 "gc   .... ...............bbb    .........",
                 "......... ...............................",
-                "......... ...............................",
-                ".........     ...........................",
-                ".............d..........................."
+                ".........d...............................",
                 },
-            MapTransitions_t {{ { 13, 23 }, MapName::Level_1_HiddenPassage, { 19, 1 } }}
+            MapTransitions_t {{ { 9, 23 }, MapName::Level_1_HiddenPassage, { 19, 1 } }}
             );
 
         m_maps.emplace_back(
