@@ -159,6 +159,8 @@ namespace castlecrawl
 
     void StateLevelUp::onEnter(const Context & t_context)
     {
+        t_context.sfx.play("achievement");
+
         // background fade
         const sf::FloatRect screenRect{ t_context.layout.screenRegion() };
         m_bgFadeRectangle.setPosition(screenRect.position);
@@ -415,7 +417,7 @@ namespace castlecrawl
         const int pointsRemaining = (m_statPointsAwardedMax - m_statPointsAwarded);
 
         std::string str;
-        
+
         if (pointsRemaining > 0)
         {
             str += "Distribute your remaining ";
