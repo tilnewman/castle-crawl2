@@ -55,9 +55,9 @@ namespace castlecrawl
             }
             else if (t_context.player.experience() > t_context.player.experienceForNextLevel())
             {
-                // TODO some fanfare and stat increases are needed here
                 t_context.player.levelAdj(1);
                 t_context.top_panel.update(t_context);
+                t_context.state.setChangePending(State::LevelUp);
             }
         }
         else if (t_context.turn.owner() == TurnOwner::Monster)
