@@ -53,6 +53,12 @@ namespace castlecrawl
             {
                 t_context.state.setChangePending(State::Death);
             }
+            else if (t_context.player.experience() > t_context.player.experienceForNextLevel())
+            {
+                // TODO some fanfare is needed here
+                t_context.player.levelAdj(1);
+                t_context.top_panel.update(t_context);
+            }
         }
         else if (t_context.turn.owner() == TurnOwner::Monster)
         {
