@@ -187,24 +187,30 @@ namespace castlecrawl
             { m_healthText.getPosition().x, (util::bottom(m_armorText) + pad) });
 
         // instruction text
-        const sf::Color instTextColor{ sf::Color(170, 170, 200) };
-
         m_instructionText1 = t_context.fonts.makeText(
-            FontSize::Small, "Use arrow keys to navigate item boxes.", instTextColor);
+            FontSize::Small,
+            "Use arrow keys to navigate item boxes.",
+            t_context.config.state_color_instruction);
 
         m_instructionText2 = t_context.fonts.makeText(
-            FontSize::Small, "Press 'E' to equip, and 'U' to unequip items.", instTextColor);
+            FontSize::Small,
+            "Press 'E' to equip, and 'U' to unequip items.",
+            t_context.config.state_color_instruction);
 
         m_instructionText3 = t_context.fonts.makeText(
-            FontSize::Small, "Press 'D' to drop unequipped items.", instTextColor);
+            FontSize::Small,
+            "Press 'D' to drop unequipped items.",
+            t_context.config.state_color_instruction);
 
         m_instructionText4 = t_context.fonts.makeText(
             FontSize::Small,
             "Press 'S' to swap an unequipped item with the equipped one.",
-            instTextColor);
+            t_context.config.state_color_instruction);
 
         m_instructionText5 = t_context.fonts.makeText(
-            FontSize::Small, "Press 'Enter' to use unequipped items.", instTextColor);
+            FontSize::Small,
+            "Press 'Enter' to use unequipped items.",
+            t_context.config.state_color_instruction);
 
         m_instructionText1.setStyle(sf::Text::Italic);
         m_instructionText2.setStyle(sf::Text::Italic);

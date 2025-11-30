@@ -39,6 +39,10 @@ namespace castlecrawl
         const sf::Color message_color_poison      = sf::Color(100, 255, 100);
         const sf::Color message_color_item        = sf::Color(160, 82, 45);
 
+        const sf::Color state_color_title       = sf::Color::White;
+        const sf::Color state_color_subtitle    = sf::Color(160, 160, 160);
+        const sf::Color state_color_instruction = sf::Color(170, 170, 200);
+
         const sf::Color spell_color_fire   = sf::Color(255, 192, 192);
         const sf::Color spell_color_ice    = sf::Color(192, 192, 255);
         const sf::Color spell_color_energy = sf::Color(192, 240, 240);

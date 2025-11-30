@@ -204,14 +204,14 @@ namespace castlecrawl
                         lastCastSpellDir);
                 }
             }
-            // todo remove after testing
+            // todo remove these after testing
             else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
             {
-                t_context.anim.flatSmoke().add(t_context, t_context.player_display.position());
+                t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::B)
             {
-                t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
+                t_context.state.setChangePending(State::LevelUp);
             }
         }
     }

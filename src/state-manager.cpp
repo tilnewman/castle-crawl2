@@ -12,6 +12,7 @@
 #include "state-editor.hpp"
 #include "state-fight.hpp"
 #include "state-inventory.hpp"
+#include "state-levelup.hpp"
 #include "state-play.hpp"
 #include "state-splash.hpp"
 #include "state-treasure.hpp"
@@ -60,6 +61,7 @@ namespace castlecrawl
             case State::Credits:    { return std::make_unique<StateCredits>(); }
             case State::Editor:     { return std::make_unique<StateEditor>(); }
             case State::Cast:       { return std::make_unique<StateCast>(); }
+            case State::LevelUp:    { return std::make_unique<StateLevelUp>(); }
             default:
             {
                 throw std::runtime_error("Error: state-manager::factory() called with unknown state!");
