@@ -40,7 +40,7 @@ namespace castlecrawl
         const sf::Color message_color_item        = sf::Color(160, 82, 45);
 
         const sf::Color state_color_title       = sf::Color::White;
-        const sf::Color state_color_subtitle    = sf::Color(160, 160, 160);
+        const sf::Color state_color_subtitle    = sf::Color(180, 160, 120);
         const sf::Color state_color_instruction = sf::Color(170, 170, 200);
 
         const sf::Color spell_color_fire   = sf::Color(255, 192, 192);

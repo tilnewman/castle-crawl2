@@ -194,7 +194,7 @@ namespace castlecrawl
         m_instructionText1 = t_context.fonts.makeText(
             FontSize::Small,
             "Use the up/down arrow keys to select a stat, then left/right to add/remove points.",
-            t_context.config.state_color_subtitle);
+            t_context.config.state_color_instruction);
 
         m_instructionText1.setStyle(sf::Text::Italic);
 
@@ -206,7 +206,7 @@ namespace castlecrawl
         m_instructionText2 = t_context.fonts.makeText(
             FontSize::Small,
             "Distribute your remaining 10 points, then press Enter.",
-            t_context.config.state_color_subtitle);
+            t_context.config.state_color_instruction);
 
         m_instructionText2.setStyle(sf::Text::Italic);
 
