@@ -102,7 +102,7 @@ namespace castlecrawl
             m_castleSprite.setColor(color);
             m_titleSprite.setColor(color);
 
-            if (0 == color.a)
+            if (m_imageAlpha < 1.0f)
             {
                 t_context.state.setChangePending(State::Play);
             }
