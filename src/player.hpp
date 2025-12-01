@@ -12,6 +12,7 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
+#include <algorithm>
 #include <vector>
 
 namespace castlecrawl
@@ -48,10 +49,18 @@ namespace castlecrawl
         inline void levelAdj(const int t_adj) { m_level += t_adj; }
         inline void experinceAdj(const int t_ad) { m_experience += t_ad; }
         inline void goldAdj(const int t_adj) { m_gold += t_adj; }
-        inline void healthAdj(const int t_adj) { m_health += t_adj; }
         inline void healthMaxAdj(const int t_adj) { m_healthMax += t_adj; }
-        inline void manaAdj(const int t_adj) { m_mana += t_adj; }
         inline void manaMaxAdj(const int t_adj) { m_manaMax += t_adj; }
+
+        inline void healthAdj(const int t_adj)
+        {
+            m_health = std::clamp((m_health + t_adj), statMin, m_healthMax);
+        }
+
+        inline void manaAdj(const int t_adj)
+        {
+            m_mana = std::clamp((m_mana + t_adj), statMin, m_manaMax);
+        }
 
         [[nodiscard]] inline item::Inventory & inventory() noexcept { return m_inventory; }
 

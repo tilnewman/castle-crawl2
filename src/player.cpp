@@ -5,8 +5,6 @@
 //
 #include "player.hpp"
 
-#include <algorithm>
-
 namespace castlecrawl
 {
 
