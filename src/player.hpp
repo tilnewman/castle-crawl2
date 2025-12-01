@@ -23,19 +23,19 @@ namespace castlecrawl
       public:
         Player();
 
-        [[nodiscard]] inline Stat & strength() noexcept { return m_strength; }
-        [[nodiscard]] inline Stat & dexterity() noexcept { return m_dexterity; }
-        [[nodiscard]] inline Stat & accuracy() noexcept { return m_accuracy; }
-        [[nodiscard]] inline Stat & luck() noexcept { return m_luck; }
-        [[nodiscard]] inline Stat & arcane() noexcept { return m_arcane; }
+        [[nodiscard]] constexpr Stat & strength() noexcept { return m_strength; }
+        [[nodiscard]] constexpr Stat & dexterity() noexcept { return m_dexterity; }
+        [[nodiscard]] constexpr Stat & accuracy() noexcept { return m_accuracy; }
+        [[nodiscard]] constexpr Stat & luck() noexcept { return m_luck; }
+        [[nodiscard]] constexpr Stat & arcane() noexcept { return m_arcane; }
 
-        [[nodiscard]] inline int health() const noexcept { return m_health; }
-        [[nodiscard]] inline int healthMax() const noexcept { return m_healthMax; }
-        [[nodiscard]] inline int mana() const noexcept { return m_mana; }
-        [[nodiscard]] inline int manaMax() const noexcept { return m_manaMax; }
-        [[nodiscard]] inline int level() const noexcept { return m_level; }
-        [[nodiscard]] inline int experience() const noexcept { return m_experience; }
-        [[nodiscard]] inline int gold() const noexcept { return m_gold; }
+        [[nodiscard]] constexpr int health() const noexcept { return m_health; }
+        [[nodiscard]] constexpr int healthMax() const noexcept { return m_healthMax; }
+        [[nodiscard]] constexpr int mana() const noexcept { return m_mana; }
+        [[nodiscard]] constexpr int manaMax() const noexcept { return m_manaMax; }
+        [[nodiscard]] constexpr int level() const noexcept { return m_level; }
+        [[nodiscard]] constexpr int experience() const noexcept { return m_experience; }
+        [[nodiscard]] constexpr int gold() const noexcept { return m_gold; }
 
         [[nodiscard]] int experienceForLevel(const int t_level) const;
 
@@ -44,20 +44,20 @@ namespace castlecrawl
             return experienceForLevel(m_level + 1);
         }
 
-        [[nodiscard]] inline Armor_t armor() const noexcept { return m_inventory.armorRating(); }
+        [[nodiscard]] constexpr Armor_t armor() const noexcept { return m_inventory.armorRating(); }
 
-        inline void levelAdj(const int t_adj) { m_level += t_adj; }
-        inline void experinceAdj(const int t_ad) { m_experience += t_ad; }
-        inline void goldAdj(const int t_adj) { m_gold += t_adj; }
-        inline void healthMaxAdj(const int t_adj) { m_healthMax += t_adj; }
-        inline void manaMaxAdj(const int t_adj) { m_manaMax += t_adj; }
+        constexpr void levelAdj(const int t_adj) { m_level += t_adj; }
+        constexpr void experinceAdj(const int t_ad) { m_experience += t_ad; }
+        constexpr void goldAdj(const int t_adj) { m_gold += t_adj; }
+        constexpr void healthMaxAdj(const int t_adj) { m_healthMax += t_adj; }
+        constexpr void manaMaxAdj(const int t_adj) { m_manaMax += t_adj; }
 
-        inline void healthAdj(const int t_adj)
+        constexpr void healthAdj(const int t_adj)
         {
             m_health = std::clamp((m_health + t_adj), statMin, m_healthMax);
         }
 
-        inline void manaAdj(const int t_adj)
+        constexpr void manaAdj(const int t_adj)
         {
             m_mana = std::clamp((m_mana + t_adj), statMin, m_manaMax);
         }
