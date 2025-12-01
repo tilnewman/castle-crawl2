@@ -229,7 +229,7 @@ namespace castlecrawl
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::B)
             {
-                t_context.state.setChangePending(State::LevelUp);
+                t_context.state.setChangePending(State::Statistics);
             }
         }
     }
@@ -301,6 +301,7 @@ namespace castlecrawl
 
             if (handleMapTransition(t_context, mapPosAfter))
             {
+                ++t_context.statistics.rooms_discovered;
                 m_mouseover.reset();
             }
         }

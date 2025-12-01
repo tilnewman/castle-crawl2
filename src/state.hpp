@@ -27,7 +27,8 @@ namespace castlecrawl
         Credits,
         Editor,
         Cast,
-        LevelUp
+        LevelUp,
+        Statistics
     };
 
     inline constexpr std::string_view toString(const State t_state) noexcept
@@ -47,6 +48,7 @@ namespace castlecrawl
             case State::Editor:     { return "Editor"; }
             case State::Cast:       { return "Cast"; }
             case State::LevelUp:    { return "LevelUp"; }
+            case State::Statistics: { return "Statistics"; }
             default:                { return "unknown_state_error"; }
                 // clang-format on
         }
