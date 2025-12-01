@@ -21,6 +21,7 @@ namespace castlecrawl
         , m_level{ 1 }
         , m_experience{ 0 }
         , m_gold{ 0 }
+        , m_maxGoldHeld{ 0 }
         , m_inventory{}
         , m_equipEffects{}
         , m_conditions{}
