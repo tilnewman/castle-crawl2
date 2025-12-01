@@ -102,13 +102,13 @@ namespace castlecrawl
 
     void StateDeath::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        if (const auto keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+        const auto keyPtr = t_event.getIf<sf::Event::KeyPressed>();
+        if (!keyPtr)
         {
-            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
-            {
-                t_context.state.setChangePending(State::Credits);
-            }
+            return;
         }
+
+        t_context.state.setChangePending(State::Statistics);
     }
 
 } // namespace castlecrawl

@@ -197,7 +197,7 @@ namespace castlecrawl
             return;
         }
 
-        t_context.state.setChangePending(State::Play);
+        t_context.state.setChangePending(State::Credits);
     }
 
 } // namespace castlecrawl
