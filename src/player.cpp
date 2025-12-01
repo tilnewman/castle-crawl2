@@ -14,10 +14,10 @@ namespace castlecrawl
         , m_arcane{ statStart, statMin, statMax }
         , m_accuracy{ statStart, statMin, statMax }
         , m_luck{ statStart, statMin, statMax }
-        , m_health{ 20 }
-        , m_healthMax{ 20 }
-        , m_mana{ 10 }
-        , m_manaMax{ 10 }
+        , m_health{ healthStart }
+        , m_healthMax{ healthStart }
+        , m_mana{ manaStart }
+        , m_manaMax{ manaStart }
         , m_level{ 1 }
         , m_experience{ 0 }
         , m_gold{ 0 }
@@ -26,7 +26,7 @@ namespace castlecrawl
         , m_conditions{}
         , m_spells{ Spell::Spark, Spell::Frostbite, Spell::Zap } // spells known when game begins
         , m_spellLastCast{ Spell::Spark }
-        , m_spellLastCastDir{sf::Keyboard::Scan::Unknown } // any non-direction will work here
+        , m_spellLastCastDir{ sf::Keyboard::Scan::Unknown } // any non-direction will work here
     {}
 
     void Player::updateEquipEffects()
