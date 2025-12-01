@@ -173,6 +173,7 @@ namespace castlecrawl
 
         // title
         m_titleText = t_context.fonts.makeText(FontSize::Huge, "Level Up");
+        m_titleText.setStyle(sf::Text::Underlined);
 
         const float pad{ botRect.size.y * 0.05f };
 
@@ -216,7 +217,7 @@ namespace castlecrawl
 
         // mana increase text
         const int manaBefore = t_context.player.mana().current();
-        const int manaAdj    = (10 + (t_context.player.arcane().current() / 5));
+        const int manaAdj    = (6 + (t_context.player.arcane().current() / 6));
         t_context.player.mana().adjNormal(manaAdj);
         t_context.player.mana().adjCurrent(manaAdj);
         const int manaAfter = t_context.player.mana().current();
