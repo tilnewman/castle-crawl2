@@ -22,6 +22,7 @@ namespace castlecrawl
         std::size_t obstacles_destroyed = 0;
         std::size_t most_coins_held     = 0;
         std::size_t level_reached       = 0;
+        std::size_t chests_opened       = 0; // TODO
     };
 
 } // namespace castlecrawl

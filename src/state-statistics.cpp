@@ -153,6 +153,11 @@ namespace castlecrawl
 
         m_statBlocks.push_back(
             StatBlock(t_context, "Level Reached", t_context.statistics.level_reached, blockRect));
+
+        blockRect.position.y += blockHeight;
+
+        m_statBlocks.push_back(
+            StatBlock(t_context, "Chests Opened", t_context.statistics.chests_opened, blockRect));
     }
 
     void StateStatistics::update(const Context & t_context, const float t_elapsedSec)
