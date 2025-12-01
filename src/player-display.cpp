@@ -84,7 +84,7 @@ namespace castlecrawl
 
         const float healthRatio =
             (static_cast<float>(t_context.player.health()) /
-             static_cast<float>(t_context.player.health()));
+             static_cast<float>(t_context.player.healthMax()));
 
         if (healthRatio < 1.0f)
         {
