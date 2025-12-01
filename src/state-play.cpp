@@ -30,6 +30,7 @@ namespace castlecrawl
     StatePlay::StatePlay()
         : m_mouseover{}
         , m_monsterUniqueId{ 0 }
+        , m_walkCount{ 0 }
     {}
 
     void StatePlay::onEnter(const Context &) {}
@@ -143,6 +144,20 @@ namespace castlecrawl
                     if (handlePlayerMove(t_context, keyPtr->scancode))
                     {
                         playMoveMusic(t_context);
+
+                        ++m_walkCount;
+                        if ((m_walkCount % t_context.config.turns_per_health_increase) == 0)
+                        {
+                            t_context.player.healthAdj(1);
+                            t_context.top_panel.update(t_context);
+                        }
+
+                        if ((m_walkCount % t_context.config.turns_per_mana_increase) == 0)
+                        {
+                            t_context.player.manaAdj(1);
+                            t_context.top_panel.update(t_context);
+                        }
+
                         t_context.turn.advance(t_context);
                     }
                 }

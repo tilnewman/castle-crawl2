@@ -51,22 +51,11 @@ namespace castlecrawl
 
     void TurnKeeper::reset() { m_owner = TurnOwner::Player; }
 
-    void TurnKeeper::turnDurationActions(const Context & t_context)
+    void TurnKeeper::turnDurationActions(const Context &)
     {
         if (isPlayerTurn())
         {
-            if ((m_turnCount % t_context.config.turns_per_health_increase) == 0)
-            {
-                t_context.player.healthAdj(1);
-                t_context.top_panel.update(t_context);
-            }
-
-            if ((m_turnCount % t_context.config.turns_per_mana_increase) == 0)
-            {
-                t_context.player.manaAdj(1);
-                t_context.top_panel.update(t_context);
-            }
-
+            // TODO there will be things that go here, but I can't think of them right now
             ++m_turnCount;
         }
     }
