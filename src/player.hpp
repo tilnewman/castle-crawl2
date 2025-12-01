@@ -54,7 +54,7 @@ namespace castlecrawl
 
         constexpr void healthAdj(const int t_adj)
         {
-            m_health = std::clamp((m_health + t_adj), statMin, m_healthMax);
+            m_health = std::clamp((m_health + t_adj), 0, m_healthMax);
         }
 
         constexpr void manaAdj(const int t_adj)
