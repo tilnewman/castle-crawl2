@@ -28,9 +28,11 @@ namespace castlecrawl
 
         m_titleSprite.setTexture(m_titleTexture, true);
 
-        const sf::FloatRect topRect{ t_context.layout.topRegion() };
+        sf::FloatRect titleBounds = t_context.layout.topRegion();
+        titleBounds.size.x *= 0.3f;
 
-        util::fit(m_titleSprite, { (topRect.size.x * 0.3f), topRect.size.y });
+        util::fitAndCenterInside(m_titleSprite, titleBounds);
+        m_titleSprite.setPosition({ 0.0f, m_titleSprite.getGlobalBounds().position.y });
 
         m_healthBar.setup(t_context);
         m_manaBar.setup(t_context);
