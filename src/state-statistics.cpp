@@ -12,6 +12,7 @@
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
+#include "maps.hpp"
 #include "monster-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
@@ -112,6 +113,8 @@ namespace castlecrawl
             StatBlock(t_context, "Barrels Opened", t_context.statistics.barrels_opened, blockRect));
 
         blockRect.position.y += blockHeight;
+
+        t_context.statistics.rooms_discovered = t_context.maps.discoveredCount();
 
         m_statBlocks.push_back(StatBlock(
             t_context, "Rooms Discovered", t_context.statistics.rooms_discovered, blockRect));

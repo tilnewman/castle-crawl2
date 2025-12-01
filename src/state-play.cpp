@@ -301,7 +301,6 @@ namespace castlecrawl
 
             if (handleMapTransition(t_context, mapPosAfter))
             {
-                ++t_context.statistics.rooms_discovered;
                 m_mouseover.reset();
             }
         }

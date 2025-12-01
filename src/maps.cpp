@@ -40,6 +40,7 @@ namespace castlecrawl
             (m_currentIter != std::end(m_maps)),
             "Tried to change to an invalid map named \"" << toString(t_mapName) << "\"");
 
+        m_currentIter->setDiscovered();
         t_context.map_display.load(t_context);
         t_context.player_display.position(t_context, t_pos);
 
@@ -476,6 +477,21 @@ namespace castlecrawl
                              << toString(transition.to_name) << "\"");
             }
         }
+    }
+
+    std::size_t Maps::discoveredCount() const
+    {
+        std::size_t count = 0;
+
+        for (const Map & map : m_maps)
+        {
+            if (map.isDiscovered())
+            {
+                ++count;
+            }
+        }
+
+        return count;
     }
 
 } // namespace castlecrawl

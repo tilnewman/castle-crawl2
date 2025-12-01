@@ -21,6 +21,7 @@ namespace castlecrawl
         void change(const Context & t_context, const MapName t_mapName, const MapPos_t & t_pos);
         void forceMapForEditting(const Context & t_context, const Map t_map);
         [[nodiscard]] inline Map & current() { return *m_currentIter; }
+        std::size_t discoveredCount() const;
 
       private:
         void load(const Context & t_context);

@@ -28,10 +28,13 @@ namespace castlecrawl
         [[nodiscard]] inline Floor floor() const { return m_floor; }
         [[nodiscard]] inline MapTransitions_t transitions() const { return m_transitions; }
         [[nodiscard]] inline bool isEmpty() const { return m_map.empty(); }
+        [[nodiscard]] inline bool isDiscovered() const { return m_isDiscovered; }
         [[nodiscard]] sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
         [[nodiscard]] MapCell cell(const MapPos_t & t_pos) const;
         void setObjectChar(const MapPos_t & t_pos, const char t_newChar);
+
+        void setDiscovered() { m_isDiscovered = true; }
 
         [[nodiscard]] MapPos_t
             screenPosToMapPos(const Context & t_context, const sf::Vector2f & t_screenPos) const;
@@ -49,6 +52,7 @@ namespace castlecrawl
         Map_t m_map;
         Floor m_floor;
         MapTransitions_t m_transitions;
+        bool m_isDiscovered;
     };
 
 } // namespace castlecrawl
