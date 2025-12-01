@@ -28,9 +28,10 @@ namespace castlecrawl
         [[nodiscard]] inline Stat & luck() noexcept { return m_luck; }
         [[nodiscard]] inline Stat & arcane() noexcept { return m_arcane; }
 
-        [[nodiscard]] inline Stat & health() noexcept { return m_health; }
-        [[nodiscard]] inline Stat & mana() noexcept { return m_mana; }
-
+        [[nodiscard]] inline int health() const noexcept { return m_health; }
+        [[nodiscard]] inline int healthMax() const noexcept { return m_healthMax; }
+        [[nodiscard]] inline int mana() const noexcept { return m_mana; }
+        [[nodiscard]] inline int manaMax() const noexcept { return m_manaMax; }
         [[nodiscard]] inline int level() const noexcept { return m_level; }
         [[nodiscard]] inline int experience() const noexcept { return m_experience; }
         [[nodiscard]] inline int gold() const noexcept { return m_gold; }
@@ -47,6 +48,10 @@ namespace castlecrawl
         inline void levelAdj(const int t_adj) { m_level += t_adj; }
         inline void experinceAdj(const int t_ad) { m_experience += t_ad; }
         inline void goldAdj(const int t_adj) { m_gold += t_adj; }
+        inline void healthAdj(const int t_adj) { m_health += t_adj; }
+        inline void healthMaxAdj(const int t_adj) { m_healthMax += t_adj; }
+        inline void manaAdj(const int t_adj) { m_mana += t_adj; }
+        inline void manaMaxAdj(const int t_adj) { m_manaMax += t_adj; }
 
         [[nodiscard]] inline item::Inventory & inventory() noexcept { return m_inventory; }
 
@@ -95,9 +100,10 @@ namespace castlecrawl
         Stat m_accuracy;
         Stat m_luck;
 
-        // these two will never have a current value that strays from the normal
-        Stat m_health;
-        Stat m_mana;
+        int m_health;
+        int m_healthMax;
+        int m_mana;
+        int m_manaMax;
 
         int m_level;
         int m_experience;

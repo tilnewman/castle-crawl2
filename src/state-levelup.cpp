@@ -196,16 +196,17 @@ namespace castlecrawl
               (util::bottom(m_titleText) + (pad * 0.25f)) });
 
         // health increase text
-        const int healthBefore = t_context.player.health().current();
-        const int healthAdj    = (10 + (t_context.player.strength().current() / 5));
-        t_context.player.health().adjNormal(healthAdj);
-        t_context.player.health().adjCurrent(healthAdj);
-        const int healthAfter = t_context.player.health().current();
+        const int healthMaxBefore = t_context.player.healthMax();
+        const int healthMaxAdj    = (10 + (t_context.player.strength().current() / 5));
+        t_context.player.healthAdj(healthMaxAdj);
+        t_context.player.healthMaxAdj(healthMaxAdj);
+        t_context.top_panel.update(t_context);
+        const int healthMaxAfter = t_context.player.healthMax();
 
         std::string healthStr = "Your health has increased from ";
-        healthStr += std::to_string(healthBefore);
+        healthStr += std::to_string(healthMaxBefore);
         healthStr += " to ";
-        healthStr += std::to_string(healthAfter);
+        healthStr += std::to_string(healthMaxAfter);
         healthStr += '.';
 
         m_healthText =
@@ -216,16 +217,17 @@ namespace castlecrawl
               (util::bottom(m_subTitleText) + (pad * 0.75f)) });
 
         // mana increase text
-        const int manaBefore = t_context.player.mana().current();
-        const int manaAdj    = (6 + (t_context.player.arcane().current() / 6));
-        t_context.player.mana().adjNormal(manaAdj);
-        t_context.player.mana().adjCurrent(manaAdj);
-        const int manaAfter = t_context.player.mana().current();
+        const int manaMaxBefore = t_context.player.manaMax();
+        const int manaMaxAdj    = (6 + (t_context.player.arcane().current() / 6));
+        t_context.player.manaAdj(manaMaxAdj);
+        t_context.player.manaMaxAdj(manaMaxAdj);
+        t_context.top_panel.update(t_context);
+        const int manaMaxAfter = t_context.player.manaMax();
 
         std::string manaStr = "Your mana has increased from ";
-        manaStr += std::to_string(manaBefore);
+        manaStr += std::to_string(manaMaxBefore);
         manaStr += " to ";
-        manaStr += std::to_string(manaAfter);
+        manaStr += std::to_string(manaMaxAfter);
         manaStr += '.';
 
         m_manaText = t_context.fonts.makeText(FontSize::Small, manaStr, sf::Color(245, 200, 245));

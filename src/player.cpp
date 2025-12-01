@@ -16,8 +16,10 @@ namespace castlecrawl
         , m_arcane{ statStart, statMin, statMax }
         , m_accuracy{ statStart, statMin, statMax }
         , m_luck{ statStart, statMin, statMax }
-        , m_health{ healthStart, 0, statMax }
-        , m_mana{ manaStart, 0, statMax }
+        , m_health{ 20 }
+        , m_healthMax{ 20 }
+        , m_mana{ 10 }
+        , m_manaMax{ 10 }
         , m_level{ 1 }
         , m_experience{ 0 }
         , m_gold{ 0 }

@@ -82,10 +82,15 @@ namespace castlecrawl
             t_target.draw(m_splatSprite, t_states);
         }
 
-        const float healthRatio = t_context.player.health().ratio();
+        const float healthRatio =
+            (static_cast<float>(t_context.player.health()) /
+             static_cast<float>(t_context.player.health()));
+
         if (healthRatio < 1.0f)
         {
-            const auto rectangles{ fight::makeCreatureHealthBars(t_context, healthRatio, m_mapPos) };
+            const auto rectangles{ fight::makeCreatureHealthBars(
+                t_context, healthRatio, m_mapPos) };
+
             t_target.draw(rectangles.background, t_states);
             t_target.draw(rectangles.foreground, t_states);
         }

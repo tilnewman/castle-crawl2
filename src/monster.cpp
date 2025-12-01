@@ -82,7 +82,7 @@ namespace castlecrawl
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);
 
-            t_context.player.health().adjCurrent(-damage);
+            t_context.player.healthAdj(-damage);
             t_context.top_panel.update(t_context);
 
             std::string message{ std::to_string(damage) };
@@ -125,7 +125,7 @@ namespace castlecrawl
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);
 
-            t_context.player.health().adjCurrent(-damage);
+            t_context.player.healthAdj(-damage);
             t_context.top_panel.update(t_context);
 
             std::string message{ std::to_string(damage) };
@@ -195,7 +195,7 @@ namespace castlecrawl
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);
 
-            t_context.player.health().adjCurrent(-damage);
+            t_context.player.healthAdj(-damage);
             t_context.top_panel.update(t_context);
         }
     }

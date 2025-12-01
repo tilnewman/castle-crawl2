@@ -133,9 +133,9 @@ namespace castlecrawl
 
         //
         std::string healthStr{ "Health: " };
-        healthStr += std::to_string(t_context.player.health().current());
+        healthStr += std::to_string(t_context.player.health());
         healthStr += '/';
-        healthStr += std::to_string(t_context.player.health().normal());
+        healthStr += std::to_string(t_context.player.healthMax());
 
         m_healthText =
             t_context.fonts.makeText(FontSize::Small, healthStr, sf::Color(255, 180, 180));
@@ -145,9 +145,9 @@ namespace castlecrawl
 
         //
         std::string manaStr{ "Mana: " };
-        manaStr += std::to_string(t_context.player.mana().current());
+        manaStr += std::to_string(t_context.player.mana());
         manaStr += '/';
-        manaStr += std::to_string(t_context.player.mana().normal());
+        manaStr += std::to_string(t_context.player.manaMax());
 
         m_manaText = t_context.fonts.makeText(FontSize::Small, manaStr, sf::Color(180, 150, 255));
 

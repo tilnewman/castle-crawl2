@@ -29,15 +29,15 @@ namespace castlecrawl
         m_statBar.setup(
             t_context,
             healthBarRect,
-            sf::Color(160, 0, 0),
-            t_context.player.health().current(),
-            t_context.player.health().max());
+            sf::Color(180, 20, 20),
+            t_context.player.health(),
+            t_context.player.healthMax());
     }
 
     void HealthBar::update(const Context & t_context)
     {
-        m_statBar.setMaxValue(t_context, t_context.player.health().max());
-        m_statBar.setCurrentValue(t_context, t_context.player.health().current());
+        m_statBar.setMaxValue(t_context, t_context.player.healthMax());
+        m_statBar.setCurrentValue(t_context, t_context.player.health());
     }
 
     void HealthBar::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const

@@ -279,7 +279,7 @@ namespace castlecrawl::fight
 
         t_context.player.setSpellLastCast(t_spell, t_direction);
 
-        t_context.player.mana().adjCurrent(-toManaCost(t_spell));
+        t_context.player.manaAdj(-toManaCost(t_spell));
         t_context.top_panel.update(t_context);
 
         // apply damage the monster (if any is at t_mapPos)

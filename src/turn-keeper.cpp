@@ -57,13 +57,13 @@ namespace castlecrawl
         {
             if ((m_turnCount % t_context.config.turns_per_health_increase) == 0)
             {
-                t_context.player.health().adjCurrent(1);
+                t_context.player.healthAdj(1);
                 t_context.top_panel.update(t_context);
             }
 
             if ((m_turnCount % t_context.config.turns_per_mana_increase) == 0)
             {
-                t_context.player.mana().adjCurrent(1);
+                t_context.player.manaAdj(1);
                 t_context.top_panel.update(t_context);
             }
 

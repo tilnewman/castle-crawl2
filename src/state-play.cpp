@@ -49,7 +49,7 @@ namespace castlecrawl
     {
         if (t_context.turn.owner() == TurnOwner::Player)
         {
-            if (t_context.player.health().current() <= 0)
+            if (t_context.player.health() <= 0)
             {
                 t_context.state.setChangePending(State::Death);
             }
@@ -180,7 +180,7 @@ namespace castlecrawl
                 if (t_context.turn.isPlayerTurn())
                 {
                     const Spell lastCastSpell{ t_context.player.spellLastCast() };
-                    if (t_context.player.mana().current() < toManaCost(lastCastSpell))
+                    if (t_context.player.mana() < toManaCost(lastCastSpell))
                     {
                         t_context.sfx.play("error-2");
                         return;
@@ -245,7 +245,7 @@ namespace castlecrawl
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);
 
-            t_context.player.health().adjCurrent(-1);
+            t_context.player.healthAdj(-1);
             t_context.top_panel.update(t_context);
 
             return true; // okay, we didn't move, but we DID something and lost our turn

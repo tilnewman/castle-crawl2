@@ -662,7 +662,7 @@ namespace castlecrawl
                 return;
             }
 
-            if (t_context.player.mana().current() < toManaCost(spell))
+            if (t_context.player.mana() < toManaCost(spell))
             {
                 showErrorMessage(t_context, "You don't have enough mana to cast that spell.");
                 t_context.sfx.play("error-2");
