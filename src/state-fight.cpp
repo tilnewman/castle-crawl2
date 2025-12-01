@@ -21,6 +21,7 @@
 #include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "state-treasure.hpp"
+#include "statistics.hpp"
 #include "top-panel.hpp"
 #include "turn-keeper.hpp"
 
@@ -134,6 +135,8 @@ namespace castlecrawl
         }
         else if (objectChar == 'b')
         {
+            ++t_context.statistics.barrels_opened;
+
             t_context.sfx.play("barrel-break.ogg");
 
             t_context.maps.current().setObjectChar(t_pos, ' ');
@@ -150,6 +153,8 @@ namespace castlecrawl
         }
         else if (objectChar == 'Z')
         {
+            ++t_context.statistics.obstacles_destroyed;
+
             t_context.sfx.play("wood-block-break.ogg");
 
             t_context.maps.current().setObjectChar(t_pos, ' ');
@@ -159,6 +164,8 @@ namespace castlecrawl
         }
         else if (objectChar == 'H')
         {
+            ++t_context.statistics.obstacles_destroyed;
+
             t_context.sfx.play("rock-block-break.ogg");
 
             t_context.maps.current().setObjectChar(t_pos, ' ');

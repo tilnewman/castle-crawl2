@@ -36,6 +36,7 @@ namespace castlecrawl
         [[nodiscard]] constexpr int level() const noexcept { return m_level; }
         [[nodiscard]] constexpr int experience() const noexcept { return m_experience; }
         [[nodiscard]] constexpr int gold() const noexcept { return m_gold; }
+        [[nodiscard]] constexpr int goldMaxHeld() const noexcept { return m_maxGoldHeld; }
 
         [[nodiscard]] int experienceForLevel(const int t_level) const;
 
@@ -48,9 +49,23 @@ namespace castlecrawl
 
         constexpr void levelAdj(const int t_adj) { m_level += t_adj; }
         constexpr void experinceAdj(const int t_ad) { m_experience += t_ad; }
-        constexpr void goldAdj(const int t_adj) { m_gold += t_adj; }
         constexpr void healthMaxAdj(const int t_adj) { m_healthMax += t_adj; }
         constexpr void manaMaxAdj(const int t_adj) { m_manaMax += t_adj; }
+
+        constexpr void goldAdj(const int t_adj)
+        {
+            m_gold += t_adj;
+
+            if (m_gold < 0)
+            {
+                m_gold = 0;
+            }
+
+            if (m_gold > m_maxGoldHeld)
+            {
+                m_maxGoldHeld = m_gold;
+            }
+        }
 
         constexpr void healthAdj(const int t_adj)
         {
@@ -59,7 +74,7 @@ namespace castlecrawl
 
         constexpr void manaAdj(const int t_adj)
         {
-            m_mana = std::clamp((m_mana + t_adj), statMin, m_manaMax);
+            m_mana = std::clamp((m_mana + t_adj), 0, m_manaMax);
         }
 
         [[nodiscard]] inline item::Inventory & inventory() noexcept { return m_inventory; }
@@ -117,6 +132,7 @@ namespace castlecrawl
         int m_level;
         int m_experience;
         int m_gold;
+        int m_maxGoldHeld;
 
         item::Inventory m_inventory;
         item::EquipEffect m_equipEffects;

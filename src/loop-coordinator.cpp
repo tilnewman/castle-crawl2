@@ -42,6 +42,7 @@ namespace castlecrawl
         , m_animationManagerUPtr{}
         , m_monsterStatsDatabaseUPtr{}
         , m_turnKeeperUPtr{}
+        , m_statisticsUPtr{}
         , m_contextUPtr{}
     {}
 
@@ -85,6 +86,7 @@ namespace castlecrawl
         m_monsterManagerUPtr = std::make_unique<MonsterManager>();
         m_npcManagerUPtr     = std::make_unique<NpcManager>();
         m_turnKeeperUPtr     = std::make_unique<TurnKeeper>();
+        m_statisticsUPtr     = std::make_unique<Statistics>();
 
         m_monsterStatsDatabaseUPtr = std::make_unique<MonsterStatsDatabase>();
 
@@ -112,7 +114,8 @@ namespace castlecrawl
             *m_npcManagerUPtr,
             *m_animationManagerUPtr,
             *m_monsterStatsDatabaseUPtr,
-            *m_turnKeeperUPtr);
+            *m_turnKeeperUPtr,
+            *m_statisticsUPtr);
 
         // this order IS critical
         m_itemFactoryUPtr->setup();
@@ -176,6 +179,7 @@ namespace castlecrawl
         m_animationManagerUPtr.reset();
         m_monsterStatsDatabaseUPtr.reset();
         m_turnKeeperUPtr.reset();
+        m_statisticsUPtr.reset();
 
         m_sfxUPtr->stopAll();
         m_sfxUPtr.reset();

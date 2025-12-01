@@ -18,6 +18,7 @@
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
+#include "statistics.hpp"
 #include "top-panel.hpp"
 
 #include <string>
@@ -187,6 +188,8 @@ namespace castlecrawl
             const std::size_t index{ m_itemListboxUPtr->selectedIndex() };
             if (index < m_treasure.items.size())
             {
+                ++t_context.statistics.items_collected;
+
                 t_context.player.inventory().add(m_treasure.items.at(index));
 
                 m_treasure.items.erase(

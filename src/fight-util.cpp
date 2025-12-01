@@ -15,6 +15,7 @@
 #include "random.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
+#include "statistics.hpp"
 #include "top-panel.hpp"
 #include "turn-keeper.hpp"
 
@@ -141,6 +142,8 @@ namespace castlecrawl::fight
 
         if (didMonsterDie)
         {
+            ++t_context.statistics.monsters_killed;
+
             const int monsterValue{ t_context.monsters.stats(t_monsterMapPos).value() };
 
             message += " KILLED +";
@@ -281,6 +284,8 @@ namespace castlecrawl::fight
 
         t_context.player.manaAdj(-toManaCost(t_spell));
         t_context.top_panel.update(t_context);
+
+        ++t_context.statistics.spells_cast;
 
         // apply damage the monster (if any is at t_mapPos)
         if (isTileImageMonster(

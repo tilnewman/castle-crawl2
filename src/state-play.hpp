@@ -48,7 +48,6 @@ namespace castlecrawl
       private:
         Mouseover m_mouseover;
         std::size_t m_monsterUniqueId;
-        std::size_t m_walkCount;
     };
 
 } // namespace castlecrawl

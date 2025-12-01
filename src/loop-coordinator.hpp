@@ -22,6 +22,7 @@
 #include "sound-player.hpp"
 #include "splat-images.hpp"
 #include "state-manager.hpp"
+#include "statistics.hpp"
 #include "tile-images.hpp"
 #include "top-panel.hpp"
 #include "turn-keeper.hpp"
@@ -82,7 +83,8 @@ namespace castlecrawl
         std::unique_ptr<AnimationManager> m_animationManagerUPtr;
         std::unique_ptr<MonsterStatsDatabase> m_monsterStatsDatabaseUPtr;
         std::unique_ptr<TurnKeeper> m_turnKeeperUPtr;
-
+        std::unique_ptr<Statistics> m_statisticsUPtr;
+        //
         std::unique_ptr<Context> m_contextUPtr;
     };
 

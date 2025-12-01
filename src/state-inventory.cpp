@@ -20,6 +20,7 @@
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
+#include "statistics.hpp"
 #include "top-panel.hpp"
 
 #include <iostream>
@@ -445,6 +446,7 @@ namespace castlecrawl
                 return;
             }
 
+            ++t_context.statistics.items_dropped;
             t_context.player.inventory().remove(m_unListboxUPtr->selectedIndex());
             updateAllAfterListboxChange(t_context);
             t_context.sfx.play("drop");

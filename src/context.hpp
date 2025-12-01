@@ -14,6 +14,7 @@ namespace util
 namespace castlecrawl
 {
     struct GameConfig;
+    struct Statistics;
     class TileImages;
     class SplatImages;
     class Layout;
@@ -59,28 +60,30 @@ namespace castlecrawl
             NpcManager & t_npcManager,
             AnimationManager & t_animationManager,
             MonsterStatsDatabase & t_monsterStatsDatabase,
-            TurnKeeper & t_turnKeeper)
-            : config(t_config)
-            , tile_images(t_tileImages)
-            , splat_images(t_splatImages)
-            , layout(t_layout)
-            , maps(t_maps)
-            , map_display(t_mapDisplay)
-            , state(t_stateManager)
-            , player(t_player)
-            , player_display(t_playerDisplay)
-            , random(t_random)
-            , sfx(t_sfx)
-            , music(t_music)
-            , fonts(t_fontManager)
-            , framerate(t_framerateText)
-            , top_panel(t_topPanel)
-            , items(t_itemFactory)
-            , monsters(t_monsterManager)
-            , npcs(t_npcManager)
-            , anim(t_animationManager)
-            , monster_stats(t_monsterStatsDatabase)
-            , turn(t_turnKeeper)
+            TurnKeeper & t_turnKeeper,
+            Statistics & t_statistics)
+            : config{ t_config }
+            , tile_images{ t_tileImages }
+            , splat_images{ t_splatImages }
+            , layout{ t_layout }
+            , maps{ t_maps }
+            , map_display{ t_mapDisplay }
+            , state{ t_stateManager }
+            , player{ t_player }
+            , player_display{ t_playerDisplay }
+            , random{ t_random }
+            , sfx{ t_sfx }
+            , music{ t_music }
+            , fonts{ t_fontManager }
+            , framerate{ t_framerateText }
+            , top_panel{ t_topPanel }
+            , items{ t_itemFactory }
+            , monsters{ t_monsterManager }
+            , npcs{ t_npcManager }
+            , anim{ t_animationManager }
+            , monster_stats{ t_monsterStatsDatabase }
+            , turn{ t_turnKeeper }
+            , statistics{ t_statistics }
         {}
 
         const GameConfig & config;
@@ -104,6 +107,7 @@ namespace castlecrawl
         AnimationManager & anim;
         MonsterStatsDatabase & monster_stats;
         TurnKeeper & turn;
+        Statistics & statistics;
     };
 
 } // namespace castlecrawl
