@@ -67,6 +67,8 @@ namespace castlecrawl
 
         if (m_treasure.gold > 0)
         {
+            t_context.player.goldAdj(m_treasure.gold);
+
             descStr += std::to_string(m_treasure.gold);
             descStr += " gold";
         }
