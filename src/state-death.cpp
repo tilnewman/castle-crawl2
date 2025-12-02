@@ -78,7 +78,7 @@ namespace castlecrawl
         }
         else
         {
-            t_context.state.setChangePending(State::Credits);
+            t_context.state.setChangePending(State::Statistics);
         }
     }
 
@@ -100,15 +100,6 @@ namespace castlecrawl
         }
     }
 
-    void StateDeath::handleEvent(const Context & t_context, const sf::Event & t_event)
-    {
-        const auto keyPtr = t_event.getIf<sf::Event::KeyPressed>();
-        if (!keyPtr)
-        {
-            return;
-        }
-
-        t_context.state.setChangePending(State::Statistics);
-    }
+    void StateDeath::handleEvent(const Context &, const sf::Event &) {}
 
 } // namespace castlecrawl
