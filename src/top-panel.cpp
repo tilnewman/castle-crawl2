@@ -36,6 +36,11 @@ namespace castlecrawl
         util::fitAndCenterInside(m_titleSprite, titleBounds);
         m_titleSprite.setPosition({ 0.0f, m_titleSprite.getGlobalBounds().position.y });
 
+        // info bars
+        m_healthBar.setup(t_context);
+        m_manaBar.setup(t_context);
+        m_experienceBar.setup(t_context);
+
         // castle image
         util::TextureLoader::load(
             m_castleTexture, (t_context.config.media_path / "image" / "castle.png"), true);
@@ -44,17 +49,12 @@ namespace castlecrawl
         m_castleSprite.setColor(sf::Color(255, 255, 255, 32));
 
         sf::FloatRect castleBounds = t_context.layout.topRegion();
-        castleBounds.size.y -= util::bottom(m_experienceBar.bounds());
+        castleBounds.size.y -= m_experienceBar.bounds().size.y;
         util::fitAndCenterInside(m_castleSprite, castleBounds);
 
         m_castleSprite.setPosition(
             { (util::right(t_context.layout.topRegion()) - m_castleSprite.getGlobalBounds().size.x),
               0.0f });
-
-        // info bars
-        m_healthBar.setup(t_context);
-        m_manaBar.setup(t_context);
-        m_experienceBar.setup(t_context);
     }
 
     void TopPanel::update(const Context & t_context)
