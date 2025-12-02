@@ -45,7 +45,7 @@ namespace castlecrawl
             return experienceForLevel(m_level + 1);
         }
 
-        [[nodiscard]] constexpr Armor_t armor() const noexcept { return m_inventory.armorRating(); }
+        [[nodiscard]] inline Armor_t armor() const noexcept { return m_inventory.armorRating(); }
 
         constexpr void levelAdj(const int t_adj) { m_level += t_adj; }
         constexpr void experinceAdj(const int t_ad) { m_experience += t_ad; }
