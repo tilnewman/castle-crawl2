@@ -17,23 +17,23 @@ namespace util
             (std::is_integral_v<T> && !std::is_same_v<T, bool>),
             "This class was designed for integer types only.  No biscuit.");
 
-        StrongType() noexcept = default;
+        constexpr StrongType() noexcept = default;
 
-        explicit StrongType(const T & value)
+        constexpr explicit StrongType(const T & value)
             : m_value(value)
         {}
 
-        StrongType(const StrongType &) noexcept = default;
-        StrongType(StrongType &&) noexcept      = default;
+        constexpr StrongType(const StrongType &) noexcept = default;
+        constexpr StrongType(StrongType &&) noexcept      = default;
 
-        StrongType & operator=(const StrongType &) noexcept = default;
-        StrongType & operator=(StrongType &&) noexcept = default;
+        constexpr StrongType & operator=(const StrongType &) noexcept = default;
+        constexpr StrongType & operator=(StrongType &&) noexcept      = default;
 
-        T & get() noexcept { return m_value; }
-        const T & get() const noexcept { return m_value; }
+        constexpr T & get() noexcept { return m_value; }
+        constexpr const T & get() const noexcept { return m_value; }
 
         template <typename FromType_t>
-        static StrongType<T, Parameter_t> make(const FromType_t fromValue)
+        constexpr static StrongType<T, Parameter_t> make(const FromType_t fromValue)
         {
             return StrongType<T, Parameter_t>(static_cast<T>(fromValue));
         }
@@ -44,60 +44,75 @@ namespace util
             return static_cast<AsType_t>(this->m_value);
         }
 
-        const StrongType abs() const { return StrongType<T, Parameter_t>(std::abs(this->m_value)); }
+        constexpr const StrongType abs() const
+        {
+            return StrongType<T, Parameter_t>(std::abs(this->m_value));
+        }
 
-        StrongType & operator+=(const StrongType & rhs)
+        constexpr StrongType & operator+=(const StrongType & rhs)
         {
             this->m_value += rhs.m_value;
             return *this;
         }
 
-        StrongType & operator-=(const StrongType & rhs)
+        constexpr StrongType & operator-=(const StrongType & rhs)
         {
             this->m_value -= rhs.m_value;
             return *this;
         }
 
-        StrongType & operator*=(const StrongType & rhs)
+        constexpr StrongType & operator*=(const StrongType & rhs)
         {
             this->m_value *= rhs.m_value;
             return *this;
         }
 
-        StrongType & operator/=(const StrongType & rhs)
+        constexpr StrongType & operator/=(const StrongType & rhs)
         {
             this->m_value /= rhs.m_value;
             return *this;
         }
 
-        StrongType operator+(const StrongType & rhs) const { return (StrongType(*this) += rhs); }
+        constexpr StrongType operator+(const StrongType & rhs) const
+        {
+            return (StrongType(*this) += rhs);
+        }
 
-        StrongType operator-(const StrongType & rhs) const { return (StrongType(*this) -= rhs); }
+        constexpr StrongType operator-(const StrongType & rhs) const
+        {
+            return (StrongType(*this) -= rhs);
+        }
 
-        StrongType operator*(const StrongType & rhs) const { return (StrongType(*this) *= rhs); }
+        constexpr StrongType operator*(const StrongType & rhs) const
+        {
+            return (StrongType(*this) *= rhs);
+        }
 
-        StrongType operator/(const StrongType & rhs) const { return (StrongType(*this) /= rhs); }
+        constexpr StrongType operator/(const StrongType & rhs) const
+        {
+            return (StrongType(*this) /= rhs);
+        }
 
-        StrongType & operator++()
+        constexpr StrongType & operator++()
         {
             ++(this->m_value);
             return *this;
         }
 
-        StrongType operator++(int)
+        constexpr StrongType operator++(int)
         {
             const StrongType temp{ *this };
             operator++();
             return temp;
         }
 
-        StrongType & operator--()
+        constexpr StrongType & operator--()
         {
             --(this->m_value);
             return *this;
         }
 
-        StrongType operator--(int)
+        constexpr StrongType operator--(int)
         {
             const StrongType temp{ *this };
             operator--();
