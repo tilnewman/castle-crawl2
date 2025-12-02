@@ -26,6 +26,8 @@ namespace castlecrawl
         Credit(
             const Context & t_context,
             const std::string & t_name,
+            const std::filesystem::path & t_imagePath,
+            const float & t_imageScale,
             const std::string & t_desc,
             const std::string & t_license = "",
             const std::string & t_extra   = "");
@@ -36,6 +38,8 @@ namespace castlecrawl
         [[nodiscard]] float bottom() const;
 
       private:
+        sf::Texture m_texture;
+        sf::Sprite m_sprite;
         sf::Text m_nameText;
         sf::Text m_descText;
         sf::Text m_licenseText;
