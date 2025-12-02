@@ -426,26 +426,59 @@ namespace castlecrawl
             MapChars_t {
                 ".......................",
                 ".......................",
-                "....bbb Z       b......",
-                ".........      bb......",
-                "i               b......",
+                "....bbbZ     h  b......",
+                "........     d bb......",
+                "i            h  b......",
                 ".... ...... hhhhh......",
                 "....   bbb. h   h......",
                 "....      . h h h......",
                 "....b     . h h h......",
                 "....bb    . h h h......",
                 "......... . h6h h......",
-                "......... . hhh h......",
-                "......... . H   h......",
-                "......... . hhhhh......",
-                "......... . h  bb......",
-                "....c   D . h  bb......",
-                "....~ \x85 . . h   b......",
-                "....    .   d  bb......",
+                ".........   hhh h......",
+                ".........   H   h......",
+                ".........   hhhhh......",
+                "...c    .   h  bb......",
+                "...~    d   h  bb......",
+                "...  \x85  .   h   b......",
+                "d       .   d  bb......",
                 ".......................",
                 "......................."
                 },
-            MapTransitions_t {{ { -1,  4 }, MapName::Level_1_CellBlock,  { 32, 2 } }}
+            MapTransitions_t {
+                { { -1,   4 }, MapName::Level_1_CellBlock,  { 32, 2 } },
+                { { -1,  17 }, MapName::Level_1_Forest,     { 25, 4 } }
+            }
+            );
+
+        m_maps.emplace_back(
+            MapName::Level_1_Forest,
+            t_context,
+            Floor::Dirt,
+            MapChars_t {
+                "...........................",
+                "...........................",
+                "......;m  m ;Lmm    M m ...",
+                "......  L L L= M  L     ...",
+                "......m   m :L L M  Lm    d",
+                "....: M L m LM M    m  M...",
+                "....M L M m    m M      ...",
+                "....    L  M ML> m L MM ...",
+                ".... MM  L m     m   M  ...",
+                "....  m  M M <mMM  L   L...",
+                "....L?ggg  M m        M ...",
+                "....Mggg   m M M LM M   ...",
+                "..ggggggg:   M           ..",
+                "..gggggggg   :    M   m ;..",
+                "..ggggggggg   mLM   M  Mg..",
+                "..gggggggggg   ggg  gg gg..",
+                ".....gggggggg ggggggggggg..",
+                ".....gggggggggggggggggggg..",
+                "...........gggggggggg......",
+                "...........gggggggggg......",
+                "..........................."
+                },
+            MapTransitions_t {{ { 27,  4 }, MapName::Level_1_Basement,  { 1, 17 } }}
             );
 
         // clang-format on
