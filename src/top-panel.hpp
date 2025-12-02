@@ -29,6 +29,8 @@ namespace castlecrawl
       private:
         sf::Texture m_titleTexture;
         sf::Sprite m_titleSprite;
+        sf::Texture m_castleTexture;
+        sf::Sprite m_castleSprite;
         HealthBar m_healthBar;
         ManaBar m_manaBar;
         ExperienceBar m_experienceBar;

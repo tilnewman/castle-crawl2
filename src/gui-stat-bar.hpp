@@ -32,6 +32,11 @@ namespace castlecrawl
         void setMaxValue(const Context & t_context, const int t_newValue);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 
+        [[nodiscard]] inline sf::FloatRect bounds() const
+        {
+            return m_outerRectangle.getGlobalBounds();
+        }
+
       private:
         void update(const Context & t_context);
 
