@@ -38,9 +38,13 @@ namespace castlecrawl
         util::TextureLoader::load(m_texture, t_imagePath, true);
 
         m_sprite.setTexture(m_texture, true);
-        m_sprite.setScale({ t_imageScale, t_imageScale });
 
         const sf::FloatRect screenRect = t_context.layout.screenRegion();
+
+        const float scale =
+            ((screenRect.size.x * t_imageScale) / m_sprite.getGlobalBounds().size.x);
+
+        m_sprite.setScale({ scale, scale });
 
         m_sprite.setPosition(
             { ((screenRect.size.x * 0.5f) - (m_sprite.getGlobalBounds().size.x * 0.5f)),
@@ -141,14 +145,14 @@ namespace castlecrawl
             t_context,
             "Ziesche Til Newman",
             (t_context.config.media_path / "image/credits/avatar.png"),
-            0.5f,
+            0.062f,
             "Design, Programming");
 
         Credit & sfmlCredit = m_credits.emplace_back(
             t_context,
             "SFML",
             (t_context.config.media_path / "image/credits/sfml.png"),
-            0.75f,
+            0.136f,
             "Simple Fast Multimedia Library",
             "www.sfml-dev.org",
             "www.opensource.org/license/Zlib");
@@ -159,7 +163,7 @@ namespace castlecrawl
             t_context,
             "Daniel Cook's Map Tiles",
             (t_context.config.media_path / "image/credits/daniel-cook.png"),
-            0.75f,
+            0.0875f,
             "Images",
             "www.lostgarden.home.blog/2006/07/08/more-free-game-graphic",
             "www.creativecommons.org/licenses/by/3.0");
@@ -170,7 +174,7 @@ namespace castlecrawl
             t_context,
             "Chris Hamons Stone Soup Dungeon Crawl Tiles",
             (t_context.config.media_path / "image/credits/stone-soup.png"),
-            2.0f,
+            0.062f,
             "Images",
             "wwww.opengameart.org/content/dungeon-crawl-32x32-tiles",
             "www.creativecommons.org/publicdomain/zero/1.0");
@@ -181,7 +185,7 @@ namespace castlecrawl
             t_context,
             "Game Icons",
             (t_context.config.media_path / "image/credits/game-icons.png"),
-            0.5f,
+            0.062f,
             "Images",
             "www.game-icons.net",
             "www.creativecommons.org/licenses/by/3.0");
@@ -192,7 +196,7 @@ namespace castlecrawl
             t_context,
             "Gentium-Plus",
             (t_context.config.media_path / "image/credits/font.png"),
-            0.5f,
+            0.054f,
             "Font",
             "SIL Open Font License",
             "www.scripts.sil.org/ofl");
@@ -203,7 +207,7 @@ namespace castlecrawl
             t_context,
             "door-church-close-e",
             (t_context.config.media_path / "image/credits/freesound.png"),
-            0.75f,
+            0.145f,
             "Sound Effect",
             "www.freesound.org/people/InspectorJ/sounds/339677",
             "www.creativecommons.org/licenses/by/3.0");
@@ -214,7 +218,7 @@ namespace castlecrawl
             t_context,
             "spider-voice",
             (t_context.config.media_path / "image/credits/freesound.png"),
-            0.75f,
+            0.145f,
             "Sound Effect",
             "www.freesound.org/people/columbia23",
             "www.creativecommons.org/licenses/by/3.0");
@@ -225,7 +229,7 @@ namespace castlecrawl
             t_context,
             "footsteps-wooden-floor-loop",
             (t_context.config.media_path / "image/credits/freesound.png"),
-            0.75f,
+            0.145f,
             "Sound Effect",
             "www.freesound.org/people/sinatra314/sounds/58454",
             "www.creativecommons.org/licenses/by/3.0");
@@ -236,7 +240,7 @@ namespace castlecrawl
             t_context,
             "jingle-lose-00",
             (t_context.config.media_path / "image/credits/freesound.png"),
-            0.75f,
+            0.145f,
             "Sound Effect",
             "Little Robot Sound Factory",
             "www.creativecommons.org/licenses/by/3.0");
