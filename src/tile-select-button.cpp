@@ -144,7 +144,7 @@ namespace castlecrawl
         for (const TileImage & tileImage : t_tileImages)
         {
             m_tiles.emplace_back(t_context, tileImage, screenPos);
-            screenPos.y += t_context.layout.cellSize().y;
+            screenPos.y += (t_context.layout.cellSize().y + 1.0f);
         }
     }
 

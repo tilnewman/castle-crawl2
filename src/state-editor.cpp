@@ -105,7 +105,7 @@ namespace castlecrawl
 
         m_doorwayButton.setup(
             t_context,
-            { (m_miscButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_miscButton.globalBounds().position.x + cellSize.x + 1.0f), tileSelectButtonVertPos },
             { TileImage::Doorway_Wood,
               TileImage::Doorway_WoodRune,
               TileImage::Doorway_SatanicGray,
@@ -125,7 +125,8 @@ namespace castlecrawl
 
         m_altarButton.setup(
             t_context,
-            { (m_doorwayButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_doorwayButton.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Altar_Statue,
               TileImage::Altar_Challace,
               TileImage::Altar_Skull,
@@ -138,7 +139,8 @@ namespace castlecrawl
 
         m_statueButton.setup(
             t_context,
-            { (m_altarButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_altarButton.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Statue_Twins,    TileImage::Statue_Mermaid,  TileImage::Statue_Demonic,
               TileImage::Statue_Wraith,   TileImage::Statue_Sword,    TileImage::Statue_Thresher,
               TileImage::Statue_Orb,      TileImage::Statue_Naga,     TileImage::Statue_Imp,
@@ -149,7 +151,8 @@ namespace castlecrawl
 
         m_columnButton.setup(
             t_context,
-            { (m_statueButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_statueButton.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Pillar_CrumbleLeft,
               TileImage::Pillar_Rubble,
               TileImage::Pillar_Complete,
@@ -159,7 +162,8 @@ namespace castlecrawl
 
         m_npcButton1.setup(
             t_context,
-            { (m_columnButton.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_columnButton.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             {
                 TileImage::Gnome,
                 TileImage::Faun,
@@ -179,7 +183,8 @@ namespace castlecrawl
 
         m_npcButton2.setup(
             t_context,
-            { (m_npcButton1.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_npcButton1.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Satyr,
               TileImage::GoldKnight,
               TileImage::DeepCaster,
@@ -197,7 +202,8 @@ namespace castlecrawl
 
         m_monsterButton1.setup(
             t_context,
-            { (m_npcButton2.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_npcButton2.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Madman,
               TileImage::Kobold,
               TileImage::KoboldBrute,
@@ -216,7 +222,8 @@ namespace castlecrawl
 
         m_monsterButton2.setup(
             t_context,
-            { (m_monsterButton1.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton1.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Beholder,
               TileImage::BeholderSpawn,
               TileImage::BeholderMite,
@@ -227,7 +234,8 @@ namespace castlecrawl
 
         m_monsterButton3.setup(
             t_context,
-            { (m_monsterButton2.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton2.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::SkullSlime,
               TileImage::AquaSlime,
               TileImage::Ooze,
@@ -237,7 +245,8 @@ namespace castlecrawl
 
         m_monsterButton4.setup(
             t_context,
-            { (m_monsterButton3.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton3.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Dragon,
               TileImage::BoneDragon,
               TileImage::DragonWarlord,
@@ -247,7 +256,8 @@ namespace castlecrawl
 
         m_monsterButton5.setup(
             t_context,
-            { (m_monsterButton4.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton4.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Cyclops,
               TileImage::FireGiant,
               TileImage::TwoHeadedOgre,
@@ -258,7 +268,8 @@ namespace castlecrawl
 
         m_monsterButton6.setup(
             t_context,
-            { (m_monsterButton5.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton5.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::FleshCreeper,
               TileImage::WailingCreeper,
               TileImage::BloodCreeper,
@@ -268,7 +279,8 @@ namespace castlecrawl
 
         m_monsterButton7.setup(
             t_context,
-            { (m_monsterButton6.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton6.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::CoillingViper,
               TileImage::GreenSnake,
               TileImage::Serpent,
@@ -280,7 +292,8 @@ namespace castlecrawl
 
         m_monsterButton8.setup(
             t_context,
-            { (m_monsterButton7.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton7.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Spider,
               TileImage::CaveSpider,
               TileImage::WidowSpider,
@@ -288,7 +301,8 @@ namespace castlecrawl
 
         m_monsterButton9.setup(
             t_context,
-            { (m_monsterButton8.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton8.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::GreenWight,
               TileImage::SoulEater,
               TileImage::Siren,
@@ -300,7 +314,8 @@ namespace castlecrawl
 
         m_monsterButton10.setup(
             t_context,
-            { (m_monsterButton9.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton9.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Wollynaut,
               TileImage::ElephantDemon,
               TileImage::RottingChomper,
@@ -322,7 +337,8 @@ namespace castlecrawl
 
         m_monsterButton11.setup(
             t_context,
-            { (m_monsterButton10.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { (m_monsterButton10.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::RustDevil,
               TileImage::RedDemon,
               TileImage::OrangeDemon,
