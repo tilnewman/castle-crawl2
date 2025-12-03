@@ -214,17 +214,6 @@ namespace castlecrawl
 
         doorSfxCredit.vertPosition(fontCredit.bottom() + vertSpacer);
 
-        Credit & spiderSfxCredit = m_credits.emplace_back(
-            t_context,
-            "spider-voice",
-            (t_context.config.media_path / "image/credits/freesound.png"),
-            0.145f,
-            "Sound Effect",
-            "www.freesound.org/people/columbia23",
-            "www.creativecommons.org/licenses/by/3.0");
-
-        spiderSfxCredit.vertPosition(doorSfxCredit.bottom() + vertSpacer);
-
         Credit & stepsSfxCredit = m_credits.emplace_back(
             t_context,
             "footsteps-wooden-floor-loop",
@@ -234,7 +223,7 @@ namespace castlecrawl
             "www.freesound.org/people/sinatra314/sounds/58454",
             "www.creativecommons.org/licenses/by/3.0");
 
-        stepsSfxCredit.vertPosition(spiderSfxCredit.bottom() + vertSpacer);
+        stepsSfxCredit.vertPosition(doorSfxCredit.bottom() + vertSpacer);
 
         Credit & gameOverSfxCredit = m_credits.emplace_back(
             t_context,
