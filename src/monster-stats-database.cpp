@@ -6,8 +6,16 @@
 #include "monster-stats-database.hpp"
 
 #include "check-macros.hpp"
+#include "context.hpp"
+#include "font.hpp"
+#include "sfml-util.hpp"
 #include "stats-display.hpp"
+#include "tile-images.hpp"
 #include "util.hpp"
+
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -1315,7 +1323,7 @@ namespace castlecrawl
 
     void MonsterStatsDatabase::setup() { verifyAll(); }
 
-    void MonsterStatsDatabase::dumpInfo(const sf::Font & t_font) const
+    void MonsterStatsDatabase::dumpInfo(const Context & t_context) const
     {
         // write all to spreadsheet
         {
@@ -1475,7 +1483,92 @@ namespace castlecrawl
 
         // make a picture of the graph of monster values
         std::sort(std::begin(rawValues), std::end(rawValues));
-        util::StatsDisplay<int>::makeAndSavePNG("monster-values", t_font, rawValues);
+        util::StatsDisplay<int>::makeAndSavePNG(
+            "monster-values", t_context.fonts.font(), rawValues);
+
+        makeQuickReferenceImage(t_context);
+    }
+
+    void MonsterStatsDatabase::makeQuickReferenceImage(const Context & t_context) const
+    {
+        // collect the stats
+        struct QuickRefStats
+        {
+            TileImage image;
+            int value;
+            int health;
+            int armor;
+        };
+
+        std::vector<QuickRefStats> quickRefStats;
+        for (const auto & pair : m_imageStatsMap)
+        {
+            quickRefStats.push_back(QuickRefStats{
+                pair.first, pair.second.value(), pair.second.health_max, pair.second.armor });
+        }
+
+        std::sort(
+            std::begin(quickRefStats),
+            std::end(quickRefStats),
+            [](const QuickRefStats & a, const QuickRefStats & b) { return (a.value < b.value); });
+
+        // make the image
+        sf::RenderTexture renderTexture;
+        if (!renderTexture.resize({ 1920u, 1200u }))
+        {
+            std::cout << "Error:  Unable to sf::RenderTexture::resize() -no monster quickref image "
+                         "will be created.\n";
+
+            return;
+        }
+
+        const float rowSize  = 25.0f;
+        const float rowCount = 4.0f;
+        const float vertPad  = 5.0f;
+        const sf::Vector2f imageSize{ renderTexture.getSize() };
+        const float rowHeight = std::floor(imageSize.y / (rowSize + vertPad));
+        const float rowWidth  = std::floor(imageSize.x / rowCount);
+
+        renderTexture.clear();
+
+        std::size_t count = 0;
+        sf::Vector2f pos{ 0.0f, 0.0f };
+        for (const QuickRefStats & stats : quickRefStats)
+        {
+            const sf::FloatRect rowRect{ pos, { rowWidth, rowHeight } };
+
+            const sf::Sprite sprite =
+                t_context.tile_images.sprite(t_context, stats.image, rowRect.position);
+
+            renderTexture.draw(sprite);
+
+            sf::Text text =
+                t_context.fonts.makeText(FontSize::Small, std::string(toString(stats.image)));
+
+            util::centerInside(text, rowRect);
+            util::setOriginToPosition(text);
+            text.setPosition({ (util::right(sprite) + 6.0f), text.getGlobalBounds().position.y });
+
+            renderTexture.draw(text);
+
+            pos.y += rowHeight;
+            pos.y += vertPad;
+
+            if (count++ == 24)
+            {
+                count = 0;
+                pos.y = 0.0f;
+                pos.x += rowWidth;
+            }
+        }
+
+        renderTexture.display();
+
+        if (!renderTexture.getTexture().copyToImage().saveToFile("monster-quickref.png"))
+        {
+            std::cout << "Error:  Unable to sf::Image::saveToFile() -no monster quickref image "
+                         "will be created.\n";
+        }
     }
 
     const MonsterStats MonsterStatsDatabase::find(const TileImage & t_tileImage) const

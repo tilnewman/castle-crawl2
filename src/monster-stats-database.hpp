@@ -13,6 +13,9 @@
 
 namespace castlecrawl
 {
+    struct Context;
+
+    //
 
     struct MonsterStats
     {
@@ -66,12 +69,13 @@ namespace castlecrawl
         MonsterStatsDatabase();
 
         void setup();
-        void dumpInfo(const sf::Font & t_font) const;
+        void dumpInfo(const Context & t_context) const;
 
         [[nodiscard]] const MonsterStats find(const TileImage & t_tileImage) const;
 
       private:
         void verifyAll() const;
+        void makeQuickReferenceImage(const Context & t_context) const;
 
       private:
         std::map<TileImage, MonsterStats> m_imageStatsMap;
