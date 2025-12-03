@@ -37,7 +37,9 @@ namespace castlecrawl
 
     void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        m_mouseover.update(t_context, t_elapsedSec);
+        // turn mouseovers off because it's a distracting lame feature
+        //m_mouseover.update(t_context, t_elapsedSec);
+
         t_context.player_display.update(t_context, t_elapsedSec);
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_elapsedSec);
