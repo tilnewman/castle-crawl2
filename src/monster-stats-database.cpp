@@ -1534,6 +1534,7 @@ namespace castlecrawl
         sf::Vector2f pos{ 0.0f, 0.0f };
         for (const QuickRefStats & stats : quickRefStats)
         {
+            // image
             const sf::FloatRect rowRect{ pos, { rowWidth, rowHeight } };
 
             const sf::Sprite sprite =
@@ -1541,22 +1542,41 @@ namespace castlecrawl
 
             renderTexture.draw(sprite);
 
+            // name
+            sf::Text nameText =
+                t_context.fonts.makeText(FontSize::Small, std::string(toString(stats.image)));
+
+            util::centerInside(nameText, rowRect);
+
+            nameText.setPosition(
+                { (util::right(sprite) + 6.0f), nameText.getGlobalBounds().position.y });
+
+            util::setOriginToPosition(nameText);
+
+            renderTexture.draw(nameText);
+
+            // stats
             std::ostringstream tempSS;
             tempSS << std::hex << static_cast<short>(tileImageToChar(stats.image));
             const std::string hexStr = tempSS.str();
 
             std::ostringstream rowSS;
-            rowSS << toString(stats.image) << "   \\x" << hexStr.at(2) << hexStr.at(3)
-                  << ", health=" << stats.health << ", armor=" << stats.armor;
+            rowSS << "\\x" << hexStr.at(2) << hexStr.at(3) << ", health=" << stats.health
+                  << ", armor=" << stats.armor;
 
-            sf::Text text = t_context.fonts.makeText(FontSize::Small, rowSS.str());
+            sf::Text statsText =
+                t_context.fonts.makeText(FontSize::Small, rowSS.str(), sf::Color(200, 200, 200));
 
-            util::centerInside(text, rowRect);
-            util::setOriginToPosition(text);
-            text.setPosition({ (util::right(sprite) + 6.0f), text.getGlobalBounds().position.y });
+            util::centerInside(statsText, rowRect);
 
-            renderTexture.draw(text);
+            statsText.setPosition({ rowRect.position.x + (rowRect.size.x * 0.45f),
+                                    statsText.getGlobalBounds().position.y });
 
+            util::setOriginToPosition(statsText);
+
+            renderTexture.draw(statsText);
+
+            // adjust row position
             pos.y += rowHeight;
 
             if (count++ == 24)
