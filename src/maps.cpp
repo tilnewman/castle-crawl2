@@ -403,7 +403,7 @@ namespace castlecrawl
                 "llllllllllllllllllll  l  l   llllllllllll",
                 "lllllllllllllllllllll ll    Allllllllllll",
                 "llllllllllllllllllll   llllllllllllllllll",
-                "lllllllllllllllllllc 9 clllllllllllllllll",
+                "lllllllllllllllllllc \xda clllllllllllllllll",
                 "llllllllllllllllllll   llllllllllllllllll",
                 "lllllllllllllllllllllclllllllllllllllllll",
                 "lllllllllllllllllllllllllllllllllllllllll",

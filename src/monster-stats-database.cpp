@@ -1321,13 +1321,17 @@ namespace castlecrawl
             std::ofstream csvFileStream("monster-stats.csv", std::ios_base::trunc);
 
             csvFileStream
-                << "name,value,health,armor,mana,str,dex,arc,acc,lck,flying,undead,immune,"
-                   "breathe fire,poison,acid,cast,break,devour,of ice,of fire,spells\n";
+                << "name,value,hex_id,health,armor,mana,str,dex,arc,acc,lck,flying,undead,"
+                   "immune,breathe fire,poison,acid,cast,break,devour,of ice,of fire,spells\n";
 
             for (const auto & pair : m_imageStatsMap)
             {
                 csvFileStream << toString(pair.first) << ',';
                 csvFileStream << pair.second.value() << ',';
+
+                csvFileStream << std::hex << static_cast<short>(tileImageToChar(pair.first))
+                              << std::dec << ',';
+
                 csvFileStream << pair.second.health_max << ',';
                 csvFileStream << pair.second.armor << ',';
                 csvFileStream << pair.second.mana_max << ',';
