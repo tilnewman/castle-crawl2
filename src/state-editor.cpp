@@ -50,6 +50,12 @@ namespace castlecrawl
         , m_monsterButton3{}
         , m_monsterButton4{}
         , m_monsterButton5{}
+        , m_monsterButton6{}
+        , m_monsterButton7{}
+        , m_monsterButton8{}
+        , m_monsterButton9{}
+        , m_monsterButton10{}
+        , m_monsterButton11{}
     {}
 
     void StateEditor::onEnter(const Context & t_context)
@@ -192,60 +198,144 @@ namespace castlecrawl
         m_monsterButton1.setup(
             t_context,
             { (m_npcButton2.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
-            { TileImage::BeholderSpawn,  TileImage::SkullSlime,   TileImage::BoneDragon,
-              TileImage::SwampThing,     TileImage::RabidRodent,  TileImage::Bat,
-              TileImage::DragonWarlord,  TileImage::AquaSlime,    TileImage::SlimeBeholder,
-              TileImage::Cyclops,        TileImage::FleshCreeper, TileImage::WailingCreeper,
-              TileImage::CoillingViper,  TileImage::IceKnight,    TileImage::Beholder,
-              TileImage::RottingChomper, TileImage::SkitterMite,  TileImage::BloodCreeper,
-              TileImage::WindHowler,     TileImage::GreenSnake });
+            { TileImage::Madman,
+              TileImage::Kobold,
+              TileImage::KoboldBrute,
+              TileImage::RabidRodent,
+              TileImage::Bat,
+              TileImage::FireBat,
+              TileImage::RustCrab,
+              TileImage::GiantLeech,
+              TileImage::Scorpion,
+              TileImage::GoldScorpion,
+              TileImage::Antlion,
+              TileImage::Quasit,
+              TileImage::OctoCrawler,
+              TileImage::BogSlave,
+              TileImage::BruteWitch });
 
         m_monsterButton2.setup(
             t_context,
             { (m_monsterButton1.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
-            { TileImage::BloatedCreeper,  TileImage::MudDemon,     TileImage::Serpent,
-              TileImage::WalkingBeholder, TileImage::InvisibleMan, TileImage::Kracklin,
-              TileImage::Kobold,          TileImage::FireGiant,    TileImage::BeholderMite,
-              TileImage::RacerSnake,      TileImage::DessertSnake, TileImage::TwoHeadedOgre,
-              TileImage::MothDragon,      TileImage::Caterhorror,  TileImage::CaveSpider,
-              TileImage::VineShambler,    TileImage::SpikeCreeper, TileImage::SlimeShambler,
-              TileImage::Spider,          TileImage::SpellWalker });
+            { TileImage::Beholder,
+              TileImage::BeholderSpawn,
+              TileImage::BeholderMite,
+              TileImage::SlimeBeholder,
+              TileImage::WalkingBeholder,
+              TileImage::ArcaneBeholder,
+              TileImage::WanderingEye });
 
         m_monsterButton3.setup(
             t_context,
             { (m_monsterButton2.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
-            { TileImage::GreenWight,   TileImage::SoulEater,
-              TileImage::BoneHound,    TileImage::ArcaneBeholder,
-              TileImage::Siren,        TileImage::Specter,
-              TileImage::BoneHydra,    TileImage::ShadowFiend,
-              TileImage::StripedSnake, TileImage::Scorpion,
-              TileImage::Firebrand,    TileImage::RustDevil,
-              TileImage::Revenant,     TileImage::WidowSpider,
-              TileImage::RedDemon,     TileImage::QuicksilverDragon,
-              TileImage::Dragon,       TileImage::Antlion,
-              TileImage::Quasit,       TileImage::KoboldBrute });
+            { TileImage::SkullSlime,
+              TileImage::AquaSlime,
+              TileImage::Ooze,
+              TileImage::RedJelly,
+              TileImage::GiantAmoeba,
+              TileImage::WailingSlime });
 
         m_monsterButton4.setup(
             t_context,
             { (m_monsterButton3.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
-            { TileImage::SpiderHorror,  TileImage::OrangeDemon,  TileImage::Ooze,
-              TileImage::OctoCrawler,   TileImage::Wollynaut,    TileImage::BogSlave,
-              TileImage::MutantBull,    TileImage::MoonTroll,    TileImage::ManaCobra,
-              TileImage::Lorocyproca,   TileImage::FleshChomper, TileImage::Juggernaut,
-              TileImage::ElephantDemon, TileImage::RedJelly,     TileImage::IronGiant,
-              TileImage::Hippogriff,    TileImage::HellWing,     TileImage::Hellion,
-              TileImage::HellHound,     TileImage::GuardianCobra });
+            { TileImage::Dragon,
+              TileImage::BoneDragon,
+              TileImage::DragonWarlord,
+              TileImage::BoneHydra,
+              TileImage::MothDragon,
+              TileImage::SkiteWing });
 
         m_monsterButton5.setup(
             t_context,
             { (m_monsterButton4.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
-            { TileImage::GoldScorpion, TileImage::GreenBullber,  TileImage::GoldenDragon,
-              TileImage::GiantLeech,   TileImage::GiantAmoeba,   TileImage::OrangeClamber,
-              TileImage::FrostGiant,   TileImage::AntCreeper,    TileImage::SunWeaver,
-              TileImage::SkiteWing,    TileImage::FireElemental, TileImage::RustCrab,
-              TileImage::FireBat,      TileImage::WanderingEye,  TileImage::TwoHeadedGiant,
-              TileImage::BruteWitch,   TileImage::Draconian,     TileImage::WailingSlime,
-              TileImage::Madman,       TileImage::Fungosite });
+            { TileImage::Cyclops,
+              TileImage::FireGiant,
+              TileImage::TwoHeadedOgre,
+              TileImage::Juggernaut,
+              TileImage::IronGiant,
+              TileImage::FrostGiant,
+              TileImage::TwoHeadedGiant });
+
+        m_monsterButton6.setup(
+            t_context,
+            { (m_monsterButton5.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::FleshCreeper,
+              TileImage::WailingCreeper,
+              TileImage::BloodCreeper,
+              TileImage::BloatedCreeper,
+              TileImage::SpikeCreeper,
+              TileImage::AntCreeper });
+
+        m_monsterButton7.setup(
+            t_context,
+            { (m_monsterButton6.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::CoillingViper,
+              TileImage::GreenSnake,
+              TileImage::Serpent,
+              TileImage::DessertSnake,
+              TileImage::RacerSnake,
+              TileImage::StripedSnake,
+              TileImage::ManaCobra,
+              TileImage::GuardianCobra });
+
+        m_monsterButton8.setup(
+            t_context,
+            { (m_monsterButton7.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::Spider,
+              TileImage::CaveSpider,
+              TileImage::WidowSpider,
+              TileImage::SpiderHorror });
+
+        m_monsterButton9.setup(
+            t_context,
+            { (m_monsterButton8.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::GreenWight,
+              TileImage::SoulEater,
+              TileImage::Siren,
+              TileImage::Specter,
+              TileImage::ShadowFiend,
+              TileImage::Revenant,
+              TileImage::Lorocyproca,
+              TileImage::HellWing });
+
+        m_monsterButton10.setup(
+            t_context,
+            { (m_monsterButton9.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::Wollynaut,
+              TileImage::ElephantDemon,
+              TileImage::RottingChomper,
+              TileImage::FleshChomper,
+              TileImage::SwampThing,
+              TileImage::IceKnight,
+              TileImage::SkitterMite,
+              TileImage::WindHowler,
+              TileImage::MudDemon,
+              TileImage::InvisibleMan,
+              TileImage::Kracklin,
+              TileImage::Caterhorror,
+              TileImage::VineShambler,
+              TileImage::SlimeShambler,
+              TileImage::SpellWalker,
+              TileImage::BoneHound,
+              TileImage::HellHound,
+              TileImage::Firebrand });
+
+        m_monsterButton11.setup(
+            t_context,
+            { (m_monsterButton10.globalBounds().position.x + cellSize.x), tileSelectButtonVertPos },
+            { TileImage::RustDevil,
+              TileImage::RedDemon,
+              TileImage::OrangeDemon,
+              TileImage::MutantBull,
+              TileImage::MoonTroll,
+              TileImage::Hippogriff,
+              TileImage::Hellion,
+              TileImage::GreenBullber,
+              TileImage::OrangeClamber,
+              TileImage::SunWeaver,
+              TileImage::FireElemental,
+              TileImage::Draconian,
+              TileImage::Fungosite });
     }
 
     void StateEditor::update(const Context & t_context, const float t_elapsedSec)
@@ -302,6 +392,12 @@ namespace castlecrawl
         m_monsterButton3.draw(t_target, t_states);
         m_monsterButton4.draw(t_target, t_states);
         m_monsterButton5.draw(t_target, t_states);
+        m_monsterButton6.draw(t_target, t_states);
+        m_monsterButton7.draw(t_target, t_states);
+        m_monsterButton8.draw(t_target, t_states);
+        m_monsterButton9.draw(t_target, t_states);
+        m_monsterButton10.draw(t_target, t_states);
+        m_monsterButton11.draw(t_target, t_states);
 
         m_mouseover.draw(t_context, t_target, t_states);
 
@@ -322,7 +418,13 @@ namespace castlecrawl
             m_monsterButton2.globalBounds().contains(t_mousePos) ||
             m_monsterButton3.globalBounds().contains(t_mousePos) ||
             m_monsterButton4.globalBounds().contains(t_mousePos) ||
-            m_monsterButton5.globalBounds().contains(t_mousePos));
+            m_monsterButton5.globalBounds().contains(t_mousePos) ||
+            m_monsterButton6.globalBounds().contains(t_mousePos) ||
+            m_monsterButton7.globalBounds().contains(t_mousePos) ||
+            m_monsterButton8.globalBounds().contains(t_mousePos) ||
+            m_monsterButton9.globalBounds().contains(t_mousePos) ||
+            m_monsterButton10.globalBounds().contains(t_mousePos) ||
+            m_monsterButton11.globalBounds().contains(t_mousePos));
     }
 
     void StateEditor::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -368,6 +470,12 @@ namespace castlecrawl
                 selectFromDropDownButton(m_monsterButton3);
                 selectFromDropDownButton(m_monsterButton4);
                 selectFromDropDownButton(m_monsterButton5);
+                selectFromDropDownButton(m_monsterButton6);
+                selectFromDropDownButton(m_monsterButton7);
+                selectFromDropDownButton(m_monsterButton8);
+                selectFromDropDownButton(m_monsterButton9);
+                selectFromDropDownButton(m_monsterButton10);
+                selectFromDropDownButton(m_monsterButton11);
             }
 
             if (!isMouseOverAnyButton(mousePos))
@@ -407,6 +515,12 @@ namespace castlecrawl
                 m_monsterButton3.updateMousePos(mousePos);
                 m_monsterButton4.updateMousePos(mousePos);
                 m_monsterButton5.updateMousePos(mousePos);
+                m_monsterButton6.updateMousePos(mousePos);
+                m_monsterButton7.updateMousePos(mousePos);
+                m_monsterButton8.updateMousePos(mousePos);
+                m_monsterButton9.updateMousePos(mousePos);
+                m_monsterButton10.updateMousePos(mousePos);
+                m_monsterButton11.updateMousePos(mousePos);
 
                 m_miscButton.setIsDroppedDown(m_miscButton.globalBounds().contains(mousePos));
                 m_doorwayButton.setIsDroppedDown(m_doorwayButton.globalBounds().contains(mousePos));
@@ -430,6 +544,24 @@ namespace castlecrawl
 
                 m_monsterButton5.setIsDroppedDown(
                     m_monsterButton5.globalBounds().contains(mousePos));
+
+                m_monsterButton6.setIsDroppedDown(
+                    m_monsterButton6.globalBounds().contains(mousePos));
+
+                m_monsterButton7.setIsDroppedDown(
+                    m_monsterButton7.globalBounds().contains(mousePos));
+
+                m_monsterButton8.setIsDroppedDown(
+                    m_monsterButton8.globalBounds().contains(mousePos));
+
+                m_monsterButton9.setIsDroppedDown(
+                    m_monsterButton9.globalBounds().contains(mousePos));
+
+                m_monsterButton10.setIsDroppedDown(
+                    m_monsterButton10.globalBounds().contains(mousePos));
+
+                m_monsterButton11.setIsDroppedDown(
+                    m_monsterButton11.globalBounds().contains(mousePos));
             }
 
             return;

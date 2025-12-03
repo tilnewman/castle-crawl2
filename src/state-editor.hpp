@@ -96,6 +96,12 @@ namespace castlecrawl
         TileSelectButton m_monsterButton3;
         TileSelectButton m_monsterButton4;
         TileSelectButton m_monsterButton5;
+        TileSelectButton m_monsterButton6;
+        TileSelectButton m_monsterButton7;
+        TileSelectButton m_monsterButton8;
+        TileSelectButton m_monsterButton9;
+        TileSelectButton m_monsterButton10;
+        TileSelectButton m_monsterButton11;
     };
 
 } // namespace castlecrawl
