@@ -150,7 +150,7 @@ namespace castlecrawl
 
         Credit & sfmlCredit = m_credits.emplace_back(
             t_context,
-            "SFML",
+            "",
             (t_context.config.media_path / "image/credits/sfml.png"),
             0.136f,
             "Simple Fast Multimedia Library",
