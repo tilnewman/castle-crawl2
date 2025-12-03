@@ -1623,7 +1623,7 @@ namespace castlecrawl
             case TileImage::SlimeBeholder:      { return "Slime Beholder"; }
             case TileImage::Cyclops:            { return "Cyclops"; }
             case TileImage::FleshCreeper:       { return "Flesh Creeper"; }
-            case TileImage::WailingCreeper:     { return "WailingCreeper"; }
+            case TileImage::WailingCreeper:     { return "Wailing Creeper"; }
             case TileImage::CoillingViper:      { return "Coilling Viper"; }
             case TileImage::IceKnight:          { return "Ice Knight"; }
             case TileImage::Beholder:           { return "Beholder"; }
