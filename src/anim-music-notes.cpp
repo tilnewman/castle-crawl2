@@ -45,7 +45,7 @@ namespace castlecrawl
         age_sec += t_elapsedSec;
         if (age_sec < age_max_sec)
         {
-            const int alpha{ 255 - util::map(age_sec, 0.0f, age_max_sec, 0, 255) };
+            const int alpha{ 255 - util::map(age_sec, 0.0f, age_max_sec, 127, 255) };
             sf::Color color{ sprite.getColor() };
             color.a = static_cast<uint8_t>(alpha);
             sprite.setColor(color);
