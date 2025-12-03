@@ -10,6 +10,7 @@
 #include "util.hpp"
 
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 namespace castlecrawl
@@ -1329,9 +1330,11 @@ namespace castlecrawl
                 csvFileStream << toString(pair.first) << ',';
                 csvFileStream << pair.second.value() << ',';
 
-                csvFileStream << std::hex << static_cast<short>(tileImageToChar(pair.first))
-                              << std::dec << ',';
+                std::ostringstream ss;
+                ss << std::hex << static_cast<short>(tileImageToChar(pair.first));
+                const std::string hexStr = ss.str();
 
+                csvFileStream << hexStr.at(2) << hexStr.at(3) << ',';
                 csvFileStream << pair.second.health_max << ',';
                 csvFileStream << pair.second.armor << ',';
                 csvFileStream << pair.second.mana_max << ',';
