@@ -86,7 +86,7 @@ namespace castlecrawl
 
         if (stats.poison_attack_ratio > 0.0f)
         {
-            ss << ", poisonous";
+            ss << ", sprays_poison";
         }
 
         if (stats.acid_attack_ratio > 0.0f)
