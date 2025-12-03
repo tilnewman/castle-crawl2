@@ -19,12 +19,12 @@ namespace castlecrawl
 
     struct MonsterStats
     {
-        [[nodiscard]] inline bool isSpellCaster() const noexcept
+        [[nodiscard]] constexpr bool isSpellCaster() const noexcept
         {
             return ((mana_max > 0) && (arcane > 0) && !spells.empty());
         }
 
-        [[nodiscard]] inline bool isElemental() const noexcept
+        [[nodiscard]] constexpr bool isElemental() const noexcept
         {
             return (is_strong_to_ice_weak_to_fire || is_strong_to_fire_weak_to_ice);
         }
