@@ -6,8 +6,14 @@
 #include "tile-select-button.hpp"
 
 #include "context.hpp"
+#include "font.hpp"
 #include "layout.hpp"
+#include "monster-stats-database.hpp"
+#include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 #include "tile-images.hpp"
+
+#include <sstream>
 
 namespace castlecrawl
 {
@@ -15,6 +21,7 @@ namespace castlecrawl
     DropDownTile::DropDownTile(
         const Context & t_context, const TileImage t_tileImage, const sf::Vector2f & t_screenPos)
         : tile_image{ t_tileImage }
+        , desc_text{ util::SfmlDefaults::instance().font() }
         , tile_sprite{ t_context.tile_images.sprite(t_context, t_tileImage) }
         , background_sprite{ t_context.tile_images.sprite(t_context, TileImage::DarkBackground) }
         , outline_rectangle{}
@@ -27,6 +34,13 @@ namespace castlecrawl
         outline_rectangle.setOutlineThickness(1.0f);
         outline_rectangle.setPosition(tile_sprite.getPosition());
         outline_rectangle.setSize(tile_sprite.getGlobalBounds().size);
+
+        desc_text = t_context.fonts.makeText(
+            FontSize::Small, makeDescription(t_context, t_tileImage), sf::Color::Transparent);
+
+        desc_text.setPosition(
+            { (util::right(tile_sprite) + 6.0f),
+              (util::center(tile_sprite).y - (desc_text.getGlobalBounds().size.y * 0.5f)) });
     }
 
     void DropDownTile::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -34,6 +48,82 @@ namespace castlecrawl
         t_target.draw(background_sprite, t_states);
         t_target.draw(tile_sprite, t_states);
         t_target.draw(outline_rectangle, t_states);
+        t_target.draw(desc_text, t_states);
+    }
+
+    std::string
+        DropDownTile::makeDescription(const Context & t_context, const TileImage t_tileImage) const
+    {
+        if (!isTileImageMonster(t_tileImage))
+        {
+            return std::string(toString(t_tileImage));
+        }
+
+        const MonsterStats stats = t_context.monster_stats.find(t_tileImage);
+
+        std::ostringstream ss;
+        ss << toString(t_tileImage);
+        ss << ":  health=" << stats.health_max;
+        ss << ", armor=" << stats.armor;
+
+        if (stats.is_undead)
+        {
+            ss << ", undead";
+        }
+
+        if (stats.is_immune_to_nonmagical_weapons)
+        {
+            ss << ", immune";
+        }
+
+        if (stats.breathe_fire_attack_ratio > 0.0f)
+        {
+            ss << ", fire_breath";
+        }
+
+        if (stats.poison_attack_ratio > 0.0f)
+        {
+            ss << ", poisonous";
+        }
+
+        if (stats.acid_attack_ratio > 0.0f)
+        {
+            ss << ", sprays_acid";
+        }
+
+        if (stats.break_attack_ratio > 0.0f)
+        {
+            ss << ", breaks_weapons";
+        }
+
+        if (stats.devour_attack_ratio > 0.0f)
+        {
+            ss << ", devours_armor";
+        }
+
+        if (stats.is_strong_to_ice_weak_to_fire)
+        {
+            ss << ", of_ice";
+        }
+
+        if (stats.is_strong_to_fire_weak_to_ice)
+        {
+            ss << ", of_fire";
+        }
+
+        if (stats.mana_max > 0)
+        {
+            ss << ", mana=" << stats.mana_max;
+            ss << ", cast_ratio=" << stats.spell_attack_ratio;
+            ss << ", (";
+            for (const Spell spell : stats.spells)
+            {
+                ss << toString(spell) << '/';
+            }
+            ss << ")";
+        }
+
+        return ss.str();
     }
 
     //
@@ -122,10 +212,12 @@ namespace castlecrawl
             if (tile.tile_sprite.getGlobalBounds().contains(t_mousePos))
             {
                 tile.outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 255));
+                tile.desc_text.setFillColor(sf::Color::White);
             }
             else
             {
                 tile.outline_rectangle.setOutlineColor(sf::Color(0, 255, 255, 127));
+                tile.desc_text.setFillColor(sf::Color::Transparent);
             }
         }
     }

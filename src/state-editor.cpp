@@ -380,24 +380,25 @@ namespace castlecrawl
             t_target.draw(rectangle);
         }
 
-        m_miscButton.draw(t_target, t_states);
-        m_doorwayButton.draw(t_target, t_states);
-        m_altarButton.draw(t_target, t_states);
-        m_statueButton.draw(t_target, t_states);
-        m_columnButton.draw(t_target, t_states);
-        m_npcButton1.draw(t_target, t_states);
-        m_npcButton2.draw(t_target, t_states);
-        m_monsterButton1.draw(t_target, t_states);
-        m_monsterButton2.draw(t_target, t_states);
-        m_monsterButton3.draw(t_target, t_states);
-        m_monsterButton4.draw(t_target, t_states);
-        m_monsterButton5.draw(t_target, t_states);
-        m_monsterButton6.draw(t_target, t_states);
-        m_monsterButton7.draw(t_target, t_states);
-        m_monsterButton8.draw(t_target, t_states);
-        m_monsterButton9.draw(t_target, t_states);
-        m_monsterButton10.draw(t_target, t_states);
+        // draw is reverse order so the description text is visible at the top
         m_monsterButton11.draw(t_target, t_states);
+        m_monsterButton10.draw(t_target, t_states);
+        m_monsterButton9.draw(t_target, t_states);
+        m_monsterButton8.draw(t_target, t_states);
+        m_monsterButton7.draw(t_target, t_states);
+        m_monsterButton6.draw(t_target, t_states);
+        m_monsterButton5.draw(t_target, t_states);
+        m_monsterButton4.draw(t_target, t_states);
+        m_monsterButton3.draw(t_target, t_states);
+        m_monsterButton2.draw(t_target, t_states);
+        m_monsterButton1.draw(t_target, t_states);
+        m_npcButton2.draw(t_target, t_states);
+        m_npcButton1.draw(t_target, t_states);
+        m_columnButton.draw(t_target, t_states);
+        m_statueButton.draw(t_target, t_states);
+        m_altarButton.draw(t_target, t_states);
+        m_doorwayButton.draw(t_target, t_states);
+        m_miscButton.draw(t_target, t_states);
 
         m_mouseover.draw(t_context, t_target, t_states);
 

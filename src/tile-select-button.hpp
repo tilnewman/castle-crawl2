@@ -9,7 +9,9 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
 
+#include <string>
 #include <vector>
 
 namespace castlecrawl
@@ -28,7 +30,10 @@ namespace castlecrawl
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
+        std::string makeDescription(const Context & t_context, const TileImage t_tileImage) const;
+
         TileImage tile_image;
+        sf::Text desc_text;
         sf::Sprite tile_sprite;
         sf::Sprite background_sprite;
         sf::RectangleShape outline_rectangle;
