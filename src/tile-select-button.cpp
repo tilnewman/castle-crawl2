@@ -63,8 +63,11 @@ namespace castlecrawl
 
         std::ostringstream ss;
         ss << toString(t_tileImage);
-        ss << ":  health=" << stats.health_max;
-        ss << ", armor=" << stats.armor;
+        ss << ":  hlth=" << stats.health_max;
+        ss << ", arm=" << stats.armor;
+
+        ss << ", (s" << stats.strength << ", d" << stats.dexterity << ", a" << stats.accuracy
+           << ", l" << stats.luck << ", a" << stats.arcane << ')';
 
         if (stats.is_undead)
         {
