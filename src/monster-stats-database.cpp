@@ -1524,9 +1524,8 @@ namespace castlecrawl
 
         const float rowSize  = 25.0f;
         const float rowCount = 4.0f;
-        const float vertPad  = 5.0f;
         const sf::Vector2f imageSize{ renderTexture.getSize() };
-        const float rowHeight = std::floor(imageSize.y / (rowSize + vertPad));
+        const float rowHeight = std::floor(imageSize.y / rowSize);
         const float rowWidth  = std::floor(imageSize.x / rowCount);
 
         renderTexture.clear();
@@ -1542,8 +1541,15 @@ namespace castlecrawl
 
             renderTexture.draw(sprite);
 
-            sf::Text text =
-                t_context.fonts.makeText(FontSize::Small, std::string(toString(stats.image)));
+            std::ostringstream tempSS;
+            tempSS << std::hex << static_cast<short>(tileImageToChar(stats.image));
+            const std::string hexStr = tempSS.str();
+
+            std::ostringstream rowSS;
+            rowSS << toString(stats.image) << "   \\x" << hexStr.at(2) << hexStr.at(3)
+                  << ", health=" << stats.health << ", armor=" << stats.armor;
+
+            sf::Text text = t_context.fonts.makeText(FontSize::Small, rowSS.str());
 
             util::centerInside(text, rowRect);
             util::setOriginToPosition(text);
@@ -1552,7 +1558,6 @@ namespace castlecrawl
             renderTexture.draw(text);
 
             pos.y += rowHeight;
-            pos.y += vertPad;
 
             if (count++ == 24)
             {
