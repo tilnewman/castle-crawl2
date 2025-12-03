@@ -277,7 +277,9 @@ namespace castlecrawl
             if (mapCharAttempted == '~')
             {
                 const int playerLevel = t_context.player.level();
-                const int coinsFound  = t_context.random.fromTo(playerLevel, (playerLevel * 10));
+
+                const int coinsFound =
+                    t_context.random.fromTo((playerLevel * 10), (playerLevel * 100));
 
                 t_context.player.goldAdj(coinsFound);
 
