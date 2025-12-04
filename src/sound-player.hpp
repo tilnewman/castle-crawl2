@@ -36,10 +36,10 @@ namespace util
         void volume(const float newVolume);
         void volumeUp();
         void volumeDown();
-        [[nodiscard]] inline float volume() const { return m_volume; }
+        [[nodiscard]] constexpr float volume() const noexcept { return m_volume; }
 
         void muteButton();
-        [[nodiscard]] inline bool isMuted() const { return m_isMuted; }
+        [[nodiscard]] constexpr bool isMuted() const noexcept { return m_isMuted; }
 
       private:
         [[nodiscard]] std::vector<std::size_t>

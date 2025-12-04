@@ -19,13 +19,13 @@ namespace castlecrawl
             , m_isRising{ true }
         {}
         
-        [[nodiscard]] inline T min() const noexcept { return static_cast<T>(m_min); }
-        [[nodiscard]] inline T max() const noexcept { return static_cast<T>(m_max); }
-        [[nodiscard]] inline float speed() const noexcept { return m_speed; }
-        [[nodiscard]] inline bool isRising() const noexcept { return m_isRising; }
-        [[nodiscard]] inline T current() const noexcept { return static_cast<T>(m_value); }
+        [[nodiscard]] constexpr T min() const noexcept { return static_cast<T>(m_min); }
+        [[nodiscard]] constexpr T max() const noexcept { return static_cast<T>(m_max); }
+        [[nodiscard]] constexpr float speed() const noexcept { return m_speed; }
+        [[nodiscard]] constexpr bool isRising() const noexcept { return m_isRising; }
+        [[nodiscard]] constexpr T current() const noexcept { return static_cast<T>(m_value); }
 
-        inline T update(const float t_step) noexcept
+        constexpr T update(const float t_step) noexcept
         {
             if (m_isRising)
             {

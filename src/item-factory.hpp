@@ -33,11 +33,11 @@ namespace castlecrawl::item
 
         void setup();
 
-        [[nodiscard]] inline const TextExtent textExtents() const { return m_textExtent; }
+        [[nodiscard]] inline const TextExtent textExtents() const noexcept { return m_textExtent; }
         [[nodiscard]] const Treasure randomTreasureFind(const Context & t_context) const;
         [[nodiscard]] const Treasure randomHerbFind(const Context & t_context) const;
 
-        [[nodiscard]] const ItemVec_t & allItems() const { return m_allItems; }
+        [[nodiscard]] inline const ItemVec_t & allItems() const noexcept { return m_allItems; }
         [[nodiscard]] const std::optional<Item> find(const std::string & t_itemName) const;
 
         void dumpInfo(const sf::Font & t_font) const;

@@ -115,12 +115,12 @@ namespace util
       public:
         explicit AnimationPlayer(const Random & t_random, const std::string & t_pathStr = {});
 
-        [[nodiscard]] inline std::size_t playingAtOnceMax() const noexcept
+        [[nodiscard]] constexpr std::size_t playingAtOnceMax() const noexcept
         {
             return m_maxPlayingAtOnceCount;
         }
 
-        inline void playingAtOnceMax(const std::size_t t_maxCount) noexcept
+        constexpr void playingAtOnceMax(const std::size_t t_maxCount) noexcept
         {
             m_maxPlayingAtOnceCount = t_maxCount;
         }

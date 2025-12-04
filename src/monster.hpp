@@ -29,18 +29,18 @@ namespace castlecrawl
 
         virtual CreatureAction takeTurn(const Context & t_context) override;
 
-        [[nodiscard]] inline std::size_t uniqueId() const noexcept { return m_uniqueId; }
+        [[nodiscard]] constexpr std::size_t uniqueId() const noexcept { return m_uniqueId; }
 
         [[nodiscard]] inline const MonsterStats stats() const noexcept { return m_stats; }
 
-        [[nodiscard]] inline float healthRatio() const noexcept
+        [[nodiscard]] constexpr float healthRatio() const noexcept
         {
             return (static_cast<float>(m_health) / static_cast<float>(m_stats.health_max));
         }
 
         int healthAdj(const int t_adjustment);
 
-        [[nodiscard]] inline bool isAlive() const noexcept { return (m_health > 0); }
+        [[nodiscard]] constexpr bool isAlive() const noexcept { return (m_health > 0); }
 
       private:
         [[nodiscard]] const std::vector<Spell> spellsThereIsManaEnoughToCast() const;

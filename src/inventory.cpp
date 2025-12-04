@@ -29,7 +29,7 @@ namespace castlecrawl::item
         m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(t_index));
     }
 
-    std::string Inventory::equip(const std::size_t t_index)
+    const std::string Inventory::equip(const std::size_t t_index)
     {
         M_CHECK(t_index < m_items.size(), "Tried to equip(" << t_index << ") out of bounds index!");
 
@@ -85,7 +85,7 @@ namespace castlecrawl::item
         m_eqItems.erase(std::begin(m_eqItems) + static_cast<std::ptrdiff_t>(t_index));
     }
 
-    EquipEffect Inventory::totalEquipEffects() const
+    const EquipEffect Inventory::totalEquipEffects() const
     {
         EquipEffect equipEffect;
 
@@ -97,7 +97,7 @@ namespace castlecrawl::item
         return equipEffect;
     }
 
-    Armor_t Inventory::armorRating() const
+    const Armor_t Inventory::armorRating() const
     {
         Armor_t armorRating{ 0_armor };
 

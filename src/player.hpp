@@ -45,14 +45,17 @@ namespace castlecrawl
             return experienceForLevel(m_level + 1);
         }
 
-        [[nodiscard]] inline Armor_t armor() const noexcept { return m_inventory.armorRating(); }
+        [[nodiscard]] inline const Armor_t armor() const noexcept
+        {
+            return m_inventory.armorRating();
+        }
 
-        constexpr void levelAdj(const int t_adj) { m_level += t_adj; }
-        constexpr void experinceAdj(const int t_ad) { m_experience += t_ad; }
-        constexpr void healthMaxAdj(const int t_adj) { m_healthMax += t_adj; }
-        constexpr void manaMaxAdj(const int t_adj) { m_manaMax += t_adj; }
+        constexpr void levelAdj(const int t_adj) noexcept { m_level += t_adj; }
+        constexpr void experinceAdj(const int t_ad) noexcept { m_experience += t_ad; }
+        constexpr void healthMaxAdj(const int t_adj) noexcept { m_healthMax += t_adj; }
+        constexpr void manaMaxAdj(const int t_adj) noexcept { m_manaMax += t_adj; }
 
-        constexpr void goldAdj(const int t_adj)
+        constexpr void goldAdj(const int t_adj) noexcept
         {
             m_gold += t_adj;
 
@@ -80,12 +83,12 @@ namespace castlecrawl
         [[nodiscard]] inline item::Inventory & inventory() noexcept { return m_inventory; }
 
         void updateEquipEffects();
-        [[nodiscard]] inline item::EquipEffect equipEffects() const noexcept
+        [[nodiscard]] inline const item::EquipEffect equipEffects() const noexcept
         {
             return m_equipEffects;
         }
 
-        [[nodiscard]] inline const std::vector<Condition> conditions() const
+        [[nodiscard]] inline const std::vector<Condition> conditions() const noexcept
         {
             return m_conditions;
         }
@@ -94,18 +97,19 @@ namespace castlecrawl
         void addCondition(const Condition t_condition);
         void removeCondition(const Condition t_condition);
 
-        [[nodiscard]] inline const std::vector<Spell> spells() const { return m_spells; }
+        [[nodiscard]] inline const std::vector<Spell> spells() const noexcept { return m_spells; }
         [[nodiscard]] bool hasSpell(const Spell t_spell) const;
         void addSpell(const Spell t_spell);
 
-        [[nodiscard]] inline Spell spellLastCast() const { return m_spellLastCast; }
+        [[nodiscard]] constexpr Spell spellLastCast() const noexcept { return m_spellLastCast; }
 
-        [[nodiscard]] inline sf::Keyboard::Scancode spellLastCastDir() const
+        [[nodiscard]] inline sf::Keyboard::Scancode spellLastCastDir() const noexcept
         {
             return m_spellLastCastDir;
         }
 
-        inline void setSpellLastCast(const Spell t_spell, const sf::Keyboard::Scancode t_dir)
+        constexpr void
+            setSpellLastCast(const Spell t_spell, const sf::Keyboard::Scancode t_dir) noexcept
         {
             m_spellLastCast    = t_spell;
             m_spellLastCastDir = t_dir;

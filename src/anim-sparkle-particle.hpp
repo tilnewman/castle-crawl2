@@ -61,7 +61,7 @@ namespace castlecrawl
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const MapPos_t & t_mapPos);
-        inline void clear() { m_effects.clear(); }
+        constexpr void clear() noexcept { m_effects.clear(); }
         [[nodiscard]] std::size_t particleCount() const;
 
       private:

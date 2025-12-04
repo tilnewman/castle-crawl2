@@ -51,7 +51,7 @@ namespace castlecrawl
         t_target.draw(desc_text, t_states);
     }
 
-    std::string
+    const std::string
         DropDownTile::makeDescription(const Context & t_context, const TileImage t_tileImage) const
     {
         std::ostringstream ss;

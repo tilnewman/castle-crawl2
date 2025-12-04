@@ -30,7 +30,8 @@ namespace castlecrawl
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
-        std::string makeDescription(const Context & t_context, const TileImage t_tileImage) const;
+        const std::string
+            makeDescription(const Context & t_context, const TileImage t_tileImage) const;
 
         TileImage tile_image;
         sf::Text desc_text;
@@ -53,7 +54,7 @@ namespace castlecrawl
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
 
-        inline void setIsDroppedDown(const bool t_isDroppedDown)
+        constexpr void setIsDroppedDown(const bool t_isDroppedDown) noexcept
         {
             m_isDroppedDown = t_isDroppedDown;
         }

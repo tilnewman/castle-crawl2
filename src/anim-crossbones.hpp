@@ -26,7 +26,7 @@ namespace castlecrawl
 
         bool update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
-        
+
         bool is_alive;
         float age_sec;
         float age_max_sec;
@@ -44,8 +44,12 @@ namespace castlecrawl
         void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
-        inline void clear() { m_particles.clear(); }
-        [[nodiscard]] inline std::size_t particleCount() const { return m_particles.size(); }
+        constexpr void clear() noexcept { m_particles.clear(); }
+
+        [[nodiscard]] constexpr std::size_t particleCount() const noexcept
+        {
+            return m_particles.size();
+        }
 
       private:
         sf::Texture m_texture;

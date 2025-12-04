@@ -10,7 +10,7 @@
 namespace castlecrawl::item
 {
 
-    std::string Treasure::description() const
+    const std::string Treasure::description() const
     {
         std::string str;
         str.reserve(200);
@@ -202,7 +202,7 @@ namespace castlecrawl::item
         m_description = makeDescription();
     }
 
-    std::string Item::makeFullName() const
+    const std::string Item::makeFullName() const
     {
         std::string str;
         str.reserve(32); // longest is 25 as of 2024-7-28
@@ -253,7 +253,7 @@ namespace castlecrawl::item
         return str;
     }
 
-    std::string Item::makeDescription() const
+    const std::string Item::makeDescription() const
     {
         std::string str;
 

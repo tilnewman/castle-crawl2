@@ -28,10 +28,8 @@ namespace castlecrawl
         // returns true if the monster changed map position
         CreatureAction takeTurn(const Context & t_context, const std::size_t t_uniqueId);
 
-        void draw(
-            const Context & t_context,
-            sf::RenderTarget & t_target,
-            sf::RenderStates t_states) const;
+        void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
+            const;
 
         [[nodiscard]] const MonsterStats stats(const MapPos_t & t_mapPos) const;
 
@@ -41,7 +39,7 @@ namespace castlecrawl
         // returns true if any were removed
         bool removeDead(const Context & t_context);
 
-        [[nodiscard]] inline std::size_t count() const { return m_monsters.size(); }
+        [[nodiscard]] constexpr std::size_t count() const noexcept { return m_monsters.size(); }
 
         [[nodiscard]] std::size_t highestUniqueId() const;
 

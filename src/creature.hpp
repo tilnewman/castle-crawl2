@@ -70,8 +70,8 @@ namespace castlecrawl
         virtual ~Creature() override = default;
 
         [[nodiscard]] inline const MapPos_t mapPosition() const noexcept { return m_mapPos; }
-        [[nodiscard]] inline TileImage tileImage() const noexcept { return m_tileImage; }
-        [[nodiscard]] inline bool isFacingLeft() const noexcept { return m_isFacingLeft; }
+        [[nodiscard]] constexpr TileImage tileImage() const noexcept { return m_tileImage; }
+        [[nodiscard]] constexpr bool isFacingLeft() const noexcept { return m_isFacingLeft; }
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 

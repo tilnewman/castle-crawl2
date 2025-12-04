@@ -29,9 +29,9 @@ namespace util
             m_engine.discard(m_warmupSkipCount);
         }
 
-        std::random_device::result_type seed() const noexcept { return m_seed; }
+        constexpr std::random_device::result_type seed() const noexcept { return m_seed; }
 
-        unsigned long long warmupSkipCount() const noexcept { return m_warmupSkipCount; }
+        constexpr unsigned long long warmupSkipCount() const noexcept { return m_warmupSkipCount; }
 
         template <typename T>
         T fromTo(const T from, const T to) const

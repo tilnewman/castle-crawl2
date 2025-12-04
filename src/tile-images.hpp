@@ -26,7 +26,7 @@ namespace castlecrawl
             const TileImage t_tileImage,
             const sf::Vector2f & t_pos = {}) const;
 
-        [[nodiscard]] inline const sf::Texture & texture() const { return m_texture; }
+        [[nodiscard]] inline const sf::Texture & texture() const noexcept { return m_texture; }
 
       private:
         sf::Texture m_texture;

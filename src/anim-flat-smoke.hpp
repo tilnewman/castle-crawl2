@@ -45,8 +45,12 @@ namespace castlecrawl
         void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
-        inline void clear() { m_animations.clear(); }
-        [[nodiscard]] inline std::size_t particleCount() const { return m_animations.size(); }
+        constexpr void clear() noexcept { m_animations.clear(); }
+
+        [[nodiscard]] constexpr std::size_t particleCount() const noexcept
+        {
+            return m_animations.size();
+        }
 
       private:
         [[nodiscard]] const sf::IntRect frameRect(const std::size_t index) const;

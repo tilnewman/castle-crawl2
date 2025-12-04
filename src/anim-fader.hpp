@@ -28,8 +28,13 @@ namespace castlecrawl
         bool update(const float t_elapsedSec);
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
-        [[nodiscard]] inline bool isFading() const { return (m_timerSec < m_durationSec); }
-        [[nodiscard]] inline bool isFadingIn() const { return m_isFadingIn; }
+
+        [[nodiscard]] constexpr bool isFading() const noexcept
+        {
+            return (m_timerSec < m_durationSec);
+        }
+
+        [[nodiscard]] constexpr bool isFadingIn() const noexcept { return m_isFadingIn; }
 
       private:
         bool m_isFadingIn;

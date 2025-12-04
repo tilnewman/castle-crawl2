@@ -38,8 +38,8 @@ namespace castlecrawl
             const std::size_t t_widthCharsMax,
             const std::size_t t_heightRows);
 
-        [[nodiscard]] inline bool empty() const { return m_items.empty(); }
-        [[nodiscard]] inline bool getFocus() const { return m_hasFocus; }
+        [[nodiscard]] constexpr bool empty() const noexcept { return m_items.empty(); }
+        [[nodiscard]] constexpr bool getFocus() const noexcept { return m_hasFocus; }
 
         void setFocus(const bool t_hasFocus)
         {
@@ -47,7 +47,7 @@ namespace castlecrawl
             redraw();
         }
 
-        [[nodiscard]] std::size_t selectedIndex() const
+        [[nodiscard]] std::size_t selectedIndex() const noexcept
         {
             return (m_indexes.display + m_indexes.offset);
         }

@@ -210,7 +210,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    [[nodiscard]] constexpr Spell toSpell(const SpellCategory t_category, const std::size_t t_index)
+    [[nodiscard]] constexpr Spell toSpell(const SpellCategory t_category, const std::size_t t_index) noexcept
     {
         if (t_category == SpellCategory::Fire)
         {

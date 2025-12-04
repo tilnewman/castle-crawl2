@@ -25,12 +25,12 @@ namespace castlecrawl
         char floor_char   = ' ';
     };
 
-    [[nodiscard]] inline int distance(const MapPos_t & t_posA, const MapPos_t & t_posB)
+    [[nodiscard]] inline int distance(const MapPos_t & t_posA, const MapPos_t & t_posB) noexcept
     {
         return (std::abs(t_posB.x - t_posA.x) + std::abs(t_posB.y - t_posA.y));
     }
 
-    [[nodiscard]] inline int distance(const MapCell & t_cellA, const MapCell & t_cellB)
+    [[nodiscard]] inline int distance(const MapCell & t_cellA, const MapCell & t_cellB) noexcept
     {
         return distance(t_cellA.position, t_cellB.position);
     }

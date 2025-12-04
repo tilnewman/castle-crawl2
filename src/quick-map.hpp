@@ -19,10 +19,10 @@ namespace castlecrawl
       public:
         QuickMap(const GameConfig & t_config, const MapChars_t & t_mapChars);
 
-        [[nodiscard]] inline bool empty() const { return m_mapChars.empty(); }
+        [[nodiscard]] constexpr bool empty() const noexcept { return m_mapChars.empty(); }
 
         // assumes all rows are the same length, see convertQuickMapToRealMap_VerifySize()
-        [[nodiscard]] inline sf::Vector2i size() const
+        [[nodiscard]] inline const sf::Vector2i size() const
         {
             return sf::Vector2i{ static_cast<int>(m_mapChars.front().size()),
                                  static_cast<int>(m_mapChars.size()) };

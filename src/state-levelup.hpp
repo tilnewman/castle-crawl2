@@ -39,7 +39,7 @@ namespace castlecrawl
         Stat & stat(const Context & t_context) const;
 
       public:
-        const static int m_perStatAwardPointMax = 5;
+        static constexpr int m_perStatAwardPointMax = 5;
 
       private:
         sf::FloatRect m_rect;

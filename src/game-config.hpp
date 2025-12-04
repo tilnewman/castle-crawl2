@@ -52,7 +52,7 @@ namespace castlecrawl
         const std::size_t turns_per_health_increase = 50;
         const std::size_t turns_per_mana_increase   = 35;
 
-        // DON'T CHANGE UNLESS YOU ALSO CHANGE ALL MAPS IN THE GAME
+        // DON'T CHANGE UNLESS YOU ALSO CHECK EVERYTHING IN MAPS.CPP
         const sf::Vector2i map_size_max = { 41, 23 };
     };
 

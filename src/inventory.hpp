@@ -6,8 +6,8 @@
 #include "item.hpp"
 
 #include <optional>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace castlecrawl::item
 {
@@ -22,15 +22,15 @@ namespace castlecrawl::item
         void remove(const std::size_t t_index);
 
         // returns an error message if fails
-        std::string equip(const std::size_t t_index);
+        const std::string equip(const std::size_t t_index);
 
         void unequip(const std::size_t t_index);
 
-        [[nodiscard]] inline const ItemVec_t & unItems() const { return m_items; }
-        [[nodiscard]] inline const ItemVec_t & eqItems() const { return m_eqItems; }
+        [[nodiscard]] inline const ItemVec_t & unItems() const noexcept { return m_items; }
+        [[nodiscard]] inline const ItemVec_t & eqItems() const noexcept { return m_eqItems; }
 
-        [[nodiscard]] EquipEffect totalEquipEffects() const;
-        [[nodiscard]] Armor_t armorRating() const;
+        [[nodiscard]] const EquipEffect totalEquipEffects() const;
+        [[nodiscard]] const Armor_t armorRating() const;
         [[nodiscard]] bool hasWeaponEquipped() const;
         [[nodiscard]] std::optional<Item> weaponEquipped() const;
 

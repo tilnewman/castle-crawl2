@@ -44,13 +44,17 @@ namespace castlecrawl
       public:
         MusicAnimation(const Context & t_context, const MapPos_t & t_mapPos);
 
-        [[nodiscard]] inline bool isAlive() const noexcept { return m_isAlive; }
-       
+        [[nodiscard]] constexpr bool isAlive() const noexcept { return m_isAlive; }
+
         bool update(
             const Context & t_context, const sf::Texture & t_texture, const float t_elapsedSec);
-        
+
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
-        [[nodiscard]] inline std::size_t particleCount() const { return m_particles.size(); }
+
+        [[nodiscard]] constexpr std::size_t particleCount() const noexcept
+        {
+            return m_particles.size();
+        }
 
       private:
         const sf::IntRect randomNoteRect(const Context & t_context) const;
@@ -75,7 +79,7 @@ namespace castlecrawl
         void update(const Context & t_context, const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
-        inline void clear() { m_animations.clear(); }
+        constexpr void clear() noexcept { m_animations.clear(); }
         [[nodiscard]] std::size_t particleCount() const;
 
       private:

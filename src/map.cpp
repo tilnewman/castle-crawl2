@@ -75,7 +75,7 @@ namespace castlecrawl
         }
     }
 
-    sf::Vector2i Map::size() const
+    const sf::Vector2i Map::size() const
     {
         if (isEmpty())
         {
@@ -157,7 +157,7 @@ namespace castlecrawl
             (t_context.layout.cellSize() * sf::Vector2f{ t_mapPos }));
     }
 
-    std::vector<MapCell> Map::surroundingCellsHorizVert(const MapPos_t & t_pos) const
+    const std::vector<MapCell> Map::surroundingCellsHorizVert(const MapPos_t & t_pos) const
     {
         std::vector<MapCell> cells;
         cells.reserve(4);
@@ -185,7 +185,7 @@ namespace castlecrawl
         return cells;
     }
 
-    std::vector<MapCell> Map::surroundingCellsAll(const MapPos_t & t_pos) const
+    const std::vector<MapCell> Map::surroundingCellsAll(const MapPos_t & t_pos) const
     {
         std::vector<MapCell> cells;
         cells.reserve(8);

@@ -43,7 +43,7 @@ namespace castlecrawl
         int accuracy{ 0 };
         int luck{ 0 };
 
-        static inline const int stat_max{ 100 };
+        static constexpr int stat_max{ 100 };
 
         bool is_flying{ false };
         bool is_undead{ false };

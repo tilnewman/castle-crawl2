@@ -6,9 +6,9 @@
 #include "item-enums.hpp"
 #include "strong-types.hpp"
 
+#include <ostream>
 #include <string>
 #include <vector>
-#include <ostream>
 
 namespace castlecrawl::item
 {
@@ -47,47 +47,76 @@ namespace castlecrawl::item
             const UseEffect & t_useEffect,
             const EquipEffect & t_equipEffect);
 
-        [[nodiscard]] inline std::string name() const { return m_fullName; }
+        [[nodiscard]] inline const std::string name() const noexcept { return m_fullName; }
 
-        [[nodiscard]] inline Weapon weaponType() const { return m_weapon; }
-        [[nodiscard]] inline Armor armorType() const { return m_armor; }
-        [[nodiscard]] inline Misc miscType() const { return m_misc; }
+        [[nodiscard]] constexpr Weapon weaponType() const noexcept { return m_weapon; }
+        [[nodiscard]] constexpr Armor armorType() const noexcept { return m_armor; }
+        [[nodiscard]] constexpr Misc miscType() const noexcept { return m_misc; }
 
-        [[nodiscard]] inline Armor_t armorRating() const { return m_armorRating; }
-        [[nodiscard]] inline int damageMin() const { return m_damageMin; }
-        [[nodiscard]] inline int damageMax() const { return m_damageMax; }
-        [[nodiscard]] inline int value() const { return m_value; }
+        [[nodiscard]] inline const Armor_t armorRating() const noexcept { return m_armorRating; }
+        [[nodiscard]] constexpr int damageMin() const noexcept { return m_damageMin; }
+        [[nodiscard]] constexpr int damageMax() const noexcept { return m_damageMax; }
+        [[nodiscard]] constexpr int value() const noexcept { return m_value; }
 
-        [[nodiscard]] inline ArmorMaterial armorMaterial() const { return m_armorMaterial; }
-        [[nodiscard]] inline WeaponMaterial weaponMaterial() const { return m_weaponMaterial; }
-        [[nodiscard]] inline MiscMaterial miscMaterial() const { return m_miscMaterial; }
+        [[nodiscard]] constexpr ArmorMaterial armorMaterial() const noexcept
+        {
+            return m_armorMaterial;
+        }
+
+        [[nodiscard]] constexpr WeaponMaterial weaponMaterial() const noexcept
+        {
+            return m_weaponMaterial;
+        }
+
+        [[nodiscard]] constexpr MiscMaterial miscMaterial() const noexcept
+        {
+            return m_miscMaterial;
+        }
 
         // these three are mutually exclusive but one of them must return true
-        [[nodiscard]] inline bool isWeapon() const { return (m_weapon != Weapon::Count); }
-        [[nodiscard]] inline bool isArmor() const { return (m_armor != Armor::Count); }
-        [[nodiscard]] inline bool isMisc() const { return ((m_misc != Misc::Count)); }
+        [[nodiscard]] constexpr bool isWeapon() const noexcept
+        {
+            return (m_weapon != Weapon::Count);
+        }
+        [[nodiscard]] constexpr bool isArmor() const noexcept { return (m_armor != Armor::Count); }
+        [[nodiscard]] constexpr bool isMisc() const noexcept { return ((m_misc != Misc::Count)); }
 
-        [[nodiscard]] inline bool isUseable() const { return isMiscUseable(m_misc); }
-        [[nodiscard]] inline std::size_t equipCount() const { return miscEquipCount(m_misc); }
-        [[nodiscard]] inline bool isEquipable() const { return isMiscEquipable(m_misc); }
+        [[nodiscard]] constexpr bool isUseable() const noexcept { return isMiscUseable(m_misc); }
 
-        [[nodiscard]] inline UseEffect useEffect() const { return m_useEffect; }
-        [[nodiscard]] inline EquipEffect equipEffect() const { return m_equipEffect; }
+        [[nodiscard]] constexpr std::size_t equipCount() const noexcept
+        {
+            return miscEquipCount(m_misc);
+        }
 
-        [[nodiscard]] inline bool isMagical() const
+        [[nodiscard]] constexpr bool isEquipable() const noexcept
+        {
+            return isMiscEquipable(m_misc);
+        }
+
+        [[nodiscard]] inline const UseEffect useEffect() const noexcept { return m_useEffect; }
+
+        [[nodiscard]] inline const EquipEffect equipEffect() const noexcept
+        {
+            return m_equipEffect;
+        }
+
+        [[nodiscard]] constexpr bool isMagical() const noexcept
         {
             return (!m_useEffect.empty() || !m_equipEffect.empty());
         }
 
-        [[nodiscard]] inline std::string description() const { return m_description; }
+        [[nodiscard]] inline const std::string description() const noexcept
+        {
+            return m_description;
+        }
 
         auto operator<=>(const Item &) const = default;
         friend std::ostream & operator<<(std::ostream & t_os, const Item & t_item);
 
       private:
         [[nodiscard]] int calcValue() const;
-        [[nodiscard]] std::string makeFullName() const;
-        [[nodiscard]] std::string makeDescription() const;
+        [[nodiscard]] const std::string makeFullName() const;
+        [[nodiscard]] const std::string makeDescription() const;
         void setup();
 
       private:
@@ -127,8 +156,8 @@ namespace castlecrawl::item
         int gold{ 0 };
         ItemVec_t items;
 
-        [[nodiscard]] inline bool empty() const { return ((0 == gold) && items.empty()); }
-        [[nodiscard]] std::string description() const;
+        [[nodiscard]] constexpr bool empty() const noexcept { return ((0 == gold) && items.empty()); }
+        [[nodiscard]] const std::string description() const;
     };
 
 } // namespace castlecrawl::item

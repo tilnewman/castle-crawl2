@@ -155,7 +155,8 @@ namespace util::keys
         // clang-format on
     }
 
-    inline sf::Vector2i moveIfDir(const sf::Vector2i & oldPos, const sf::Keyboard::Scancode dir)
+    inline sf::Vector2i
+        moveIfDir(const sf::Vector2i & oldPos, const sf::Keyboard::Scancode dir) noexcept
     {
         sf::Vector2i newPos{ oldPos };
 

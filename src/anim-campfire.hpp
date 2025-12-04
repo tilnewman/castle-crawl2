@@ -46,8 +46,12 @@ namespace castlecrawl
 
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         void remove(const Context & t_context, const MapPos_t & t_mapPos);
-        inline void clear() { m_animations.clear(); } // TODO remove smoke?
-        [[nodiscard]] inline std::size_t particleCount() const { return m_animations.size(); }
+        constexpr void clear() noexcept { m_animations.clear(); } // TODO remove smoke?
+
+        [[nodiscard]] constexpr std::size_t particleCount() const noexcept
+        {
+            return m_animations.size();
+        }
 
       private:
         [[nodiscard]] const sf::IntRect frameRect(const std::size_t index) const;

@@ -108,7 +108,7 @@ namespace util
     constexpr T float_compare_epsilon = (std::numeric_limits<T>::epsilon() * T(100));
 
     template <typename T>
-    void makeEven(T & number, const bool willAdd)
+    constexpr void makeEven(T & number, const bool willAdd) noexcept
     {
         static_assert(std::is_integral_v<T>);
 
@@ -126,7 +126,7 @@ namespace util
     }
 
     template <typename T>
-    T makeEvenCopy(const T number, const bool willAdd)
+    constexpr T makeEvenCopy(const T number, const bool willAdd) noexcept
     {
         static_assert(std::is_integral_v<T>);
         T copy{ number };

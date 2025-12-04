@@ -1184,7 +1184,7 @@ namespace castlecrawl
             (t_image == TileImage::GreenRanger) || (t_image == TileImage::BookSpeaker));
     }
 
-    inline const sf::IntRect tileImageToRect(const TileImage tileImage)
+    inline const sf::IntRect tileImageToRect(const TileImage tileImage) noexcept
     {
         // clang-format off
         switch (tileImage)
@@ -1472,7 +1472,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    constexpr const std::string_view toString(const TileImage tileImage)
+    constexpr const std::string_view toString(const TileImage tileImage) noexcept
     {
         // clang-format off
         switch (tileImage)

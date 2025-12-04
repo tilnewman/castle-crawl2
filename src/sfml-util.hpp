@@ -111,7 +111,7 @@ namespace sf
     }
 
     template <typename T>
-    [[nodiscard]] bool operator<(const sf::Vector2<T> & left, const sf::Vector2<T> & right)
+    [[nodiscard]] bool operator<(const sf::Vector2<T> & left, const sf::Vector2<T> & right) noexcept
     {
         if (left.x != right.x)
         {
@@ -124,14 +124,15 @@ namespace sf
     }
 
     template <typename T>
-    [[nodiscard]] bool operator<=(const sf::Vector2<T> & left, const sf::Vector2<T> & right)
+    [[nodiscard]] bool
+        operator<=(const sf::Vector2<T> & left, const sf::Vector2<T> & right) noexcept
     {
         return ((left == right) || (left < right));
     }
 
     template <typename T>
     [[nodiscard]] sf::Vector2<T>
-        operator*(const sf::Vector2<T> & left, const sf::Vector2<T> & right)
+        operator*(const sf::Vector2<T> & left, const sf::Vector2<T> & right) noexcept
     {
         return { (left.x * right.x), (left.y * right.y) };
     }
@@ -146,7 +147,7 @@ namespace sf
     //
 
     template <typename T>
-    [[nodiscard]] bool operator<(const sf::Rect<T> & r1, const sf::Rect<T> & r2)
+    [[nodiscard]] constexpr bool operator<(const sf::Rect<T> & r1, const sf::Rect<T> & r2) noexcept
     {
         return (
             std::tie(r1.position.y, r1.position.x, r1.size.x, r1.size.y) <
@@ -360,7 +361,7 @@ namespace util
     }
 
     // degrees, assumes 0/360 degrees aims right, and positive degress turns clockwise
-    [[nodiscard]] inline float angleFromVector(const sf::Vector2f & velocity)
+    [[nodiscard]] inline float angleFromVector(const sf::Vector2f & velocity) noexcept
     {
         const sf::Vector2f posDiffNormal{ normalize(velocity) };
         const float angleRadians{ std::acos(posDiffNormal.x) };
@@ -378,13 +379,14 @@ namespace util
     }
 
     // assumes 0 and 360 degrees aims right, and positive degress turns clockwise
-    [[nodiscard]] inline float angleFromTo(const sf::Vector2f & from, const sf::Vector2f & to)
+    [[nodiscard]] inline float
+        angleFromTo(const sf::Vector2f & from, const sf::Vector2f & to) noexcept
     {
         return angleFromVector(difference(from, to));
     }
 
     template <typename T, typename U = T>
-    [[nodiscard]] float angleFromTo(const T & from, const U & to)
+    [[nodiscard]] float angleFromTo(const T & from, const U & to) noexcept
     {
         sf::Vector2f fromPos{ 0.0f, 0.0f };
         if constexpr (std::is_same_v<std::remove_cv_t<T>, sf::Vector2f>)

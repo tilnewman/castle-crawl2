@@ -47,8 +47,12 @@ namespace castlecrawl
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const;
         void add(const Context & t_context, const MapPos_t & t_mapPos);
         // there is no remove() because they remove themselves in update()
-        void clear() { m_effects.clear(); }
-        [[nodiscard]] inline std::size_t particleCount() const { return m_effects.size(); }
+        constexpr void clear() noexcept { m_effects.clear(); }
+
+        [[nodiscard]] constexpr std::size_t particleCount() const noexcept
+        {
+            return m_effects.size();
+        }
 
       private:
         sf::Texture m_texture;
