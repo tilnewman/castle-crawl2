@@ -25,7 +25,7 @@ namespace castlecrawl
         const std::size_t t_uniqueId,
         const MapPos_t & t_mapPos,
         const TileImage t_tileImage)
-        : Creature{ t_mapPos, t_tileImage }
+        : Creature{ t_context, t_mapPos, t_tileImage }
         , m_uniqueId{ t_uniqueId }
         , m_stats{ t_context.monster_stats.find(t_tileImage) }
         , m_health{ m_stats.health_max }

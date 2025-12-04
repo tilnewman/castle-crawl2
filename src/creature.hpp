@@ -6,6 +6,9 @@
 #include "map-types.hpp"
 #include "tile-image-enum.hpp"
 
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
 #include <string_view>
 
 namespace castlecrawl
@@ -60,14 +63,16 @@ namespace castlecrawl
     //
 
     // base class for both NPCs and Monsters
-    class Creature
+    class Creature : public sf::Drawable
     {
       public:
-        Creature(const MapPos_t & t_mapPos, const TileImage t_tileImage);
-        virtual ~Creature() = default;
+        Creature(const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage);
+        virtual ~Creature() override = default;
 
         [[nodiscard]] inline const MapPos_t mapPosition() const noexcept { return m_mapPos; }
         [[nodiscard]] inline TileImage tileImage() const noexcept { return m_tileImage; }
+
+        void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 
         // returns true if m_mapPos was changed
         virtual CreatureAction takeTurn(const Context & t_context) = 0;
@@ -83,6 +88,7 @@ namespace castlecrawl
       private:
         MapPos_t m_mapPos;
         TileImage m_tileImage;
+        sf::Sprite m_sprite;
     };
 
 } // namespace castlecrawl

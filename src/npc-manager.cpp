@@ -14,9 +14,9 @@ namespace castlecrawl
         : m_npcs{}
     {}
 
-    void NpcManager::add(const Context &, const MapPos_t & t_mapPos, const char t_mapChar)
+    void NpcManager::add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar)
     {
-        m_npcs.emplace_back(t_mapPos, charToTileImage(t_mapChar));
+        m_npcs.emplace_back(t_context, t_mapPos, charToTileImage(t_mapChar));
     }
 
     bool NpcManager::takeTurns(const Context & t_context)
@@ -31,6 +31,14 @@ namespace castlecrawl
         }
 
         return didAnyNpcsMove;
+    }
+
+    void NpcManager::draw(sf::RenderTarget & t_target, const sf::RenderStates & t_states) const
+    {
+        for (const Npc & npc : m_npcs)
+        {
+            t_target.draw(npc, t_states);
+        }
     }
 
     std::vector<Npc>::iterator NpcManager::findFromMapPos(const MapPos_t & t_mapPos)

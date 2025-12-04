@@ -13,6 +13,7 @@
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "monster-manager.hpp"
+#include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
 #include "sfml-defaults.hpp"
@@ -318,7 +319,8 @@ namespace castlecrawl
     {
         t_target.draw(t_context.top_panel, t_states);
         t_context.map_display.draw(t_context, t_target, t_states);
-        t_context.monsters.drawHealthLines(t_context, t_target, t_states);
+        t_context.monsters.draw(t_context, t_target, t_states);
+        t_context.npcs.draw(t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.anim.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);

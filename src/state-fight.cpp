@@ -16,6 +16,7 @@
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"
+#include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
 #include "sound-player.hpp"
@@ -49,7 +50,8 @@ namespace castlecrawl
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
-        t_context.monsters.drawHealthLines(t_context, t_target, t_states);
+        t_context.monsters.draw(t_context, t_target, t_states);
+        t_context.npcs.draw(t_target, t_states);
         t_context.player_display.draw(t_context, t_target, t_states);
         t_context.anim.draw(t_target, t_states);
         t_context.framerate.draw(t_target, t_states);

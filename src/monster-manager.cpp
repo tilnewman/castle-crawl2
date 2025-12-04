@@ -23,9 +23,9 @@ namespace castlecrawl
         m_monsters.emplace_back(t_context, m_nextUniqueId++, t_mapPos, charToTileImage(t_mapChar));
     }
 
-    void MonsterManager::reset() 
-    { 
-        m_monsters.clear(); 
+    void MonsterManager::reset()
+    {
+        m_monsters.clear();
         m_nextUniqueId = 0;
     }
 
@@ -43,11 +43,13 @@ namespace castlecrawl
         return CreatureAction::None;
     }
 
-    void MonsterManager::drawHealthLines(
+    void MonsterManager::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         for (const Monster & monster : m_monsters)
         {
+            t_target.draw(monster, t_states);
+
             if (monster.healthRatio() < 1.0f)
             {
                 const auto rectangles{ fight::makeCreatureHealthBars(

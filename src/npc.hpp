@@ -13,7 +13,7 @@ namespace castlecrawl
     class Npc : public Creature
     {
       public:
-        Npc(const MapPos_t & t_mapPos, const TileImage t_tileImage);
+        Npc(const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage);
         virtual ~Npc() override = default;
 
         // returns true if m_mapPos was changed

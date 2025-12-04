@@ -28,7 +28,7 @@ namespace castlecrawl
         // returns true if the monster changed map position
         CreatureAction takeTurn(const Context & t_context, const std::size_t t_uniqueId);
 
-        void drawHealthLines(
+        void draw(
             const Context & t_context,
             sf::RenderTarget & t_target,
             sf::RenderStates t_states) const;
@@ -46,9 +46,7 @@ namespace castlecrawl
         [[nodiscard]] std::size_t highestUniqueId() const;
 
       private:
-        // these IDs are only unique to each map
-        std::size_t m_nextUniqueId;
-
+        std::size_t m_nextUniqueId; // these IDs are only unique to each map
         std::vector<Monster> m_monsters;
     };
 

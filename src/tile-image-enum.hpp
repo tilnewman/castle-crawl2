@@ -291,11 +291,6 @@ namespace castlecrawl
         BookSpeaker
     };
 
-    constexpr bool isDrawnByMapDisplay(const char ch) noexcept
-    {
-        return ((ch != 'a') && (ch != 'A') && (ch != ' ') && (ch != '.'));
-    }
-
     /*
      *  It is handy to keep track of which characters are used and which are not:
             //case '\\':

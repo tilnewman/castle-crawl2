@@ -6,6 +6,9 @@
 #include "map-types.hpp"
 #include "npc.hpp"
 
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include <vector>
 
 namespace castlecrawl
@@ -19,9 +22,11 @@ namespace castlecrawl
 
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
         inline void reset() { m_npcs.clear(); }
-        
+
         // returns true if any monsters change map position
         bool takeTurns(const Context & t_context);
+
+        void draw(sf::RenderTarget & t_target, const sf::RenderStates & t_states) const;
 
       private:
         std::vector<Npc>::iterator findFromMapPos(const MapPos_t & t_mapPos);

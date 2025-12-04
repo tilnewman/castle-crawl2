@@ -12,8 +12,8 @@
 namespace castlecrawl
 {
 
-    Npc::Npc(const MapPos_t & t_mapPos, const TileImage t_tileImage)
-        : Creature{ t_mapPos, t_tileImage }
+    Npc::Npc(const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage)
+        : Creature{ t_context, t_mapPos, t_tileImage }
     {}
 
     CreatureAction Npc::takeTurn(const Context & t_context)

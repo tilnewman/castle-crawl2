@@ -9,16 +9,29 @@
 #include "maps.hpp"
 #include "player-display.hpp"
 #include "random.hpp"
+#include "tile-images.hpp"
+
+#include <SFML/Graphics/RenderStates.hpp>
 
 #include <algorithm>
 
 namespace castlecrawl
 {
 
-    Creature::Creature(const MapPos_t & t_mapPos, const TileImage t_tileImage)
+    Creature::Creature(
+        const Context & t_context, const MapPos_t & t_mapPos, const TileImage t_tileImage)
         : m_mapPos{ t_mapPos }
         , m_tileImage{ t_tileImage }
+        , m_sprite{ t_context.tile_images.sprite(
+              t_context,
+              t_tileImage,
+              t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos)) }
     {}
+
+    void Creature::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
+    {
+        t_target.draw(m_sprite, t_states);
+    }
 
     bool Creature::isPlayerAdjacent(const Context & t_context) const
     {
@@ -87,6 +100,8 @@ namespace castlecrawl
         t_context.maps.current().setObjectChar(m_mapPos, ' ');
         m_mapPos = t_newMapPos;
         t_context.maps.current().setObjectChar(m_mapPos, myChar);
+
+        m_sprite.setPosition(t_context.maps.current().mapPosToScreenPos(t_context, m_mapPos));
     }
 
 } // namespace castlecrawl
