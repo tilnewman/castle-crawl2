@@ -54,16 +54,30 @@ namespace castlecrawl
     std::string
         DropDownTile::makeDescription(const Context & t_context, const TileImage t_tileImage) const
     {
+        std::ostringstream ss;
+        ss << toString(t_tileImage);
+
+        std::ostringstream hextempSS;
+        hextempSS << std::hex << static_cast<short>(tileImageToChar(t_tileImage));
+        const std::string hexStr = hextempSS.str();
+
+        if (hexStr.size() < 4)
+        {
+            ss << ", char=" << tileImageToChar(t_tileImage);
+        }
+        else
+        {
+            ss << ", hex=" << hexStr.at(2) << hexStr.at(3);
+        }
+
         if (!isTileImageMonster(t_tileImage))
         {
-            return std::string(toString(t_tileImage));
+            return ss.str();
         }
 
         const MonsterStats stats = t_context.monster_stats.find(t_tileImage);
 
-        std::ostringstream ss;
-        ss << toString(t_tileImage);
-        ss << ":  hlth=" << stats.health_max;
+        ss << ", hlth=" << stats.health_max;
         ss << ", arm=" << stats.armor;
 
         ss << ", (s" << stats.strength << ", d" << stats.dexterity << ", a" << stats.accuracy
