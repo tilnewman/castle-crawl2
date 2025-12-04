@@ -196,7 +196,7 @@ namespace castlecrawl
             t_context,
             "Gentium-Plus",
             (t_context.config.media_path / "image/credits/font.png"),
-            0.054f,
+            0.04f,
             "Font",
             "SIL Open Font License",
             "www.scripts.sil.org/ofl");
