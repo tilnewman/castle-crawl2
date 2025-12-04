@@ -114,7 +114,7 @@ namespace castlecrawl
             { m_extraText.getGlobalBounds().position.x, util::bottom(m_licenseText) + m_vertPad });
     }
 
-    float Credit::bottom() const { return util::bottom(m_licenseText); }
+    float Credit::bottom() const { return util::bottom(m_extraText); }
 
     StateCredits::StateCredits()
         : m_castleTexture{}
