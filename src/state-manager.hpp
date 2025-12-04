@@ -19,9 +19,9 @@ namespace castlecrawl
 
         [[nodiscard]] inline IState & current() const { return *m_stateUPtr; }
 
-        inline void setChangePending(const State t_newState) { m_pendingStateOpt = t_newState; }
+        constexpr void setChangePending(const State t_newState) noexcept { m_pendingStateOpt = t_newState; }
 
-        [[nodiscard]] inline bool isChangePending() const noexcept
+        [[nodiscard]] constexpr bool isChangePending() const noexcept
         {
             return m_pendingStateOpt.has_value();
         }
