@@ -50,6 +50,8 @@ namespace castlecrawl
 
         void attackPlayer(const Context & t_context);
 
+        void turnToFacePlayer(const Context & t_context);
+
       private:
         std::size_t m_uniqueId;
         MonsterStats m_stats;

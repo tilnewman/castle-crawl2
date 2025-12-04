@@ -26,6 +26,7 @@ namespace castlecrawl
               t_context,
               t_tileImage,
               t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos)) }
+        , m_isFacingLeft{ true } // all creature images from stone soup face left
     {}
 
     void Creature::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -102,6 +103,26 @@ namespace castlecrawl
         t_context.maps.current().setObjectChar(m_mapPos, myChar);
 
         m_sprite.setPosition(t_context.maps.current().mapPosToScreenPos(t_context, m_mapPos));
+
+        if (!m_isFacingLeft)
+        {
+            m_sprite.move({ m_sprite.getGlobalBounds().size.x, 0.0f });
+        }
+    }
+
+    void Creature::turn()
+    {
+        m_isFacingLeft = !m_isFacingLeft;
+        m_sprite.scale({ -1.0f, 1.0f });
+
+        if (m_isFacingLeft)
+        {
+            m_sprite.move({ -m_sprite.getGlobalBounds().size.x, 0.0f });
+        }
+        else
+        {
+            m_sprite.move({ m_sprite.getGlobalBounds().size.x, 0.0f });
+        }
     }
 
 } // namespace castlecrawl

@@ -33,6 +33,10 @@ namespace castlecrawl
                 return CreatureAction::Move;
             }
         }
+        else if (t_context.random.fromTo(1, 4) == 1) // only turn some of the time if not walking
+        {
+            turn();
+        }
 
         return CreatureAction::None;
     }

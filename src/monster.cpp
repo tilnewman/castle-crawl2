@@ -43,12 +43,17 @@ namespace castlecrawl
         {
             if (moveToward(t_context, t_context.player_display.position()))
             {
+                turnToFacePlayer(t_context);
                 return CreatureAction::Move;
             }
             else
             {
                 return CreatureAction::None;
             }
+        }
+        else
+        {
+            turnToFacePlayer(t_context);
         }
 
         const std::vector<Spell> spellsThatCanBeCast{ spellsThereIsManaEnoughToCast() };
@@ -298,6 +303,35 @@ namespace castlecrawl
         }
 
         return spells;
+    }
+
+    void Monster::turnToFacePlayer(const Context & t_context)
+    {
+        const MapPos_t playerPos  = t_context.player_display.position();
+        const MapPos_t monsterPos = mapPosition();
+
+        if (playerPos.x == monsterPos.x)
+        {
+            // if the player is directly above or below then only turn some of the time
+            if (t_context.random.fromTo(1, 5) == 1)
+            {
+                turn();
+            }
+        }
+        else if (playerPos.x < monsterPos.x)
+        {
+            if (!isFacingLeft())
+            {
+                turn();
+            }
+        }
+        else if (playerPos.x > monsterPos.x)
+        {
+            if (isFacingLeft())
+            {
+                turn();
+            }
+        }
     }
 
 } // namespace castlecrawl
