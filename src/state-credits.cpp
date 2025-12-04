@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "font.hpp"
 #include "layout.hpp"
+#include "music-player.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "state-manager.hpp"
@@ -123,6 +124,9 @@ namespace castlecrawl
 
     void StateCredits::onEnter(const Context & t_context)
     {
+        t_context.music.stopAll();
+        t_context.music.start("credits.ogg");
+
         const sf::FloatRect screenRect = t_context.layout.screenRegion();
 
         util::TextureLoader::load(
@@ -235,6 +239,17 @@ namespace castlecrawl
             "www.creativecommons.org/licenses/by/3.0");
 
         gameOverSfxCredit.vertPosition(stepsSfxCredit.bottom() + vertSpacer);
+
+        Credit & creditsMusicCredit = m_credits.emplace_back(
+            t_context,
+            "Radakan",
+            (t_context.config.media_path / "image/credits/open-game-art.png"),
+            0.2f,
+            "Music",
+            "Posted to OpenGameArt.org by Janne Hanhisuanto",
+            "www.creativecommons.org/licenses/by/3.0");
+
+        creditsMusicCredit.vertPosition(gameOverSfxCredit.bottom() + vertSpacer);
     }
 
     void StateCredits::update(const Context & t_context, const float t_elapsedSec)
