@@ -218,7 +218,7 @@ namespace util
         return static_cast<Ratio_t>((number - inMin) / (inMax - inMin));
     }
 
-    inline constexpr unsigned char mapRatioToColorValue(const float ratio)
+    constexpr unsigned char mapRatioToColorValue(const float ratio)
     {
         return map(
             std::clamp(ratio, 0.0f, 1.0f),
@@ -305,7 +305,7 @@ namespace util
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr bool isPowerOfTwo(const T number) noexcept
+    [[nodiscard]] constexpr bool isPowerOfTwo(const T number) noexcept
     {
         static_assert(std::is_unsigned_v<T>);
         static_assert(!std::is_same_v<std::remove_cv<T>, bool>);
@@ -314,7 +314,7 @@ namespace util
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr T findPowerOfTwoGreaterThan(const unsigned number) noexcept
+    [[nodiscard]] constexpr T findPowerOfTwoGreaterThan(const unsigned number) noexcept
     {
         static_assert(std::is_unsigned_v<T>);
         static_assert(!std::is_same_v<std::remove_cv<T>, bool>);

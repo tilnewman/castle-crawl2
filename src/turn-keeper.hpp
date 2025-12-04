@@ -22,7 +22,7 @@ namespace castlecrawl
         NpcDelay
     };
 
-    [[nodiscard]] inline constexpr std::string_view toString(const TurnOwner t_turnOwner) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const TurnOwner t_turnOwner) noexcept
     {
         // clang-format off
         switch (t_turnOwner)
@@ -45,15 +45,15 @@ namespace castlecrawl
       public:
         TurnKeeper();
 
-        [[nodiscard]] inline TurnOwner owner() const noexcept { return m_owner; }
+        [[nodiscard]] constexpr TurnOwner owner() const noexcept { return m_owner; }
 
-        [[nodiscard]] inline bool isPlayerTurn() const noexcept
+        [[nodiscard]] constexpr bool isPlayerTurn() const noexcept
         {
             return (m_owner == TurnOwner::Player);
         }
 
         // what is the number of this turn?
-        [[nodiscard]] inline std::size_t turnCount() const noexcept { return m_turnCount; }
+        [[nodiscard]] constexpr std::size_t turnCount() const noexcept { return m_turnCount; }
 
         void advance(const Context & t_context, const float t_delaySec = 0.0f);
         void reset();

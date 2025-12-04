@@ -35,7 +35,7 @@ namespace colors
         return util::abs(diff<T>(left, right));
     }
 
-    [[nodiscard]] inline constexpr float
+    [[nodiscard]] constexpr float
         diffRatio(const std::uint8_t left, const std::uint8_t right) noexcept
     {
         return (diffAbs<float>(left, right) / 255.0f);
@@ -43,7 +43,7 @@ namespace colors
 
     // whole color diffs
 
-    [[nodiscard]] inline Diff_t
+    [[nodiscard]] constexpr Diff_t
         diffMagnitudeCount(const sf::Color & left, const sf::Color & right) noexcept
     {
         return (
@@ -51,19 +51,19 @@ namespace colors
             diffAbs(left.a, right.a));
     }
 
-    [[nodiscard]] inline Diff_t
+    [[nodiscard]] constexpr Diff_t
         diffMagnitudeCountOpaque(const sf::Color & left, const sf::Color & right) noexcept
     {
         return (diffAbs(left.r, right.r) + diffAbs(left.g, right.g) + diffAbs(left.b, right.b));
     }
 
-    [[nodiscard]] inline float
+    [[nodiscard]] constexpr float
         diffMagnitude(const sf::Color & left, const sf::Color & right) noexcept
     {
         return (static_cast<float>(diffMagnitudeCount(left, right)) / static_cast<float>(255 * 4));
     }
 
-    [[nodiscard]] inline float
+    [[nodiscard]] constexpr float
         diffMagnitudeOpaque(const sf::Color & left, const sf::Color & right) noexcept
     {
         return (
@@ -71,7 +71,8 @@ namespace colors
             static_cast<float>(255 * 3));
     }
 
-    [[nodiscard]] inline float diffEuclid(const sf::Color & left, const sf::Color & right) noexcept
+    [[nodiscard]] constexpr float
+        diffEuclid(const sf::Color & left, const sf::Color & right) noexcept
     {
         const Diff_t diffRed{ diffAbs(left.r, right.r) };
         const Diff_t diffGrn{ diffAbs(left.g, right.g) };
@@ -87,7 +88,7 @@ namespace colors
         return static_cast<float>(diff / ratioCorrection);
     }
 
-    [[nodiscard]] inline float diffEuclidOpaque(sf::Color left, sf::Color right) noexcept
+    [[nodiscard]] constexpr float diffEuclidOpaque(sf::Color left, sf::Color right) noexcept
     {
         const Diff_t diffRed{ diffAbs(left.r, right.r) };
         const Diff_t diffGrn{ diffAbs(left.g, right.g) };
@@ -125,7 +126,7 @@ namespace colors
 
     // blends
 
-    [[nodiscard]] inline constexpr std::uint8_t
+    [[nodiscard]] constexpr std::uint8_t
         blend(const float ratio, const std::uint8_t from, const std::uint8_t to) noexcept
     {
         return static_cast<std::uint8_t>(

@@ -28,7 +28,7 @@ namespace castlecrawl
         BreatheFire
     };
 
-    inline constexpr std::string_view toString(const CreatureAction t_action) noexcept
+    constexpr std::string_view toString(const CreatureAction t_action) noexcept
     {
         // clang-format off
         switch(t_action)

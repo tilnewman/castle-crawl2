@@ -73,7 +73,7 @@ namespace castlecrawl
         Level_1_Forest
     };
 
-    inline constexpr std::string_view toString(const MapName t_name) noexcept
+    constexpr std::string_view toString(const MapName t_name) noexcept
     {
         // clang-format off
         switch (t_name)

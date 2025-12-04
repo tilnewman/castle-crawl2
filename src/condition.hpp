@@ -18,7 +18,7 @@ namespace castlecrawl
         Immobillized
     };
 
-    [[nodiscard]] constexpr inline std::string_view toString(const Condition & t_condition)
+    [[nodiscard]] constexpr std::string_view toString(const Condition & t_condition)
     {
         // clang-format off
         switch (t_condition)
