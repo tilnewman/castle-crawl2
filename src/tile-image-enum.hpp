@@ -291,7 +291,7 @@ namespace castlecrawl
         BookSpeaker
     };
 
-    inline constexpr bool isDrawnByMapDisplay(const char ch) noexcept
+    constexpr bool isDrawnByMapDisplay(const char ch) noexcept
     {
         return ((ch != 'a') && (ch != 'A') && (ch != ' ') && (ch != '.'));
     }
@@ -306,7 +306,7 @@ namespace castlecrawl
             //
             //case '\x7F':
     */
-    inline constexpr TileImage charToTileImage(const char ch) noexcept
+    constexpr TileImage charToTileImage(const char ch) noexcept
     {
         // clang-format off
         switch (ch)
@@ -594,7 +594,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline constexpr char tileImageToChar(const TileImage t_image) noexcept
+    constexpr char tileImageToChar(const TileImage t_image) noexcept
     {
         // clang-format off
         switch (t_image)
@@ -882,7 +882,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline constexpr bool isTileImageMonster(const TileImage t_image) noexcept
+    constexpr bool isTileImageMonster(const TileImage t_image) noexcept
     {
         // clang-format off
         switch (t_image)
@@ -1170,7 +1170,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    inline constexpr bool isTileImageNpc(const TileImage t_image) noexcept
+    constexpr bool isTileImageNpc(const TileImage t_image) noexcept
     {
         return (
             (t_image == TileImage::Gnome) || (t_image == TileImage::Faun) ||
@@ -1477,7 +1477,7 @@ namespace castlecrawl
         // clang-format on
     }
 
-    constexpr inline const std::string_view toString(const TileImage tileImage)
+    constexpr const std::string_view toString(const TileImage tileImage)
     {
         // clang-format off
         switch (tileImage)
