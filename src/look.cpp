@@ -6,11 +6,10 @@
 #include "look.hpp"
 
 #include "context.hpp"
-#include "game-config.hpp"
 #include "maps.hpp"
-#include "monster-manager.hpp"
 #include "state-manager.hpp"
 #include "state-text-popup.hpp"
+#include "tile-image-enum.hpp"
 #include "turn-keeper.hpp"
 
 namespace castlecrawl
@@ -192,14 +191,16 @@ namespace castlecrawl
         }
         else if (isTileImageMonster(tileImage))
         {
-            // TODO add some stats (monster info) to the message
-            // const MonsterStats monsterStats{ t_context.monsters.stats(t_pos) };
-            info.message = toString(tileImage);
+            info.message = "A ";
+            info.message += toString(tileImage);
+            info.message += " is trying to kill you!";
         }
         else if (isTileImageNpc(tileImage))
         {
             // TODO add some extra info on NPCs?  Maybe descriptions of what they look like?
-            info.message = toString(tileImage);
+            info.message = "A ";
+            info.message += toString(tileImage);
+            info.message += " stands before you.";
         }
         else
         {
