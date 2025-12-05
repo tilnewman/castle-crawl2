@@ -5,27 +5,18 @@
 //
 #include "state-look.hpp"
 
-#include "anim-dust-particle.hpp"
 #include "animation-manager.hpp"
 #include "context.hpp"
-#include "fight-util.hpp"
 #include "framerate-text.hpp"
-#include "game-config.hpp"
-#include "inventory.hpp"
-#include "item-factory.hpp"
 #include "look.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
-#include "player.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
-#include "state-treasure.hpp"
-#include "statistics.hpp"
 #include "top-panel.hpp"
-#include "turn-keeper.hpp"
 
 namespace castlecrawl
 {
