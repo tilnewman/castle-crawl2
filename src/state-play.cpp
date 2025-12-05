@@ -38,7 +38,7 @@ namespace castlecrawl
     void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
         // turn mouseovers off because it's a distracting lame feature
-        //m_mouseover.update(t_context, t_elapsedSec);
+        // m_mouseover.update(t_context, t_elapsedSec);
 
         t_context.player_display.update(t_context, t_elapsedSec);
         t_context.framerate.update(t_context);
@@ -194,6 +194,13 @@ namespace castlecrawl
                 if (t_context.turn.isPlayerTurn())
                 {
                     t_context.state.setChangePending(State::Cast);
+                }
+            }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::L)
+            {
+                if (t_context.turn.isPlayerTurn())
+                {
+                    t_context.state.setChangePending(State::Look);
                 }
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::R)

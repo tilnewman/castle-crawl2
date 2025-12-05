@@ -31,6 +31,7 @@ namespace castlecrawl
     class AnimationManager;
     class MonsterStatsDatabase;
     class TurnKeeper;
+    class Look;
 
     namespace item
     {
@@ -61,7 +62,8 @@ namespace castlecrawl
             AnimationManager & t_animationManager,
             MonsterStatsDatabase & t_monsterStatsDatabase,
             TurnKeeper & t_turnKeeper,
-            Statistics & t_statistics)
+            Statistics & t_statistics,
+            Look & t_look)
             : config{ t_config }
             , tile_images{ t_tileImages }
             , splat_images{ t_splatImages }
@@ -84,6 +86,7 @@ namespace castlecrawl
             , monster_stats{ t_monsterStatsDatabase }
             , turn{ t_turnKeeper }
             , statistics{ t_statistics }
+            , look{ t_look }
         {}
 
         const GameConfig & config;
@@ -108,6 +111,7 @@ namespace castlecrawl
         MonsterStatsDatabase & monster_stats;
         TurnKeeper & turn;
         Statistics & statistics;
+        Look & look;
     };
 
 } // namespace castlecrawl

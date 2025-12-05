@@ -10,6 +10,7 @@
 #include "game-config.hpp"
 #include "item-factory.hpp"
 #include "layout.hpp"
+#include "look.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"
@@ -84,6 +85,7 @@ namespace castlecrawl
         std::unique_ptr<MonsterStatsDatabase> m_monsterStatsDatabaseUPtr;
         std::unique_ptr<TurnKeeper> m_turnKeeperUPtr;
         std::unique_ptr<Statistics> m_statisticsUPtr;
+        std::unique_ptr<Look> m_lookUPtr;
         //
         std::unique_ptr<Context> m_contextUPtr;
     };

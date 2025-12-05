@@ -55,6 +55,22 @@ namespace castlecrawl
         Wood
     };
 
+    [[nodiscard]] constexpr std::string_view toString(const Floor t_floor) noexcept
+    {
+        if (t_floor == Floor::Dirt)
+        {
+            return "Dirt";
+        }
+        else if (t_floor == Floor::Stone)
+        {
+            return "Stone";
+        }
+        else
+        {
+            return "Wood";
+        }
+    }
+
     using VertVec_t = std::vector<sf::Vertex>;
 
     enum class MapName
