@@ -52,7 +52,7 @@ namespace castlecrawl
         }
         else if (objectChar == tileImageToChar(TileImage::Chest))
         {
-            info.message = "A wooden treasure chest.  Who knows what could be inside...";
+            info.message = "A wooden treasure chest.";
         }
         else if (objectChar == tileImageToChar(TileImage::Ice))
         {
