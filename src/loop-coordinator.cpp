@@ -142,6 +142,14 @@ namespace castlecrawl
 
         // m_itemFactoryUPtr->dumpInfo(m_fontsUPtr->font());
         // m_monsterStatsDatabaseUPtr->dumpInfo(m_fontsUPtr->font());
+
+        // equip standard start of game items
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Cuirass").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Greaves").value());
+        m_playerUPtr->inventory().equip(0);
+        m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Boots").value());
+        m_playerUPtr->inventory().equip(0);
     }
 
     void LoopCoordinator::teardown()
