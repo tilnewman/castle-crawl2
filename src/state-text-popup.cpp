@@ -26,21 +26,22 @@ namespace castlecrawl
 
     StateTextPopup::StateTextPopup()
         : m_backgroundRectangle{}
-        , m_messageText{ util::SfmlDefaults::instance().font() }
+        , m_textLayout{}
     {}
 
     void StateTextPopup::onEnter(const Context & t_context)
     {
         sf::FloatRect rect = t_context.layout.screenRegion();
         util::scaleRectInPlace(rect, 0.35f);
-        m_backgroundRectangle.setPosition(rect.position);
-        m_backgroundRectangle.setSize(rect.size);
+
+        m_textLayout = TextLayout::typeset(
+            t_context, m_info.message, rect, FontSize::Medium, sf::Color::White);
+
+        m_backgroundRectangle.setPosition(m_textLayout.rect.position);
+        m_backgroundRectangle.setSize(m_textLayout.rect.size);
         m_backgroundRectangle.setFillColor(sf::Color::Black);
         m_backgroundRectangle.setOutlineThickness(2.0f);
         m_backgroundRectangle.setOutlineColor(sf::Color::White);
-
-        m_messageText = t_context.fonts.makeText(FontSize::Medium, m_info.message);
-        util::centerInside(m_messageText, rect);
     }
 
     void StateTextPopup::update(const Context & t_context, const float t_elapsedSec)
@@ -61,7 +62,11 @@ namespace castlecrawl
 
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_backgroundRectangle, t_states);
-        t_target.draw(m_messageText, t_states);
+
+        for (const sf::Text & text : m_textLayout.texts)
+        {
+            t_target.draw(text, t_states);
+        }
     }
 
     void StateTextPopup::handleEvent(const Context & t_context, const sf::Event & t_event)

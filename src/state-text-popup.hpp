@@ -5,6 +5,7 @@
 //
 #include "map-types.hpp"
 #include "state.hpp"
+#include "text-layout.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -65,7 +66,7 @@ namespace castlecrawl
         static inline TextPopupInfo m_info{};
 
         sf::RectangleShape m_backgroundRectangle;
-        sf::Text m_messageText;
+        TextLayoutPack m_textLayout;
     };
 
 } // namespace castlecrawl
