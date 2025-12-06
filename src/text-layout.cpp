@@ -17,8 +17,9 @@ namespace castlecrawl
     const TextLayoutPack TextLayout::typeset(
         const Context & t_context,
         const std::string & t_text,
-        const sf::FloatRect & t_rect,
+        const sf::FloatRect & t_rectOrig,
         const FontSize & t_fontSize,
+        const float t_padRatio,
         const bool t_willCenterJustify,
         const sf::Color & t_color)
     {
@@ -29,7 +30,8 @@ namespace castlecrawl
 
         // transform words into one sf::Text per line of text that fits into t_rect
         TextLayoutPack layout;
-        layout.rect = t_rect;
+        layout.rect_outer = t_rectOrig;
+        layout.rect_inner = util::scaleRectInPlaceCopy(t_rectOrig, (1.0f - t_padRatio));
 
         if (words.empty())
         {
@@ -38,7 +40,7 @@ namespace castlecrawl
 
         layout.texts.reserve(words.size());
 
-        sf::Vector2f pos{ t_rect.position };
+        sf::Vector2f pos{ layout.rect_inner.position };
         std::string lineStr;
         sf::Text lineText = t_context.fonts.makeText(t_fontSize, "", t_color);
         lineText.setPosition(pos);
@@ -74,7 +76,7 @@ namespace castlecrawl
             util::setOriginToPosition(tempText);
             tempText.setPosition(pos);
 
-            if (util::right(tempText) < util::right(t_rect))
+            if (util::right(tempText) < util::right(layout.rect_inner))
             {
                 lineText = tempText;
                 lineStr  = tempStr;
@@ -141,8 +143,8 @@ namespace castlecrawl
         const float height{ util::bottom(layout.texts.back()) -
                             layout.texts.front().getGlobalBounds().position.y };
 
-        const sf::Vector2f offset{ (layout.rect.size.x - width) * 0.5f,
-                                   (layout.rect.size.y - height) * 0.5f };
+        const sf::Vector2f offset{ (layout.rect_inner.size.x - width) * 0.5f,
+                                   (layout.rect_inner.size.y - height) * 0.5f };
 
         for (sf::Text & text : layout.texts)
         {
@@ -156,10 +158,11 @@ namespace castlecrawl
 
         for (sf::Text & text : layout.texts)
         {
-            text.setPosition({ layout.rect.position.x, text.getGlobalBounds().position.y });
+            text.setPosition({ layout.rect_inner.position.x, text.getGlobalBounds().position.y });
 
-            const sf::Vector2f offset{ (layout.rect.size.x - text.getGlobalBounds().size.x) * 0.5f,
-                                       0.0f };
+            const sf::Vector2f offset{
+                (layout.rect_inner.size.x - text.getGlobalBounds().size.x) * 0.5f, 0.0f
+            };
 
             text.move(offset);
         }

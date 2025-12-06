@@ -39,11 +39,12 @@ namespace castlecrawl
             m_info.message,
             rect,
             m_info.font_size,
+            0.1f,
             m_info.will_center_justify,
             m_info.color);
 
-        m_backgroundRectangle.setPosition(m_textLayout.rect.position);
-        m_backgroundRectangle.setSize(m_textLayout.rect.size);
+        m_backgroundRectangle.setPosition(m_textLayout.rect_outer.position);
+        m_backgroundRectangle.setSize(m_textLayout.rect_outer.size);
         m_backgroundRectangle.setFillColor(sf::Color::Black);
         m_backgroundRectangle.setOutlineThickness(2.0f);
         m_backgroundRectangle.setOutlineColor(sf::Color::White);

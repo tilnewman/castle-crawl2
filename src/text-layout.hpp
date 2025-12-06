@@ -21,8 +21,9 @@ namespace castlecrawl
 
     struct TextLayoutPack
     {
-        sf::FloatRect rect;
-        std::vector<sf::Text> texts;
+        sf::FloatRect rect_outer{};
+        sf::FloatRect rect_inner{};
+        std::vector<sf::Text> texts{};
     };
 
     //
@@ -35,6 +36,7 @@ namespace castlecrawl
             const std::string & t_text,
             const sf::FloatRect & t_rect,
             const FontSize & t_fontSize,
+            const float t_padRatio         = 0.0f,
             const bool t_willCenterJustify = true,
             const sf::Color & t_color      = sf::Color::White);
 
