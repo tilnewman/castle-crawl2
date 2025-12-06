@@ -154,15 +154,19 @@ namespace castlecrawl
 
     void TextLayout::centerTextLines(TextLayoutPack & layout)
     {
-        centerTextBlock(layout);
+        if (layout.texts.empty())
+        {
+            return;
+        }
+
+        const float height{ util::bottom(layout.texts.back()) -
+                            layout.texts.front().getGlobalBounds().position.y };
 
         for (sf::Text & text : layout.texts)
         {
-            text.setPosition({ layout.rect_inner.position.x, text.getGlobalBounds().position.y });
-
-            const sf::Vector2f offset{
-                (layout.rect_inner.size.x - text.getGlobalBounds().size.x) * 0.5f, 0.0f
-            };
+            const sf::Vector2f offset{ (layout.rect_inner.size.x - text.getGlobalBounds().size.x) *
+                                           0.5f,
+                                       (layout.rect_inner.size.y - height) * 0.5f };
 
             text.move(offset);
         }
