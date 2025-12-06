@@ -57,7 +57,17 @@ namespace castlecrawl
                 continue;
             }
 
-            const std::string tempStr{ lineStr + " " + *wordIter };
+            std::string tempStr;
+            if (lineStr.empty())
+            {
+                tempStr = *wordIter;
+            }
+            else
+            {
+                tempStr = lineStr;
+                tempStr += ' ';
+                tempStr += *wordIter;
+            }
 
             sf::Text tempText{ lineText };
             tempText.setString(tempStr);
@@ -144,20 +154,14 @@ namespace castlecrawl
     {
         centerTextBlock(layout);
 
-        if (layout.texts.size() == 1)
+        for (sf::Text & text : layout.texts)
         {
-            util::centerInside(layout.texts.front(), layout.rect);
-        }
-        else
-        {
-            for (sf::Text & text : layout.texts)
-            {
-                const sf::Vector2f offset{
-                    (layout.rect.size.x - text.getGlobalBounds().size.x) * 0.5f, 0.0f
-                };
+            text.setPosition({ layout.rect.position.x, text.getGlobalBounds().position.y });
 
-                text.move(offset);
-            }
+            const sf::Vector2f offset{ (layout.rect.size.x - text.getGlobalBounds().size.x) * 0.5f,
+                                       0.0f };
+
+            text.move(offset);
         }
     }
 
