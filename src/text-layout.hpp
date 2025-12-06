@@ -35,11 +35,16 @@ namespace castlecrawl
             const std::string & t_text,
             const sf::FloatRect & t_rect,
             const FontSize & t_fontSize,
-            const sf::Color & t_color = sf::Color::White);
+            const bool t_willCenterJustify = true,
+            const sf::Color & t_color      = sf::Color::White);
 
       private:
         [[nodiscard]] static const std::vector<std::string>
             splitIntoWords(const std::string & t_text);
+
+        static void centerTextBlock(TextLayoutPack & layout);
+
+        static void centerTextLines(TextLayoutPack & layout);
     };
 
 } // namespace castlecrawl

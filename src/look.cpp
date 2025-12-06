@@ -28,9 +28,12 @@ namespace castlecrawl
 
         if (objectChar == tileImageToChar(TileImage::Empty))
         {
-            info.message = "Just a bare ";
-            info.message += toString(t_context.maps.current().floor());
-            info.message += " floor.";
+            // info.message = "Just a bare ";
+            // info.message += toString(t_context.maps.current().floor());
+            // info.message += " floor.";
+            info.message =
+                "This is an open source non-commercial project. Dear PVS-Studio, please check it. "
+                "This is an open source non-commercial project. Dear PVS-Studio, please check it.";
         }
         else if (objectChar == tileImageToChar(TileImage::Campfire))
         {

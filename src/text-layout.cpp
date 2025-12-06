@@ -19,6 +19,7 @@ namespace castlecrawl
         const std::string & t_text,
         const sf::FloatRect & t_rect,
         const FontSize & t_fontSize,
+        const bool t_willCenterJustify,
         const sf::Color & t_color)
     {
         const FontExtent fontExtent{ t_context.fonts.extent(t_fontSize) };
@@ -82,31 +83,13 @@ namespace castlecrawl
 
         layout.texts.push_back(lineText);
 
-        if (layout.texts.empty())
+        if (t_willCenterJustify)
         {
-            return layout;
+            centerTextLines(layout);
         }
-
-        // find the widest line of text
-        float width = 0.0f;
-        for (const sf::Text & text : layout.texts)
+        else
         {
-            if (text.getGlobalBounds().size.x > width)
-            {
-                width = text.getGlobalBounds().size.x;
-            }
-        }
-
-        // center the text into t_rect
-        const float height{ util::bottom(layout.texts.back()) -
-                            layout.texts.front().getGlobalBounds().position.y };
-
-        const sf::Vector2f offset{ (t_rect.size.x - width) * 0.5f,
-                                   (t_rect.size.y - height) * 0.5f };
-
-        for (sf::Text & text : layout.texts)
-        {
-            text.move(offset);
+            centerTextBlock(layout);
         }
 
         return layout;
@@ -125,6 +108,57 @@ namespace castlecrawl
             std::back_inserter(words));
 
         return words;
+    }
+
+    void TextLayout::centerTextBlock(TextLayoutPack & layout)
+    {
+        if (layout.texts.empty())
+        {
+            return;
+        }
+
+        // find the widest line of text
+        float width = 0.0f;
+        for (const sf::Text & text : layout.texts)
+        {
+            if (text.getGlobalBounds().size.x > width)
+            {
+                width = text.getGlobalBounds().size.x;
+            }
+        }
+
+        // center all the text as a block into t_rect
+        const float height{ util::bottom(layout.texts.back()) -
+                            layout.texts.front().getGlobalBounds().position.y };
+
+        const sf::Vector2f offset{ (layout.rect.size.x - width) * 0.5f,
+                                   (layout.rect.size.y - height) * 0.5f };
+
+        for (sf::Text & text : layout.texts)
+        {
+            text.move(offset);
+        }
+    }
+
+    void TextLayout::centerTextLines(TextLayoutPack & layout)
+    {
+        centerTextBlock(layout);
+
+        if (layout.texts.size() == 1)
+        {
+            util::centerInside(layout.texts.front(), layout.rect);
+        }
+        else
+        {
+            for (sf::Text & text : layout.texts)
+            {
+                const sf::Vector2f offset{
+                    (layout.rect.size.x - text.getGlobalBounds().size.x) * 0.5f, 0.0f
+                };
+
+                text.move(offset);
+            }
+        }
     }
 
 } // namespace castlecrawl

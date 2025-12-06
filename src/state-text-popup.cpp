@@ -35,7 +35,12 @@ namespace castlecrawl
         util::scaleRectInPlace(rect, 0.35f);
 
         m_textLayout = TextLayout::typeset(
-            t_context, m_info.message, rect, FontSize::Medium, sf::Color::White);
+            t_context,
+            m_info.message,
+            rect,
+            m_info.font_size,
+            m_info.will_center_justify,
+            m_info.color);
 
         m_backgroundRectangle.setPosition(m_textLayout.rect.position);
         m_backgroundRectangle.setSize(m_textLayout.rect.size);
