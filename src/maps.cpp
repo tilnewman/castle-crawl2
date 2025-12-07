@@ -137,7 +137,8 @@ namespace castlecrawl
             MapName::Level_1_Cell,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 "...........",
                 "...........",
                 "...    G...",
@@ -148,11 +149,13 @@ namespace castlecrawl
                 "..... .....",
                 "..... .....",
                 ".....d....."
-             },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { 5, 10 }, MapName::Level_1_CellBlock, { 5, 1 } }
-                },
-            LookEvents_t{
+            },
+            LookEvents_t
+            {
                 {
                     .map_pos = { 7, 2 }, 
                     .message = "Inside this festering pool of sewage you see a steel dagger!",
@@ -161,14 +164,14 @@ namespace castlecrawl
                     .item_keyword_required = "Gauntlets",
                     .item_given_pass = "Steel Dagger"
                 }
-            }
-            );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_CellBlock,
             t_context,
             Floor::Wood,
-            MapChars_t {
+            MapChars_t
+            {
                 ".....d............................",
                 "..... ............................",
                 "..... ........................   I",
@@ -190,19 +193,20 @@ namespace castlecrawl
                 "...... .....~    .     .     .....",
                 "...... ...........................",
                 "......d..........................."
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { 5, -1 }, MapName::Level_1_Cell,  { 5, 8 } },
                 { { 6, 21 }, MapName::Level_1_MainHall,  { 16, 1 } },
                 { { 34, 2 }, MapName::Level_1_Basement, { 1, 4 } }
-                }
-            );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_MainHall,
             t_context,
             Floor::Wood,
-            MapChars_t {
+            MapChars_t
+            {
                 "................d.................",
                 "................ .................",
                 "................ .................",
@@ -226,19 +230,20 @@ namespace castlecrawl
                 "................ .................",
                 "................ .................",
                 "................I................."
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { 16, -1 }, MapName::Level_1_CellBlock,  { 6, 19 } },
                 { { 16, 23 }, MapName::Level_1_BoilerRoom, { 2,  0 } },
                 { { 34, 4 }, MapName::Level_1_HiddenPassage, { 1,  1 } }
-                }
-            );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_BoilerRoom,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 "..i..........................",
                 ".. ..........................",
                 ".. ....ll  llllllll..........",
@@ -261,18 +266,19 @@ namespace castlecrawl
                 ".......bbbbllbbb...........gg",
                 "...........................gg",
                 "............................."
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { 2,  -1 }, MapName::Level_1_MainHall, { 16, 22 } },
                 { { -1,  13 }, MapName::Level_1_LavaGatehouse, { 15, 14 } }
-                }
-            );
+            } );
         
         m_maps.emplace_back(
             MapName::Level_1_HiddenPassage,
             t_context,
             Floor::Wood,
-            MapChars_t {
+            MapChars_t
+            {
                 "...................d.......",
                 "d     ............. .......",
                 "..... ............. .......",
@@ -293,19 +299,20 @@ namespace castlecrawl
                 ".............    ..........",
                 ".............   b..........",
                 "..........................."
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { -1, 1 }, MapName::Level_1_MainHall,  { 32, 4 } },
                 { { 27, 5 }, MapName::Level_1_CoffinRoom, { 0,  9 } },
                 { { 19, -1 }, MapName::Level_1_LakeStronghold, { 9,  21 } }
-                }
-            );
+            } );
 
         m_maps.emplace_back( 
             MapName::Level_1_CoffinRoom,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 ".................................",
                 ".................................",
                 "...................    kk........",
@@ -327,17 +334,18 @@ namespace castlecrawl
                 "..kkk k    kk....................",
                 ".................................",
                 "................................."
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { -1, 9 }, MapName::Level_1_HiddenPassage, { 26, 5 } }
-                }
-            );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_LakeStronghold,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 "ggggggggggggggggggggggggggggggggggggggggg",
                 "ggggggggggggggggggggggggggggggggggggggggg",
                 "ggggg.......b          .......ggggggggggg",
@@ -361,15 +369,18 @@ namespace castlecrawl
                 "gc   .... ...............bbb    .........",
                 "......... ...............................",
                 ".........d...............................",
-                },
-            MapTransitions_t {{ { 9, 23 }, MapName::Level_1_HiddenPassage, { 19, 1 } }}
-            );
+            },
+            MapTransitions_t 
+            {
+                { { 9, 23 }, MapName::Level_1_HiddenPassage, { 19, 1 } }
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_LavaGatehouse,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 "lllllllllllllllll",
                 "lllllllllllllllll",
                 "lllllllllllllllll",
@@ -391,18 +402,19 @@ namespace castlecrawl
                 "lA            hhl",
                 "lllll      Alllll",
                 "llllllllll llllll"
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { 17,  14 }, MapName::Level_1_BoilerRoom, { 1, 13 } },
                 { { 10,  21 }, MapName::Level_1_LavaHiddenPath, { 24, 0 } }
-            }
-            );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_LavaHiddenPath,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 "llllllllllllllllllllllll llllllllllllllll",
                 "llllllllllllllllllllllll llllllllllllllll",
                 "llllllllllllllllllllllll llllllllllllllll",
@@ -426,15 +438,18 @@ namespace castlecrawl
                 "lllllllllllllllllllllllllllllllllllllllll",
                 "lllllllllllllllllllllllllllllllllllllllll",
                 "lllllllllllllllllllllllllllllllllllllllll",
-                },
-            MapTransitions_t {{ { 24,  -1 }, MapName::Level_1_LavaGatehouse, { 10, 20 } }}
-            );
+            },
+            MapTransitions_t
+            {
+                { { 24,  -1 }, MapName::Level_1_LavaGatehouse, { 10, 20 } }
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_Basement,
             t_context,
             Floor::Stone,
-            MapChars_t {
+            MapChars_t
+            {
                 ".......................",
                 ".......................",
                 "....~~~Z    h   b......",
@@ -455,18 +470,19 @@ namespace castlecrawl
                 "d       .   h  bb......",
                 ".......................",
                 ".......................",
-                },
-            MapTransitions_t {
+            },
+            MapTransitions_t
+            {
                 { { -1,   4 }, MapName::Level_1_CellBlock,  { 32, 2 } },
                 { { -1,  17 }, MapName::Level_1_Forest,     { 25, 4 } }
-            }
-            );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_Forest,
             t_context,
             Floor::Dirt,
-            MapChars_t {
+            MapChars_t
+            {
                 "...........................",
                 "...........................",
                 "......;m  m ;Lmm    M m ...",
@@ -488,10 +504,11 @@ namespace castlecrawl
                 "...........gggggggggg......",
                 "...........gggggggggg......",
                 "..........................."
-                },
-            MapTransitions_t {{ { 27,  4 }, MapName::Level_1_Basement,  { 1, 17 } }}
-            );
-
+            },
+            MapTransitions_t
+            {
+                { { 27,  4 }, MapName::Level_1_Basement,  { 1, 17 } }
+            } );
         // clang-format on
 
         m_currentIter = std::begin(m_maps);
