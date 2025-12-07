@@ -785,6 +785,12 @@ namespace castlecrawl::item
             items.clear();
             for (const Item & item : m_allItems)
             {
+                // skip items not allowed in random loot
+                if (item.isMisc() && !canMiscBeRandomFoundItem(item.miscType()))
+                {
+                    continue;
+                }
+
                 // skip items worth too much
                 if (item.value() > valueRemaining)
                 {
