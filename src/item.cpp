@@ -292,7 +292,14 @@ namespace castlecrawl::item
         }
         else if (isMisc())
         {
-            str += " a magical item";
+            str += " a";
+
+            if (isMagical())
+            {
+                str += " magical";
+            }
+
+            str += " item";
 
             if (isUseable())
             {
