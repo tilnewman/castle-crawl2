@@ -27,9 +27,10 @@ namespace castlecrawl::item
         int acc{ 0 };
         int arc{ 0 };
         int dex{ 0 };
-        int dmg{ 0 };
         int lck{ 0 };
         int str{ 0 };
+
+        int dmg{ 0 };
 
         [[nodiscard]] constexpr int total() const noexcept
         {
@@ -77,7 +78,7 @@ namespace castlecrawl::item
         Count
     };
 
-    constexpr std::string_view toString(const Weapon t_weapon) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const Weapon t_weapon) noexcept
     {
         // clang-format off
         switch (t_weapon)
@@ -99,7 +100,7 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    inline const sf::Vector2i baseWeaponDamage(const Weapon t_weapon) noexcept
+    [[nodiscard]] inline const sf::Vector2i baseWeaponDamage(const Weapon t_weapon) noexcept
     {
         // clang-format off
         switch (t_weapon)
@@ -133,7 +134,7 @@ namespace castlecrawl::item
         Count
     };
 
-    constexpr std::string_view toString(const WeaponMaterial t_material) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const WeaponMaterial t_material) noexcept
     {
         // clang-format off
         switch (t_material)
@@ -151,7 +152,7 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    constexpr int weaponMaterialDamage(const WeaponMaterial t_material) noexcept
+    [[nodiscard]] constexpr int weaponMaterialDamage(const WeaponMaterial t_material) noexcept
     {
         // clang-format off
         switch (t_material)
@@ -180,7 +181,7 @@ namespace castlecrawl::item
         Count
     };
 
-    constexpr std::string_view toString(const Armor t_armor) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const Armor t_armor) noexcept
     {
         // clang-format off
         switch (t_armor)
@@ -197,7 +198,7 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    constexpr int baseArmorRating(const Armor t_armor) noexcept
+    [[nodiscard]] constexpr int baseArmorRating(const Armor t_armor) noexcept
     {
         // clang-format off
         switch (t_armor)
@@ -226,7 +227,7 @@ namespace castlecrawl::item
         Count
     };
 
-    constexpr std::string_view toString(const ArmorMaterial t_material) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const ArmorMaterial t_material) noexcept
     {
         // clang-format off
         switch (t_material)
@@ -244,7 +245,7 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    constexpr int armorMaterialRating(const ArmorMaterial t_material) noexcept
+    [[nodiscard]] constexpr int armorMaterialRating(const ArmorMaterial t_material) noexcept
     {
         // clang-format off
         switch (t_material)
@@ -313,7 +314,7 @@ namespace castlecrawl::item
         Count
     };
 
-    constexpr int miscBaseValue(const Misc t_misc) noexcept
+    [[nodiscard]] constexpr int miscBaseValue(const Misc t_misc) noexcept
     {
         // clang-format off
         switch (t_misc)
@@ -327,7 +328,6 @@ namespace castlecrawl::item
             case Misc::Whistle:         { return 7;  }
             case Misc::Ankh:            { return 8;  }
             case Misc::Egg:             { return 9;  }
-            case Misc::Key:             { return 10; }
             case Misc::Ring:            { return 11; }
             case Misc::Armband:         { return 12; }
             case Misc::Mask:            { return 13; }
@@ -363,13 +363,18 @@ namespace castlecrawl::item
             case Misc::Rainmaker:       { return 43; }
             case Misc::Scepter:         { return 44; }
             case Misc::Wand:            { return 45; }
+
+            // It doesn't really make sense for keys to participate in the value system because
+            // they don't appear as random loot in barrels/chests/etc, but meh.
+            case Misc::Key:             { return 50; }
+
             case Misc::Count:
             default:                    { return 0;  }
         }
         // clang-format on
     }
 
-    constexpr std::string_view toString(const Misc t_misc) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const Misc t_misc) noexcept
     {
         // clang-format off
         switch (t_misc)
@@ -426,7 +431,7 @@ namespace castlecrawl::item
     }
 
     // if not misc, then it's either weapon/armor which can only equip one of
-    constexpr std::size_t miscEquipCount(const Misc t_misc) noexcept
+    [[nodiscard]] constexpr std::size_t miscEquipCount(const Misc t_misc) noexcept
     {
         // clang-format off
         switch (t_misc)
@@ -453,7 +458,6 @@ namespace castlecrawl::item
             case Misc::Horseshoe:
             case Misc::Hourglass:
             case Misc::ImpTail:
-            case Misc::Key:
             case Misc::MagnifyingGlass:
             case Misc::Mask:
             case Misc::Mirror:
@@ -476,21 +480,32 @@ namespace castlecrawl::item
             case Misc::Whistle:
             case Misc::Wolfpelt:  { return 1; }
             //
+            case Misc::Key:
             case Misc::Potion:
             case Misc::Herbs:     { return 0; }
+            //
             case Misc::Count:
             default:              { return 1; } //must be 1 so that non-misc are equipable
         }
         // clang-format on
     }
 
-    constexpr bool isMiscEquipable(const Misc t_misc) noexcept
+    // misc items are either Useable or Equipable but never both and never neither
+    [[nodiscard]] constexpr bool isMiscEquipable(const Misc t_misc) noexcept
     {
         return (miscEquipCount(t_misc) > 0);
     }
+    //
+    [[nodiscard]] constexpr bool isMiscUseable(const Misc t_misc) noexcept
+    {
+        return !isMiscEquipable(t_misc);
+    }
 
-    // misc items are either Useable or Equipable but never both and never neither
-    constexpr bool isMiscUseable(const Misc t_misc) noexcept { return !isMiscEquipable(t_misc); }
+    // so far only keys cannot be found as random treasure in barrels/chests/etc.
+    [[nodiscard]] constexpr bool canMiscBeRandomFoundItem(const Misc t_misc) noexcept
+    {
+        return (t_misc != Misc::Key);
+    }
 
     enum class MiscMaterial : unsigned char
     {
@@ -509,11 +524,11 @@ namespace castlecrawl::item
         Lazuli,
         Bloody,
         Jeweled,
-        Magic, // must be last! see ItemFactory::makeMisc()
+        Magic,
         Count
     };
 
-    constexpr std::string_view toString(const MiscMaterial t_material) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const MiscMaterial t_material) noexcept
     {
         // clang-format off
         switch (t_material)
@@ -540,7 +555,8 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    constexpr EquipEffect miscMaterialEquipEffect(const MiscMaterial t_material) noexcept
+    [[nodiscard]] constexpr EquipEffect
+        miscMaterialEquipEffect(const MiscMaterial t_material) noexcept
     {
         // clang-format off
         switch (t_material)
@@ -567,19 +583,6 @@ namespace castlecrawl::item
         // clang-format on
     }
 
-    // useable misc items (potions & herbs) can only have the "Magic" material
-    constexpr MiscMaterial requiredMiscMaterial(const Misc t_misc) noexcept
-    {
-        MiscMaterial material = MiscMaterial::Count;
-
-        if (isMiscUseable(t_misc))
-        {
-            material = MiscMaterial::Magic;
-        }
-
-        return material;
-    }
-
     enum class UseStrength : unsigned char
     {
         Weak,
@@ -587,7 +590,7 @@ namespace castlecrawl::item
         Strong
     };
 
-    constexpr std::string_view toString(const UseStrength t_strength) noexcept
+    [[nodiscard]] constexpr std::string_view toString(const UseStrength t_strength) noexcept
     {
         // clang-format off
         switch (t_strength)

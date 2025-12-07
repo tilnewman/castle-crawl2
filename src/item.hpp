@@ -39,13 +39,13 @@ namespace castlecrawl::item
             const std::string & t_uniqueName,
             const EquipEffect & t_effect);
 
-        // misc item constructor (all misc items are magical)
+        // misc item constructor
         Item(
             const Misc t_misc,
             const MiscMaterial t_material,
-            const UseStrength t_strength,
-            const UseEffect & t_useEffect,
-            const EquipEffect & t_equipEffect);
+            const UseStrength t_strength = UseStrength::Normal,
+            const UseEffect & t_useEffect = {},
+            const EquipEffect & t_equipEffect = {});
 
         [[nodiscard]] inline const std::string name() const noexcept { return m_fullName; }
 

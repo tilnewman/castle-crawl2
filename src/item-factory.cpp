@@ -65,18 +65,22 @@ namespace castlecrawl::item
 
     void ItemFactory::makeMisc(ItemVec_t & t_items) const
     {
+        // generate the equipable (non useable) mist items, see below for the others
         for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
         {
-            // these are the equipable misc items only
             const auto type = static_cast<Misc>(i);
-            if (requiredMiscMaterial(type) != MiscMaterial::Count)
+            if (!isMiscEquipable(type))
             {
                 continue;
             }
 
-            for (int m = 0; m < static_cast<int>(MiscMaterial::Magic); ++m)
+            for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
             {
                 const auto material = static_cast<MiscMaterial>(m);
+                if (material == MiscMaterial::Magic)
+                {
+                    continue;
+                }
 
                 t_items.emplace_back(
                     type,
@@ -87,20 +91,51 @@ namespace castlecrawl::item
             }
         }
 
-        // these are the useable misc items
-        // clang-format off
-        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
-        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.health=16}, {}));
-        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.health=32}, {}));
+        // these are the useable misc items not generated above
+
+        // keys (these have no equip effect)
+        for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
+        {
+            const auto material = static_cast<MiscMaterial>(m);
+            if (material == MiscMaterial::Magic)
+            {
+                continue;
+            }
+
+            t_items.emplace_back(Misc::Key, material);
+        }
+
+        // useable potions and herbs
+        t_items.push_back(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
+
+        t_items.push_back(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, { .health = 16 }, {}));
+
+        t_items.push_back(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, { .health = 32 }, {}));
+
         //
-        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.mana=5}, {}));
-        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.mana=10}, {}));
-        t_items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.mana=20}, {}));
+
+        t_items.push_back(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .mana = 5 }, {}));
+
+        t_items.push_back(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, { .mana = 10 }, {}));
+
+        t_items.push_back(
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, { .mana = 20 }, {}));
+
         //
-        t_items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak,   {.health=5}, {}));
-        t_items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
-        t_items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
-        // clang-format on
+
+        t_items.push_back(
+            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak, { .health = 5 }, {}));
+
+        t_items.push_back(
+            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, { .health = 10 }, {}));
+
+        t_items.push_back(
+            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, { .health = 20 }, {}));
     }
 
     void ItemFactory::makeCustom(ItemVec_t & t_items) const
@@ -126,7 +161,7 @@ namespace castlecrawl::item
                 type,
                 WeaponMaterial::Obsidian,
                 std::string("Dark ").append(toString(type)),
-                EquipEffect{ .arc = 1, .dmg = 1, .str = 1 });
+                EquipEffect{ .arc = 1, .str = 1, .dmg = 1 });
         }
 
         for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
@@ -137,7 +172,7 @@ namespace castlecrawl::item
                 type,
                 WeaponMaterial::Steel,
                 std::string("Savage ").append(toString(type)),
-                EquipEffect{ .acc = 1, .dmg = 4, .str = 2 });
+                EquipEffect{ .acc = 1, .str = 2, .dmg = 4 });
         }
 
         t_items.push_back(Item(
@@ -176,10 +211,10 @@ namespace castlecrawl::item
             Weapon::Shortsword,
             WeaponMaterial::Steel,
             "Scoundrel Shortsword",
-            { .dmg = 6, .lck = 3 }));
+            { .lck = 3, .dmg = 6 }));
 
         t_items.push_back(
-            Item(Weapon::Waraxe, WeaponMaterial::Steel, "Wicked Waraxe", { .dmg = 5, .lck = 1 }));
+            Item(Weapon::Waraxe, WeaponMaterial::Steel, "Wicked Waraxe", { .lck = 1, .dmg = 5 }));
 
         t_items.push_back(
             Item(Weapon::Dagger, WeaponMaterial::Obsidian, "Diabolic Dagger", { .dmg = 10 }));
@@ -197,16 +232,16 @@ namespace castlecrawl::item
             Item(Weapon::Claymore, WeaponMaterial::Obsidian, "Gloom Claymore", { .dmg = 4 }));
 
         t_items.push_back(
-            Item(Weapon::Dagger, WeaponMaterial::Silver, "Pirate Dagger", { .dmg = 2, .lck = 2 }));
+            Item(Weapon::Dagger, WeaponMaterial::Silver, "Pirate Dagger", { .lck = 2, .dmg = 2 }));
 
         t_items.push_back(Item(
-            Weapon::Longsword, WeaponMaterial::Silver, "Pirate Longsword", { .dmg = 2, .lck = 2 }));
+            Weapon::Longsword, WeaponMaterial::Silver, "Pirate Longsword", { .lck = 2, .dmg = 2 }));
 
         t_items.push_back(
             Item(Weapon::Dagger, WeaponMaterial::Steel, "Bone Dagger", { .arc = 1, .dmg = 2 }));
 
         t_items.push_back(Item(
-            Weapon::Handaxe, WeaponMaterial::Bronze, "Villan's Handaxe", { .dmg = 1, .str = 1 }));
+            Weapon::Handaxe, WeaponMaterial::Bronze, "Villan's Handaxe", { .str = 1, .dmg = 1 }));
 
         // armor
 
@@ -218,7 +253,7 @@ namespace castlecrawl::item
                 type,
                 ArmorMaterial::DragonScale,
                 std::string("Dragon Slayer ").append(toString(type)),
-                EquipEffect{ .acc = 3, .dmg = 3, .str = 3 });
+                EquipEffect{ .acc = 3, .str = 3, .dmg = 3 });
         }
 
         for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -703,15 +738,11 @@ namespace castlecrawl::item
 
         if (t_item.isMisc())
         {
-            if (t_item.isUseable())
+            if (t_item.isUseable() && (t_item.miscMaterial() == MiscMaterial::Magic))
             {
                 M_CHECK(
                     (t_item.useEffect().total() > 0),
-                    "Useable item has no use effects: " << t_item);
-
-                M_CHECK(
-                    (t_item.miscMaterial() == MiscMaterial::Magic),
-                    "Misc item Potions and Herbs MUST have the material 'Magic': " << t_item);
+                    "Useable magical Misc item has no use effects: " << t_item);
             }
             else
             {

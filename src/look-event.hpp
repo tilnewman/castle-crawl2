@@ -49,10 +49,10 @@ namespace castlecrawl
         // this message is always displayed and so must not be empty for this event to be valid
         std::string message{};
 
-        // this message is only displayed if the all the requirements are satisfied
+        // this message is only displayed if the all the requirements are met
         std::string message_pass{};
 
-        // this message is only displayed if one or more of the requirements are NOT met
+        // this message is only displayed if all the requirements are NOT met
         std::string message_fail{};
 
         // all requirements

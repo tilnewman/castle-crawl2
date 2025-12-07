@@ -237,16 +237,14 @@ namespace castlecrawl::item
                 {
                     str += "Healing ";
                 }
-                else
+                else if (m_useEffect.mana > 0)
                 {
                     str += "Mana ";
                 }
             }
-            else
-            {
-                str += toString(m_miscMaterial);
-                str += ' ';
-            }
+
+            str += toString(m_miscMaterial);
+            str += ' ';
         }
 
         str += m_baseName;
