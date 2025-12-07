@@ -12,6 +12,7 @@
 #include "layout.hpp"
 #include "look-event.hpp"
 #include "map-display.hpp"
+#include "maps.hpp"
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
@@ -44,6 +45,7 @@ namespace castlecrawl
             {
                 message += m_lookEvent.message_pass;
                 LookEventHandler::takePassActions(t_context, m_lookEvent);
+                t_context.maps.current().setLookEventAsHappened();
             }
             else
             {

@@ -35,6 +35,7 @@ namespace castlecrawl
         [[nodiscard]] constexpr bool isEmpty() const noexcept { return m_map.empty(); }
         [[nodiscard]] constexpr bool isDiscovered() const noexcept { return m_isDiscovered; }
         [[nodiscard]] const LookEvent lookEvent() const noexcept { return m_lookEvent; }
+        void setLookEventAsHappened() { m_lookEvent.has_happened = true; }
 
         [[nodiscard]] const sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;

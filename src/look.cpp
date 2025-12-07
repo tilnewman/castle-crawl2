@@ -20,7 +20,7 @@ namespace castlecrawl
     void Look::look(const Context & t_context, const MapPos_t & t_pos, const bool t_willAdvanceTurn)
     {
         const LookEvent lookEvent = t_context.maps.current().lookEvent();
-        if (lookEvent.map_pos == t_pos)
+        if (!lookEvent.has_happened && (lookEvent.map_pos == t_pos))
         {
             StateLookEvent::setEvent(lookEvent);
             t_context.state.setChangePending(State::LookEvent);

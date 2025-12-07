@@ -41,6 +41,8 @@ namespace castlecrawl
                 !item_keyword_required.empty());
         }
 
+        bool has_happened{ false };
+
         // both must be negative to be invalid
         MapPos_t map_pos{ -1, -1 };
 
