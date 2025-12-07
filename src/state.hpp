@@ -30,6 +30,7 @@ namespace castlecrawl
         LevelUp,
         Statistics,
         Look,
+        LookEvent,
         TextPopup
     };
 
@@ -52,6 +53,7 @@ namespace castlecrawl
             case State::LevelUp:    { return "LevelUp"; }
             case State::Statistics: { return "Statistics"; }
             case State::Look:       { return "Look"; }
+            case State::LookEvent:  { return "LookEvent"; } 
             case State::TextPopup:  { return "TextPopup"; }
             default:                { return "unknown_state_error"; }
                 // clang-format on

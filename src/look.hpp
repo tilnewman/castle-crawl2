@@ -5,6 +5,8 @@
 //
 #include "map-types.hpp"
 
+#include <string>
+
 namespace castlecrawl
 {
     struct Context;
@@ -17,6 +19,10 @@ namespace castlecrawl
         Look();
 
         void look(const Context & t_context, const MapPos_t & t_pos, const bool t_willAdvanceTurn);
+
+      private:
+        const std::string
+            popupMapCharMessage(const Context & t_context, const MapPos_t & t_pos) const;
     };
 
 } // namespace castlecrawl

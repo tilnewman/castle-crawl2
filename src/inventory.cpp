@@ -138,6 +138,48 @@ namespace castlecrawl::item
         return {};
     }
 
+    bool Inventory::contains(const std::string & t_name) const
+    {
+        for (const Item & item : m_items)
+        {
+            if (item.name() == t_name)
+            {
+                return true;
+            }
+        }
+
+        for (const Item & item : m_eqItems)
+        {
+            if (item.name() == t_name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool Inventory::containsKeyword(const std::string & t_name) const
+    {
+        for (const Item & item : m_items)
+        {
+            if (item.name().find(t_name) != std::string::npos)
+            {
+                return true;
+            }
+        }
+
+        for (const Item & item : m_eqItems)
+        {
+            if (item.name().find(t_name) != std::string::npos)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool Inventory::hasEquipped(const Armor t_armor) const
     {
         for (const Item & item : m_eqItems)

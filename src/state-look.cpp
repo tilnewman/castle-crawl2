@@ -8,6 +8,7 @@
 #include "animation-manager.hpp"
 #include "context.hpp"
 #include "framerate-text.hpp"
+#include "look-event.hpp"
 #include "look.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
@@ -83,6 +84,8 @@ namespace castlecrawl
         const MapPos_t downPos{ mapPos.x, (mapPos.y + 1) };
         const MapPos_t leftPos{ (mapPos.x - 1), mapPos.y };
         const MapPos_t rightPos{ (mapPos.x + 1), mapPos.y };
+
+        const LookEvent lookEvent = t_context.maps.current().lookEvent();
 
         if ((t_key == sf::Keyboard::Scancode::Up) && (t_context.maps.current().isPosValid(upPos)))
         {

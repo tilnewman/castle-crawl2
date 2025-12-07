@@ -8,6 +8,7 @@
 #include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "item-factory.hpp"
 #include "map-display.hpp"
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
@@ -24,7 +25,7 @@ namespace castlecrawl
     void Maps::setup(const Context & t_context)
     {
         load(t_context);
-        verify();
+        verify(t_context);
     }
 
     void Maps::change(const Context & t_context, MapName t_mapName, const MapPos_t & t_pos)
@@ -150,6 +151,14 @@ namespace castlecrawl
              },
             MapTransitions_t {
                 { { 5, 10 }, MapName::Level_1_CellBlock, { 5, 1 } }
+                },
+            LookEvent {
+                .map_pos = { 7, 2 }, 
+                .message = "Inside this festering pool of sewage you see a steel dagger!",
+                .message_pass = "Using your gauntlet protected hands you reach in and take it. Use your inventory to see this dagger and equip it so you can use it during combat.",
+                .message_fail = "But you dare not reach in and get it without gauntlets to protect your hands.",
+                .item_keyword_required = "Gauntlets",
+                .item_given_pass = "Steel Dagger"
                 }
             );
 
@@ -486,7 +495,7 @@ namespace castlecrawl
         m_currentIter = std::begin(m_maps);
     }
 
-    void Maps::verify() const
+    void Maps::verify(const Context & t_context) const
     {
         M_CHECK(!m_maps.empty(), "No maps were loaded!");
 
@@ -508,6 +517,26 @@ namespace castlecrawl
                     "Map \"" << toString(map.name())
                              << "\" has invalid to_name transition to unknown map named \""
                              << toString(transition.to_name) << "\"");
+            }
+
+            const std::string itemNameRequired = map.lookEvent().item_required;
+            if (!itemNameRequired.empty())
+            {
+                M_CHECK(
+                    (t_context.items.find(itemNameRequired).has_value()),
+                    "Map \"" << toString(map.name())
+                             << "\" has an invalid LookEvent.item_required=\"" << itemNameRequired
+                             << "\"");
+            }
+
+            const std::string itemNameGiven = map.lookEvent().item_given_pass;
+            if (!itemNameGiven.empty())
+            {
+                M_CHECK(
+                    (t_context.items.find(itemNameGiven).has_value()),
+                    "Map \"" << toString(map.name())
+                             << "\" has an invalid LookEvent.item_given_pass=\"" << itemNameGiven
+                             << "\"");
             }
         }
     }

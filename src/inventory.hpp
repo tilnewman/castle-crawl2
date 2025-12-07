@@ -33,6 +33,8 @@ namespace castlecrawl::item
         [[nodiscard]] const Armor_t armorRating() const;
         [[nodiscard]] bool hasWeaponEquipped() const;
         [[nodiscard]] std::optional<Item> weaponEquipped() const;
+        [[nodiscard]] bool contains(const std::string & t_name) const;
+        [[nodiscard]] bool containsKeyword(const std::string & t_name) const;
 
       private:
         [[nodiscard]] bool hasEquipped(const Armor armor) const;

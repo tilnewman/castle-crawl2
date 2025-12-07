@@ -13,6 +13,7 @@
 #include "state-fight.hpp"
 #include "state-inventory.hpp"
 #include "state-levelup.hpp"
+#include "state-look-event.hpp"
 #include "state-look.hpp"
 #include "state-play.hpp"
 #include "state-splash.hpp"
@@ -67,6 +68,7 @@ namespace castlecrawl
             case State::LevelUp:    { return std::make_unique<StateLevelUp>(); }
             case State::Statistics: { return std::make_unique<StateStatistics>(); }
             case State::Look:       { return std::make_unique<StateLook>(); }
+            case State::LookEvent:  { return std::make_unique<StateLookEvent>(); }
             case State::TextPopup:  { return std::make_unique<StateTextPopup>(); }
             default:
             {

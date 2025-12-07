@@ -22,6 +22,7 @@ namespace castlecrawl
         , m_floor{ Floor::Dirt } // anything works here
         , m_transitions{}
         , m_isDiscovered{ false }
+        , m_lookEvent{}
     {}
 
     Map::Map(
@@ -29,12 +30,14 @@ namespace castlecrawl
         const Context & t_context,
         const Floor t_floor,
         const MapChars_t & t_mapChars,
-        const MapTransitions_t & t_transVec)
+        const MapTransitions_t & t_transVec,
+        const LookEvent & t_lookEvent)
         : m_name{ t_name }
         , m_map{}
         , m_floor{ t_floor }
         , m_transitions{ t_transVec }
         , m_isDiscovered{ false }
+        , m_lookEvent{ t_lookEvent }
     {
         const QuickMap quickMap(t_context.config, t_mapChars);
 

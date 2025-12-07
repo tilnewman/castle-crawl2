@@ -3,9 +3,8 @@
 //
 // map.hpp
 //
+#include "look-event.hpp"
 #include "map-types.hpp"
-
-#include <SFML/System/Vector2.hpp>
 
 #include <vector>
 
@@ -22,18 +21,21 @@ namespace castlecrawl
             const Context & t_context,
             const Floor t_floor,
             const MapChars_t & t_mapChars,
-            const MapTransitions_t & t_transVec);
+            const MapTransitions_t & t_transVec,
+            const LookEvent & t_lookEvent = {});
 
         [[nodiscard]] constexpr MapName name() const noexcept { return m_name; }
         [[nodiscard]] constexpr Floor floor() const noexcept { return m_floor; }
-        
+
         [[nodiscard]] inline const MapTransitions_t transitions() const noexcept
         {
             return m_transitions;
         }
-        
+
         [[nodiscard]] constexpr bool isEmpty() const noexcept { return m_map.empty(); }
         [[nodiscard]] constexpr bool isDiscovered() const noexcept { return m_isDiscovered; }
+        [[nodiscard]] const LookEvent lookEvent() const noexcept { return m_lookEvent; }
+
         [[nodiscard]] const sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
         [[nodiscard]] MapCell cell(const MapPos_t & t_pos) const;
@@ -59,6 +61,7 @@ namespace castlecrawl
         Floor m_floor;
         MapTransitions_t m_transitions;
         bool m_isDiscovered;
+        LookEvent m_lookEvent;
     };
 
 } // namespace castlecrawl

@@ -1,52 +1,59 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// state-text-popup.cpp
+// state-look-event.cpp
 //
-#include "state-text-popup.hpp"
+#include "state-look-event.hpp"
 
 #include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "font.hpp"
 #include "framerate-text.hpp"
-#include "game-config.hpp"
 #include "layout.hpp"
+#include "look-event.hpp"
 #include "map-display.hpp"
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
-#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
-#include "turn-keeper.hpp"
 
 namespace castlecrawl
 {
 
-    StateTextPopup::StateTextPopup()
+    StateLookEvent::StateLookEvent()
         : m_backgroundRectangle{}
         , m_textLayout{}
     {}
 
-    void StateTextPopup::onEnter(const Context & t_context)
+    void StateLookEvent::onEnter(const Context & t_context)
     {
-        sf::FloatRect rect = t_context.layout.screenRegion();
-        util::scaleRectInPlace(rect, 0.35f);
-
         M_CHECK(
-            !m_info.message.empty(),
-            "State TextPopup was switched to but there was no TextPopupInfo!");
+            !m_lookEvent.empty(), "State LookEvent was switched to but there was no LookEvent!");
+
+        sf::FloatRect rect = t_context.layout.screenRegion();
+        util::scaleRectInPlace(rect, 0.5f);
+
+        std::string message = m_lookEvent.message;
+        if (m_lookEvent.hasRequirements())
+        {
+            message += ' ';
+
+            if (LookEventHandler::areAllRequirementsMet(t_context, m_lookEvent))
+            {
+                message += m_lookEvent.message_pass;
+                LookEventHandler::takePassActions(t_context, m_lookEvent);
+            }
+            else
+            {
+                message += m_lookEvent.message_fail;
+                LookEventHandler::takeFailActions(t_context, m_lookEvent);
+            }
+        }
 
         m_textLayout = TextLayout::typeset(
-            t_context,
-            m_info.message,
-            rect,
-            m_info.font_size,
-            0.1f,
-            m_info.will_center_justify,
-            m_info.color);
+            t_context, message, rect, FontSize::Medium, 0.1f, true, sf::Color(220, 220, 220));
 
         m_backgroundRectangle.setPosition(m_textLayout.rect_outer.position);
         m_backgroundRectangle.setSize(m_textLayout.rect_outer.size);
@@ -55,15 +62,15 @@ namespace castlecrawl
         m_backgroundRectangle.setOutlineColor(sf::Color::White);
     }
 
-    void StateTextPopup::onExit(const Context &) { m_info = TextPopupInfo(); }
+    void StateLookEvent::onExit(const Context &) { m_lookEvent = LookEvent(); }
 
-    void StateTextPopup::update(const Context & t_context, const float t_elapsedSec)
+    void StateLookEvent::update(const Context & t_context, const float t_elapsedSec)
     {
         t_context.framerate.update(t_context);
         t_context.anim.update(t_context, t_elapsedSec);
     }
 
-    void StateTextPopup::draw(
+    void StateLookEvent::draw(
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
@@ -82,17 +89,15 @@ namespace castlecrawl
         }
     }
 
-    void StateTextPopup::handleEvent(const Context & t_context, const sf::Event & t_event)
+    void StateLookEvent::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
-        const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>();
-        if (keyPtr)
+        if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
-            if (m_info.will_advance_turn)
+            if ((keyPtr->scancode == sf::Keyboard::Scancode::Escape) ||
+                (keyPtr->scancode == sf::Keyboard::Scancode::Enter))
             {
-                t_context.turn.advance(t_context, t_context.config.turn_delay_after_player_misc);
+                t_context.state.setChangePending(State::Play);
             }
-
-            t_context.state.setChangePending(State::Play);
         }
     }
 
