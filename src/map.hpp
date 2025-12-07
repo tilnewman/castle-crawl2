@@ -6,8 +6,6 @@
 #include "look-event.hpp"
 #include "map-types.hpp"
 
-#include <vector>
-
 namespace castlecrawl
 {
     struct Context;
@@ -22,7 +20,7 @@ namespace castlecrawl
             const Floor t_floor,
             const MapChars_t & t_mapChars,
             const MapTransitions_t & t_transVec,
-            const LookEvent & t_lookEvent = {});
+            const LookEvents_t & t_lookEvents = {});
 
         [[nodiscard]] constexpr MapName name() const noexcept { return m_name; }
         [[nodiscard]] constexpr Floor floor() const noexcept { return m_floor; }
@@ -35,8 +33,12 @@ namespace castlecrawl
         [[nodiscard]] constexpr bool isEmpty() const noexcept { return m_map.empty(); }
         [[nodiscard]] constexpr bool isDiscovered() const noexcept { return m_isDiscovered; }
 
-        [[nodiscard]] const LookEvent lookEvent() const noexcept { return m_lookEvent; }
-        void setLookEventAsHappened() { m_lookEvent.has_happened = true; }
+        [[nodiscard]] const std::vector<LookEvent> lookEvents() const noexcept
+        {
+            return m_lookEvents;
+        }
+
+        void setLookEventAsHappened(const MapPos_t & t_pos);
 
         [[nodiscard]] const sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
@@ -63,7 +65,7 @@ namespace castlecrawl
         Floor m_floor;
         MapTransitions_t m_transitions;
         bool m_isDiscovered;
-        LookEvent m_lookEvent;
+        LookEvents_t m_lookEvents;
     };
 
 } // namespace castlecrawl

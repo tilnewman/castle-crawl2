@@ -46,7 +46,7 @@ namespace castlecrawl
             {
                 message += m_lookEvent.message_pass;
                 LookEventHandler::takePassActions(t_context, m_lookEvent);
-                t_context.maps.current().setLookEventAsHappened();
+                t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace castlecrawl
         }
         else
         {
-            t_context.maps.current().setLookEventAsHappened();
+            t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
         }
 
         m_textLayout = TextLayout::typeset(

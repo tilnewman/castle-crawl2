@@ -152,14 +152,16 @@ namespace castlecrawl
             MapTransitions_t {
                 { { 5, 10 }, MapName::Level_1_CellBlock, { 5, 1 } }
                 },
-            LookEvent {
-                .map_pos = { 7, 2 }, 
-                .message = "Inside this festering pool of sewage you see a steel dagger!",
-                .message_pass = "Using your gauntlet protected hands you reach in and take it. Use your inventory to see this dagger and equip it so you can use it during combat.",
-                .message_fail = "But you dare not reach in and get it without gauntlets to protect your hands.",
-                .item_keyword_required = "Gauntlets",
-                .item_given_pass = "Steel Dagger"
+            LookEvents_t{
+                {
+                    .map_pos = { 7, 2 }, 
+                    .message = "Inside this festering pool of sewage you see a steel dagger!",
+                    .message_pass = "Using your gauntlet protected hands you reach in and take it. Use your inventory to see this dagger and equip it so you can use it during combat.",
+                    .message_fail = "But you dare not reach in and get it without gauntlets to protect your hands.",
+                    .item_keyword_required = "Gauntlets",
+                    .item_given_pass = "Steel Dagger"
                 }
+            }
             );
 
         m_maps.emplace_back(
@@ -519,24 +521,31 @@ namespace castlecrawl
                              << toString(transition.to_name) << "\"");
             }
 
-            const std::string itemNameRequired = map.lookEvent().item_required;
-            if (!itemNameRequired.empty())
+            for (const LookEvent & lookEvent : map.lookEvents())
             {
                 M_CHECK(
-                    (t_context.items.find(itemNameRequired).has_value()),
-                    "Map \"" << toString(map.name())
-                             << "\" has an invalid LookEvent.item_required=\"" << itemNameRequired
-                             << "\"");
-            }
+                    !lookEvent.empty(),
+                    "Map \"" << toString(map.name()) << "\" has an empty LookEvent!");
 
-            const std::string itemNameGiven = map.lookEvent().item_given_pass;
-            if (!itemNameGiven.empty())
-            {
-                M_CHECK(
-                    (t_context.items.find(itemNameGiven).has_value()),
-                    "Map \"" << toString(map.name())
-                             << "\" has an invalid LookEvent.item_given_pass=\"" << itemNameGiven
-                             << "\"");
+                const std::string itemNameRequired = lookEvent.item_required;
+                if (!itemNameRequired.empty())
+                {
+                    M_CHECK(
+                        (t_context.items.find(itemNameRequired).has_value()),
+                        "Map \"" << toString(map.name())
+                                 << "\" has an invalid LookEvent.item_required=\""
+                                 << itemNameRequired << "\"");
+                }
+
+                const std::string itemNameGiven = lookEvent.item_given_pass;
+                if (!itemNameGiven.empty())
+                {
+                    M_CHECK(
+                        (t_context.items.find(itemNameGiven).has_value()),
+                        "Map \"" << toString(map.name())
+                                 << "\" has an invalid LookEvent.item_given_pass=\""
+                                 << itemNameGiven << "\"");
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ namespace castlecrawl
         , m_floor{ Floor::Dirt } // anything works here
         , m_transitions{}
         , m_isDiscovered{ false }
-        , m_lookEvent{}
+        , m_lookEvents{}
     {}
 
     Map::Map(
@@ -31,13 +31,13 @@ namespace castlecrawl
         const Floor t_floor,
         const MapChars_t & t_mapChars,
         const MapTransitions_t & t_transVec,
-        const LookEvent & t_lookEvent)
+        const LookEvents_t & t_lookEvents)
         : m_name{ t_name }
         , m_map{}
         , m_floor{ t_floor }
         , m_transitions{ t_transVec }
         , m_isDiscovered{ false }
-        , m_lookEvent{ t_lookEvent }
+        , m_lookEvents{ t_lookEvents }
     {
         const QuickMap quickMap(t_context.config, t_mapChars);
 
@@ -76,6 +76,20 @@ namespace castlecrawl
                 m_map.back().push_back(cell);
             }
         }
+    }
+
+    void Map::setLookEventAsHappened(const MapPos_t & t_pos) 
+    {
+        for (LookEvent & event: m_lookEvents)
+        {
+            if (t_pos == event.map_pos)
+            {
+                event.has_happened = true;
+                break;
+            }
+        }
+
+        // Technically we should never get here...Throw?
     }
 
     const sf::Vector2i Map::size() const

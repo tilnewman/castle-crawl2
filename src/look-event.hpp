@@ -6,6 +6,7 @@
 #include "map-types.hpp"
 
 #include <string>
+#include <vector>
 
 namespace castlecrawl
 {
@@ -43,7 +44,7 @@ namespace castlecrawl
 
         bool has_happened{ false };
 
-        // both must be negative to be invalid
+        // this is the unique ID for a LookEvent, both must be negative to be invalid default
         MapPos_t map_pos{ -1, -1 };
 
         // this message is always displayed and so must not be empty for this event to be valid
@@ -69,6 +70,8 @@ namespace castlecrawl
         // all consequences if the requirements are NOT met
         int health_adj_fail{ 0 };
     };
+
+    using LookEvents_t = std::vector<LookEvent>;
 
     //
 
