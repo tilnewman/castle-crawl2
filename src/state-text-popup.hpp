@@ -30,7 +30,7 @@ namespace castlecrawl
             , map_pos{ -1, -1 } // both must be negative to be invalid
             , will_advance_turn{ false }
             , will_center_justify{ true }
-            , color{ sf::Color::White }
+            , color{ sf::Color(220, 220, 220) }
             , font_size{ FontSize::Medium }
         {}
 
@@ -39,7 +39,7 @@ namespace castlecrawl
             const MapPos_t & t_mapPos,
             const bool t_willAdanceTurn,
             const bool t_willCenterJustify = true,
-            const sf::Color & t_color      = sf::Color::White,
+            const sf::Color & t_color      = sf::Color(220, 220, 220),
             const FontSize t_fontSize      = FontSize::Medium)
             : message{ t_message }
             , map_pos{ t_mapPos }

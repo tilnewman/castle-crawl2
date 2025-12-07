@@ -9,6 +9,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "framerate-text.hpp"
+#include "game-config.hpp"
 #include "layout.hpp"
 #include "look-event.hpp"
 #include "map-display.hpp"
@@ -55,7 +56,13 @@ namespace castlecrawl
         }
 
         m_textLayout = TextLayout::typeset(
-            t_context, message, rect, FontSize::Medium, 0.1f, true, sf::Color(220, 220, 220));
+            t_context,
+            message,
+            rect,
+            FontSize::Medium,
+            0.1f,
+            true,
+            t_context.config.message_color_popup);
 
         m_backgroundRectangle.setPosition(m_textLayout.rect_outer.position);
         m_backgroundRectangle.setSize(m_textLayout.rect_outer.size);

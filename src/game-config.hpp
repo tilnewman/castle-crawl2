@@ -38,6 +38,7 @@ namespace castlecrawl
         const sf::Color message_color_coins       = sf::Color(255, 200, 100);
         const sf::Color message_color_poison      = sf::Color(100, 255, 100);
         const sf::Color message_color_item        = sf::Color(160, 82, 45);
+        const sf::Color message_color_popup       = sf::Color(220, 220, 220);
 
         const sf::Color state_color_title       = sf::Color::White;
         const sf::Color state_color_subtitle    = sf::Color(180, 160, 120);
