@@ -236,7 +236,18 @@ namespace castlecrawl
                 { { 16, -1 }, MapName::Level_1_CellBlock,  { 6, 19 } },
                 { { 16, 23 }, MapName::Level_1_BoilerRoom, { 2,  0 } },
                 { { 34, 4 }, MapName::Level_1_HiddenPassage, { 1,  1 } }
-            } );
+            },
+            LookEvents_t
+            {
+                {
+                    .map_pos = { 12, 5 }, 
+                    .message = "Inside this door's keyhole is a key that appears to be stuck, keeping the door locked.",
+                    .message_pass = "You are able to pull the key out with your mighty strength. They key is now yours!",
+                    .message_fail = "You are not strong enough to pull the key out at this time.  Try again later after growing stronger.",
+                    .stats_required = { .str = 12 },
+                    .item_given_pass = "Pewter Key"
+                }
+            });
 
         m_maps.emplace_back(
             MapName::Level_1_BoilerRoom,
