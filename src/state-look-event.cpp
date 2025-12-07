@@ -54,6 +54,10 @@ namespace castlecrawl
                 LookEventHandler::takeFailActions(t_context, m_lookEvent);
             }
         }
+        else
+        {
+            t_context.maps.current().setLookEventAsHappened();
+        }
 
         m_textLayout = TextLayout::typeset(
             t_context,
