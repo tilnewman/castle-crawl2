@@ -369,6 +369,44 @@ namespace castlecrawl
         {
             t_context.state.setChangePending(State::Play);
         }
+        else if (keyPtr->scancode == sf::Keyboard::Scancode::Enter)
+        {
+            if (!m_unListboxUPtr->getFocus())
+            {
+                showErrorText(
+                    t_context,
+                    "Can't use equipped items. First press the left arrow key to select an "
+                    "unequipped item.");
+
+                return;
+            }
+
+            if (m_unListboxUPtr->empty())
+            {
+                showErrorText(t_context, "You have no unequipped items to use.");
+                return;
+            }
+
+            const item::Item itemCopy{ t_context.player.inventory().unItems().at(
+                m_unListboxUPtr->selectedIndex()) };
+
+            if (!itemCopy.isUseable())
+            {
+                showErrorText(t_context, "This item is NOT useable.");
+                return;
+            }
+
+            if (itemCopy.miscType() == item::Misc::Key)
+            {
+                showErrorText(
+                    t_context,
+                    "Keys are not used here in the inventory.  Just walk into a locked door and "
+                    "the right key will be used.");
+                return;
+            }
+
+            // TODO use the item
+        }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
         {
             if (!m_unListboxUPtr->getFocus())
