@@ -486,6 +486,15 @@ namespace castlecrawl
                 return;
             }
 
+            const item::Item itemCopy{ t_context.player.inventory().unItems().at(
+                m_unListboxUPtr->selectedIndex()) };
+
+            if (itemCopy.isMisc() && (itemCopy.miscType() == item::Misc::Key))
+            {
+                showErrorText(t_context, "You cannot drop keys.  That would be a bad idea...");
+                return;
+            }
+
             ++t_context.statistics.items_dropped;
             t_context.player.inventory().remove(m_unListboxUPtr->selectedIndex());
             updateAllAfterListboxChange(t_context);
