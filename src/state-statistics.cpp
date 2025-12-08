@@ -115,6 +115,11 @@ namespace castlecrawl
 
         blockRect.position.y += blockHeight;
 
+        m_statBlocks.push_back(
+            StatBlock(t_context, "Coffins Opened", t_context.statistics.coffins_opened, blockRect));
+
+        blockRect.position.y += blockHeight;
+
         t_context.statistics.rooms_discovered = t_context.maps.discoveredCount();
 
         m_statBlocks.push_back(StatBlock(

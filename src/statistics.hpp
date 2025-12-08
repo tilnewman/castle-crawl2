@@ -14,6 +14,7 @@ namespace castlecrawl
 
         std::size_t walk_count          = 0;
         std::size_t barrels_opened      = 0;
+        std::size_t coffins_opened      = 0;
         std::size_t rooms_discovered    = 0;
         std::size_t spells_cast         = 0;
         std::size_t monsters_killed     = 0;

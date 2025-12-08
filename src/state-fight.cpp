@@ -135,11 +135,20 @@ namespace castlecrawl
         {
             t_context.sfx.play("miss.ogg");
         }
-        else if (objectChar == 'b')
+        else if (
+            (objectChar == tileImageToChar(TileImage::Barrel)) ||
+            (objectChar == tileImageToChar(TileImage::Coffin)))
         {
-            ++t_context.statistics.barrels_opened;
+            if (objectChar == tileImageToChar(TileImage::Barrel))
+            {
+                ++t_context.statistics.barrels_opened;
+            }
+            else if (objectChar == tileImageToChar(TileImage::Coffin))
+            {
+                ++t_context.statistics.coffins_opened;
+            }
 
-            t_context.sfx.play("barrel-break.ogg");
+            t_context.sfx.play("barrel-break.ogg"); // same sfx for coffins
 
             t_context.maps.current().setObjectChar(t_pos, ' ');
             t_context.map_display.load(t_context);
@@ -153,7 +162,7 @@ namespace castlecrawl
                 nextState = State::Treasure;
             }
         }
-        else if (objectChar == 'Z')
+        else if (objectChar == tileImageToChar(TileImage::Wall_BlockWeak))
         {
             ++t_context.statistics.obstacles_destroyed;
 
@@ -164,7 +173,7 @@ namespace castlecrawl
 
             t_context.anim.dust().add(t_context, t_pos);
         }
-        else if (objectChar == 'H')
+        else if (objectChar == tileImageToChar(TileImage::RockWeak))
         {
             ++t_context.statistics.obstacles_destroyed;
 
