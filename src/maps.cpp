@@ -327,7 +327,7 @@ namespace castlecrawl
         m_maps.emplace_back( 
             MapName::Level_1_CoffinRoom,
             t_context,
-            Floor::Stone,
+            Floor::Wood,
             MapChars_t
             {
                 ".................................",
