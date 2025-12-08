@@ -190,7 +190,7 @@ namespace castlecrawl
                 "... ........bb   .     .     .....",
                 "...    ...................d.......",
                 "...... .....     .     .b    .....",
-                "...... .....\xE4    D  \x9a  d     .....",
+                "...... .....\xE4    d  \x9a  d     .....",
                 "...... .....~    .     .     .....",
                 "...... ...........................",
                 "......d..........................."
@@ -269,7 +269,7 @@ namespace castlecrawl
                 ".. ....      l   bb.   b.....",
                 ".. .......   \xc9    b.    .....",
                 "..       .         .    .....",
-                "........ .......D...    .....",
+                "........ .......d...    .....",
                 "........ .              .....",
                 "........d.              ....g",
                 "....                    ....g",
@@ -307,7 +307,7 @@ namespace castlecrawl
                 "...b      .................",
                 "...bb     .................",
                 ".......   .................",
-                "...c  D   .................",
+                "...c  d   .................",
                 ".......d...................",
                 "....... .....     bb.......",
                 "....... .....   . bb.......",
@@ -338,9 +338,9 @@ namespace castlecrawl
                 "....k      .......... ...........",
                 "....... ............. ...........",
                 "....... ............. ...........",
-                ".......D............. ...........",
-                "        D             ...........",
-                ".......D.........................",
+                ".......d............. ...........",
+                "        d             ...........",
+                ".......d.........................",
                 "....... .........................",
                 "....... .........................",
                 "....... .........................",
@@ -596,6 +596,7 @@ namespace castlecrawl
 
     void Maps::verifyDoorLocks(const Context & t_context, const Map & t_map) const
     {
+        // verify that every DoorLock is valid
         for (const DoorLock & doorLock : t_map.doorLocks())
         {
             M_CHECK(
@@ -609,6 +610,29 @@ namespace castlecrawl
                 "Map \"" << toString(t_map.name())
                          << "\" has an invalid DoorLock.unlocking_item_name=\""
                          << doorLock.unlocking_item_name << "\"");
+        }
+
+        // verify every locked door on the map has a coresponding DoorLock object specified
+        const sf::Vector2i size = t_map.size();
+        for (int y(0); y < size.y; ++y)
+        {
+            for (int x(0); x < size.x; ++x)
+            {
+                const MapPos_t pos{ x, y };
+                const char ch = t_map.cell(pos).object_char;
+
+                if (ch != tileImageToChar(TileImage::DoorLocked))
+                {
+                    continue;
+                }
+
+                const DoorLockOpt_t doorLockOpt = t_map.doorLock(pos);
+
+                M_CHECK(
+                    doorLockOpt.has_value(),
+                    "Map \"" << toString(t_map.name()) << "\" at map_pos=" << pos
+                             << " is a locked door with no coresponding DoorLock specified!");
+            }
         }
     }
 
