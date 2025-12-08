@@ -31,13 +31,15 @@ namespace castlecrawl
         const Floor t_floor,
         const MapChars_t & t_mapChars,
         const MapTransitions_t & t_transVec,
-        const LookEvents_t & t_lookEvents)
+        const LookEvents_t & t_lookEvents,
+        const DoorLocks_t & t_doorLocks)
         : m_name{ t_name }
         , m_map{}
         , m_floor{ t_floor }
         , m_transitions{ t_transVec }
         , m_isDiscovered{ false }
         , m_lookEvents{ t_lookEvents }
+        , m_doorLocks{ t_doorLocks }
     {
         const QuickMap quickMap(t_context.config, t_mapChars);
 
@@ -164,7 +166,7 @@ namespace castlecrawl
             pos.y += t_context.layout.cellSize().y;
         }
 
-        return { -1, -1 }; // any negative values work here
+        return { -1, -1 }; // any two negative values work here
     }
 
     sf::Vector2f Map::mapPosToScreenPos(const Context & t_context, const MapPos_t & t_mapPos) const

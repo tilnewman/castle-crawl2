@@ -48,6 +48,20 @@ namespace castlecrawl
         updateTurn(t_context);
     }
 
+    const DoorLockOpt_t StatePlay::getDoorLockForPosition(
+        const Context & t_context, const MapPos_t & t_mapPos) const
+    {
+        for (const DoorLock & doorLock : t_context.maps.current().doorLocks())
+        {
+            if (doorLock.map_pos == t_mapPos)
+            {
+                return doorLock;
+            }
+        }
+
+        return {};
+    }
+
     void StatePlay::updateTurn(const Context & t_context)
     {
         if (t_context.turn.owner() == TurnOwner::Player)
@@ -250,10 +264,24 @@ namespace castlecrawl
         const MapPos_t mapPosAttempted = util::keys::moveIfDir(mapPosBefore, t_key);
         const char mapCharAttempted    = t_context.maps.current().cell(mapPosAttempted).object_char;
 
+        // handle locked doors
+        bool didUnlockDoor              = false;
+        const DoorLockOpt_t doorLockOpt = getDoorLockForPosition(t_context, mapPosAttempted);
+        if (doorLockOpt.has_value())
+        {
+            if (t_context.player.inventory().contains(doorLockOpt->unlocking_item_name))
+            {
+                didUnlockDoor = true;
+            }
+        }
+
         const MapPos_t mapPosAfter = [&]() {
-            if ((mapCharAttempted == ' ') || (mapCharAttempted == 'd') ||
-                (mapCharAttempted == '.') || (mapCharAttempted == 'i') ||
-                (mapCharAttempted == 'I') || (mapCharAttempted == '~'))
+            if (didUnlockDoor || (mapCharAttempted == '.') ||
+                (mapCharAttempted == tileImageToChar(TileImage::Empty)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Door)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Stair_Down)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Stair_Up)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Coins)))
             {
                 return mapPosAttempted;
             }
@@ -268,7 +296,8 @@ namespace castlecrawl
         playMoveSfx(t_context, didMove, mapCharAttempted);
 
         // handle walking into damaging health drop
-        if (!didMove && ((mapCharAttempted == 'l') || (mapCharAttempted == 'A')))
+        if (!didMove && ((mapCharAttempted == tileImageToChar(TileImage::Lava)) ||
+                         (mapCharAttempted == tileImageToChar(TileImage::Inferno))))
         {
             t_context.player_display.shake();
             t_context.player_display.bloodSplatStart(t_context);
@@ -284,7 +313,7 @@ namespace castlecrawl
             t_context.player_display.position(t_context, mapPosAfter);
 
             // pickup coins
-            if (mapCharAttempted == '~')
+            if (mapCharAttempted == tileImageToChar(TileImage::Coins))
             {
                 const int playerLevel = t_context.player.level();
 
@@ -325,11 +354,14 @@ namespace castlecrawl
     {
         if (t_didMove)
         {
-            if (t_mapCharAttempted == 'd')
+            if ((t_mapCharAttempted == tileImageToChar(TileImage::Door)) ||
+                (t_mapCharAttempted == tileImageToChar(TileImage::DoorLocked)))
             {
                 t_context.sfx.play("door-open");
             }
-            else if ((t_mapCharAttempted == 'i') || (t_mapCharAttempted == 'I'))
+            else if (
+                (t_mapCharAttempted == tileImageToChar(TileImage::Stair_Down)) ||
+                (t_mapCharAttempted == tileImageToChar(TileImage::Stair_Up)))
             {
                 t_context.sfx.play("stairs");
             }
@@ -340,15 +372,15 @@ namespace castlecrawl
         }
         else
         {
-            if (t_mapCharAttempted == 'D')
+            if (t_mapCharAttempted == tileImageToChar(TileImage::DoorLocked))
             {
                 t_context.sfx.play("locked");
             }
-            else if (t_mapCharAttempted == 'g')
+            else if (t_mapCharAttempted == tileImageToChar(TileImage::Water))
             {
                 t_context.sfx.play("splash");
             }
-            else if (t_mapCharAttempted == 'l')
+            else if (t_mapCharAttempted == tileImageToChar(TileImage::Lava))
             {
                 t_context.sfx.play("burn");
             }
@@ -366,7 +398,7 @@ namespace castlecrawl
 
         const auto foundLavaIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {
-                return (cell.object_char == 'l');
+                return (cell.object_char == tileImageToChar(TileImage::Lava));
             });
 
         if (foundLavaIter == std::end(surroundingCells))
@@ -380,7 +412,7 @@ namespace castlecrawl
 
         const auto foundWaterIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {
-                return (cell.object_char == 'g');
+                return (cell.object_char == tileImageToChar(TileImage::Water));
             });
 
         if (foundWaterIter == std::end(surroundingCells))

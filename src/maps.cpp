@@ -13,6 +13,7 @@
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
+#include "sfml-util.hpp"
 #include "tile-image-enum.hpp"
 
 namespace castlecrawl
@@ -247,7 +248,12 @@ namespace castlecrawl
                     .stats_required = { .str = 12 },
                     .item_given_pass = "Pewter Key"
                 }
-            });
+            },
+            DoorLocks_t
+            {
+                { .map_pos = { 12, 5  }, .unlocking_item_name = "Pewter Key" },
+                { .map_pos = { 20, 16 }, .unlocking_item_name = "Pewter Key" }
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_BoilerRoom,
@@ -273,7 +279,7 @@ namespace castlecrawl
                 "....            .    gggggggg",
                 "............Z.......  ggggggg",
                 ".......l  b     ....  ggggggg",
-                ".......bb      b....bbbbggggg",
+                ".......bb  \xc9   b....bbbbggggg",
                 ".......bbbbllbbb...........gg",
                 "...........................gg",
                 "............................."
@@ -531,50 +537,78 @@ namespace castlecrawl
 
         for (const Map & map : m_maps)
         {
+            verifyTransitions(t_context, map);
+            verifyLookEvents(t_context, map);
+            verifyDoorLocks(t_context, map);
+        }
+    }
+
+    void Maps::verifyTransitions(const Context &, const Map & t_map) const
+    {
+        M_CHECK(
+            !t_map.transitions().empty(),
+            "Map \"" << toString(t_map.name()) << "\" has no transitions!");
+
+        for (const MapTransition & transition : t_map.transitions())
+        {
+            const auto foundIter =
+                std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & m) {
+                    return (m.name() == transition.to_name);
+                });
+
             M_CHECK(
-                !map.transitions().empty(),
-                "Map \"" << toString(map.name()) << "\" has no transitions!");
+                (foundIter != std::end(m_maps)),
+                "Map \"" << toString(t_map.name())
+                         << "\" has invalid to_name transition to unknown map named \""
+                         << toString(transition.to_name) << "\"");
+        }
+    }
 
-            for (const MapTransition & transition : map.transitions())
+    void Maps::verifyLookEvents(const Context & t_context, const Map & t_map) const
+    {
+        for (const LookEvent & lookEvent : t_map.lookEvents())
+        {
+            M_CHECK(
+                !lookEvent.empty(),
+                "Map \"" << toString(t_map.name()) << "\" has an empty LookEvent!");
+
+            const std::string itemNameRequired = lookEvent.item_required;
+            if (!itemNameRequired.empty())
             {
-                const auto foundIter =
-                    std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & m) {
-                        return (m.name() == transition.to_name);
-                    });
-
                 M_CHECK(
-                    (foundIter != std::end(m_maps)),
-                    "Map \"" << toString(map.name())
-                             << "\" has invalid to_name transition to unknown map named \""
-                             << toString(transition.to_name) << "\"");
+                    (t_context.items.find(itemNameRequired).has_value()),
+                    "Map \"" << toString(t_map.name())
+                             << "\" has an invalid LookEvent.item_required=\"" << itemNameRequired
+                             << "\"");
             }
 
-            for (const LookEvent & lookEvent : map.lookEvents())
+            const std::string itemNameGiven = lookEvent.item_given_pass;
+            if (!itemNameGiven.empty())
             {
                 M_CHECK(
-                    !lookEvent.empty(),
-                    "Map \"" << toString(map.name()) << "\" has an empty LookEvent!");
-
-                const std::string itemNameRequired = lookEvent.item_required;
-                if (!itemNameRequired.empty())
-                {
-                    M_CHECK(
-                        (t_context.items.find(itemNameRequired).has_value()),
-                        "Map \"" << toString(map.name())
-                                 << "\" has an invalid LookEvent.item_required=\""
-                                 << itemNameRequired << "\"");
-                }
-
-                const std::string itemNameGiven = lookEvent.item_given_pass;
-                if (!itemNameGiven.empty())
-                {
-                    M_CHECK(
-                        (t_context.items.find(itemNameGiven).has_value()),
-                        "Map \"" << toString(map.name())
-                                 << "\" has an invalid LookEvent.item_given_pass=\""
-                                 << itemNameGiven << "\"");
-                }
+                    (t_context.items.find(itemNameGiven).has_value()),
+                    "Map \"" << toString(t_map.name())
+                             << "\" has an invalid LookEvent.item_given_pass=\"" << itemNameGiven
+                             << "\"");
             }
+        }
+    }
+
+    void Maps::verifyDoorLocks(const Context & t_context, const Map & t_map) const
+    {
+        for (const DoorLock & doorLock : t_map.doorLocks())
+        {
+            M_CHECK(
+                (t_map.cell(doorLock.map_pos).object_char ==
+                 tileImageToChar(TileImage::DoorLocked)),
+                "Map \"" << toString(t_map.name()) << "\" has an invalid DoorLock.map_pos="
+                         << doorLock.map_pos << " that was not on a locked door!");
+
+            M_CHECK(
+                (t_context.items.find(doorLock.unlocking_item_name).has_value()),
+                "Map \"" << toString(t_map.name())
+                         << "\" has an invalid DoorLock.unlocking_item_name=\""
+                         << doorLock.unlocking_item_name << "\"");
         }
     }
 

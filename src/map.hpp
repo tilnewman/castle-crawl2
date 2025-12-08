@@ -3,6 +3,7 @@
 //
 // map.hpp
 //
+#include "door-lock.hpp"
 #include "look-event.hpp"
 #include "map-types.hpp"
 
@@ -20,7 +21,8 @@ namespace castlecrawl
             const Floor t_floor,
             const MapChars_t & t_mapChars,
             const MapTransitions_t & t_transVec,
-            const LookEvents_t & t_lookEvents = {});
+            const LookEvents_t & t_lookEvents = {},
+            const DoorLocks_t & t_doorLocks   = {});
 
         [[nodiscard]] constexpr MapName name() const noexcept { return m_name; }
         [[nodiscard]] constexpr Floor floor() const noexcept { return m_floor; }
@@ -33,12 +35,10 @@ namespace castlecrawl
         [[nodiscard]] constexpr bool isEmpty() const noexcept { return m_map.empty(); }
         [[nodiscard]] constexpr bool isDiscovered() const noexcept { return m_isDiscovered; }
 
-        [[nodiscard]] const std::vector<LookEvent> lookEvents() const noexcept
-        {
-            return m_lookEvents;
-        }
-
+        [[nodiscard]] const LookEvents_t lookEvents() const noexcept { return m_lookEvents; }
         void setLookEventAsHappened(const MapPos_t & t_pos);
+
+        [[nodiscard]] const DoorLocks_t doorLocks() const noexcept { return m_doorLocks; }
 
         [[nodiscard]] const sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
@@ -66,6 +66,7 @@ namespace castlecrawl
         MapTransitions_t m_transitions;
         bool m_isDiscovered;
         LookEvents_t m_lookEvents;
+        DoorLocks_t m_doorLocks;
     };
 
 } // namespace castlecrawl
