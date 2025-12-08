@@ -272,6 +272,12 @@ namespace castlecrawl
             if (t_context.player.inventory().contains(doorLockOpt->unlocking_item_name))
             {
                 didUnlockDoor = true;
+
+                std::string message = "Door Unlocked with ";
+                message += doorLockOpt->unlocking_item_name;
+
+                t_context.anim.risingText().add(
+                    t_context, message, sf::Color::White, mapPosAttempted);
             }
         }
 
