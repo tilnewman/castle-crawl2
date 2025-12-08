@@ -56,6 +56,7 @@ namespace castlecrawl
 
         [[nodiscard]] const std::vector<MapCell>
             surroundingCellsHorizVert(const MapPos_t & t_pos) const;
+
         [[nodiscard]] const std::vector<MapCell> surroundingCellsAll(const MapPos_t & t_pos) const;
 
         void dumpToConsole() const;

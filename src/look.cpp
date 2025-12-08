@@ -152,7 +152,7 @@ namespace castlecrawl
         }
         else if (objectChar == tileImageToChar(TileImage::Coffin))
         {
-            message = "A wooden coffin.";
+            message = "A wooden coffin that looks easy to break open...";
         }
         else if (objectChar == tileImageToChar(TileImage::StoneSpire))
         {
