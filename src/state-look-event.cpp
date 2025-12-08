@@ -18,6 +18,7 @@
 #include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "sfml-util.hpp"
+#include "sound-player.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
 
@@ -47,6 +48,7 @@ namespace castlecrawl
                 message += m_lookEvent.message_pass;
                 LookEventHandler::takePassActions(t_context, m_lookEvent);
                 t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
+                t_context.sfx.play("magic-1");
             }
             else
             {
