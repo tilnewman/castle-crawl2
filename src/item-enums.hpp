@@ -279,6 +279,7 @@ namespace castlecrawl::item
         Egg,
         Feather,
         Figurine,
+        Flute,
         GnomeNose,
         Goblet,
         Headdress,
@@ -308,7 +309,6 @@ namespace castlecrawl::item
         Veil,
         Vial,
         Wand,
-        Whistle,
         Wolfpelt,
         Ring,
         Count
@@ -325,7 +325,7 @@ namespace castlecrawl::item
             case Misc::Figurine:        { return 4;  }
             case Misc::Puppet:          { return 5;  }
             case Misc::Chime:           { return 6;  }
-            case Misc::Whistle:         { return 7;  }
+            case Misc::Flute:           { return 7;  }
             case Misc::Ankh:            { return 8;  }
             case Misc::Egg:             { return 9;  }
             case Misc::Ring:            { return 11; }
@@ -392,6 +392,7 @@ namespace castlecrawl::item
             case Misc::Egg:             { return "Egg"; }
             case Misc::Feather:         { return "Feather"; }
             case Misc::Figurine:        { return "Figurine"; }
+            case Misc::Flute:           { return "Flute"; }
             case Misc::GnomeNose:       { return "Gnome Nose"; }
             case Misc::Goblet:          { return "Goblet"; }
             case Misc::Headdress:       { return "Headdress"; }
@@ -421,7 +422,6 @@ namespace castlecrawl::item
             case Misc::Veil:            { return "Veil"; }
             case Misc::Vial:            { return "Vial"; }
             case Misc::Wand:            { return "Wand"; }
-            case Misc::Whistle:         { return "Whistle"; }
             case Misc::Wolfpelt:        { return "Wolfpelt"; }
             case Misc::Ring:            { return "Ring"; }
             case Misc::Count:
@@ -477,9 +477,9 @@ namespace castlecrawl::item
             case Misc::Veil:
             case Misc::Vial:
             case Misc::Wand:
-            case Misc::Whistle:
             case Misc::Wolfpelt:  { return 1; }
             //
+            case Misc::Flute:
             case Misc::Key:
             case Misc::Potion:
             case Misc::Herbs:     { return 0; }
@@ -504,7 +504,7 @@ namespace castlecrawl::item
     // so far only keys cannot be found as random treasure in barrels/chests/etc.
     [[nodiscard]] constexpr bool canMiscBeRandomFoundItem(const Misc t_misc) noexcept
     {
-        return (t_misc != Misc::Key);
+        return ((t_misc != Misc::Key) && (t_misc != Misc::Flute));
     }
 
     enum class MiscMaterial : unsigned char

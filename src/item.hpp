@@ -6,6 +6,7 @@
 #include "item-enums.hpp"
 #include "strong-types.hpp"
 
+#include <optional>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -43,8 +44,8 @@ namespace castlecrawl::item
         Item(
             const Misc t_misc,
             const MiscMaterial t_material,
-            const UseStrength t_strength = UseStrength::Normal,
-            const UseEffect & t_useEffect = {},
+            const UseStrength t_strength      = UseStrength::Normal,
+            const UseEffect & t_useEffect     = {},
             const EquipEffect & t_equipEffect = {});
 
         [[nodiscard]] inline const std::string name() const noexcept { return m_fullName; }
@@ -144,21 +145,11 @@ namespace castlecrawl::item
     };
 
     using ItemVec_t = std::vector<Item>;
+    using ItemOpt_t = std::optional<Item>;
 
     std::ostream & operator<<(std::ostream & t_os, const Item & t_item);
 
     [[nodiscard]] inline std::string toString(const item::Item & t_item) { return t_item.name(); }
-
-    //
-
-    struct Treasure
-    {
-        int gold{ 0 };
-        ItemVec_t items;
-
-        [[nodiscard]] constexpr bool empty() const noexcept { return ((0 == gold) && items.empty()); }
-        [[nodiscard]] const std::string description() const;
-    };
 
 } // namespace castlecrawl::item
 

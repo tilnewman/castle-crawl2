@@ -29,6 +29,7 @@ namespace castlecrawl
         void verifyTransitions(const Context & t_context, const Map & t_map) const;
         void verifyLookEvents(const Context & t_context, const Map & t_map) const;
         void verifyDoorLocks(const Context & t_context, const Map & t_map) const;
+        void verifyLoots(const Context & t_context, const Map & t_map) const;
         void loadCreatures(const Context & t_context);
         void unloadCreatures(const Context & t_context);
         void loadAnimations(const Context & t_context);

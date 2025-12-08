@@ -653,10 +653,7 @@ namespace castlecrawl
 
     void StateInventory::updateWeaponText(const Context & t_context)
     {
-        const std::optional<item::Item> eqWeaponOpt{
-            t_context.player.inventory().weaponEquipped()
-        };
-
+        const item::ItemOpt_t eqWeaponOpt{ t_context.player.inventory().weaponEquipped() };
         if (!eqWeaponOpt.has_value())
         {
             m_weaponText.setString("Weapon Damage: 1 to 2 (fists)");
@@ -685,7 +682,7 @@ namespace castlecrawl
 
         if (t_unEquipItem.isWeapon())
         {
-            const std::optional<item::Item> eqWeaponOpt{ inventory.weaponEquipped() };
+            const item::ItemOpt_t eqWeaponOpt{ inventory.weaponEquipped() };
             if (!eqWeaponOpt.has_value())
             {
                 return "Hint: You have no weapon equipped, so you should equip this weapon.";
@@ -699,7 +696,7 @@ namespace castlecrawl
         }
         else if (t_unEquipItem.isArmor())
         {
-            std::optional<item::Item> eqAmorOfSameType{};
+            item::ItemOpt_t eqAmorOfSameType{};
             for (const item::Item & eqItem : inventory.eqItems())
             {
                 if (eqItem.isArmor() && eqItem.armorType() == t_unEquipItem.armorType())
@@ -752,7 +749,7 @@ namespace castlecrawl
         const item::Item unEqItem{ t_context.player.inventory().unItems().at(
             m_unListboxUPtr->selectedIndex()) };
 
-        std::optional<item::Item> eqItemOpt;
+        item::ItemOpt_t eqItemOpt;
 
         if (unEqItem.isWeapon())
         {

@@ -131,7 +131,7 @@ namespace castlecrawl
 
         float turnDelay{ t_context.config.turn_delay_after_player_misc };
 
-        if (objectChar == ' ')
+        if (objectChar == tileImageToChar(TileImage::Empty))
         {
             t_context.sfx.play("miss.ogg");
         }

@@ -125,7 +125,7 @@ namespace castlecrawl::item
         return false;
     }
 
-    std::optional<Item> Inventory::weaponEquipped() const
+    ItemOpt_t Inventory::weaponEquipped() const
     {
         for (const Item & item : m_eqItems)
         {

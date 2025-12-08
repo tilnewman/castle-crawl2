@@ -11,6 +11,7 @@
 #include "framerate-text.hpp"
 #include "game-config.hpp"
 #include "keys.hpp"
+#include "loot.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"
@@ -21,8 +22,10 @@
 #include "player.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
+#include "state-treasure.hpp"
 #include "statistics.hpp"
 #include "top-panel.hpp"
+#include "treasure.hpp"
 #include "turn-keeper.hpp"
 
 namespace castlecrawl
@@ -273,7 +276,8 @@ namespace castlecrawl
                 (mapCharAttempted == tileImageToChar(TileImage::Door)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Stair_Down)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Stair_Up)) ||
-                (mapCharAttempted == tileImageToChar(TileImage::Coins)))
+                (mapCharAttempted == tileImageToChar(TileImage::Coins)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Bag)))
             {
                 return mapPosAttempted;
             }
@@ -314,7 +318,9 @@ namespace castlecrawl
 
                 t_context.player.goldAdj(coinsFound);
 
-                t_context.maps.current().setObjectChar(mapPosAfter, ' ');
+                t_context.maps.current().setObjectChar(
+                    mapPosAfter, tileImageToChar(TileImage::Empty));
+
                 t_context.map_display.load(t_context);
 
                 std::string risingTextMessage("+");
@@ -328,8 +334,27 @@ namespace castlecrawl
                     mapPosAfter);
 
                 t_context.anim.sparkle().remove(mapPosAfter);
+            }
 
-                t_context.sfx.play("coin");
+            // pickup bags
+            if (mapCharAttempted == tileImageToChar(TileImage::Bag))
+            {
+                t_context.maps.current().setObjectChar(
+                    mapPosAfter, tileImageToChar(TileImage::Empty));
+
+                t_context.map_display.load(t_context);
+
+                const LootOpt_t lootOpt = t_context.maps.current().loot(mapPosAfter);
+                if (lootOpt.has_value())
+                {
+                    item::Treasure treasure;
+                    treasure.populateFromLoot(t_context, lootOpt.value());
+
+                    StateTreasure::setTreasure(treasure);
+                    t_context.state.setChangePending(State::Treasure);
+
+                    t_context.maps.current().setLootAsCollected(mapPosAfter);
+                }
             }
 
             if (handleMapTransition(t_context, mapPosAfter))
@@ -359,6 +384,14 @@ namespace castlecrawl
                 (t_mapCharAttempted == tileImageToChar(TileImage::Stair_Up)))
             {
                 t_context.sfx.play("stairs");
+            }
+            else if (t_mapCharAttempted == tileImageToChar(TileImage::Bag))
+            {
+                t_context.sfx.play("drop"); // what can I say, this just sounds right
+            }
+            else if (t_mapCharAttempted == tileImageToChar(TileImage::Coins))
+            {
+                t_context.sfx.play("coin");
             }
             else
             {

@@ -105,6 +105,18 @@ namespace castlecrawl::item
             t_items.emplace_back(Misc::Key, material);
         }
 
+        // flutes (these have no equip effect)
+        for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
+        {
+            const auto material = static_cast<MiscMaterial>(m);
+            if (material == MiscMaterial::Magic)
+            {
+                continue;
+            }
+
+            t_items.emplace_back(Misc::Flute, material);
+        }
+
         // useable potions and herbs
         t_items.push_back(
             Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
@@ -841,7 +853,7 @@ namespace castlecrawl::item
         return treasure;
     }
 
-    const std::optional<Item> ItemFactory::find(const std::string & t_itemName) const
+    const ItemOpt_t ItemFactory::find(const std::string & t_itemName) const
     {
         for (const Item & item : m_allItems)
         {

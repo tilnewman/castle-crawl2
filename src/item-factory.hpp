@@ -4,6 +4,7 @@
 // item-factory.hpp
 //
 #include "item.hpp"
+#include "treasure.hpp"
 
 #include <SFML/Graphics/Font.hpp>
 
@@ -38,7 +39,7 @@ namespace castlecrawl::item
         [[nodiscard]] const Treasure randomHerbFind(const Context & t_context) const;
 
         [[nodiscard]] inline const ItemVec_t & allItems() const noexcept { return m_allItems; }
-        [[nodiscard]] const std::optional<Item> find(const std::string & t_itemName) const;
+        [[nodiscard]] const ItemOpt_t find(const std::string & t_itemName) const;
 
         void dumpInfo(const sf::Font & t_font) const;
 

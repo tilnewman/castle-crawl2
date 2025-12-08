@@ -5,6 +5,7 @@
 //
 #include "door-lock.hpp"
 #include "look-event.hpp"
+#include "loot.hpp"
 #include "map-types.hpp"
 
 namespace castlecrawl
@@ -22,7 +23,8 @@ namespace castlecrawl
             const MapChars_t & t_mapChars,
             const MapTransitions_t & t_transVec,
             const LookEvents_t & t_lookEvents = {},
-            const DoorLocks_t & t_doorLocks   = {});
+            const DoorLocks_t & t_doorLocks   = {},
+            const Loots_t & t_loots           = {});
 
         [[nodiscard]] constexpr MapName name() const noexcept { return m_name; }
         [[nodiscard]] constexpr Floor floor() const noexcept { return m_floor; }
@@ -40,6 +42,10 @@ namespace castlecrawl
 
         [[nodiscard]] const DoorLocks_t doorLocks() const noexcept { return m_doorLocks; }
         [[nodiscard]] const DoorLockOpt_t doorLock(const MapPos_t & t_pos) const;
+
+        [[nodiscard]] const Loots_t loots() const noexcept { return m_loots; }
+        [[nodiscard]] const LootOpt_t loot(const MapPos_t & t_pos) const;
+        void setLootAsCollected(const MapPos_t & t_pos);
 
         [[nodiscard]] const sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;
@@ -69,6 +75,7 @@ namespace castlecrawl
         bool m_isDiscovered;
         LookEvents_t m_lookEvents;
         DoorLocks_t m_doorLocks;
+        Loots_t m_loots;
     };
 
 } // namespace castlecrawl

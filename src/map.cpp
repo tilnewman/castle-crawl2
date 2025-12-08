@@ -23,6 +23,8 @@ namespace castlecrawl
         , m_transitions{}
         , m_isDiscovered{ false }
         , m_lookEvents{}
+        , m_doorLocks{}
+        , m_loots{}
     {}
 
     Map::Map(
@@ -32,7 +34,8 @@ namespace castlecrawl
         const MapChars_t & t_mapChars,
         const MapTransitions_t & t_transVec,
         const LookEvents_t & t_lookEvents,
-        const DoorLocks_t & t_doorLocks)
+        const DoorLocks_t & t_doorLocks,
+        const Loots_t & t_loots)
         : m_name{ t_name }
         , m_map{}
         , m_floor{ t_floor }
@@ -40,6 +43,7 @@ namespace castlecrawl
         , m_isDiscovered{ false }
         , m_lookEvents{ t_lookEvents }
         , m_doorLocks{ t_doorLocks }
+        , m_loots{ t_loots }
     {
         const QuickMap quickMap(t_context.config, t_mapChars);
 
@@ -105,6 +109,33 @@ namespace castlecrawl
         }
 
         return {};
+    }
+
+    const LootOpt_t Map::loot(const MapPos_t & t_pos) const
+    {
+        for (const Loot & loot : m_loots)
+        {
+            if (loot.map_pos == t_pos)
+            {
+                return loot;
+            }
+        }
+
+        return {};
+    }
+
+    void Map::setLootAsCollected(const MapPos_t & t_pos)
+    {
+        for (Loot & loot : m_loots)
+        {
+            if (t_pos == loot.map_pos)
+            {
+                loot.has_been_collected = true;
+                break;
+            }
+        }
+
+        // Technically we should never get here...Throw?
     }
 
     const sf::Vector2i Map::size() const

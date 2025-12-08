@@ -4,8 +4,8 @@
 // state-treasure.hpp
 //
 #include "gui-listbox.hpp"
-#include "item.hpp"
 #include "state.hpp"
+#include "treasure.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>

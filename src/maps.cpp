@@ -13,7 +13,7 @@
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
-#include "sfml-util.hpp"
+#include "sfml-util.hpp" // for operator<<(MapPos_t)
 #include "tile-image-enum.hpp"
 
 namespace castlecrawl
@@ -183,7 +183,7 @@ namespace castlecrawl
                 "..... ........ ........... .......",
                 "...     ....     .     .     .....",
                 "...    b....     .  \x85  d     .....",
-                "...   bb....     .     .     .....",
+                "...   bJ....     .     .     .....",
                 "... ..........d.....d.......d.....",
                 "... ........     .     .     .....",
                 "... ........b \xa6  d     .  \x85  .....",
@@ -200,7 +200,16 @@ namespace castlecrawl
                 { { 5, -1 }, MapName::Level_1_Cell,  { 5, 8 } },
                 { { 6, 21 }, MapName::Level_1_MainHall,  { 16, 1 } },
                 { { 34, 2 }, MapName::Level_1_Basement, { 1, 4 } }
-            } );
+            },
+            LookEvents_t
+            {},
+            DoorLocks_t
+            {},
+            Loots_t
+            {
+                { .map_pos = { 7, 10 }, .item_names{ { "Bone Flute" } } }
+            }
+        );
 
         m_maps.emplace_back(
             MapName::Level_1_MainHall,
@@ -540,6 +549,7 @@ namespace castlecrawl
             verifyTransitions(t_context, map);
             verifyLookEvents(t_context, map);
             verifyDoorLocks(t_context, map);
+            verifyLoots(t_context, map);
         }
     }
 
@@ -560,7 +570,7 @@ namespace castlecrawl
                 (foundIter != std::end(m_maps)),
                 "Map \"" << toString(t_map.name())
                          << "\" has invalid to_name transition to unknown map named \""
-                         << toString(transition.to_name) << "\"");
+                         << toString(transition.to_name) << "\"!");
         }
     }
 
@@ -579,7 +589,7 @@ namespace castlecrawl
                     (t_context.items.find(itemNameRequired).has_value()),
                     "Map \"" << toString(t_map.name())
                              << "\" has an invalid LookEvent.item_required=\"" << itemNameRequired
-                             << "\"");
+                             << "\"!");
             }
 
             const std::string itemNameGiven = lookEvent.item_given_pass;
@@ -589,7 +599,7 @@ namespace castlecrawl
                     (t_context.items.find(itemNameGiven).has_value()),
                     "Map \"" << toString(t_map.name())
                              << "\" has an invalid LookEvent.item_given_pass=\"" << itemNameGiven
-                             << "\"");
+                             << "\"!");
             }
         }
     }
@@ -609,7 +619,7 @@ namespace castlecrawl
                 (t_context.items.find(doorLock.unlocking_item_name).has_value()),
                 "Map \"" << toString(t_map.name())
                          << "\" has an invalid DoorLock.unlocking_item_name=\""
-                         << doorLock.unlocking_item_name << "\"");
+                         << doorLock.unlocking_item_name << "\"!");
         }
 
         // verify every locked door on the map has a coresponding DoorLock object specified
@@ -632,6 +642,41 @@ namespace castlecrawl
                     doorLockOpt.has_value(),
                     "Map \"" << toString(t_map.name()) << "\" at map_pos=" << pos
                              << " is a locked door with no coresponding DoorLock specified!");
+            }
+        }
+    }
+
+    void Maps::verifyLoots(const Context & t_context, const Map & t_map) const
+    {
+        for (const Loot & loot : t_map.loots())
+        {
+            // verify this loot is on the map where loot can be found
+            const char ch = t_map.cell(loot.map_pos).object_char;
+
+            const bool isValidObjectAtMapPos =
+                ((ch == tileImageToChar(TileImage::Barrel)) ||
+                 (ch == tileImageToChar(TileImage::Coffin)) ||
+                 (ch == tileImageToChar(TileImage::Bag)) ||
+                 (ch == tileImageToChar(TileImage::Chest)));
+
+            M_CHECK(
+                isValidObjectAtMapPos,
+                "Map \"" << toString(t_map.name()) << "\" has an invalid Loot.map_pos="
+                         << loot.map_pos << " that was not on a barrel/coffin/chest/bag!");
+
+            // verify valid gold amount
+            M_CHECK(
+                (loot.gold >= 0),
+                "Map \"" << toString(t_map.name()) << "\" has an invalid Loot.gold=" << loot.gold
+                         << " amount that was negative!");
+
+            // verify this loot's items are real items contained in the item factory
+            for (const std::string & itemName : loot.item_names)
+            {
+                M_CHECK(
+                    (t_context.items.find(itemName).has_value()),
+                    "Map \"" << toString(t_map.name()) << "\" has an invalid loot.item_name=\""
+                             << itemName << "\"!");
             }
         }
     }
