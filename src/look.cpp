@@ -91,8 +91,25 @@ namespace castlecrawl
         }
         else if (objectChar == tileImageToChar(TileImage::DoorLocked))
         {
-            // TODO mention what kind of key it needs
-            message = "A locked wooden door.";
+            message = "A locked wooden door";
+
+            DoorLockOpt_t doorLockOpt;
+            for (const DoorLock & doorLock : t_context.maps.current().doorLocks())
+            {
+                if (doorLock.map_pos == t_pos)
+                {
+                    doorLockOpt = doorLock;
+                    break;
+                }
+            }
+
+            if (doorLockOpt.has_value())
+            {
+                message += " that needs a ";
+                message += doorLockOpt->unlocking_item_name;
+            }
+
+            message += '.';
         }
         else if (objectChar == tileImageToChar(TileImage::Blood))
         {
