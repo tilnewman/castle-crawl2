@@ -346,10 +346,13 @@ namespace castlecrawl
     {
         if (t_didMove)
         {
-            if ((t_mapCharAttempted == tileImageToChar(TileImage::Door)) ||
-                (t_mapCharAttempted == tileImageToChar(TileImage::DoorLocked)))
+            if (t_mapCharAttempted == tileImageToChar(TileImage::Door))
             {
                 t_context.sfx.play("door-open");
+            }
+            else if (t_mapCharAttempted == tileImageToChar(TileImage::DoorLocked))
+            {
+                t_context.sfx.play("door-unlock");
             }
             else if (
                 (t_mapCharAttempted == tileImageToChar(TileImage::Stair_Down)) ||
