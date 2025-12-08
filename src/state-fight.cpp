@@ -148,18 +148,28 @@ namespace castlecrawl
                 ++t_context.statistics.coffins_opened;
             }
 
-            t_context.sfx.play("barrel-break.ogg"); // same sfx for coffins
-
-            t_context.maps.current().setObjectChar(t_pos, ' ');
-            t_context.map_display.load(t_context);
-
             t_context.anim.dust().add(t_context, t_pos);
 
-            const item::Treasure treasure{ t_context.items.randomTreasureFind(t_context) };
-            if (!treasure.empty())
+            t_context.sfx.play("barrel-break.ogg"); // same sfx for coffins
+
+            const bool willSpawnBat = (t_context.random.fromTo(1, 20) == 1);
+            if (willSpawnBat)
             {
-                StateTreasure::setTreasure(treasure);
-                nextState = State::Treasure;
+                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Bat));
+                t_context.map_display.load(t_context);
+                t_context.monsters.add(t_context, t_pos, tileImageToChar(TileImage::Bat));
+            }
+            else
+            {
+                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Empty));
+                t_context.map_display.load(t_context);
+
+                const item::Treasure treasure{ t_context.items.randomTreasureFind(t_context) };
+                if (!treasure.empty())
+                {
+                    StateTreasure::setTreasure(treasure);
+                    nextState = State::Treasure;
+                }
             }
         }
         else if (objectChar == tileImageToChar(TileImage::Wall_BlockWeak))
