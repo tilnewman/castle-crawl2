@@ -48,20 +48,6 @@ namespace castlecrawl
         updateTurn(t_context);
     }
 
-    const DoorLockOpt_t StatePlay::getDoorLockForPosition(
-        const Context & t_context, const MapPos_t & t_mapPos) const
-    {
-        for (const DoorLock & doorLock : t_context.maps.current().doorLocks())
-        {
-            if (doorLock.map_pos == t_mapPos)
-            {
-                return doorLock;
-            }
-        }
-
-        return {};
-    }
-
     void StatePlay::updateTurn(const Context & t_context)
     {
         if (t_context.turn.owner() == TurnOwner::Player)
@@ -266,7 +252,7 @@ namespace castlecrawl
 
         // handle locked doors
         bool didUnlockDoor              = false;
-        const DoorLockOpt_t doorLockOpt = getDoorLockForPosition(t_context, mapPosAttempted);
+        const DoorLockOpt_t doorLockOpt = t_context.maps.current().doorLock(mapPosAttempted);
         if (doorLockOpt.has_value())
         {
             if (t_context.player.inventory().contains(doorLockOpt->unlocking_item_name))

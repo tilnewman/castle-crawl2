@@ -39,6 +39,7 @@ namespace castlecrawl
         void setLookEventAsHappened(const MapPos_t & t_pos);
 
         [[nodiscard]] const DoorLocks_t doorLocks() const noexcept { return m_doorLocks; }
+        [[nodiscard]] const DoorLockOpt_t doorLock(const MapPos_t & t_pos) const;
 
         [[nodiscard]] const sf::Vector2i size() const;
         [[nodiscard]] bool isPosValid(const MapPos_t & t_pos) const;

@@ -93,16 +93,7 @@ namespace castlecrawl
         {
             message = "A locked wooden door";
 
-            DoorLockOpt_t doorLockOpt;
-            for (const DoorLock & doorLock : t_context.maps.current().doorLocks())
-            {
-                if (doorLock.map_pos == t_pos)
-                {
-                    doorLockOpt = doorLock;
-                    break;
-                }
-            }
-
+            const DoorLockOpt_t doorLockOpt = t_context.maps.current().doorLock(t_pos);
             if (doorLockOpt.has_value())
             {
                 message += " that needs a ";

@@ -35,9 +35,6 @@ namespace castlecrawl
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) final;
 
       private:
-        [[nodiscard]] const DoorLockOpt_t
-            getDoorLockForPosition(const Context & t_context, const MapPos_t & t_mapPos) const;
-
         void updateTurn(const Context & t_context);
 
         [[nodiscard]] bool

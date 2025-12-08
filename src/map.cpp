@@ -80,9 +80,9 @@ namespace castlecrawl
         }
     }
 
-    void Map::setLookEventAsHappened(const MapPos_t & t_pos) 
+    void Map::setLookEventAsHappened(const MapPos_t & t_pos)
     {
-        for (LookEvent & event: m_lookEvents)
+        for (LookEvent & event : m_lookEvents)
         {
             if (t_pos == event.map_pos)
             {
@@ -92,6 +92,19 @@ namespace castlecrawl
         }
 
         // Technically we should never get here...Throw?
+    }
+
+    const DoorLockOpt_t Map::doorLock(const MapPos_t & t_pos) const
+    {
+        for (const DoorLock & doorLock : m_doorLocks)
+        {
+            if (doorLock.map_pos == t_pos)
+            {
+                return doorLock;
+            }
+        }
+
+        return {};
     }
 
     const sf::Vector2i Map::size() const
