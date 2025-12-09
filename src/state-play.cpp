@@ -310,7 +310,7 @@ namespace castlecrawl
         {
             t_context.player_display.position(t_context, mapPosAfter);
 
-            // pickup coins
+            // pickup loot by walking on it
             if ((mapCharAttempted == tileImageToChar(TileImage::Coins)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Bag)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Chest)))
