@@ -776,7 +776,7 @@ namespace castlecrawl::item
     const Treasure ItemFactory::randomTreasureFind(const Context & t_context) const
     {
         // establish how much value this random find is worth
-        const int valuePerLevel{ 100 };
+        const int valuePerLevel{ 50 };
         int valueRemaining = t_context.player.level() * valuePerLevel;
         valueRemaining += t_context.random.fromTo(0, valuePerLevel);
 

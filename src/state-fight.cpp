@@ -152,7 +152,25 @@ namespace castlecrawl
 
             t_context.sfx.play("barrel-break.ogg"); // same sfx for coffins
 
-            const bool willSpawnBat = (t_context.random.fromTo(1, 20) == 1);
+            const bool willSpawnBat = [&]() {
+                if (objectChar == tileImageToChar(TileImage::Barrel))
+                {
+                    return (
+                        t_context.random.fromTo(
+                            1, t_context.config.barrel_contains_monster_chance) == 1);
+                }
+                else if (objectChar == tileImageToChar(TileImage::Coffin))
+                {
+                    return (
+                        t_context.random.fromTo(
+                            1, t_context.config.coffin_contains_monster_chance) == 1);
+                }
+                else
+                {
+                    return false;
+                }
+            }();
+
             if (willSpawnBat)
             {
                 t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Bat));
@@ -164,10 +182,28 @@ namespace castlecrawl
                 t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Empty));
                 t_context.map_display.load(t_context);
 
-                const item::Treasure treasure{ t_context.items.randomTreasureFind(t_context) };
-                if (!treasure.empty())
+                const bool isEmpty = [&]() {
+                    if (objectChar == tileImageToChar(TileImage::Barrel))
+                    {
+                        return (
+                            t_context.random.fromTo(1, t_context.config.barrel_is_empty_chance) ==
+                            1);
+                    }
+                    else if (objectChar == tileImageToChar(TileImage::Coffin))
+                    {
+                        return (
+                            t_context.random.fromTo(1, t_context.config.coffin_is_empty_chance) ==
+                            1);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }();
+
+                if (!isEmpty)
                 {
-                    StateTreasure::setTreasure(treasure);
+                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(t_context));
                     nextState = State::Treasure;
                 }
             }
@@ -178,7 +214,7 @@ namespace castlecrawl
 
             t_context.sfx.play("wood-block-break.ogg");
 
-            t_context.maps.current().setObjectChar(t_pos, ' ');
+            t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Empty));
             t_context.map_display.load(t_context);
 
             t_context.anim.dust().add(t_context, t_pos);
@@ -189,7 +225,7 @@ namespace castlecrawl
 
             t_context.sfx.play("rock-block-break.ogg");
 
-            t_context.maps.current().setObjectChar(t_pos, ' ');
+            t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Empty));
             t_context.map_display.load(t_context);
 
             t_context.anim.dust().add(t_context, t_pos);
