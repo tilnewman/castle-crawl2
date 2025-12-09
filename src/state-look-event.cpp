@@ -49,16 +49,13 @@ namespace castlecrawl
                 LookEventHandler::takePassActions(t_context, m_lookEvent);
                 t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
                 t_context.sfx.play("magic-1");
+                t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
             }
             else
             {
                 message += m_lookEvent.message_fail;
                 LookEventHandler::takeFailActions(t_context, m_lookEvent);
             }
-        }
-        else
-        {
-            t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
         }
 
         m_textLayout = TextLayout::typeset(

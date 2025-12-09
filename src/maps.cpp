@@ -534,6 +534,13 @@ namespace castlecrawl
             MapTransitions_t
             {
                 { { 27,  4 }, MapName::Level_1_Basement,  { 1, 17 } }
+            },
+            LookEvents_t
+            {
+                {
+                    .map_pos = { 22, 4},
+                    .message = "Welcome to sculpture garden. Each sculpture has a message plaque for you to read. Dangerous animals may be present. You have been warned."
+                }
             } );
         // clang-format on
 
