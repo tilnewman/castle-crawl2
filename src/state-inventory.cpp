@@ -414,7 +414,7 @@ namespace castlecrawl
             }
             else
             {
-                // TODO use the item
+                // TODO use all the other items
             }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::E)

@@ -42,6 +42,7 @@ namespace castlecrawl
         Tree2,
         Tree3,
         Coins,
+        Well,
         DarkBackground,
 
         Wall_TopLeft,
@@ -295,7 +296,6 @@ namespace castlecrawl
      *  It is handy to keep track of which characters are used and which are not:
             //case '\\':
             //case '`':
-            //case '{':
             //case '\'':
             //case '}';
             //
@@ -333,6 +333,7 @@ namespace castlecrawl
             case 'm':    { return TileImage::Tree2;                 }
             case 'M':    { return TileImage::Tree3;                 }
             case '~':    { return TileImage::Coins;                 }
+            case '{':    { return TileImage::Well;                  }
 
             case 'n':    { return TileImage::Statue_Twins;          }
             case 'N':    { return TileImage::Statue_Mermaid;        }
@@ -621,6 +622,7 @@ namespace castlecrawl
             case TileImage::Tree2:               { return 'm'; }
             case TileImage::Tree3:               { return 'M'; }
             case TileImage::Coins:               { return '~'; }
+            case TileImage::Well:                { return '{'; }
             
             case TileImage::Statue_Twins:        { return 'n'; }
             case TileImage::Statue_Mermaid:      { return 'N'; }
@@ -1056,6 +1058,7 @@ namespace castlecrawl
             case TileImage::Tree2:               
             case TileImage::Tree3:     
             case TileImage::Coins:
+            case TileImage::Well:
 
             case TileImage::Statue_Twins:        
             case TileImage::Statue_Mermaid:      
@@ -1214,7 +1217,8 @@ namespace castlecrawl
             case TileImage::Tree2:              { return sf::IntRect( {160,224},{32,32}); }
             case TileImage::Tree3:              { return sf::IntRect( {192,224},{32,32}); }
             case TileImage::Coins:              { return sf::IntRect( {192,160},{32,32}); }
-            
+            case TileImage::Well:               { return sf::IntRect( { 96,384},{32,32}); }
+
             case TileImage::DarkBackground:     { return sf::IntRect( {128,160},{32,32}); }
             case TileImage::Wall_Shadow:        { return sf::IntRect( { 32, 32},{32,32}); }
             case TileImage::Avatar:             { return sf::IntRect( {224,224},{32,32}); }
@@ -1502,6 +1506,7 @@ namespace castlecrawl
             case TileImage::Tree2:              { return "Tree"; }
             case TileImage::Tree3:              { return "Tree"; }
             case TileImage::Coins:              { return "Coins"; }
+            case TileImage::Well:               { return "Well"; }
 
             case TileImage::DarkBackground:     { return "DarkBackground"; }
             case TileImage::Wall_Shadow:        { return "Wall_Shadow"; }

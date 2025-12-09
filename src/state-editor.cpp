@@ -101,11 +101,12 @@ namespace castlecrawl
               TileImage::Ice,           TileImage::Rock,          TileImage::RockWeak,
               TileImage::Stair_Up,      TileImage::Stair_Down,    TileImage::Altar,
               TileImage::Bag,           TileImage::Coffin,        TileImage::StoneSpire,
-              TileImage::Coins });
+              TileImage::Coins,         TileImage::Well });
 
         m_doorwayButton.setup(
             t_context,
-            { (m_miscButton.globalBounds().position.x + cellSize.x + 1.0f), tileSelectButtonVertPos },
+            { (m_miscButton.globalBounds().position.x + cellSize.x + 1.0f),
+              tileSelectButtonVertPos },
             { TileImage::Doorway_Wood,
               TileImage::Doorway_WoodRune,
               TileImage::Doorway_SatanicGray,
