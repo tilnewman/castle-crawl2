@@ -501,7 +501,6 @@ namespace castlecrawl::item
         return !isMiscEquipable(t_misc);
     }
 
-    // so far only keys cannot be found as random treasure in barrels/chests/etc.
     [[nodiscard]] constexpr bool canMiscBeRandomFoundItem(const Misc t_misc) noexcept
     {
         return ((t_misc != Misc::Key) && (t_misc != Misc::Flute));

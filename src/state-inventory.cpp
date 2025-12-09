@@ -489,9 +489,9 @@ namespace castlecrawl
             const item::Item itemCopy{ t_context.player.inventory().unItems().at(
                 m_unListboxUPtr->selectedIndex()) };
 
-            if (itemCopy.isMisc() && (itemCopy.miscType() == item::Misc::Key))
+            if (itemCopy.isMisc() && !canMiscBeRandomFoundItem(itemCopy.miscType()))
             {
-                showErrorText(t_context, "You cannot drop keys.  That would be a bad idea...");
+                showErrorText(t_context, "You cannot drop this item.  You may need it later...");
                 return;
             }
 
