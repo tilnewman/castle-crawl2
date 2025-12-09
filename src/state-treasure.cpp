@@ -6,6 +6,7 @@
 #include "state-treasure.hpp"
 
 #include "animation-manager.hpp"
+#include "check-macros.hpp"
 #include "context.hpp"
 #include "framerate-text.hpp"
 #include "item-factory.hpp"
@@ -39,6 +40,8 @@ namespace castlecrawl
 
     void StateTreasure::onEnter(const Context & t_context)
     {
+        M_CHECK(!m_treasure.empty(), "StateTreasure switched to but there was no treasure!");
+
         m_itemListboxUPtr = std::make_unique<Listbox>(m_treasure.items);
 
         m_itemListboxUPtr->setup(
@@ -124,6 +127,8 @@ namespace castlecrawl
         m_itemDescText = t_context.fonts.makeText(FontSize::Small, "");
         updateItemDescText(t_context);
     }
+
+    void StateTreasure::onExit(const Context &) { m_treasure = item::Treasure{}; }
 
     void StateTreasure::update(const Context & t_context, const float t_elapsedSec)
     {

@@ -779,11 +779,10 @@ namespace castlecrawl::item
         const int valuePerLevel{ 100 };
         int valueRemaining = t_context.player.level() * valuePerLevel;
         valueRemaining += t_context.random.fromTo(0, valuePerLevel);
-        valueRemaining = t_context.random.fromTo(0, valueRemaining);
 
         // determine how much will be gold
         Treasure treasure;
-        const int valueOfGold = t_context.random.fromTo(0, valueRemaining);
+        const int valueOfGold = t_context.random.fromTo(1, valueRemaining);
         treasure.gold         = (valueOfGold / 5);
         valueRemaining -= valueOfGold;
 

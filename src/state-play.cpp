@@ -10,6 +10,7 @@
 #include "fight-util.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
+#include "item-factory.hpp"
 #include "keys.hpp"
 #include "loot.hpp"
 #include "map-display.hpp"
@@ -277,7 +278,8 @@ namespace castlecrawl
                 (mapCharAttempted == tileImageToChar(TileImage::Stair_Down)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Stair_Up)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Coins)) ||
-                (mapCharAttempted == tileImageToChar(TileImage::Bag)))
+                (mapCharAttempted == tileImageToChar(TileImage::Bag)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Chest)))
             {
                 return mapPosAttempted;
             }
@@ -335,9 +337,7 @@ namespace castlecrawl
 
                 t_context.anim.sparkle().remove(mapPosAfter);
             }
-
-            // pickup bags
-            if (mapCharAttempted == tileImageToChar(TileImage::Bag))
+            else if (mapCharAttempted == tileImageToChar(TileImage::Bag))
             {
                 t_context.maps.current().setObjectChar(
                     mapPosAfter, tileImageToChar(TileImage::Empty));
@@ -354,6 +354,30 @@ namespace castlecrawl
                     t_context.state.setChangePending(State::Treasure);
 
                     t_context.maps.current().setLootAsCollected(mapPosAfter);
+                }
+            }
+            else if (mapCharAttempted == tileImageToChar(TileImage::Chest))
+            {
+                t_context.maps.current().setObjectChar(
+                    mapPosAfter, tileImageToChar(TileImage::Empty));
+
+                t_context.map_display.load(t_context);
+
+                const LootOpt_t lootOpt = t_context.maps.current().loot(mapPosAfter);
+                if (lootOpt.has_value())
+                {
+                    item::Treasure treasure;
+                    treasure.populateFromLoot(t_context, lootOpt.value());
+
+                    StateTreasure::setTreasure(treasure);
+                    t_context.state.setChangePending(State::Treasure);
+
+                    t_context.maps.current().setLootAsCollected(mapPosAfter);
+                }
+                else
+                {
+                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(t_context));
+                    t_context.state.setChangePending(State::Treasure);
                 }
             }
 
@@ -392,6 +416,10 @@ namespace castlecrawl
             else if (t_mapCharAttempted == tileImageToChar(TileImage::Coins))
             {
                 t_context.sfx.play("coin");
+            }
+            else if (t_mapCharAttempted == tileImageToChar(TileImage::Chest))
+            {
+                t_context.sfx.play("chest-open");
             }
             else
             {
