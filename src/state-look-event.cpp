@@ -49,7 +49,6 @@ namespace castlecrawl
                 LookEventHandler::takePassActions(t_context, m_lookEvent);
                 t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
                 t_context.sfx.play("magic-1");
-                t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
             }
             else
             {
