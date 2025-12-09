@@ -405,7 +405,17 @@ namespace castlecrawl
                 return;
             }
 
-            // TODO use the item
+            if (itemCopy.isMisc() && (itemCopy.miscType() == item::Misc::Flute))
+            {
+                t_context.sfx.play("flute");
+                t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
+                t_context.state.setChangePending(State::Play);
+                return;
+            }
+            else
+            {
+                // TODO use the item
+            }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
         {
