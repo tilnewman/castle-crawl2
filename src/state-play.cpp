@@ -320,6 +320,11 @@ namespace castlecrawl
 
                 t_context.map_display.load(t_context);
 
+                if (mapCharAttempted == tileImageToChar(TileImage::Coins))
+                {
+                    t_context.anim.sparkle().remove(mapPosAfter);
+                }
+
                 const LootOpt_t lootOpt = t_context.maps.current().loot(mapPosAfter);
                 if (lootOpt.has_value())
                 {
