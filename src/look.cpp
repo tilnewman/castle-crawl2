@@ -173,6 +173,10 @@ namespace castlecrawl
         {
             message = "A pile of coins on the ground.";
         }
+        else if (objectChar == tileImageToChar(TileImage::Well))
+        {
+            message = "Sounds echo deep down this empty stone well.";
+        }
         else if (
             (objectChar >= tileImageToChar(TileImage::Statue_Twins)) &&
             (objectChar <= tileImageToChar(TileImage::Statue_Tengu)))
