@@ -53,8 +53,8 @@ namespace castlecrawl
         const std::size_t turns_per_health_increase = 50;
         const std::size_t turns_per_mana_increase   = 35;
 
-        const int barrel_contains_monster_chance = 18;
-        const int coffin_contains_monster_chance = 12;
+        const int barrel_contains_monster_chance = 12;
+        const int coffin_contains_monster_chance = 6;
 
         const int barrel_is_empty_chance = 8;
         const int coffin_is_empty_chance = 16;

@@ -16,6 +16,7 @@
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-manager.hpp"
+#include "monster-spawn.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
 #include "player.hpp"
@@ -143,14 +144,15 @@ namespace castlecrawl
 
             t_context.sfx.play("barrel-break.ogg"); // intentionally using barrel sfx
 
-            const bool willSpawnBat =
-                (t_context.random.fromTo(1, t_context.config.coffin_contains_monster_chance) == 1);
+            const bool willSpawnMonster =
+                (t_context.random.fromTo(1, t_context.config.barrel_contains_monster_chance) == 1);
 
-            if (willSpawnBat)
+            if (willSpawnMonster)
             {
-                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Bat));
+                const TileImage spawnedMonster = MonsterSpawn::randomMonster(t_context);
+                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(spawnedMonster));
                 t_context.map_display.load(t_context);
-                t_context.monsters.add(t_context, t_pos, tileImageToChar(TileImage::Bat));
+                t_context.monsters.add(t_context, t_pos, tileImageToChar(spawnedMonster));
             }
             else
             {
@@ -177,14 +179,15 @@ namespace castlecrawl
 
             t_context.sfx.play("barrel-break.ogg");
 
-            const bool willSpawnBat =
+            const bool willSpawnMonster =
                 (t_context.random.fromTo(1, t_context.config.barrel_contains_monster_chance) == 1);
 
-            if (willSpawnBat)
+            if (willSpawnMonster)
             {
-                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Bat));
+                const TileImage spawnedMonster = MonsterSpawn::randomMonster(t_context);
+                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(spawnedMonster));
                 t_context.map_display.load(t_context);
-                t_context.monsters.add(t_context, t_pos, tileImageToChar(TileImage::Bat));
+                t_context.monsters.add(t_context, t_pos, tileImageToChar(spawnedMonster));
             }
             else
             {
