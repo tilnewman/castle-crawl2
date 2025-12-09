@@ -9,8 +9,52 @@
 #include "item-factory.hpp"
 #include "random.hpp"
 
+#include <iostream>
+
 namespace castlecrawl::item
 {
+
+    TreasureValues::TreasureValues(const TileImage t_source)
+        : value_per_level{ 0 }
+        , gold_value_divisor{ 1 } // don't divide by zero!
+    {
+        if (t_source == TileImage::Bag)
+        {
+            value_per_level    = 35;
+            gold_value_divisor = 2;
+        }
+        else if (t_source == TileImage::Barrel)
+        {
+            value_per_level    = 50;
+            gold_value_divisor = 10;
+        }
+        else if (t_source == TileImage::Coffin)
+        {
+            value_per_level    = 75;
+            gold_value_divisor = 5;
+        }
+        else if (t_source == TileImage::Chest)
+        {
+            value_per_level    = 125;
+            gold_value_divisor = 3;
+        }
+        else if (t_source == TileImage::Coins)
+        {
+            value_per_level    = 100;
+            gold_value_divisor = 1;
+        }
+        else
+        {
+            std::cerr << "Error:  TreasureValues::TreasureValues() was given an unhandled "
+                         "TileImage source=\""
+                      << toString(t_source) << "\"! Using default values to keep game running.\n";
+
+            value_per_level    = 50;
+            gold_value_divisor = 5;
+        }
+    }
+
+    //
 
     const std::string Treasure::description() const
     {
@@ -90,4 +134,4 @@ namespace castlecrawl::item
         }
     }
 
-} // namespace castlecrawl
+} // namespace castlecrawl::item

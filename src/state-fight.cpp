@@ -135,41 +135,16 @@ namespace castlecrawl
         {
             t_context.sfx.play("miss.ogg");
         }
-        else if (
-            (objectChar == tileImageToChar(TileImage::Barrel)) ||
-            (objectChar == tileImageToChar(TileImage::Coffin)))
+        else if (objectChar == tileImageToChar(TileImage::Coffin))
         {
-            if (objectChar == tileImageToChar(TileImage::Barrel))
-            {
-                ++t_context.statistics.barrels_opened;
-            }
-            else if (objectChar == tileImageToChar(TileImage::Coffin))
-            {
-                ++t_context.statistics.coffins_opened;
-            }
+            ++t_context.statistics.coffins_opened;
 
             t_context.anim.dust().add(t_context, t_pos);
 
-            t_context.sfx.play("barrel-break.ogg"); // same sfx for coffins
+            t_context.sfx.play("barrel-break.ogg"); // intentionally using barrel sfx
 
-            const bool willSpawnBat = [&]() {
-                if (objectChar == tileImageToChar(TileImage::Barrel))
-                {
-                    return (
-                        t_context.random.fromTo(
-                            1, t_context.config.barrel_contains_monster_chance) == 1);
-                }
-                else if (objectChar == tileImageToChar(TileImage::Coffin))
-                {
-                    return (
-                        t_context.random.fromTo(
-                            1, t_context.config.coffin_contains_monster_chance) == 1);
-                }
-                else
-                {
-                    return false;
-                }
-            }();
+            const bool willSpawnBat =
+                (t_context.random.fromTo(1, t_context.config.coffin_contains_monster_chance) == 1);
 
             if (willSpawnBat)
             {
@@ -182,28 +157,48 @@ namespace castlecrawl
                 t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Empty));
                 t_context.map_display.load(t_context);
 
-                const bool isEmpty = [&]() {
-                    if (objectChar == tileImageToChar(TileImage::Barrel))
-                    {
-                        return (
-                            t_context.random.fromTo(1, t_context.config.barrel_is_empty_chance) ==
-                            1);
-                    }
-                    else if (objectChar == tileImageToChar(TileImage::Coffin))
-                    {
-                        return (
-                            t_context.random.fromTo(1, t_context.config.coffin_is_empty_chance) ==
-                            1);
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }();
+                const bool isEmpty =
+                    (t_context.random.fromTo(1, t_context.config.coffin_is_empty_chance) == 1);
 
                 if (!isEmpty)
                 {
-                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(t_context));
+                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(
+                        t_context, item::TreasureValues(TileImage::Coffin)));
+
+                    nextState = State::Treasure;
+                }
+            }
+        }
+        else if (objectChar == tileImageToChar(TileImage::Barrel))
+        {
+            ++t_context.statistics.barrels_opened;
+
+            t_context.anim.dust().add(t_context, t_pos);
+
+            t_context.sfx.play("barrel-break.ogg");
+
+            const bool willSpawnBat =
+                (t_context.random.fromTo(1, t_context.config.barrel_contains_monster_chance) == 1);
+
+            if (willSpawnBat)
+            {
+                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Bat));
+                t_context.map_display.load(t_context);
+                t_context.monsters.add(t_context, t_pos, tileImageToChar(TileImage::Bat));
+            }
+            else
+            {
+                t_context.maps.current().setObjectChar(t_pos, tileImageToChar(TileImage::Empty));
+                t_context.map_display.load(t_context);
+
+                const bool isEmpty =
+                    (t_context.random.fromTo(1, t_context.config.barrel_is_empty_chance) == 1);
+
+                if (!isEmpty)
+                {
+                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(
+                        t_context, item::TreasureValues(TileImage::Barrel)));
+
                     nextState = State::Treasure;
                 }
             }

@@ -35,7 +35,10 @@ namespace castlecrawl::item
         void setup();
 
         [[nodiscard]] inline const TextExtent textExtents() const noexcept { return m_textExtent; }
-        [[nodiscard]] const Treasure randomTreasureFind(const Context & t_context) const;
+
+        [[nodiscard]] const Treasure
+            randomTreasureFind(const Context & t_context, const TreasureValues & t_values) const;
+
         [[nodiscard]] const Treasure randomHerbFind(const Context & t_context) const;
 
         [[nodiscard]] inline const ItemVec_t & allItems() const noexcept { return m_allItems; }

@@ -311,52 +311,9 @@ namespace castlecrawl
             t_context.player_display.position(t_context, mapPosAfter);
 
             // pickup coins
-            if (mapCharAttempted == tileImageToChar(TileImage::Coins))
-            {
-                const int playerLevel = t_context.player.level();
-
-                const int coinsFound =
-                    t_context.random.fromTo((playerLevel * 10), (playerLevel * 100));
-
-                t_context.player.goldAdj(coinsFound);
-
-                t_context.maps.current().setObjectChar(
-                    mapPosAfter, tileImageToChar(TileImage::Empty));
-
-                t_context.map_display.load(t_context);
-
-                std::string risingTextMessage("+");
-                risingTextMessage += std::to_string(coinsFound);
-                risingTextMessage += " gold";
-
-                t_context.anim.risingText().add(
-                    t_context,
-                    risingTextMessage,
-                    t_context.config.message_color_coins,
-                    mapPosAfter);
-
-                t_context.anim.sparkle().remove(mapPosAfter);
-            }
-            else if (mapCharAttempted == tileImageToChar(TileImage::Bag))
-            {
-                t_context.maps.current().setObjectChar(
-                    mapPosAfter, tileImageToChar(TileImage::Empty));
-
-                t_context.map_display.load(t_context);
-
-                const LootOpt_t lootOpt = t_context.maps.current().loot(mapPosAfter);
-                if (lootOpt.has_value())
-                {
-                    item::Treasure treasure;
-                    treasure.populateFromLoot(t_context, lootOpt.value());
-
-                    StateTreasure::setTreasure(treasure);
-                    t_context.state.setChangePending(State::Treasure);
-
-                    t_context.maps.current().setLootAsCollected(mapPosAfter);
-                }
-            }
-            else if (mapCharAttempted == tileImageToChar(TileImage::Chest))
+            if ((mapCharAttempted == tileImageToChar(TileImage::Coins)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Bag)) ||
+                (mapCharAttempted == tileImageToChar(TileImage::Chest)))
             {
                 t_context.maps.current().setObjectChar(
                     mapPosAfter, tileImageToChar(TileImage::Empty));
@@ -376,7 +333,9 @@ namespace castlecrawl
                 }
                 else
                 {
-                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(t_context));
+                    StateTreasure::setTreasure(t_context.items.randomTreasureFind(
+                        t_context, item::TreasureValues(charToTileImage(mapCharAttempted))));
+
                     t_context.state.setChangePending(State::Treasure);
                 }
             }

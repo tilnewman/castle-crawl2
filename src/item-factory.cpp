@@ -773,18 +773,29 @@ namespace castlecrawl::item
         M_CHECK((t_item.value() > 0), "Item's Value is zero or less: " << t_item);
     }
 
-    const Treasure ItemFactory::randomTreasureFind(const Context & t_context) const
+    const Treasure ItemFactory::randomTreasureFind(
+        const Context & t_context, const TreasureValues & t_values) const
     {
+        M_CHECK(
+            (t_values.gold_value_divisor > 0),
+            "ItemFactory::randomTreasureFind() given an invalid TreasureValue.gold_value_divisor="
+                << t_values.gold_value_divisor);
+
         // establish how much value this random find is worth
-        const int valuePerLevel{ 50 };
+        const int valuePerLevel{ t_values.value_per_level };
         int valueRemaining = t_context.player.level() * valuePerLevel;
         valueRemaining += t_context.random.fromTo(0, valuePerLevel);
 
         // determine how much will be gold
         Treasure treasure;
         const int valueOfGold = t_context.random.fromTo(1, valueRemaining);
-        treasure.gold         = (valueOfGold / 5);
+        treasure.gold         = (valueOfGold / t_values.gold_value_divisor);
         valueRemaining -= valueOfGold;
+
+        if (1 == t_values.gold_value_divisor)
+        {
+            valueRemaining = 0;
+        }
 
         // use remaining value to add items
         ItemVec_t items;

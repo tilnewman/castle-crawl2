@@ -5,6 +5,7 @@
 //
 #include "item.hpp"
 #include "loot.hpp"
+#include "tile-image-enum.hpp"
 
 #include <string>
 
@@ -15,6 +16,17 @@ namespace castlecrawl
 
 namespace castlecrawl::item
 {
+
+    struct TreasureValues
+    {
+        explicit TreasureValues(const TileImage t_source);
+
+        int value_per_level;
+        int gold_value_divisor;
+    };
+
+    //
+
     struct Treasure
     {
         int gold{ 0 };
@@ -24,11 +36,11 @@ namespace castlecrawl::item
         {
             return ((0 == gold) && items.empty());
         }
-        
+
         [[nodiscard]] const std::string description() const;
 
         void populateFromLoot(const Context & t_context, const Loot & t_loot);
     };
-}
+} // namespace castlecrawl::item
 
 #endif // TREASURE_HPP_INCLUDED
