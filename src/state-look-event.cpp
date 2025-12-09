@@ -72,7 +72,7 @@ namespace castlecrawl
 
         m_backgroundRectangle.setPosition(m_textLayout.rect_outer.position);
         m_backgroundRectangle.setSize(m_textLayout.rect_outer.size);
-        m_backgroundRectangle.setFillColor(sf::Color::Black);
+        m_backgroundRectangle.setFillColor(t_context.config.message_color_popup_bg);
         m_backgroundRectangle.setOutlineThickness(2.0f);
         m_backgroundRectangle.setOutlineColor(sf::Color::White);
     }

@@ -8,7 +8,6 @@
 #include "animation-manager.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
-#include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
@@ -16,7 +15,6 @@
 #include "monster-manager.hpp"
 #include "npc-manager.hpp"
 #include "player-display.hpp"
-#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "state-manager.hpp"
 #include "top-panel.hpp"
@@ -50,7 +48,7 @@ namespace castlecrawl
 
         m_backgroundRectangle.setPosition(m_textLayout.rect_outer.position);
         m_backgroundRectangle.setSize(m_textLayout.rect_outer.size);
-        m_backgroundRectangle.setFillColor(sf::Color::Black);
+        m_backgroundRectangle.setFillColor(t_context.config.message_color_popup_bg);
         m_backgroundRectangle.setOutlineThickness(2.0f);
         m_backgroundRectangle.setOutlineColor(sf::Color::White);
     }
