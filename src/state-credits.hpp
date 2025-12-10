@@ -34,7 +34,7 @@ namespace castlecrawl
 
         void update(const float t_elapsedSec);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
-        void vertPosition(const float t_pos);
+        void vertPosition(const Context & t_context, const float t_pos);
         [[nodiscard]] float bottom() const;
 
       private:
@@ -44,7 +44,6 @@ namespace castlecrawl
         sf::Text m_descText;
         sf::Text m_licenseText;
         sf::Text m_extraText;
-        static const float m_vertPad;
     };
 
     //

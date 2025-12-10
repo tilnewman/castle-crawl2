@@ -19,8 +19,6 @@
 namespace castlecrawl
 {
 
-    const float Credit::m_vertPad{ 10.0f };
-
     Credit::Credit(
         const Context & t_context,
         const std::string & t_name,
@@ -55,7 +53,7 @@ namespace castlecrawl
 
         m_nameText.setPosition(
             { ((screenRect.size.x * 0.5f) - (m_nameText.getGlobalBounds().size.x * 0.5f)),
-              (util::bottom(m_sprite.getGlobalBounds()) + (m_vertPad * 2.0f)) });
+              util::bottom(m_sprite.getGlobalBounds()) });
 
         const sf::Color textColor = sf::Color(220, 220, 220);
 
@@ -63,19 +61,19 @@ namespace castlecrawl
 
         m_descText.setPosition(
             { ((screenRect.size.x * 0.5f) - (m_descText.getGlobalBounds().size.x * 0.5f)),
-              util::bottom(m_nameText) + m_vertPad });
+              util::bottom(m_nameText) });
 
         m_licenseText = t_context.fonts.makeText(FontSize::Small, t_license, textColor);
 
         m_licenseText.setPosition(
             { ((screenRect.size.x * 0.5f) - (m_licenseText.getGlobalBounds().size.x * 0.5f)),
-              util::bottom(m_descText) + m_vertPad });
+              util::bottom(m_descText) });
 
         m_extraText = t_context.fonts.makeText(FontSize::Small, t_extra, textColor);
 
         m_extraText.setPosition(
             { ((screenRect.size.x * 0.5f) - (m_extraText.getGlobalBounds().size.x * 0.5f)),
-              util::bottom(m_licenseText) + m_vertPad });
+              util::bottom(m_licenseText) });
     }
 
     void Credit::update(const float t_elapsedSec)
@@ -97,21 +95,28 @@ namespace castlecrawl
         t_target.draw(m_extraText, t_states);
     }
 
-    void Credit::vertPosition(const float t_pos)
+    void Credit::vertPosition(const Context & t_context, const float t_pos)
     {
         m_sprite.setPosition({ m_sprite.getGlobalBounds().position.x, t_pos });
 
         m_nameText.setPosition(
-            { m_nameText.getGlobalBounds().position.x, util::bottom(m_sprite) + m_vertPad });
+            { m_nameText.getGlobalBounds().position.x,
+              util::bottom(m_sprite) + (t_context.layout.screenRegion().size.y * 0.0175f) });
+
+        const float vertPadRatio = 0.2f;
 
         m_descText.setPosition(
-            { m_descText.getGlobalBounds().position.x, util::bottom(m_nameText) + m_vertPad });
+            { m_descText.getGlobalBounds().position.x,
+              util::bottom(m_nameText) + (m_nameText.getGlobalBounds().size.y * vertPadRatio) });
 
         m_licenseText.setPosition(
-            { m_licenseText.getGlobalBounds().position.x, util::bottom(m_descText) + m_vertPad });
+            { m_licenseText.getGlobalBounds().position.x,
+              util::bottom(m_descText) + (m_descText.getGlobalBounds().size.y * vertPadRatio) });
 
         m_extraText.setPosition(
-            { m_extraText.getGlobalBounds().position.x, util::bottom(m_licenseText) + m_vertPad });
+            { m_extraText.getGlobalBounds().position.x,
+              util::bottom(m_licenseText) +
+                  (m_licenseText.getGlobalBounds().size.y * vertPadRatio) });
     }
 
     float Credit::bottom() const { return util::bottom(m_extraText); }
@@ -152,6 +157,8 @@ namespace castlecrawl
             0.062f,
             "Design, Programming");
 
+        softwareCredit.vertPosition(t_context, screenRect.size.y);
+
         Credit & sfmlCredit = m_credits.emplace_back(
             t_context,
             "",
@@ -161,7 +168,7 @@ namespace castlecrawl
             "www.sfml-dev.org",
             "www.opensource.org/license/Zlib");
 
-        sfmlCredit.vertPosition(softwareCredit.bottom() + vertSpacer);
+        sfmlCredit.vertPosition(t_context, softwareCredit.bottom() + vertSpacer);
 
         Credit & tileCredit = m_credits.emplace_back(
             t_context,
@@ -172,7 +179,7 @@ namespace castlecrawl
             "www.lostgarden.home.blog/2006/07/08/more-free-game-graphic",
             "www.creativecommons.org/licenses/by/3.0");
 
-        tileCredit.vertPosition(sfmlCredit.bottom() + vertSpacer);
+        tileCredit.vertPosition(t_context, sfmlCredit.bottom() + vertSpacer);
 
         Credit & stoneSoupCredit = m_credits.emplace_back(
             t_context,
@@ -183,7 +190,7 @@ namespace castlecrawl
             "wwww.opengameart.org/content/dungeon-crawl-32x32-tiles",
             "www.creativecommons.org/publicdomain/zero/1.0");
 
-        stoneSoupCredit.vertPosition(tileCredit.bottom() + vertSpacer);
+        stoneSoupCredit.vertPosition(t_context, tileCredit.bottom() + vertSpacer);
 
         Credit & gameIconsCredit = m_credits.emplace_back(
             t_context,
@@ -194,7 +201,7 @@ namespace castlecrawl
             "www.game-icons.net",
             "www.creativecommons.org/licenses/by/3.0");
 
-        gameIconsCredit.vertPosition(stoneSoupCredit.bottom() + vertSpacer);
+        gameIconsCredit.vertPosition(t_context, stoneSoupCredit.bottom() + vertSpacer);
 
         Credit & fontCredit = m_credits.emplace_back(
             t_context,
@@ -205,7 +212,7 @@ namespace castlecrawl
             "SIL Open Font License",
             "www.scripts.sil.org/ofl");
 
-        fontCredit.vertPosition(gameIconsCredit.bottom() + vertSpacer);
+        fontCredit.vertPosition(t_context, gameIconsCredit.bottom() + vertSpacer);
 
         Credit & doorSfxCredit = m_credits.emplace_back(
             t_context,
@@ -216,7 +223,7 @@ namespace castlecrawl
             "www.freesound.org/people/InspectorJ/sounds/339677",
             "www.creativecommons.org/licenses/by/3.0");
 
-        doorSfxCredit.vertPosition(fontCredit.bottom() + vertSpacer);
+        doorSfxCredit.vertPosition(t_context, fontCredit.bottom() + vertSpacer);
 
         Credit & stepsSfxCredit = m_credits.emplace_back(
             t_context,
@@ -227,7 +234,7 @@ namespace castlecrawl
             "www.freesound.org/people/sinatra314/sounds/58454",
             "www.creativecommons.org/licenses/by/3.0");
 
-        stepsSfxCredit.vertPosition(doorSfxCredit.bottom() + vertSpacer);
+        stepsSfxCredit.vertPosition(t_context, doorSfxCredit.bottom() + vertSpacer);
 
         Credit & gameOverSfxCredit = m_credits.emplace_back(
             t_context,
@@ -238,7 +245,7 @@ namespace castlecrawl
             "Little Robot Sound Factory",
             "www.creativecommons.org/licenses/by/3.0");
 
-        gameOverSfxCredit.vertPosition(stepsSfxCredit.bottom() + vertSpacer);
+        gameOverSfxCredit.vertPosition(t_context, stepsSfxCredit.bottom() + vertSpacer);
 
         Credit & creditsMusicCredit = m_credits.emplace_back(
             t_context,
@@ -249,7 +256,7 @@ namespace castlecrawl
             "Posted to OpenGameArt.org by Janne Hanhisuanto",
             "www.creativecommons.org/licenses/by/3.0");
 
-        creditsMusicCredit.vertPosition(gameOverSfxCredit.bottom() + vertSpacer);
+        creditsMusicCredit.vertPosition(t_context, gameOverSfxCredit.bottom() + vertSpacer);
     }
 
     void StateCredits::update(const Context & t_context, const float t_elapsedSec)
