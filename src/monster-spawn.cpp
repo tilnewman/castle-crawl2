@@ -34,7 +34,7 @@ namespace castlecrawl
                                            TileImage::Spider,
                                            TileImage::GreenSnake });
         }
-        else if (playerLevel <= 6)
+        else if (playerLevel <= 7)
         {
             return t_context.random.from({ TileImage::KoboldBrute,
                                            TileImage::OctoCrawler,
