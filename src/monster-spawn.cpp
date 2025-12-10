@@ -27,61 +27,67 @@ namespace castlecrawl
         }
         else if (playerLevel <= 5)
         {
-            return t_context.random.from({ TileImage::Kobold,
-                                           TileImage::Quasit,
-                                           TileImage::RustCrab,
-                                           TileImage::Spider,
-                                           TileImage::Spider,
-                                           TileImage::GreenSnake });
+            return t_context.random.from(
+                { TileImage::Kobold,
+                  TileImage::Quasit,
+                  TileImage::RustCrab,
+                  TileImage::Spider,
+                  TileImage::GreenSnake });
         }
         else if (playerLevel <= 7)
         {
-            return t_context.random.from({ TileImage::KoboldBrute,
-                                           TileImage::OctoCrawler,
-                                           TileImage::RedJelly,
-                                           TileImage::AntCreeper,
-                                           TileImage::DessertSnake,
-                                           TileImage::Scorpion,
-                                           TileImage::SkitterMite });
+            return t_context.random.from(
+                { TileImage::KoboldBrute,
+                  TileImage::OctoCrawler,
+                  TileImage::RedJelly,
+                  TileImage::AntCreeper,
+                  TileImage::DessertSnake,
+                  TileImage::Scorpion,
+                  TileImage::SkitterMite });
         }
         else if (playerLevel <= 10)
         {
-            return t_context.random.from({ TileImage::RacerSnake,
-                                           TileImage::CoillingViper,
-                                           TileImage::SkullSlime,
-                                           TileImage::BeholderMite,
-                                           TileImage::FleshChomper });
+            return t_context.random.from(
+                { TileImage::RacerSnake,
+                  TileImage::CoillingViper,
+                  TileImage::SkullSlime,
+                  TileImage::BeholderMite,
+                  TileImage::FleshChomper });
         }
         else if (playerLevel <= 15)
         {
-            return t_context.random.from({ TileImage::BloatedCreeper,
-                                           TileImage::CaveSpider,
-                                           TileImage::SlimeBeholder,
-                                           TileImage::GoldScorpion,
-                                           TileImage::BeholderSpawn });
+            return t_context.random.from(
+                { TileImage::BloatedCreeper,
+                  TileImage::CaveSpider,
+                  TileImage::SlimeBeholder,
+                  TileImage::GoldScorpion,
+                  TileImage::BeholderSpawn });
         }
         else if (playerLevel <= 20)
         {
-            return t_context.random.from({ TileImage::Fungosite,
-                                           TileImage::WidowSpider,
-                                           TileImage::RottingChomper,
-                                           TileImage::GuardianCobra });
+            return t_context.random.from(
+                { TileImage::Fungosite,
+                  TileImage::WidowSpider,
+                  TileImage::RottingChomper,
+                  TileImage::GuardianCobra });
         }
         else if (playerLevel <= 25)
         {
-            return t_context.random.from({ TileImage::AquaSlime,
-                                           TileImage::SpiderHorror,
-                                           TileImage::GiantAmoeba,
-                                           TileImage::WanderingEye,
-                                           TileImage::Ooze });
+            return t_context.random.from(
+                { TileImage::AquaSlime,
+                  TileImage::SpiderHorror,
+                  TileImage::GiantAmoeba,
+                  TileImage::WanderingEye,
+                  TileImage::Ooze });
         }
         else
         {
-            return t_context.random.from({ TileImage::WalkingBeholder,
-                                           TileImage::ManaCobra,
-                                           TileImage::WailingSlime,
-                                           TileImage::SkiteWing,
-                                           TileImage::Beholder });
+            return t_context.random.from(
+                { TileImage::WalkingBeholder,
+                  TileImage::ManaCobra,
+                  TileImage::WailingSlime,
+                  TileImage::SkiteWing,
+                  TileImage::Beholder });
         }
     }
 
