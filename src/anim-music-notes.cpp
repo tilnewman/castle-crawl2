@@ -5,6 +5,7 @@
 //
 #include "anim-music-notes.hpp"
 
+#include "color-range.hpp"
 #include "context.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
@@ -35,9 +36,12 @@ namespace castlecrawl
             sprite,
             util::scaleRectInPlaceCopy(mapScreenRect, t_context.random.fromTo(0.25f, 0.75f)));
 
-        sprite.move({ t_context.random.fromTo(
-                          -(mapScreenRect.size.x * 0.4f), (mapScreenRect.size.x * 0.4f)),
-                      0.0f });
+        sprite.move(
+            { t_context.random.fromTo(
+                  -(mapScreenRect.size.x * 0.4f), (mapScreenRect.size.x * 0.4f)),
+              0.0f });
+
+        sprite.setColor(colors::randomVibrant(t_context.random, false));
     }
 
     bool NoteParticle::update(const Context &, const float t_elapsedSec)
