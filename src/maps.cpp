@@ -539,7 +539,9 @@ namespace castlecrawl
             {
                 {
                     .map_pos = { 22, 4},
-                    .message = "Welcome to sculpture garden. Each sculpture has a message plaque for you to read. Dangerous animals may be present."
+                    .message = "A wooden sign reads: Welcome to the sculpture garden. Each "
+                               "sculpture has a message plaque for you to read. Dangerous "
+                               "animals may be present."
                 }
             } );
         // clang-format on
