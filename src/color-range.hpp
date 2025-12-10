@@ -71,24 +71,24 @@ namespace colors
             static_cast<float>(255 * 3));
     }
 
-    [[nodiscard]] constexpr float
-        diffEuclid(const sf::Color & left, const sf::Color & right) noexcept
+    [[nodiscard]] inline float diffEuclid(const sf::Color & left, const sf::Color & right) noexcept
     {
         const Diff_t diffRed{ diffAbs(left.r, right.r) };
         const Diff_t diffGrn{ diffAbs(left.g, right.g) };
         const Diff_t diffBlu{ diffAbs(left.b, right.b) };
         const Diff_t diffAlp{ diffAbs(left.a, right.a) };
 
-        const double diff{ std::sqrt(static_cast<double>(
-            (diffRed * diffRed) + (diffGrn * diffGrn) + (diffBlu * diffBlu) +
-            (diffAlp * diffAlp))) };
+        const double diff{ std::sqrt(
+            static_cast<double>(
+                (diffRed * diffRed) + (diffGrn * diffGrn) + (diffBlu * diffBlu) +
+                (diffAlp * diffAlp))) };
 
         const double ratioCorrection{ std::sqrt(static_cast<double>(255 * 255 * 4)) };
 
         return static_cast<float>(diff / ratioCorrection);
     }
 
-    [[nodiscard]] constexpr float diffEuclidOpaque(sf::Color left, sf::Color right) noexcept
+    [[nodiscard]] inline float diffEuclidOpaque(sf::Color left, sf::Color right) noexcept
     {
         const Diff_t diffRed{ diffAbs(left.r, right.r) };
         const Diff_t diffGrn{ diffAbs(left.g, right.g) };
