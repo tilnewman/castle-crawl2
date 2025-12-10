@@ -95,11 +95,7 @@ namespace castlecrawl
         t_target.draw(t_context.top_panel, t_states);
         t_target.draw(m_fadeRedRectangle, t_states);
         t_target.draw(m_fadeBlackRectangle, t_states);
-
-        if (m_fadeRedRectangle.getFillColor().a < 255)
-        {
-            t_target.draw(m_titleText, t_states);
-        }
+        t_target.draw(m_titleText, t_states);
     }
 
     void StateDeath::handleEvent(const Context &, const sf::Event &) {}
