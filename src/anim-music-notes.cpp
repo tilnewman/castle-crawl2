@@ -25,7 +25,7 @@ namespace castlecrawl
         : is_alive{ true }
         , speed{ t_context.random.fromTo(20.0f, 40.0f) }
         , age_sec{ 0.0f }
-        , age_max_sec{ t_context.random.fromTo(0.5f, 1.5f) }
+        , age_max_sec{ t_context.random.fromTo(0.5f, 2.25f) }
         , sprite{ t_texture, t_textureRect }
     {
         const sf::FloatRect mapScreenRect{ t_context.maps.current().mapPosToScreenPos(
