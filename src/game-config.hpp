@@ -38,8 +38,6 @@ namespace castlecrawl
         const sf::Color message_color_coins       = sf::Color(255, 200, 100);
         const sf::Color message_color_poison      = sf::Color(100, 255, 100);
         const sf::Color message_color_item        = sf::Color(160, 82, 45);
-        const sf::Color message_color_popup       = sf::Color(220, 220, 220);
-        const sf::Color message_color_popup_bg    = sf::Color(20, 16, 16);
 
         const sf::Color state_color_title       = sf::Color::White;
         const sf::Color state_color_subtitle    = sf::Color(180, 160, 120);
@@ -59,6 +57,10 @@ namespace castlecrawl
 
         const int barrel_is_empty_chance = 8;
         const int coffin_is_empty_chance = 16;
+
+        const float popup_text_region_ratio = 0.35f;
+        const float look_text_region_ratio  = 0.5f;
+        const float text_inner_pad_ratio    = 0.15f;
 
         // DON'T CHANGE UNLESS YOU ALSO CHECK EVERYTHING IN MAPS.CPP
         const sf::Vector2i map_size_max = { 41, 23 };

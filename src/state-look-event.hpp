@@ -3,6 +3,7 @@
 //
 // state-look-event.hpp
 //
+#include "accent-image.hpp"
 #include "look-event.hpp"
 #include "state.hpp"
 #include "text-layout.hpp"
@@ -41,7 +42,9 @@ namespace castlecrawl
       private:
         static inline LookEvent m_lookEvent{};
 
-        sf::RectangleShape m_backgroundRectangle;
+        sf::Texture m_paperTexture;
+        sf::Sprite m_paperSprite;
+        AccentImage m_accentImage;
         TextLayoutPack m_textLayout;
     };
 

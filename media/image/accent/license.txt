@@ -1,0 +1,1 @@
+All images are in the Public Domain, gathered either from wpclipart.com or publicdomainvectors.org.  Some files were rasterized from svg format to png.  Some files were modified in photoshop to be strictly black lines on a transparent background.  All files were resized to have a max dimension of 512 pixels.

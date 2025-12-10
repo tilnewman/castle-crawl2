@@ -3,6 +3,7 @@
 //
 // state-text-popup.hpp
 //
+#include "accent-image.hpp"
 #include "font.hpp"
 #include "map-types.hpp"
 #include "state.hpp"
@@ -12,7 +13,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include <string>
@@ -30,7 +33,7 @@ namespace castlecrawl
             , map_pos{ -1, -1 } // both must be negative to be invalid
             , will_advance_turn{ false }
             , will_center_justify{ true }
-            , color{ sf::Color(220, 220, 220) }
+            , color{ sf::Color::Black }
             , font_size{ FontSize::Medium }
         {}
 
@@ -39,7 +42,7 @@ namespace castlecrawl
             const MapPos_t & t_mapPos,
             const bool t_willAdanceTurn,
             const bool t_willCenterJustify = true,
-            const sf::Color & t_color      = sf::Color(220, 220, 220),
+            const sf::Color & t_color      = sf::Color::Black,
             const FontSize t_fontSize      = FontSize::Medium)
             : message{ t_message }
             , map_pos{ t_mapPos }
@@ -82,7 +85,9 @@ namespace castlecrawl
       private:
         static inline TextPopupInfo m_info{};
 
-        sf::RectangleShape m_backgroundRectangle;
+        sf::Texture m_paperTexture;
+        sf::Sprite m_paperSprite;
+        AccentImage m_accentImage;
         TextLayoutPack m_textLayout;
     };
 
