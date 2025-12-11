@@ -41,7 +41,7 @@ namespace castlecrawl
 
     void RisingTextAnimationManager::update(const Context & t_context, const float t_elapsedSec)
     {
-        const float ageMaxSec{ 3.0f };
+        const float ageMaxSec{ 4.0f };
         const float vertTravelMax{ (t_context.layout.cellSize().y * 2.25f) };
 
         for (RisingTextAnimation & animation : m_animations)
