@@ -722,13 +722,24 @@ namespace castlecrawl
                 t_context.sfx.play("tap-wood-low");
             }
         }
+        else if (keyScancode == sf::Keyboard::Scancode::Period)
+        {
+            editMap(t_context, '.', "Erase");
+        }
         else if (keyScancode == sf::Keyboard::Scancode::Space)
         {
             editMap(t_context, tileImageToChar(TileImage::Empty), "Bare Floor");
         }
-        else if (keyScancode == sf::Keyboard::Scancode::Period)
+        else if (keyScancode == sf::Keyboard::Scancode::K)
         {
-            editMap(t_context, '.', "Erase");
+            if (isShiftPressed())
+            {
+                editMap(t_context, tileImageToChar(TileImage::StoneSpire), "Spire");
+            }
+            else
+            {
+                editMap(t_context, tileImageToChar(TileImage::Coffin), "Coffin");
+            }
         }
         else if (keyScancode == sf::Keyboard::Scancode::R)
         {
