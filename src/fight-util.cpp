@@ -287,7 +287,7 @@ namespace castlecrawl::fight
 
         ++t_context.statistics.spells_cast;
 
-        // apply damage the monster (if any is at t_mapPos)
+        // apply damage to the monster (if any is at t_mapPos)
         if (isTileImageMonster(
                 charToTileImage(t_context.maps.current().cell(t_mapPos).object_char)))
         {
