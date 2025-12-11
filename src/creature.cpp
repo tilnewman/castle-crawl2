@@ -26,7 +26,7 @@ namespace castlecrawl
               t_context,
               t_tileImage,
               t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos)) }
-        , m_isFacingLeft{ true } // all creature images from stone soup face left
+        , m_isFacingLeft{ true } // all creature/npc images from stone soup face left
     {}
 
     void Creature::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -78,18 +78,22 @@ namespace castlecrawl
             return false;
         }
 
-        const int closestDistance = positions.front().distance;
-        const int currentDistance = distance(t_targetMapPos, m_mapPos);
-
-        if ((closestDistance == currentDistance) && t_context.random.boolean())
+        // allow moving away from the target half of the time
+        // this makes no sense but looks like more natural eager monster movement
+        // this also allows monsters to sometimes move around obstacles more naturally
+        if (t_context.random.boolean())
         {
-            // if moving won't get us any closer, then don't bother moving about half the time
-            return false;
-        }
+            const int currentDistance = distance(t_targetMapPos, m_mapPos);
 
-        std::erase_if(positions, [&](const PositionDistance & mpd) {
-            return (mpd.distance > closestDistance);
-        });
+            std::erase_if(positions, [&](const PositionDistance & mpd) {
+                return (mpd.distance > currentDistance);
+            });
+
+            if (positions.empty())
+            {
+                return false;
+            }
+        }
 
         moveTo(t_context, t_context.random.from(positions).position);
         return true;
