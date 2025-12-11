@@ -645,6 +645,25 @@ namespace castlecrawl
                              << itemNameGivenPass << "\"!");
             }
         }
+
+        // make sure all wooden signs have corresponding LookEvents
+        for (const auto & mapCells : t_map.mapCellsVec())
+        {
+            for (const MapCell & cell : mapCells)
+            {
+                if (cell.object_char != tileImageToChar(TileImage::Sign))
+                {
+                    continue;
+                }
+
+                const LookEventOpt_t lookEventOpt = t_map.lookEvent(cell.position);
+
+                M_CHECK(
+                    lookEventOpt.has_value(),
+                    "Map \"" << toString(t_map.name()) << "\" at map_pos=" << cell.position
+                             << " is a wooden sign with no coresponding LookEvent specified!");
+            }
+        }
     }
 
     void Maps::verifyDoorLocks(const Context & t_context, const Map & t_map) const
@@ -666,24 +685,20 @@ namespace castlecrawl
         }
 
         // verify every locked door on the map has a coresponding DoorLock object specified
-        const sf::Vector2i size = t_map.size();
-        for (int y(0); y < size.y; ++y)
+        for (const auto & mapCells : t_map.mapCellsVec())
         {
-            for (int x(0); x < size.x; ++x)
+            for (const MapCell & cell : mapCells)
             {
-                const MapPos_t pos{ x, y };
-                const char ch = t_map.cell(pos).object_char;
-
-                if (ch != tileImageToChar(TileImage::DoorLocked))
+                if (cell.object_char != tileImageToChar(TileImage::DoorLocked))
                 {
                     continue;
                 }
 
-                const DoorLockOpt_t doorLockOpt = t_map.doorLock(pos);
+                const DoorLockOpt_t doorLockOpt = t_map.doorLock(cell.position);
 
                 M_CHECK(
                     doorLockOpt.has_value(),
-                    "Map \"" << toString(t_map.name()) << "\" at map_pos=" << pos
+                    "Map \"" << toString(t_map.name()) << "\" at map_pos=" << cell.position
                              << " is a locked door with no coresponding DoorLock specified!");
             }
         }

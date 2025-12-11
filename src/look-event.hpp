@@ -5,6 +5,7 @@
 //
 #include "map-types.hpp"
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -67,7 +68,8 @@ namespace castlecrawl
         int health_adj_fail{ 0 };
     };
 
-    using LookEvents_t = std::vector<LookEvent>;
+    using LookEvents_t   = std::vector<LookEvent>;
+    using LookEventOpt_t = std::optional<LookEvent>;
 
     //
 

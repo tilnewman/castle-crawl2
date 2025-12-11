@@ -84,6 +84,19 @@ namespace castlecrawl
         }
     }
 
+    const LookEventOpt_t Map::lookEvent(const MapPos_t & t_pos) const
+    {
+        for (const LookEvent & event : m_lookEvents)
+        {
+            if (event.map_pos == t_pos)
+            {
+                return event;
+            }
+        }
+
+        return {};
+    }
+
     void Map::setLookEventAsHappened(const MapPos_t & t_pos)
     {
         for (LookEvent & event : m_lookEvents)

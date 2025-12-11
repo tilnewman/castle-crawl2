@@ -27,6 +27,7 @@ namespace castlecrawl
             const Loots_t & t_loots           = {});
 
         [[nodiscard]] constexpr MapName name() const noexcept { return m_name; }
+        [[nodiscard]] const Map_t mapCellsVec() const noexcept { return m_map; }
         [[nodiscard]] constexpr Floor floor() const noexcept { return m_floor; }
 
         [[nodiscard]] inline const MapTransitions_t transitions() const noexcept
@@ -38,6 +39,7 @@ namespace castlecrawl
         [[nodiscard]] constexpr bool isDiscovered() const noexcept { return m_isDiscovered; }
 
         [[nodiscard]] const LookEvents_t lookEvents() const noexcept { return m_lookEvents; }
+        [[nodiscard]] const LookEventOpt_t lookEvent(const MapPos_t & t_pos) const;
         void setLookEventAsHappened(const MapPos_t & t_pos);
 
         [[nodiscard]] const DoorLocks_t doorLocks() const noexcept { return m_doorLocks; }
