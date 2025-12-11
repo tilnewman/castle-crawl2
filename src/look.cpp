@@ -106,10 +106,6 @@ namespace castlecrawl
         {
             message = "A pool of blood.";
         }
-        else if (objectChar == tileImageToChar(TileImage::Key))
-        {
-            message = "A key that you could pickup and use.";
-        }
         else if (objectChar == tileImageToChar(TileImage::FountainWater))
         {
             message = "A lovely fountain trickles water.";

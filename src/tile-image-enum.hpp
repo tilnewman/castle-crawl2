@@ -37,7 +37,6 @@ namespace castlecrawl
         Bag,
         Altar,
         StoneSpire,
-        Key,
         Tree1,
         Tree2,
         Tree3,
@@ -294,12 +293,14 @@ namespace castlecrawl
 
     /*
      *  It is handy to keep track of which characters are used and which are not:
+            //case 'E':
             //case '\\':
             //case '`':
             //case '\'':
             //case '}';
-            //
             //case '\x7F':
+            //
+            //case '.': //this is not used because it is required by QuickMaps
     */
     constexpr TileImage charToTileImage(const char ch) noexcept
     {
@@ -315,7 +316,6 @@ namespace castlecrawl
             case 'd':    { return TileImage::Door;                  }
             case 'D':    { return TileImage::DoorLocked;            }
             case 'e':    { return TileImage::Blood;                 }
-            case 'E':    { return TileImage::Key;                   }
             case 'f':    { return TileImage::FountainWater;         }
             case 'F':    { return TileImage::FountainBlood;         }
             case 'g':    { return TileImage::Water;                 }
@@ -604,7 +604,6 @@ namespace castlecrawl
             case TileImage::Door:                { return 'd'; }
             case TileImage::DoorLocked:          { return 'D'; }
             case TileImage::Blood:               { return 'e'; }
-            case TileImage::Key:                 { return 'E'; }
             case TileImage::FountainWater:       { return 'f'; }
             case TileImage::FountainBlood:       { return 'F'; }
             case TileImage::Water:               { return 'g'; }
@@ -1039,8 +1038,7 @@ namespace castlecrawl
             case TileImage::Ice:                 
             case TileImage::Door:                
             case TileImage::DoorLocked:          
-            case TileImage::Blood:               
-            case TileImage::Key:                 
+            case TileImage::Blood:           
             case TileImage::FountainWater:       
             case TileImage::FountainBlood:       
             case TileImage::Water:               
@@ -1212,7 +1210,6 @@ namespace castlecrawl
             case TileImage::Bag:                { return sf::IntRect( {224,  0},{32,32}); }
             case TileImage::Altar:              { return sf::IntRect( {128, 96},{32,32}); }
             case TileImage::StoneSpire:         { return sf::IntRect( {160, 96},{32,32}); }
-            case TileImage::Key:                { return sf::IntRect( {192,128},{32,32}); }
             case TileImage::Tree1:              { return sf::IntRect( {128,224},{32,32}); }
             case TileImage::Tree2:              { return sf::IntRect( {160,224},{32,32}); }
             case TileImage::Tree3:              { return sf::IntRect( {192,224},{32,32}); }
@@ -1501,7 +1498,6 @@ namespace castlecrawl
             case TileImage::Bag:                { return "Bag"; }
             case TileImage::Altar:              { return "Altar"; }
             case TileImage::StoneSpire:         { return "Stone Spire"; }
-            case TileImage::Key:                { return "Key"; }
             case TileImage::Tree1:              { return "Tree"; }
             case TileImage::Tree2:              { return "Tree"; }
             case TileImage::Tree3:              { return "Tree"; }
