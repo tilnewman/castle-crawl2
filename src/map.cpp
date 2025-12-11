@@ -104,11 +104,8 @@ namespace castlecrawl
             if (t_pos == event.map_pos)
             {
                 event.has_happened = true;
-                break;
             }
         }
-
-        // Technically we should never get here...Throw?
     }
 
     const DoorLockOpt_t Map::doorLock(const MapPos_t & t_pos) const
@@ -144,11 +141,8 @@ namespace castlecrawl
             if (t_pos == loot.map_pos)
             {
                 loot.has_been_collected = true;
-                break;
             }
         }
-
-        // Technically we should never get here...Throw?
     }
 
     const sf::Vector2i Map::size() const
