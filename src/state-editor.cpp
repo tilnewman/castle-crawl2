@@ -724,7 +724,7 @@ namespace castlecrawl
         }
         else if (keyScancode == sf::Keyboard::Scancode::Space)
         {
-            editMap(t_context, ' ', "Bare Floor");
+            editMap(t_context, tileImageToChar(TileImage::Empty), "Bare Floor");
         }
         else if (keyScancode == sf::Keyboard::Scancode::Period)
         {
@@ -734,108 +734,108 @@ namespace castlecrawl
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'H', "Breakable Rock");
+                editMap(t_context, tileImageToChar(TileImage::RockWeak), "Breakable Rock");
             }
             else
             {
-                editMap(t_context, 'h', "Rock");
+                editMap(t_context, tileImageToChar(TileImage::Rock), "Rock");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::Z)
         {
-            editMap(t_context, 'Z', "Breakable Wood Wall");
+            editMap(t_context, tileImageToChar(TileImage::Wall_BlockWeak), "Breakable Wood Wall");
         }
         else if (keyScancode == sf::Keyboard::Scancode::W)
         {
-            editMap(t_context, 'g', "Water");
+            editMap(t_context, tileImageToChar(TileImage::Water), "Water");
         }
         else if (keyScancode == sf::Keyboard::Scancode::L)
         {
-            editMap(t_context, 'l', "Lava");
+            editMap(t_context, tileImageToChar(TileImage::Lava), "Lava");
         }
         else if (keyScancode == sf::Keyboard::Scancode::E)
         {
-            editMap(t_context, 'e', "Blood");
+            editMap(t_context, tileImageToChar(TileImage::Blood), "Blood");
         }
         else if (keyScancode == sf::Keyboard::Scancode::G)
         {
-            editMap(t_context, 'G', "Slime");
+            editMap(t_context, tileImageToChar(TileImage::Slime), "Slime");
         }
         else if (keyScancode == sf::Keyboard::Scancode::D)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'D', "Locked Door");
+                editMap(t_context, tileImageToChar(TileImage::DoorLocked), "Locked Door");
             }
             else
             {
-                editMap(t_context, 'd', "Door");
+                editMap(t_context, tileImageToChar(TileImage::Door), "Door");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::C)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, '~', "Coins");
+                editMap(t_context, tileImageToChar(TileImage::Coins), "Coins");
             }
             else
             {
-                editMap(t_context, 'c', "Chest");
+                editMap(t_context, tileImageToChar(TileImage::Chest), "Chest");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::B)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'k', "Coffin");
+                editMap(t_context, tileImageToChar(TileImage::Coffin), "Coffin");
             }
             else
             {
-                editMap(t_context, 'b', "Barrel");
+                editMap(t_context, tileImageToChar(TileImage::Barrel), "Barrel");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::H)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'F', "Blood Fountain");
+                editMap(t_context, tileImageToChar(TileImage::FountainBlood), "Blood Fountain");
             }
             else
             {
-                editMap(t_context, 'f', "Water Fountain");
+                editMap(t_context, tileImageToChar(TileImage::FountainWater), "Water Fountain");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::S)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'I', "Stairs Down");
+                editMap(t_context, tileImageToChar(TileImage::Stair_Down), "Stairs Down");
             }
             else
             {
-                editMap(t_context, 'i', "Stairs Up");
+                editMap(t_context, tileImageToChar(TileImage::Stair_Up), "Stairs Up");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::P)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'j', "Stone Altar");
+                editMap(t_context, tileImageToChar(TileImage::Altar), "Stone Altar");
             }
             else
             {
-                editMap(t_context, 'K', "Stone Spire");
+                editMap(t_context, tileImageToChar(TileImage::StoneSpire), "Stone Spire");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::A)
         {
             if (isShiftPressed())
             {
-                editMap(t_context, 'A', "Inferno");
+                editMap(t_context, tileImageToChar(TileImage::Inferno), "Inferno");
             }
             else
             {
-                editMap(t_context, 'a', "Campfire");
+                editMap(t_context, tileImageToChar(TileImage::Campfire), "Campfire");
             }
         }
         else if (keyScancode == sf::Keyboard::Scancode::T)
