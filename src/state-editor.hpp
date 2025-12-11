@@ -59,6 +59,8 @@ namespace castlecrawl
         void editMap(
             const Context & t_context, const char t_newMapChar, const std::string & t_fadeText);
 
+        void editMap(const Context & t_context, const TileImage t_tileImage);
+
         void fadeText(const Context & t_context, const std::string & t_text);
         void save(const Context & t_context) const;
         void load(const Context & t_context);
