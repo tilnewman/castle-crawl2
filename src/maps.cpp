@@ -578,9 +578,6 @@ namespace castlecrawl
                                     "increases."
                 }
             } );
-
-        /*  \xa3, \x83   */
-
         // clang-format on
 
         m_currentIter = std::begin(m_maps);
