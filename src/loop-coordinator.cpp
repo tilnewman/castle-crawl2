@@ -140,9 +140,6 @@ namespace castlecrawl
         m_musicUPtr->setup((m_config.media_path / "music").string());
         m_musicUPtr->start("music.ogg", m_config.music_volume);
 
-        // m_itemFactoryUPtr->dumpInfo(m_fontsUPtr->font());
-        // m_monsterStatsDatabaseUPtr->dumpInfo(*m_contextUPtr);
-
         // equip standard start of game items
         m_playerUPtr->inventory().add(m_itemFactoryUPtr->find("Leather Greaves").value());
         m_playerUPtr->inventory().equip(0);

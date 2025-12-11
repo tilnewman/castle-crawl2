@@ -10,9 +10,11 @@
 #include "font.hpp"
 #include "framerate-text.hpp"
 #include "game-config.hpp"
+#include "item-factory.hpp"
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
+#include "monster-stats-database.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
@@ -60,12 +62,18 @@ namespace castlecrawl
 
     void StateEditor::onEnter(const Context & t_context)
     {
+        // use starting the map editor as a handy way to dump all info
+        t_context.items.dumpInfo(t_context.fonts.font());
+        t_context.monster_stats.dumpInfo(t_context);
+
+        //
         m_mapChars = std::vector<std::string>(
             static_cast<std::size_t>(t_context.config.map_size_max.y),
             std::string(static_cast<std::size_t>(t_context.config.map_size_max.x), '.'));
 
         resetMap(t_context);
 
+        //
         m_editRectangle.setFillColor(sf::Color(0, 255, 255, 64));
         m_editRectangle.setOutlineColor(sf::Color(0, 255, 255));
         m_editRectangle.setOutlineThickness(1.0f);
@@ -866,9 +874,10 @@ namespace castlecrawl
 
             m_keyText.setString(keyText);
 
-            m_keyText.setPosition({ ((t_context.layout.topRegion().size.x * 0.5f) -
-                                     (m_keyText.getGlobalBounds().size.x * 0.5f)),
-                                    (t_context.layout.topRegion().size.y - 25.0f) });
+            m_keyText.setPosition(
+                { ((t_context.layout.topRegion().size.x * 0.5f) -
+                   (m_keyText.getGlobalBounds().size.x * 0.5f)),
+                  (t_context.layout.topRegion().size.y - 25.0f) });
         }
         else
         {
@@ -1084,11 +1093,13 @@ namespace castlecrawl
 
     void StateEditor::updateDragRect()
     {
-        m_dragRectangle.setPosition({ util::min(m_dragPosStart.x, m_dragPosStop.x),
-                                      util::min(m_dragPosStart.y, m_dragPosStop.y) });
+        m_dragRectangle.setPosition(
+            { util::min(m_dragPosStart.x, m_dragPosStop.x),
+              util::min(m_dragPosStart.y, m_dragPosStop.y) });
 
-        m_dragRectangle.setSize(sf::Vector2f{ util::abs(m_dragPosStart.x - m_dragPosStop.x),
-                                              util::abs(m_dragPosStart.y - m_dragPosStop.y) });
+        m_dragRectangle.setSize(
+            sf::Vector2f{ util::abs(m_dragPosStart.x - m_dragPosStop.x),
+                          util::abs(m_dragPosStart.y - m_dragPosStop.y) });
     }
 
     void StateEditor::updateDragSelectedMapCells(const Context & t_context)
