@@ -438,7 +438,7 @@ namespace castlecrawl::item
     {
         // write all items to a spreadsheet
         {
-            std::ofstream fileStream("items.csv", std::ios_base::trunc);
+            std::ofstream fileStream("item-stats.csv", std::ios_base::trunc);
 
             fileStream << "name,value,type,magical,Description\n";
 
@@ -612,10 +612,10 @@ namespace castlecrawl::item
         }
         std::sort(std::begin(nameLengths), std::end(nameLengths));
         std::sort(std::begin(descLengths), std::end(descLengths));
-        util::StatsDisplay<int>::makeAndSavePNG("all-item-values", t_font, allValues);
-        util::StatsDisplay<int>::makeAndSavePNG("weapon-item-values", t_font, weaponValues);
-        util::StatsDisplay<int>::makeAndSavePNG("armor-item-values", t_font, armorValues);
-        util::StatsDisplay<int>::makeAndSavePNG("misc-item-values", t_font, miscValues);
+        util::StatsDisplay<int>::makeAndSavePNG("item-values", t_font, allValues);
+        util::StatsDisplay<int>::makeAndSavePNG("item-weapon-values", t_font, weaponValues);
+        util::StatsDisplay<int>::makeAndSavePNG("item-armor-values", t_font, armorValues);
+        util::StatsDisplay<int>::makeAndSavePNG("item-misc-values", t_font, miscValues);
         util::StatsDisplay<std::size_t>::makeAndSavePNG("item-name-lengths", t_font, nameLengths);
         util::StatsDisplay<std::size_t>::makeAndSavePNG("item-desc-lengths", t_font, descLengths);
 
