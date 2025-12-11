@@ -50,24 +50,20 @@ namespace castlecrawl
         // this message is always displayed and so must not be empty for this event to be valid
         std::string message{};
 
-        // this message is only displayed if the all the requirements are met
-        std::string message_pass{};
-
-        // this message is only displayed if all the requirements are NOT met
-        std::string message_fail{};
-
         // all requirements
         Stats stats_required{};
         std::string item_required{};
         std::string item_keyword_required{};
 
         // all bonuses and things given if requirments are met
+        std::string message_pass{};
         std::string item_given_pass{};
         int health_adj_pass{ 0 };
         int gold_adj_pass{ 0 };
         Stats stats_adj_pass{};
 
         // all consequences if the requirements are NOT met
+        std::string message_fail{};
         int health_adj_fail{ 0 };
     };
 
