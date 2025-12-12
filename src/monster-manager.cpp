@@ -8,6 +8,9 @@
 #include "context.hpp"
 #include "fight-util.hpp"
 #include "maps.hpp"
+#include "sfml-util.hpp"
+
+#include <iostream>
 
 namespace castlecrawl
 {
@@ -40,6 +43,9 @@ namespace castlecrawl
         }
 
         // should never get here...not really...i don't think...
+        std::cerr << "WARNING:  MonsterManager::takeTurn(unique_id=" << t_uniqueId
+                  << ") did nothing because that unique_id could not be found!\n";
+
         return CreatureAction::None;
     }
 
@@ -71,6 +77,10 @@ namespace castlecrawl
             }
         }
 
+        // should never get here...not really...i don't think...
+        std::cerr << "WARNING:  MonsterManager::stats(map_pos=" << t_mapPos
+                  << ") did nothing because that map_pos had no monster!\n";
+
         return {}; // default constructed MonsterStats are invalid with all zeros
     }
 
@@ -84,6 +94,10 @@ namespace castlecrawl
                 return !monster.isAlive();
             }
         }
+
+        // should never get here...not really...i don't think...
+        std::cerr << "WARNING:  MonsterManager::damage(map_pos=" << t_mapPos
+                  << ") did nothing because that map_pos had no monster!\n";
 
         return false;
     }
@@ -124,6 +138,19 @@ namespace castlecrawl
         }
 
         return highestUniqueId;
+    }
+
+    bool MonsterManager::hasMonsterWithUniqueId(const std::size_t t_uniqueId) const
+    {
+        for (const Monster & monster : m_monsters)
+        {
+            if (monster.uniqueId() == t_uniqueId)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 } // namespace castlecrawl

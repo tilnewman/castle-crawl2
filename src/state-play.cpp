@@ -74,22 +74,25 @@ namespace castlecrawl
                 t_context.map_display.load(t_context);
             }
 
-            const CreatureAction actionTaken{ t_context.monsters.takeTurn(
-                t_context, m_monsterUniqueId) };
-
             float delayAfterTurn{ 0.0f };
-            if (actionTaken == CreatureAction::Move)
+            if (t_context.monsters.hasMonsterWithUniqueId(m_monsterUniqueId))
             {
-                t_context.map_display.load(t_context);
-                delayAfterTurn = t_context.config.turn_delay_after_nonplayer_move;
-            }
-            else if (actionTaken == CreatureAction::None)
-            {
-                delayAfterTurn = 0.0f;
-            }
-            else
-            {
-                delayAfterTurn = t_context.config.turn_delay_after_nonplayer_attack;
+                const CreatureAction actionTaken{ t_context.monsters.takeTurn(
+                    t_context, m_monsterUniqueId) };
+
+                if (actionTaken == CreatureAction::Move)
+                {
+                    t_context.map_display.load(t_context);
+                    delayAfterTurn = t_context.config.turn_delay_after_nonplayer_move;
+                }
+                else if (actionTaken == CreatureAction::None)
+                {
+                    delayAfterTurn = 0.0f;
+                }
+                else
+                {
+                    delayAfterTurn = t_context.config.turn_delay_after_nonplayer_attack;
+                }
             }
 
             if (m_monsterUniqueId > t_context.monsters.highestUniqueId())

@@ -43,6 +43,8 @@ namespace castlecrawl
 
         [[nodiscard]] std::size_t highestUniqueId() const;
 
+        [[nodiscard]] bool hasMonsterWithUniqueId(const std::size_t t_uniqueId) const;
+
       private:
         std::size_t m_nextUniqueId; // these IDs are only unique to each map
         std::vector<Monster> m_monsters;
