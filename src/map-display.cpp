@@ -72,7 +72,9 @@ namespace castlecrawl
     {
         auto isDrawnByMapDisplay = [](const char ch) {
             return (
-                (ch != 'a') && (ch != 'A') && (ch != ' ') && (ch != '.') &&
+                (ch != tileImageToChar(TileImage::Campfire)) &&
+                (ch != tileImageToChar(TileImage::Inferno)) &&
+                (ch != tileImageToChar(TileImage::Empty)) && (ch != '.') &&
                 !isTileImageMonster(charToTileImage(ch)) && !isTileImageNpc(charToTileImage(ch)));
         };
 
@@ -198,7 +200,12 @@ namespace castlecrawl
     {
         // liquids, ice, etc. (anything that needs the stone edges drawn around it)
         auto isLiquid = [](const char ch) {
-            return ((ch == 'l') || (ch == 'g') || (ch == 'G') || (ch == 'e') || (ch == 'C'));
+            return (
+                (ch == tileImageToChar(TileImage::Lava)) ||
+                (ch == tileImageToChar(TileImage::Water)) ||
+                (ch == tileImageToChar(TileImage::Slime)) ||
+                (ch == tileImageToChar(TileImage::Blood)) ||
+                (ch == tileImageToChar(TileImage::Ice)));
         };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
@@ -333,19 +340,28 @@ namespace castlecrawl
 
     void MapDisplay::resetVertexBuffers()
     {
-        M_CHECK(m_objectBuffer.create(m_objectVerts.size()), "m_objectBuffer.create() failed");
+        M_CHECK(
+            m_objectBuffer.create(m_objectVerts.size()),
+            "m_objectBuffer.create(" << m_objectVerts.size() << ") failed");
+
         if (!m_objectVerts.empty())
         {
             M_CHECK(m_objectBuffer.update(&m_objectVerts[0]), "m_objectBuffer.update() failed");
         }
 
-        M_CHECK(m_floorBuffer.create(m_floorVerts.size()), "m_floorBuffer.create() failed");
+        M_CHECK(
+            m_floorBuffer.create(m_floorVerts.size()),
+            "m_floorBuffer.create(" << m_floorVerts.size() << ") failed");
+
         if (!m_floorVerts.empty())
         {
             M_CHECK(m_floorBuffer.update(&m_floorVerts[0]), "m_floorBuffer.update() failed");
         }
 
-        M_CHECK(m_borderBuffer.create(m_borderVerts.size()), "m_borderBuffer.create() failed");
+        M_CHECK(
+            m_borderBuffer.create(m_borderVerts.size()),
+            "m_borderBuffer.create(" << m_borderVerts.size() << ") failed");
+
         if (!m_borderVerts.empty())
         {
             M_CHECK(m_borderBuffer.update(&m_borderVerts[0]), "m_borderBuffer.update() failed");
