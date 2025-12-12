@@ -402,6 +402,7 @@ namespace castlecrawl
             case '_':    { return TileImage::Block_Emboss3;         }
             case ']':    { return TileImage::Block_Emboss4;         }
 
+            // i think these could be replaced with ' ' as they are not used in maps
             case '\x1F': { return TileImage::DarkBackground;        }
             case '\x1D': { return TileImage::Wall_Shadow;           }
             case '\x1E': { return TileImage::Avatar;                }
