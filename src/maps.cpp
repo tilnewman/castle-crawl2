@@ -206,8 +206,7 @@ namespace castlecrawl
                 { { 5, -1 }, MapName::Level_1_Cell,  { 5, 8 } },
                 { { 6, 21 }, MapName::Level_1_MainHall,  { 16, 1 } },
                 { { 34, 2 }, MapName::Level_1_Basement, { 1, 4 } }
-            }
-        );
+            } );
 
         m_maps.emplace_back(
             MapName::Level_1_MainHall,
