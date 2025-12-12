@@ -293,6 +293,7 @@ namespace castlecrawl
     const std::vector<Spell> Monster::spellsThereIsManaEnoughToCast() const
     {
         std::vector<Spell> spells;
+        spells.reserve(4);
 
         for (const Spell spell : m_stats.spells)
         {
