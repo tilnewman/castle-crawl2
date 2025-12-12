@@ -549,7 +549,7 @@ namespace castlecrawl
 
                     .message = "A wooden sign reads: Welcome to the sculpture garden. Each "
                                "sculpture has a message plaque for you to read. Put all the "
-                               "messages together in order and reveal the hidden message. "
+                               "messages together in order and reveal the hidden clue. "
                                "Dangerous animals may roam the grounds."
                 },
                 {   .map_pos = { 6, 2 },    .message = "8. garden." },
