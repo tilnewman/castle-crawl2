@@ -93,7 +93,7 @@ namespace castlecrawl::item
 
         // these are the useable misc items not generated above
 
-        // keys (these have no equip effect)
+        // flutes and keys (these have no equip effect)
         for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
         {
             const auto material = static_cast<MiscMaterial>(m);
@@ -103,17 +103,6 @@ namespace castlecrawl::item
             }
 
             t_items.emplace_back(Misc::Key, material);
-        }
-
-        // flutes (these have no equip effect)
-        for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
-        {
-            const auto material = static_cast<MiscMaterial>(m);
-            if (material == MiscMaterial::Magic)
-            {
-                continue;
-            }
-
             t_items.emplace_back(Misc::Flute, material);
         }
 
