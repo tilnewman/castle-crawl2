@@ -22,7 +22,7 @@ namespace castlecrawl::item
         explicit TreasureValues(const TileImage t_source);
 
         int value_per_level;
-        int gold_value_divisor;
+        float gold_amount_ratio;
     };
 
     //

@@ -776,31 +776,40 @@ namespace castlecrawl::item
     const Treasure ItemFactory::randomTreasureFind(
         const Context & t_context, const TreasureValues & t_values) const
     {
-        M_CHECK(
-            (t_values.gold_value_divisor > 0),
-            "ItemFactory::randomTreasureFind() given an invalid TreasureValue.gold_value_divisor="
-                << t_values.gold_value_divisor);
-
         // establish how much value this random find is worth
-        const int valuePerLevel{ t_values.value_per_level };
-        int valueRemaining = t_context.player.level() * valuePerLevel;
-        valueRemaining += t_context.random.fromTo(0, valuePerLevel);
+        int valueRemaining = t_context.player.level() * t_values.value_per_level;
+        valueRemaining += t_context.random.fromTo(0, t_values.value_per_level);
 
         // determine how much will be gold
-        Treasure treasure;
-        const int valueOfGold = t_context.random.fromTo(1, valueRemaining);
-        treasure.gold         = (valueOfGold / t_values.gold_value_divisor);
-        valueRemaining -= valueOfGold;
+        const int goldValue = [&]() {
+            if (t_values.gold_amount_ratio > 0.0f)
+            {
+                const int goldValueMax = static_cast<int>(
+                    static_cast<float>(valueRemaining) * t_values.gold_amount_ratio);
 
-        if (1 == t_values.gold_value_divisor)
+                if (goldValueMax > 1)
+                {
+                    return t_context.random.fromTo(1, goldValueMax);
+                }
+            }
+
+            return 0;
+        }();
+
+        Treasure treasure;
+        treasure.gold = (goldValue / 5);
+
+        valueRemaining -= goldValue;
+
+        if ((valueRemaining <= 0) || (t_values.gold_amount_ratio == 1.0f))
         {
-            valueRemaining = 0;
+            return treasure;
         }
 
         // use remaining value to add items
         ItemVec_t items;
         items.reserve(m_allItems.size());
-        const int lowestValue = m_allItems.front().value();
+        const int lowestValue = m_allItems.front().value(); // m_allItems is sorted by value
         while (valueRemaining >= lowestValue)
         {
             // create a vector of items that could still possibly be found

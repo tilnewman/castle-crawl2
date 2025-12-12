@@ -16,32 +16,32 @@ namespace castlecrawl::item
 
     TreasureValues::TreasureValues(const TileImage t_source)
         : value_per_level{ 0 }
-        , gold_value_divisor{ 1 } // don't divide by zero!
+        , gold_amount_ratio{ 0.0f }
     {
         if (t_source == TileImage::Bag)
         {
-            value_per_level    = 35;
-            gold_value_divisor = 2;
+            value_per_level   = 35;
+            gold_amount_ratio = 0.9f;
         }
         else if (t_source == TileImage::Barrel)
         {
-            value_per_level    = 50;
-            gold_value_divisor = 10;
+            value_per_level   = 50;
+            gold_amount_ratio = 0.15f;
         }
         else if (t_source == TileImage::Coffin)
         {
-            value_per_level    = 75;
-            gold_value_divisor = 5;
+            value_per_level   = 75;
+            gold_amount_ratio = 0.1f;
         }
         else if (t_source == TileImage::Chest)
         {
-            value_per_level    = 125;
-            gold_value_divisor = 3;
+            value_per_level   = 125;
+            gold_amount_ratio = 0.5f;
         }
         else if (t_source == TileImage::Coins)
         {
-            value_per_level    = 100;
-            gold_value_divisor = 1;
+            value_per_level   = 100;
+            gold_amount_ratio = 1.0f;
         }
         else
         {
@@ -49,8 +49,8 @@ namespace castlecrawl::item
                          "TileImage source=\""
                       << toString(t_source) << "\"! Using default values to keep game running.\n";
 
-            value_per_level    = 50;
-            gold_value_divisor = 5;
+            value_per_level   = 50;
+            gold_amount_ratio = 1.0f;
         }
     }
 
