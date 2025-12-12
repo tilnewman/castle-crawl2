@@ -200,12 +200,41 @@ namespace castlecrawl
             // TODO have unique descriptions for each door hinting at interactions
             message = "A doorawy.";
         }
-        else if (
-            (objectChar >= tileImageToChar(TileImage::Altar_Statue)) &&
-            (objectChar <= tileImageToChar(TileImage::Altar_King)))
+        else if (objectChar == tileImageToChar(TileImage::Altar_Statue))
         {
-            // TODO have unique descriptions for each altar hinting at interactions
-            message = "A proud stone altar keeps it's silent repose.";
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Challace))
+        {
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Skull))
+        {
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Throne))
+        {
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Blood))
+        {
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Body))
+        {
+            message = "A skeleton is tied down to a stone altar.";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Demonic))
+        {
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_Hand))
+        {
+            message = "TODO";
+        }
+        else if (objectChar == tileImageToChar(TileImage::Altar_King))
+        {
+            message = "TODO";
         }
         else if (
             (objectChar == tileImageToChar(TileImage::Pillar_CrumbleLeft)) ||
