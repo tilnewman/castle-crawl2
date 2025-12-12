@@ -62,6 +62,8 @@ namespace castlecrawl
 
         setupRenderWindow(m_config.video_mode);
 
+        m_renderWindow.setMouseCursorVisible(false);
+
         util::SfmlDefaults::instance().setup();
 
         m_randomUPtr = std::make_unique<util::Random>();
