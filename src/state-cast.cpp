@@ -81,15 +81,17 @@ namespace castlecrawl
             { imageRect.position.x, (spell_text1.getGlobalBounds().position.y - (pad * 0.5f)) },
             nameRectSize);
 
-        spell_text2.setPosition({ (t_position.x - (spell_text2.getGlobalBounds().size.x * 0.5f)),
-                                  (util::bottom(spell_text1) + pad) });
+        spell_text2.setPosition(
+            { (t_position.x - (spell_text2.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(spell_text1) + pad) });
 
         spell_rect2 = sf::FloatRect(
             { imageRect.position.x, (spell_text2.getGlobalBounds().position.y - (pad * 0.5f)) },
             nameRectSize);
 
-        spell_text3.setPosition({ (t_position.x - (spell_text3.getGlobalBounds().size.x * 0.5f)),
-                                  (util::bottom(spell_text2) + pad) });
+        spell_text3.setPosition(
+            { (t_position.x - (spell_text3.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(spell_text2) + pad) });
 
         spell_rect3 = sf::FloatRect(
             { imageRect.position.x, (spell_text3.getGlobalBounds().position.y - (pad * 0.5f)) },
@@ -562,7 +564,7 @@ namespace castlecrawl
         {
             handleKeystrokesAfterSpellSelection(t_context, *keyPtr);
         }
-        else
+        else if (!m_isAnimatingCategorySelection)
         {
             handleKeystrokesBeforeSpellSelection(t_context, *keyPtr);
         }
@@ -681,7 +683,6 @@ namespace castlecrawl
 
             m_isAnimatingCategorySelection = true;
             t_context.sfx.play("gui-twing");
-            return;
         }
         else if (t_key.scancode == sf::Keyboard::Scancode::Up)
         {
@@ -821,9 +822,10 @@ namespace castlecrawl
         m_descriptionText.setString(description);
         util::setOriginToPosition(m_errorText);
 
-        m_descriptionText.setPosition({ ((t_context.layout.botRegion().size.x * 0.5f) -
-                                         (m_descriptionText.getGlobalBounds().size.x * 0.5f)),
-                                        (t_context.layout.botRegion().size.y * 0.8f) });
+        m_descriptionText.setPosition(
+            { ((t_context.layout.botRegion().size.x * 0.5f) -
+               (m_descriptionText.getGlobalBounds().size.x * 0.5f)),
+              (t_context.layout.botRegion().size.y * 0.8f) });
     }
 
     void StateCast::showErrorMessage(const Context & t_context, const std::string & t_message)
@@ -831,9 +833,10 @@ namespace castlecrawl
         m_errorText.setString(t_message);
         util::setOriginToPosition(m_errorText);
 
-        m_errorText.setPosition({ ((t_context.layout.botRegion().size.x * 0.5f) -
-                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (t_context.layout.botRegion().size.y * 0.925f) });
+        m_errorText.setPosition(
+            { ((t_context.layout.botRegion().size.x * 0.5f) -
+               (m_errorText.getGlobalBounds().size.x * 0.5f)),
+              (t_context.layout.botRegion().size.y * 0.925f) });
 
         m_errorTimerSec = 0.0f;
     }
