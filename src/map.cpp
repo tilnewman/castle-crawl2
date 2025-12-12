@@ -10,6 +10,7 @@
 #include "quick-map.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
+#include "tile-image-enum.hpp"
 
 #include <iostream>
 
@@ -64,17 +65,17 @@ namespace castlecrawl
                 {
                     if (Floor::Stone == m_floor)
                     {
-                        cell.floor_char = '\x6';
+                        cell.floor_char = tileImageToChar(TileImage::Floor_Stone1);
                         cell.floor_char += t_context.random.fromTo<char>(0, 5);
                     }
                     else if (Floor::Wood == m_floor)
                     {
-                        cell.floor_char = '\x0';
+                        cell.floor_char = tileImageToChar(TileImage::Floor_Wood1);
                         cell.floor_char += t_context.random.fromTo<char>(0, 5);
                     }
                     else // dirt
                     {
-                        cell.floor_char = '\xC';
+                        cell.floor_char = tileImageToChar(TileImage::Floor_Dirt1);
                         cell.floor_char += t_context.random.fromTo<char>(0, 4);
                     }
                 }
