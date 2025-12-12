@@ -365,7 +365,7 @@ namespace castlecrawl::item
             case Misc::Wand:            { return 45; }
 
             // It doesn't really make sense for keys to participate in the value system because
-            // they don't appear as random loot in barrels/chests/etc, but meh.
+            // they don't appear as random loot in barrels/chests/bags/etc, but meh.
             case Misc::Key:             { return 50; }
 
             case Misc::Count:

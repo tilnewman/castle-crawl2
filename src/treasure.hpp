@@ -41,6 +41,7 @@ namespace castlecrawl::item
 
         void populateFromLoot(const Context & t_context, const Loot & t_loot);
     };
+
 } // namespace castlecrawl::item
 
 #endif // TREASURE_HPP_INCLUDED

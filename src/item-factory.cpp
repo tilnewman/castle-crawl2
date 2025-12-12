@@ -108,35 +108,35 @@ namespace castlecrawl::item
 
         // useable potions and herbs
         t_items.push_back(
-            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .health = 12 }, {}));
 
         t_items.push_back(
-            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, { .health = 16 }, {}));
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, { .health = 25 }, {}));
 
         t_items.push_back(
-            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, { .health = 32 }, {}));
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, { .health = 50 }, {}));
 
         //
 
         t_items.push_back(
-            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .mana = 5 }, {}));
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak, { .mana = 10 }, {}));
 
         t_items.push_back(
-            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, { .mana = 10 }, {}));
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, { .mana = 20 }, {}));
 
         t_items.push_back(
-            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, { .mana = 20 }, {}));
+            Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, { .mana = 30 }, {}));
 
         //
 
         t_items.push_back(
-            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak, { .health = 5 }, {}));
+            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak, { .health = 8 }, {}));
 
         t_items.push_back(
-            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, { .health = 10 }, {}));
+            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, { .health = 16 }, {}));
 
         t_items.push_back(
-            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, { .health = 20 }, {}));
+            Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, { .health = 32 }, {}));
     }
 
     void ItemFactory::makeCustom(ItemVec_t & t_items) const
