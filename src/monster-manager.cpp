@@ -71,7 +71,7 @@ namespace castlecrawl
             }
         }
 
-        return {}; // default constructed MonsterStats are invalid with all zeros anyway
+        return {}; // default constructed MonsterStats are invalid with all zeros
     }
 
     bool MonsterManager::damage(const MapPos_t & t_mapPos, const int t_damage)
@@ -96,7 +96,9 @@ namespace castlecrawl
         {
             if (!monster.isAlive())
             {
-                t_context.maps.current().setObjectChar(monster.mapPosition(), ' ');
+                t_context.maps.current().setObjectChar(
+                    monster.mapPosition(), tileImageToChar(TileImage::Empty));
+
                 wereAnyRemoved = true;
             }
         }
