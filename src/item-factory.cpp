@@ -778,7 +778,6 @@ namespace castlecrawl::item
     {
         // establish how much value this random find is worth
         int valueRemaining = t_context.player.level() * t_values.value_per_level;
-        valueRemaining += t_context.random.fromTo(0, t_values.value_per_level);
 
         // determine how much will be gold
         const int goldValue = [&]() {
@@ -789,7 +788,7 @@ namespace castlecrawl::item
 
                 if (goldValueMax > 1)
                 {
-                    return t_context.random.fromTo(1, goldValueMax);
+                    return t_context.random.fromTo((goldValueMax / 2), goldValueMax);
                 }
             }
 
@@ -797,12 +796,17 @@ namespace castlecrawl::item
         }();
 
         Treasure treasure;
-        treasure.gold = (goldValue / 5);
+        treasure.gold = (goldValue / 3);
 
         valueRemaining -= goldValue;
 
         if ((valueRemaining <= 0) || (t_values.gold_amount_ratio == 1.0f))
         {
+            if (treasure.gold <= 0)
+            {
+                treasure.gold = 1;
+            }
+
             return treasure;
         }
 
