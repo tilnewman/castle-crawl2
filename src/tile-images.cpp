@@ -5,11 +5,14 @@
 //
 #include "tile-images.hpp"
 
+#include "check-macros.hpp"
 #include "context.hpp"
 #include "game-config.hpp"
 #include "layout.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
+
+#include <set>
 
 namespace castlecrawl
 {
@@ -24,6 +27,33 @@ namespace castlecrawl
         // It improves image quality BUT also causes mass tile edge artifacts.
         // Texture smoothing really only works when the images have transparent edges.
         util::TextureLoader::load(m_texture, (t_config.media_path / "image" / "tile.png"), false);
+
+        validate();
+    }
+
+    void TileImages::validate() const
+    {
+        std::set<char> usedChars;
+
+        for (std::size_t index{ static_cast<std::size_t>(TileImage::Empty) };
+             index <= static_cast<std::size_t>(TileImage::BookSpeaker);
+             ++index)
+        {
+            const TileImage tileImage = static_cast<TileImage>(index);
+            const char ch             = tileImageToChar(tileImage);
+
+            M_CHECK(
+                (usedChars.find(ch) == std::end(usedChars)),
+                "Error: TileImages::verify() tile_image=\"" << toString(tileImage)
+                                                            << "\" has duplicate used char!");
+
+            usedChars.insert(ch);
+
+            M_CHECK(
+                (charToTileImage(ch) == tileImage),
+                "Error: TileImages::verify() tile_image=\"" << toString(tileImage)
+                                                            << "\" reverse lookup failed!");
+        }
     }
 
     const sf::Sprite TileImages::sprite(

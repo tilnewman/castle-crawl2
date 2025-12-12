@@ -11,6 +11,7 @@ namespace castlecrawl
 {
 
     // used to index so keep unsigned
+    // keep in sync with TileImages::validate()
     enum class TileImage : std::size_t
     {
         Empty = 0,

@@ -20,6 +20,7 @@ namespace castlecrawl
         TileImages();
 
         void setup(const GameConfig & t_config);
+        void validate() const;
 
         [[nodiscard]] const sf::Sprite sprite(
             const Context & t_context,
