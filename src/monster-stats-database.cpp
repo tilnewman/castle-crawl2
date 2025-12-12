@@ -7,6 +7,7 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "fight-util.hpp"
 #include "font.hpp"
 #include "sfml-util.hpp"
 #include "stats-display.hpp"
@@ -1430,7 +1431,7 @@ namespace castlecrawl
             std::ofstream csvFileStream("monster-stats.csv", std::ios_base::trunc);
 
             csvFileStream
-                << "name,value,hex_id,health,armor,mana,str,dex,arc,acc,lck,flying,undead,"
+                << "name,value,hex_id,health,armor,mana,damage,str,dex,arc,acc,lck,flying,undead,"
                    "immune,breathe fire,poison,acid,cast,break,devour,of ice,of fire,spells\n";
 
             struct MonsterInfo
@@ -1465,6 +1466,13 @@ namespace castlecrawl
                 csvFileStream << info.stats.health_max << ',';
                 csvFileStream << info.stats.armor << ',';
                 csvFileStream << info.stats.mana_max << ',';
+
+                const auto damageMinMaxPair = fight::monsterDamageMinMax(info.stats.strength);
+                csvFileStream << std::to_string(damageMinMaxPair.first);
+                csvFileStream << '-';
+                csvFileStream << std::to_string(damageMinMaxPair.second);
+                csvFileStream << ',';
+
                 csvFileStream << info.stats.strength << ',';
                 csvFileStream << info.stats.dexterity << ',';
                 csvFileStream << info.stats.arcane << ',';

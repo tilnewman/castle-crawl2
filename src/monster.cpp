@@ -170,9 +170,8 @@ namespace castlecrawl
         }
 
         // calc damage
-        const int damageMin{ 1 + (m_stats.strength / 10) };
-        const int damageMax{ std::max((damageMin + 1), m_stats.strength) };
-        int damage{ t_context.random.fromTo(damageMin, damageMax) };
+        const auto damageMinMaxPair = fight::monsterDamageMinMax(m_stats.strength);
+        int damage{ t_context.random.fromTo(damageMinMaxPair.first, damageMinMaxPair.second) };
 
         damage -= static_cast<int>(std::sqrt(t_context.player.armor().as<float>()) * 2.0f);
         if (damage < 0)

@@ -309,4 +309,11 @@ namespace castlecrawl::fight
         t_context.turn.advance(t_context, t_context.config.turn_delay_after_player_attack);
     }
 
+    const std::pair<int, int> monsterDamageMinMax(const int t_strength)
+    {
+        const int damageMin{ 1 + (t_strength / 10) };
+        const int damageMax{ std::max((damageMin + 1), t_strength) };
+        return { damageMin, damageMax };
+    }
+
 } // namespace castlecrawl::fight

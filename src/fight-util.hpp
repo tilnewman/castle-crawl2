@@ -10,6 +10,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+#include <utility>
+
 namespace castlecrawl
 {
     struct Context;
@@ -57,6 +59,8 @@ namespace castlecrawl::fight
         const Spell t_spell,
         const MapPos_t & t_mapPos,
         const sf::Keyboard::Scancode t_direction);
+
+    const std::pair<int, int> monsterDamageMinMax(const int t_strength);
 
 } // namespace castlecrawl::fight
 
