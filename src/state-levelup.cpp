@@ -162,6 +162,8 @@ namespace castlecrawl
 
     void StateLevelUp::onEnter(const Context & t_context)
     {
+        t_context.player.levelAdj(1);
+
         t_context.sfx.play("achievement");
 
         // background fade
@@ -199,10 +201,9 @@ namespace castlecrawl
         // health increase text
         const int healthMaxBefore = t_context.player.healthMax();
         const int healthMaxAdj    = (10 + (t_context.player.strength().current() / 5));
-        t_context.player.healthAdj(healthMaxAdj);
         t_context.player.healthMaxAdj(healthMaxAdj);
-        t_context.top_panel.update(t_context);
         const int healthMaxAfter = t_context.player.healthMax();
+        t_context.player.healthAdj(healthMaxAfter - t_context.player.health());
 
         std::string healthStr = "Your health has increased from ";
         healthStr += std::to_string(healthMaxBefore);
@@ -220,10 +221,9 @@ namespace castlecrawl
         // mana increase text
         const int manaMaxBefore = t_context.player.manaMax();
         const int manaMaxAdj    = (6 + (t_context.player.arcane().current() / 6));
-        t_context.player.manaAdj(manaMaxAdj);
         t_context.player.manaMaxAdj(manaMaxAdj);
-        t_context.top_panel.update(t_context);
         const int manaMaxAfter = t_context.player.manaMax();
+        t_context.player.manaAdj(manaMaxAfter - t_context.player.mana());
 
         std::string manaStr = "Your mana has increased from ";
         manaStr += std::to_string(manaMaxBefore);
@@ -287,6 +287,9 @@ namespace castlecrawl
         // error text
         m_errorText =
             t_context.fonts.makeText(FontSize::Large, "", t_context.config.error_message_color);
+
+        // update the top panel with all the various changes made above
+        t_context.top_panel.update(t_context);
     }
 
     void StateLevelUp::update(const Context & t_context, const float t_elapsedSec)
@@ -451,9 +454,10 @@ namespace castlecrawl
         m_errorText.setString(t_message);
         util::setOriginToPosition(m_errorText);
 
-        m_errorText.setPosition({ ((t_context.layout.botRegion().size.x * 0.5f) -
-                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (t_context.layout.botRegion().size.y * 0.925f) });
+        m_errorText.setPosition(
+            { ((t_context.layout.botRegion().size.x * 0.5f) -
+               (m_errorText.getGlobalBounds().size.x * 0.5f)),
+              (t_context.layout.botRegion().size.y * 0.925f) });
 
         m_errorTimerSec = 0.0f;
 
