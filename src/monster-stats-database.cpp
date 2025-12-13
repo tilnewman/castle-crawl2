@@ -54,8 +54,8 @@ namespace castlecrawl
         value += static_cast<int>(poison_attack_ratio * 200.0f);
         value += static_cast<int>(acid_attack_ratio * 200.0f);
         value += static_cast<int>(spell_attack_ratio * 200.0f);
-        value += static_cast<int>(break_attack_ratio * 2000.0f);
-        value += static_cast<int>(devour_attack_ratio * 2000.0f);
+        value += static_cast<int>(break_attack_ratio * 500.0f);
+        value += static_cast<int>(devour_attack_ratio * 500.0f);
 
         return value;
     }

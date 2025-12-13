@@ -29,7 +29,7 @@ namespace castlecrawl
             return (is_strong_to_ice_weak_to_fire || is_strong_to_fire_weak_to_ice);
         }
 
-        // not used by the game, only to nerd out on stats and graphs
+        // used as experince gained for killing a monster
         [[nodiscard]] int value() const;
 
         int health_max{ 0 };
@@ -42,8 +42,6 @@ namespace castlecrawl
         int arcane{ 0 };
         int accuracy{ 0 };
         int luck{ 0 };
-
-        static constexpr int stat_max{ 100 };
 
         bool is_flying{ false };
         bool is_undead{ false };
@@ -59,6 +57,8 @@ namespace castlecrawl
         float devour_attack_ratio{ 0.0f };
 
         std::vector<Spell> spells{};
+
+        static constexpr int stat_max{ 100 };
     };
 
     //
