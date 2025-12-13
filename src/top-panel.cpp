@@ -6,7 +6,10 @@
 #include "top-panel.hpp"
 
 #include "context.hpp"
+#include "font.hpp"
 #include "layout.hpp"
+#include "player.hpp"
+#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "texture-loader.hpp"
 
@@ -21,6 +24,7 @@ namespace castlecrawl
         , m_healthBar{}
         , m_manaBar{}
         , m_experienceBar{}
+        , m_levelText{ util::SfmlDefaults::instance().font() }
     {}
 
     void TopPanel::setup(const Context & t_context)
@@ -41,6 +45,9 @@ namespace castlecrawl
         m_manaBar.setup(t_context);
         m_experienceBar.setup(t_context);
 
+        // level text
+        m_levelText = t_context.fonts.makeText(FontSize::Small, "", sf::Color(200, 200, 200));
+
         // castle image
         util::TextureLoader::load(
             m_castleTexture, (t_context.config.media_path / "image" / "castle.png"), true);
@@ -55,6 +62,8 @@ namespace castlecrawl
         m_castleSprite.setPosition(
             { (util::right(t_context.layout.topRegion()) - m_castleSprite.getGlobalBounds().size.x),
               0.0f });
+
+        update(t_context);
     }
 
     void TopPanel::update(const Context & t_context)
@@ -62,15 +71,27 @@ namespace castlecrawl
         m_healthBar.update(t_context);
         m_manaBar.update(t_context);
         m_experienceBar.setup(t_context);
+
+        std::string levelStr = "Level: ";
+        levelStr += std::to_string(t_context.player.level());
+        m_levelText.setString(levelStr);
+        util::setOriginToPosition(m_levelText);
+
+        m_levelText.setPosition(
+            { (util::center(m_experienceBar.bounds()).x -
+               (m_levelText.getGlobalBounds().size.x * 0.5f)),
+              ((m_experienceBar.bounds().position.y - m_levelText.getGlobalBounds().size.y) -
+               (m_levelText.getGlobalBounds().size.y * 0.4f)) });
     }
 
     void TopPanel::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_target.draw(m_titleSprite, t_states);
-        t_target.draw(m_castleSprite, t_states);
         t_target.draw(m_healthBar, t_states);
         t_target.draw(m_manaBar, t_states);
         t_target.draw(m_experienceBar, t_states);
+        t_target.draw(m_levelText, t_states);
+        t_target.draw(m_castleSprite, t_states);
     }
 
 } // namespace castlecrawl

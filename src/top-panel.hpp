@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 namespace castlecrawl
@@ -34,6 +35,7 @@ namespace castlecrawl
         HealthBar m_healthBar;
         ManaBar m_manaBar;
         ExperienceBar m_experienceBar;
+        sf::Text m_levelText;
     };
 
 } // namespace castlecrawl
