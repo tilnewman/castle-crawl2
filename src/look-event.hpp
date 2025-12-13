@@ -40,10 +40,11 @@ namespace castlecrawl
         {
             return (
                 !stats_required.empty() || !item_required.empty() ||
-                !item_keyword_required.empty());
+                !item_keyword_required.empty() || (gold_required > 0));
         }
 
         bool has_happened{ false };
+        bool will_always_happen{ false };
 
         // this is the unique ID for a LookEvent, both must be negative to be invalid default
         MapPos_t map_pos{ -1, -1 };
@@ -55,13 +56,15 @@ namespace castlecrawl
         Stats stats_required{};
         std::string item_required{};
         std::string item_keyword_required{};
+        int gold_required{ 0 };
 
-        // all bonuses and things given if requirments are met
+        // all bonuses/things given if requirments are met
         std::string message_pass{};
         std::string item_given_pass{};
         int health_adj_pass{ 0 };
         int gold_adj_pass{ 0 };
         Stats stats_adj_pass{};
+        bool will_spawn_monster{ false };
 
         // all consequences if the requirements are NOT met
         std::string message_fail{};
@@ -81,8 +84,11 @@ namespace castlecrawl
         [[nodiscard]] static bool
             areAllRequirementsMet(const Context & t_context, const LookEvent & t_lookEvent);
 
-        static void takePassActions(const Context & t_context, const LookEvent & t_lookEvent);
-        static void takeFailActions(const Context & t_context, const LookEvent & t_lookEvent);
+        static const std::string
+            takePassActions(const Context & t_context, const LookEvent & t_lookEvent);
+
+        static const std::string
+            takeFailActions(const Context & t_context, const LookEvent & t_lookEvent);
     };
 
 } // namespace castlecrawl

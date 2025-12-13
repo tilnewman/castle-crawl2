@@ -55,14 +55,18 @@ namespace castlecrawl
             if (LookEventHandler::areAllRequirementsMet(t_context, m_lookEvent))
             {
                 message += m_lookEvent.message_pass;
-                LookEventHandler::takePassActions(t_context, m_lookEvent);
-                t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
+                message += LookEventHandler::takePassActions(t_context, m_lookEvent);
                 t_context.sfx.play("magic-1");
+
+                if (!m_lookEvent.will_always_happen)
+                {
+                    t_context.maps.current().setLookEventAsHappened(m_lookEvent.map_pos);
+                }
             }
             else
             {
                 message += m_lookEvent.message_fail;
-                LookEventHandler::takeFailActions(t_context, m_lookEvent);
+                message += LookEventHandler::takeFailActions(t_context, m_lookEvent);
             }
         }
 

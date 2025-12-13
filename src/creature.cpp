@@ -58,7 +58,7 @@ namespace castlecrawl
 
         for (const MapCell & cell : adjacentCells)
         {
-            if (cell.object_char == ' ')
+            if (cell.object_char == tileImageToChar(TileImage::Empty))
             {
                 positions.emplace_back(cell.position, distance(t_targetMapPos, cell.position));
             }
@@ -102,7 +102,7 @@ namespace castlecrawl
     void Creature::moveTo(const Context & t_context, const MapPos_t & t_newMapPos)
     {
         const char myChar = t_context.maps.current().cell(m_mapPos).object_char;
-        t_context.maps.current().setObjectChar(m_mapPos, ' ');
+        t_context.maps.current().setObjectChar(m_mapPos, tileImageToChar(TileImage::Empty));
         m_mapPos = t_newMapPos;
         t_context.maps.current().setObjectChar(m_mapPos, myChar);
 

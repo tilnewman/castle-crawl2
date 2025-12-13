@@ -47,7 +47,7 @@ namespace castlecrawl
 
         for (auto wordIter = std::begin(words); wordIter != std::end(words); ++wordIter)
         {
-            if ("<paragraph>" == *wordIter)
+            if ("<p>" == *wordIter)
             {
                 layout.texts.push_back(lineText);
                 pos.y += fontExtent.letter_size.y;

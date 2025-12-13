@@ -498,6 +498,19 @@ namespace castlecrawl
             {
                 { { -1,   4 }, MapName::Level_1_CellBlock,  { 32, 2 } },
                 { { -1,  17 }, MapName::Level_1_Forest,     { 25, 4 } }
+            },
+            LookEvents_t
+            {
+                {
+                    .will_always_happen = true,
+                    .map_pos = { 15, 3 },
+                    .message = "Cobwebs cover this old stone well.",
+                    .gold_required = 1,
+                    .message_pass = "You flick a gold coin down the well and ",
+                    .gold_adj_pass = -1,
+                    .will_spawn_monster = true,
+                    .message_fail = "If only you had a gold coin to toss in for luck..."
+                }
             } );
 
         m_maps.emplace_back(
@@ -535,7 +548,7 @@ namespace castlecrawl
             LookEvents_t
             {
                 {
-                    .map_pos = { 22, 4},
+                    .map_pos = { 22, 4 },
 
                     .message = "A wooden sign reads: Welcome to the sculpture garden. Each "
                                "sculpture has a message plaque for you to read. Put all the "
