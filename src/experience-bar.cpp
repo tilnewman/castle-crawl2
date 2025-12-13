@@ -30,14 +30,14 @@ namespace castlecrawl
             t_context,
             rect,
             sf::Color(160, 160, 190),
-            t_context.player.experience(),
+            t_context.player.experienceOffset(),
             t_context.player.experienceForNextLevel());
     }
 
     void ExperienceBar::update(const Context & t_context)
     {
         m_statBar.setMaxValue(t_context, t_context.player.experienceForNextLevel());
-        m_statBar.setCurrentValue(t_context, t_context.player.experience());
+        m_statBar.setCurrentValue(t_context, t_context.player.experienceOffset());
     }
 
     void ExperienceBar::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const

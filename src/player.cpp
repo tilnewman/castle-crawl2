@@ -19,7 +19,8 @@ namespace castlecrawl
         , m_mana{ manaStart }
         , m_manaMax{ manaStart }
         , m_level{ 1 }
-        , m_experience{ 0 }
+        , m_experienceBase{ 0 }
+        , m_experienceOffset{ 0 }
         , m_gold{ 0 }
         , m_maxGoldHeld{ 0 }
         , m_inventory{}

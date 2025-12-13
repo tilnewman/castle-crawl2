@@ -34,9 +34,20 @@ namespace castlecrawl
         [[nodiscard]] constexpr int mana() const noexcept { return m_mana; }
         [[nodiscard]] constexpr int manaMax() const noexcept { return m_manaMax; }
         [[nodiscard]] constexpr int level() const noexcept { return m_level; }
-        [[nodiscard]] constexpr int experience() const noexcept { return m_experience; }
         [[nodiscard]] constexpr int gold() const noexcept { return m_gold; }
         [[nodiscard]] constexpr int goldMaxHeld() const noexcept { return m_maxGoldHeld; }
+        [[nodiscard]] constexpr int experienceOffset() const noexcept { return m_experienceOffset; }
+
+        [[nodiscard]] constexpr int experience() const noexcept
+        {
+            return (m_experienceBase + m_experienceOffset);
+        }
+
+        inline void experienceReset()
+        {
+            m_experienceBase += m_experienceOffset;
+            m_experienceOffset = 0;
+        }
 
         [[nodiscard]] int experienceForLevel(const int t_level) const;
 
@@ -51,7 +62,7 @@ namespace castlecrawl
         }
 
         constexpr void levelAdj(const int t_adj) noexcept { m_level += t_adj; }
-        constexpr void experinceAdj(const int t_ad) noexcept { m_experience += t_ad; }
+        constexpr void experinceAdj(const int t_ad) noexcept { m_experienceOffset += t_ad; }
         constexpr void healthMaxAdj(const int t_adj) noexcept { m_healthMax += t_adj; }
         constexpr void manaMaxAdj(const int t_adj) noexcept { m_manaMax += t_adj; }
 
@@ -134,7 +145,8 @@ namespace castlecrawl
         int m_manaMax;
 
         int m_level;
-        int m_experience;
+        int m_experienceBase;
+        int m_experienceOffset;
         int m_gold;
         int m_maxGoldHeld;
 
