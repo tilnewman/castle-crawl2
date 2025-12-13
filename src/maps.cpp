@@ -40,7 +40,8 @@ namespace castlecrawl
 
         M_CHECK(
             (m_currentIter != std::end(m_maps)),
-            "Tried to change to an invalid map named \"" << toString(t_mapName) << "\"");
+            "Tried to change to map named \"" << toString(t_mapName)
+                                              << "\" but that map could not be found!");
 
         m_currentIter->setDiscovered();
         t_context.map_display.load(t_context);
@@ -576,6 +577,22 @@ namespace castlecrawl
     {
         M_CHECK(!m_maps.empty(), "No maps were loaded!");
 
+        // verify that load() created all maps
+        for (std::size_t index{ 0 }; index < static_cast<std::size_t>(MapName::Count); ++index)
+        {
+            const MapName mapName = static_cast<MapName>(index);
+
+            const auto foundIter =
+                std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
+                    return (map.name() == mapName);
+                });
+
+            M_CHECK(
+                (foundIter != std::end(m_maps)),
+                "Unable to find the map named \"" << toString(mapName) << "\" after Maps::load()!");
+        }
+
+        // verify everything else per map
         for (const Map & map : m_maps)
         {
             verifyTransitions(t_context, map);

@@ -73,11 +73,11 @@ namespace castlecrawl
 
     using VertVec_t = std::vector<sf::Vertex>;
 
-    enum class MapName
+    //used for indexing so keep unsigned
+    enum class MapName : std::size_t
     {
-        Level_1_Cell,
+        Level_1_Cell = 0,
         Level_1_CellBlock,
-        Level_1_CellsEnd,
         Level_1_MainHall,
         Level_1_BoilerRoom,
         Level_1_HiddenPassage,
@@ -86,7 +86,8 @@ namespace castlecrawl
         Level_1_LavaGatehouse,
         Level_1_LavaHiddenPath,
         Level_1_Basement,
-        Level_1_Forest
+        Level_1_Forest,
+        Count
     };
 
     constexpr std::string_view toString(const MapName t_name) noexcept
@@ -96,7 +97,6 @@ namespace castlecrawl
         {
             case MapName::Level_1_Cell:             { return "Level_1_Cell"; }
             case MapName::Level_1_CellBlock:        { return "Level_1_CellBlock"; }
-            case MapName::Level_1_CellsEnd:         { return "Level_1_CellsEnd"; }
             case MapName::Level_1_MainHall:         { return "Level_1_MainHall"; }
             case MapName::Level_1_BoilerRoom:       { return "Level_1_BoilerRoom"; }
             case MapName::Level_1_HiddenPassage:    { return "Level_1_HiddenPassage"; }
@@ -106,6 +106,7 @@ namespace castlecrawl
             case MapName::Level_1_LavaHiddenPath:   { return "Level_1_LavaHiddenPath"; }
             case MapName::Level_1_Basement:         { return "Level_1_Basement"; }
             case MapName::Level_1_Forest:           { return "Level_1_Forest"; }
+            case MapName::Count:
             default:                                { return "(unknown_MapName)"; }
         }
         // clang-format on
