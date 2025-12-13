@@ -24,6 +24,7 @@ namespace castlecrawl
         const float music_volume               = 40.0f;
         const unsigned int framerate_limit     = 0;
         const float top_panel_height_ratio     = 0.1f;
+        const float stat_bar_height_ratio      = 0.135f;
 
         const float turn_delay_after_player_misc      = 0.25f;
         const float turn_delay_after_player_move      = 0.0f;

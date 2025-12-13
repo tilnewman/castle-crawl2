@@ -21,7 +21,7 @@ namespace castlecrawl
         const sf::FloatRect topRect{ t_context.layout.topRegion() };
 
         sf::FloatRect rect;
-        rect.size.y     = (topRect.size.y * 0.1f);
+        rect.size.y     = (topRect.size.y * t_context.config.stat_bar_height_ratio);
         rect.position.y = ((topRect.size.y - rect.size.y) - 3.0f);
         rect.size.x     = (topRect.size.x * 0.275f);
         rect.position.x = ((topRect.size.x - rect.size.x) - 5.0f);
