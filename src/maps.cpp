@@ -60,11 +60,6 @@ namespace castlecrawl
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
 
-                if ((ch == ' ') || (ch == '.'))
-                {
-                    continue;
-                }
-
                 if (isTileImageMonster(charToTileImage(ch)))
                 {
                     t_context.monsters.add(t_context, pos, ch);
@@ -92,11 +87,6 @@ namespace castlecrawl
             {
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
-
-                if ((ch == ' ') || (ch == '.'))
-                {
-                    continue;
-                }
 
                 if (tileImageToChar(TileImage::Campfire) == ch)
                 {
