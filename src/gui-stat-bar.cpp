@@ -89,7 +89,7 @@ namespace castlecrawl
         m_text =
             t_context.fonts.makeText(FontSize::Small, str, (m_color + sf::Color(100, 100, 100, 0)));
 
-        util::fitAndCenterInside(m_text, m_innerRectangle.getGlobalBounds());
+        util::fitAndCenterInside(m_text, m_outerRectangle.getGlobalBounds());
 
         const float maxWidth{ m_outerRectangle.getSize().x - 2.0f };
         const float ratio{ static_cast<float>(m_current) / static_cast<float>(m_max) };
