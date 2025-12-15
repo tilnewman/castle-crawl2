@@ -246,7 +246,7 @@ namespace castlecrawl
                       << sf::VideoMode::getDesktopMode().bitsPerPixel << "bpp:" << std::endl
                       << util::makeSupportedVideoModesString(true) << std::endl;
 
-            t_videoMode = util::findVideoModeClosestTo(t_videoMode);
+            t_videoMode = util::findHighestVideoMode();
             setupRenderWindow(t_videoMode);
             return;
         }

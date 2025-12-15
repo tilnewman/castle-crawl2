@@ -989,6 +989,37 @@ namespace util
         return *videoModes.begin();
     }
 
+    // returns desktop mode if none found matching the desktop bpp
+    inline const sf::VideoMode findHighestVideoMode()
+    {
+        std::vector<sf::VideoMode> videoModes = sf::VideoMode::getFullscreenModes();
+
+        videoModes.erase(
+            std::remove_if(
+                std::begin(videoModes),
+                std::end(videoModes),
+                [&](const auto & vm) {
+                    return (vm.bitsPerPixel != sf::VideoMode::getDesktopMode().bitsPerPixel);
+                }),
+            std::end(videoModes));
+
+        if (videoModes.empty())
+        {
+            return sf::VideoMode::getDesktopMode();
+        }
+
+        std::sort(
+            std::begin(videoModes),
+            std::end(videoModes),
+            [&](const sf::VideoMode A, const sf::VideoMode B) {
+                const unsigned sumA{ A.size.x * A.size.y };
+                const unsigned sumB{ B.size.x * B.size.y };
+                return (sumA > sumB);
+            });
+
+        return *videoModes.begin();
+    }
+
     [[nodiscard]] inline std::string makeSupportedVideoModesString(
         const bool willSkipDiffBitsPerPixel = false, const std::string & separator = "\n")
     {
