@@ -17,6 +17,7 @@
 #include "player.hpp"
 #include "random.hpp"
 #include "sfml-util.hpp"
+#include "sound-player.hpp"
 
 #include <iostream>
 
@@ -126,6 +127,8 @@ namespace castlecrawl
                 message += "a terrifying ";
                 message += toString(spawnTileImage);
                 message += " climbs out!";
+
+                t_context.sfx.play("monster-spawn.ogg");
             }
         }
 

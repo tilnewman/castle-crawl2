@@ -153,6 +153,7 @@ namespace castlecrawl
                 t_context.maps.current().setObjectChar(t_pos, tileImageToChar(spawnedMonster));
                 t_context.map_display.load(t_context);
                 t_context.monsters.add(t_context, t_pos, tileImageToChar(spawnedMonster));
+                t_context.sfx.play("monster-spawn.ogg");
             }
             else
             {
@@ -188,6 +189,7 @@ namespace castlecrawl
                 t_context.maps.current().setObjectChar(t_pos, tileImageToChar(spawnedMonster));
                 t_context.map_display.load(t_context);
                 t_context.monsters.add(t_context, t_pos, tileImageToChar(spawnedMonster));
+                t_context.sfx.play("monster-spawn.ogg");
             }
             else
             {
