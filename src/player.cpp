@@ -5,6 +5,8 @@
 //
 #include "player.hpp"
 
+#include <cmath>
+
 namespace castlecrawl
 {
 
@@ -92,7 +94,7 @@ namespace castlecrawl
         else
         {
             int exp = (t_level * 200);
-            exp += static_cast<int>(std::sqrt(static_cast<float>(exp))) * (t_level * 10);
+            exp += static_cast<int>(sqrt(static_cast<float>(exp))) * (t_level * 10);
             return exp;
         }
     }

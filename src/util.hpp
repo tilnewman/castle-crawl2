@@ -4,6 +4,7 @@
 // util.hpp
 //
 #include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <ios>
 #include <limits>
@@ -477,8 +478,7 @@ namespace util
             deviationSum += (diff * diff);
         }
 
-        stats.sdv = std::sqrt(deviationSum / static_cast<double>(stats.count));
-
+        stats.sdv = sqrt(deviationSum / static_cast<double>(stats.count));
         return stats;
     }
 
