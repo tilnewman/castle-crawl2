@@ -60,7 +60,7 @@ namespace castlecrawl
             {
                 t_context.state.setChangePending(State::Death);
             }
-            else if (t_context.player.experience() > t_context.player.experienceForNextLevel())
+            else if (t_context.player.experience() >= t_context.player.experienceForNextLevel())
             {
                 t_context.state.setChangePending(State::LevelUp);
             }
