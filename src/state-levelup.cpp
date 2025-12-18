@@ -162,8 +162,7 @@ namespace castlecrawl
 
     void StateLevelUp::onEnter(const Context & t_context)
     {
-        t_context.player.levelAdj(1);
-        t_context.player.experienceReset();
+        t_context.player.levelAdvance();
 
         t_context.sfx.play("achievement");
 

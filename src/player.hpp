@@ -43,12 +43,6 @@ namespace castlecrawl
             return (m_experienceBase + m_experienceOffset);
         }
 
-        inline void experienceReset()
-        {
-            m_experienceBase += m_experienceOffset;
-            m_experienceOffset = 0;
-        }
-
         [[nodiscard]] int experienceForLevel(const int t_level) const;
 
         [[nodiscard]] inline int experienceForNextLevel() const
@@ -61,7 +55,12 @@ namespace castlecrawl
             return m_inventory.armorRating();
         }
 
-        constexpr void levelAdj(const int t_adj) noexcept { m_level += t_adj; }
+        constexpr void levelAdvance() noexcept
+        {
+            advanceExperienceForLevel();
+            ++m_level;
+        }
+
         constexpr void experinceAdj(const int t_ad) noexcept { m_experienceOffset += t_ad; }
         constexpr void healthMaxAdj(const int t_adj) noexcept { m_healthMax += t_adj; }
         constexpr void manaMaxAdj(const int t_adj) noexcept { m_manaMax += t_adj; }
@@ -124,6 +123,14 @@ namespace castlecrawl
         {
             m_spellLastCast    = t_spell;
             m_spellLastCastDir = t_dir;
+        }
+
+      private:
+        constexpr void advanceExperienceForLevel()
+        {
+            const int expForLevel = (experienceForLevel(m_level + 1) - experienceForLevel(m_level));
+            m_experienceBase += expForLevel;
+            m_experienceOffset -= expForLevel;
         }
 
       private:
