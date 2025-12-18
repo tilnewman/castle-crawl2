@@ -31,7 +31,8 @@ namespace castlecrawl
             rect,
             sf::Color(160, 160, 190),
             t_context.player.experienceOffset(),
-            t_context.player.experienceForNextLevel());
+            t_context.player.experienceForLevel(t_context.player.level() + 1) -
+                t_context.player.experienceForLevel(t_context.player.level()));
     }
 
     void ExperienceBar::update(const Context & t_context)

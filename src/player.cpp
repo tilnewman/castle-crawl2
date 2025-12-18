@@ -18,7 +18,7 @@ namespace castlecrawl
         , m_healthMax{ healthStart }
         , m_mana{ manaStart }
         , m_manaMax{ manaStart }
-        , m_level{ 1 }
+        , m_level{ 0 }
         , m_experienceBase{ 0 }
         , m_experienceOffset{ 0 }
         , m_gold{ 0 }
@@ -85,7 +85,16 @@ namespace castlecrawl
 
     int Player::experienceForLevel(const int t_level) const
     {
-        return std::clamp((((t_level - 2) * 100) + ((t_level - 1) * 200)), 0, 10'000);
+        if (t_level <= 0)
+        {
+            return 0;
+        }
+        else
+        {
+            int exp = (t_level * 200);
+            exp += static_cast<int>(std::sqrt(static_cast<float>(exp))) * (t_level * 10);
+            return exp;
+        }
     }
 
 } // namespace castlecrawl

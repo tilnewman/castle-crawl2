@@ -244,7 +244,8 @@ namespace castlecrawl
             }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::B)
             {
-                t_context.state.setChangePending(State::Statistics);
+                t_context.player.experinceAdj(50);
+                t_context.top_panel.update(t_context);
             }
         }
     }
