@@ -766,7 +766,7 @@ namespace castlecrawl::item
         const Context & t_context, const TreasureValues & t_values) const
     {
         // establish how much value this random find is worth
-        int valueRemaining = t_context.player.level() * t_values.value_per_level;
+        int valueRemaining = (t_context.player.level() + 1) * t_values.value_per_level;
 
         // determine how much will be gold
         const int goldValue = [&]() {
