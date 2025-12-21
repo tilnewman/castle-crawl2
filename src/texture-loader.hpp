@@ -62,21 +62,37 @@ namespace util
 
         static void dumpInfo()
         {
-            std::ostringstream ss;
-            ss.imbue(std::locale("")); // this is only to put commas in the big numbers
-
-            std::size_t totalLoadCount  = 0;
-            std::size_t uniqueByteCount = 0;
-            for (const auto & pathCountPair : m_pathCountMap)
             {
-                totalLoadCount += pathCountPair.second.loads;
-                uniqueByteCount += pathCountPair.second.bytes;
+                std::ostringstream ss;
+                ss.imbue(std::locale("")); // this is only to put commas in the big numbers
+
+                std::size_t totalLoadCount  = 0;
+                std::size_t uniqueByteCount = 0;
+                for (const auto & pathCountPair : m_pathCountMap)
+                {
+                    totalLoadCount += pathCountPair.second.loads;
+                    uniqueByteCount += pathCountPair.second.bytes;
+                }
+
+                ss << m_pathCountMap.size() << " textures (" << uniqueByteCount
+                   << "bytes) were loaded " << totalLoadCount << " times:";
+
+                std::clog << ss.str() << '\n';
             }
 
-            ss << m_pathCountMap.size() << " textures (" << uniqueByteCount << "bytes) were loaded "
-               << totalLoadCount << " times.";
+            {
+                std::ostringstream ss;
+                ss.imbue(std::locale("")); // this is only to put commas in the big numbers
 
-            std::clog << ss.str() << '\n';
+                for (const auto & pathCountPair : m_pathCountMap)
+                {
+                    const std::filesystem::path path{ pathCountPair.first };
+                    ss << '\t' << path.filename().string() << "\t\t" << pathCountPair.second.bytes
+                       << "\t\tx" << pathCountPair.second.loads << '\n';
+                }
+
+                std::clog << ss.str() << '\n';
+            }
         }
 
       private:
