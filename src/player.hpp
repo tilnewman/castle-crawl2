@@ -59,7 +59,7 @@ namespace castlecrawl
             return m_inventory.armorRating();
         }
 
-        constexpr void levelAdvance() noexcept
+        void levelAdvance()
         {
             advanceExperienceForLevel();
             ++m_level;
