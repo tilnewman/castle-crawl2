@@ -18,10 +18,14 @@
 namespace castlecrawl
 {
 
+    struct Context;
+
     class Player
     {
       public:
         Player();
+
+        void dumpInfo(const Context & t_context);
 
         [[nodiscard]] constexpr Stat & strength() noexcept { return m_strength; }
         [[nodiscard]] constexpr Stat & dexterity() noexcept { return m_dexterity; }

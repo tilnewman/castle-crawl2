@@ -5,6 +5,10 @@
 //
 #include "player.hpp"
 
+#include "context.hpp"
+#include "font.hpp"
+#include "stats-display.hpp"
+
 #include <cmath>
 
 namespace castlecrawl
@@ -97,6 +101,31 @@ namespace castlecrawl
             exp += static_cast<int>(sqrt(static_cast<float>(exp))) * (t_level * 10);
             return exp;
         }
+    }
+
+    void Player::dumpInfo(const Context & t_context)
+    {
+        std::vector<int> experiencePerLevel;
+        experiencePerLevel.reserve(100);
+        for (int index{ 0 }; index < 100; ++index)
+        {
+            experiencePerLevel.push_back(t_context.player.experienceForLevel(index));
+        }
+        
+        util::StatsDisplay<int>::makeAndSavePNG(
+            "exp-per-level", t_context.fonts.font(), experiencePerLevel);
+        
+        std::vector<int> experienceDeltas;
+        experienceDeltas.reserve(experiencePerLevel.size());
+        for (int index{ 0 }; index < static_cast<int>(experiencePerLevel.size() - 1); ++index)
+        {
+            experienceDeltas.push_back(
+                experiencePerLevel.at(static_cast<std::size_t>(index + 1)) -
+                experiencePerLevel.at(static_cast<std::size_t>(index)));
+        }
+        
+        util::StatsDisplay<int>::makeAndSavePNG(
+            "exp-per-level-delta", t_context.fonts.font(), experienceDeltas);
     }
 
 } // namespace castlecrawl

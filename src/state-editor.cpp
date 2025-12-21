@@ -65,30 +65,11 @@ namespace castlecrawl
     void StateEditor::onEnter(const Context & t_context)
     {
         // TODO remove after testing
-        // use starting the map editor as a handy way to dump all info
+        // use starting the map editor as a handy way to dump all info and test images
         t_context.items.dumpInfo(t_context.fonts.font());
         t_context.monster_stats.dumpInfo(t_context);
-        //
-        std::vector<int> experiencePerLevel;
-        experiencePerLevel.reserve(100);
-        for (int index{ 0 }; index < 40; ++index)
-        {
-            experiencePerLevel.push_back(t_context.player.experienceForLevel(index));
-        }
-        util::StatsDisplay<int>::makeAndSavePNG(
-            "exp-per-level", t_context.fonts.font(), experiencePerLevel);
-        //
-        std::vector<int> experienceDeltas;
-        experienceDeltas.reserve(experiencePerLevel.size());
-        for (int index{ 0 }; index < static_cast<int>(experiencePerLevel.size() - 1); ++index)
-        {
-            experienceDeltas.push_back(
-                experiencePerLevel.at(static_cast<std::size_t>(index + 1)) -
-                experiencePerLevel.at(static_cast<std::size_t>(index)));
-        }
-        util::StatsDisplay<int>::makeAndSavePNG(
-            "exp-per-level-delta", t_context.fonts.font(), experienceDeltas);
-
+        t_context.player.dumpInfo(t_context);
+        
         //
         m_mapChars = std::vector<std::string>(
             static_cast<std::size_t>(t_context.config.map_size_max.y),
@@ -428,7 +409,7 @@ namespace castlecrawl
             t_target.draw(rectangle);
         }
 
-        // draw is reverse order so the description text is visible at the top
+        // draw in reverse order so the description text is visible at the top
         m_monsterButton11.draw(t_target, t_states);
         m_monsterButton10.draw(t_target, t_states);
         m_monsterButton9.draw(t_target, t_states);
