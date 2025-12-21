@@ -24,8 +24,9 @@ namespace castlecrawl
             std::vector<MapCell> adjacentCells =
                 t_context.maps.current().surroundingCellsHorizVert(mapPosition());
 
-            std::erase_if(
-                adjacentCells, [](const MapCell & cell) { return (cell.object_char != ' '); });
+            std::erase_if(adjacentCells, [](const MapCell & cell) {
+                return (cell.object_char != tileImageToChar(TileImage::Empty));
+            });
 
             if (!adjacentCells.empty())
             {
