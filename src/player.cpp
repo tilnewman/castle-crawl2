@@ -106,8 +106,8 @@ namespace castlecrawl
     void Player::dumpInfo(const Context & t_context)
     {
         std::vector<int> experiencePerLevel;
-        experiencePerLevel.reserve(100);
-        for (int index{ 0 }; index < 100; ++index)
+        experiencePerLevel.reserve(200);
+        for (int index{ 0 }; index < 200; ++index)
         {
             experiencePerLevel.push_back(t_context.player.experienceForLevel(index));
         }
