@@ -29,7 +29,7 @@ namespace castlecrawl::item
     void ItemFactory::makeAll()
     {
         m_allItems.clear();
-        m_allItems.reserve(1000); // acutally 883 as of 2024-7-28
+        m_allItems.reserve(1000); // acutally 883 as of 2025-12-21
 
         makeWeapons(m_allItems);
         makeArmor(m_allItems);
