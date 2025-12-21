@@ -46,8 +46,8 @@ namespace castlecrawl
         bool has_happened{ false };
         bool will_always_happen{ false };
 
-        // this is the unique ID for a LookEvent, both must be negative to be invalid default
-        MapPos_t map_pos{ -1, -1 };
+        // this is the unique ID for a LookEvent
+        MapPos_t map_pos{ invalidMapPos };
 
         // this message is always displayed and so must not be empty for this event to be valid
         std::string message{};

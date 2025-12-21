@@ -17,10 +17,12 @@ namespace castlecrawl
     using MapPos_t   = sf::Vector2i;
     using MapChars_t = std::vector<std::string>;
 
+    static inline const MapPos_t invalidMapPos = { -1, -1 }; // any two negative values work here
+
     struct MapCell
     {
         // these default values are safe where needed and invalid where needed -don't change
-        MapPos_t position = { -1, -1 }; // both must be negative to be invalid
+        MapPos_t position = { invalidMapPos };
         char object_char  = '.';
         char floor_char   = ' ';
     };
@@ -42,7 +44,7 @@ namespace castlecrawl
             , distance{ t_distance }
         {}
 
-        MapPos_t position{ -1, -1 }; // both must be negative to be invalid
+        MapPos_t position{ invalidMapPos }; // both must be negative to be invalid
         int distance{ 0 };
     };
 
@@ -73,7 +75,7 @@ namespace castlecrawl
 
     using VertVec_t = std::vector<sf::Vertex>;
 
-    //used for indexing so keep unsigned
+    // used for indexing so keep unsigned
     enum class MapName : std::size_t
     {
         Level_1_Cell = 0,
@@ -120,9 +122,9 @@ namespace castlecrawl
 
     struct MapTransition
     {
-        MapPos_t from_pos{ -1, -1 };              // both must be negative to be invalid
+        MapPos_t from_pos{ invalidMapPos };
         MapName to_name{ MapName::Level_1_Cell }; // anything works here
-        MapPos_t to_pos{ -1, -1 };                // both must be negative to be invalid
+        MapPos_t to_pos{ invalidMapPos };
     };
 
     using MapTransitions_t = std::vector<MapTransition>;

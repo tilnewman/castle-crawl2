@@ -63,7 +63,7 @@ namespace castlecrawl
     //
 
     SparkleParticleEffect::SparkleParticleEffect()
-        : map_pos{ -1, -1 } // both are negative to make it invalid by default
+        : map_pos{ invalidMapPos }
         , particles{}
     {}
 

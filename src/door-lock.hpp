@@ -14,7 +14,7 @@ namespace castlecrawl
 
     struct DoorLock
     {
-        MapPos_t map_pos{ -1, -1 }; // both must be negative to be invalid default
+        MapPos_t map_pos{ invalidMapPos };
         std::string unlocking_item_name{};
     };
 

@@ -16,7 +16,7 @@ namespace castlecrawl
     {
         bool has_been_collected{ false };
 
-        MapPos_t map_pos{ -1, -1 }; // both must be negative to be invalid default
+        MapPos_t map_pos{ invalidMapPos };
 
         std::vector<std::string> item_names{};
         bool will_randomize_items{ false };
