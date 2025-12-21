@@ -29,7 +29,7 @@ namespace castlecrawl
             return (is_strong_to_ice_weak_to_fire || is_strong_to_fire_weak_to_ice);
         }
 
-        // used as experince gained for killing a monster
+        // used as experince gained after killing a monster
         [[nodiscard]] int value() const;
 
         int health_max{ 0 };

@@ -1732,7 +1732,8 @@ namespace castlecrawl
     {
         // verify none are missing
         std::size_t count = 0;
-        for (std::size_t index{}; index <= static_cast<std::size_t>(TileImage::BookSpeaker);
+        for (std::size_t index{ static_cast<std::size_t>(TileImage::BeholderSpawn) };
+             index <= static_cast<std::size_t>(TileImage::BookSpeaker);
              ++index)
         {
             if (isTileImageMonster(static_cast<TileImage>(index)))
