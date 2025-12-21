@@ -326,6 +326,10 @@ namespace castlecrawl
                 {
                     t_context.anim.sparkle().remove(mapPosAfter);
                 }
+                else if (mapCharAttempted == tileImageToChar(TileImage::Chest))
+                {
+                    ++t_context.statistics.chests_opened;
+                }
 
                 const LootOpt_t lootOpt = t_context.maps.current().loot(mapPosAfter);
                 if (lootOpt.has_value())
