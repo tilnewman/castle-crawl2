@@ -35,12 +35,13 @@ namespace castlecrawl
         m_sprite5.setTextureRect({ { 64, 64 }, { 64, 64 } });
         m_sprite6.setTextureRect({ { 128, 64 }, { 64, 64 } });
 
-        m_sprite1.setColor(sf::Color(255, 0, 0, 127));
-        m_sprite2.setColor(sf::Color(255, 0, 0, 127));
-        m_sprite3.setColor(sf::Color(255, 0, 0, 127));
-        m_sprite4.setColor(sf::Color(255, 0, 0, 127));
-        m_sprite5.setColor(sf::Color(255, 0, 0, 127));
-        m_sprite6.setColor(sf::Color(255, 0, 0, 127));
+        const sf::Color splatRedColor = sf::Color(255, 0, 0, 127);
+        m_sprite1.setColor(splatRedColor);
+        m_sprite2.setColor(splatRedColor);
+        m_sprite3.setColor(splatRedColor);
+        m_sprite4.setColor(splatRedColor);
+        m_sprite5.setColor(splatRedColor);
+        m_sprite6.setColor(splatRedColor);
     }
 
     const sf::Sprite & SplatImages::getRandom(const Context & t_context) const
