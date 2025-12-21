@@ -35,7 +35,14 @@ namespace castlecrawl
 
         [[nodiscard]] constexpr float healthRatio() const noexcept
         {
-            return (static_cast<float>(m_health) / static_cast<float>(m_stats.health_max));
+            if (m_stats.health_max <= 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return (static_cast<float>(m_health) / static_cast<float>(m_stats.health_max));
+            }
         }
 
         int healthAdj(const int t_adjustment);
