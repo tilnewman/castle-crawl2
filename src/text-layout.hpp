@@ -45,7 +45,6 @@ namespace castlecrawl
             splitIntoWords(const std::string & t_text);
 
         static void centerTextBlock(TextLayoutPack & layout);
-
         static void centerTextLines(TextLayoutPack & layout);
     };
 
