@@ -1732,8 +1732,7 @@ namespace castlecrawl
     {
         // verify none are missing
         std::size_t count = 0;
-        for (std::size_t index{ static_cast<std::size_t>(TileImage::BeholderSpawn) };
-             index <= static_cast<std::size_t>(TileImage::BookSpeaker);
+        for (std::size_t index{ 0 }; index <= static_cast<std::size_t>(TileImage::BookSpeaker);
              ++index)
         {
             if (isTileImageMonster(static_cast<TileImage>(index)))
@@ -1745,7 +1744,7 @@ namespace castlecrawl
         M_CHECK(
             (m_imageStatsMap.size() == count),
             "MonsterStatsDatabase has missing or extra entries.  Has "
-                << m_imageStatsMap.size() << " but should have exactly " << count);
+                << count << " but should have exactly " << m_imageStatsMap.size());
 
         // verify all are valid
         for (const auto & pair : m_imageStatsMap)
