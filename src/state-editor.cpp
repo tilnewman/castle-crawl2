@@ -15,10 +15,12 @@
 #include "map-display.hpp"
 #include "maps.hpp"
 #include "monster-stats-database.hpp"
+#include "player.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-manager.hpp"
+#include "stats-display.hpp"
 
 #include <fstream>
 
@@ -62,9 +64,30 @@ namespace castlecrawl
 
     void StateEditor::onEnter(const Context & t_context)
     {
+        // TODO remove after testing
         // use starting the map editor as a handy way to dump all info
         t_context.items.dumpInfo(t_context.fonts.font());
         t_context.monster_stats.dumpInfo(t_context);
+        //
+        std::vector<int> experiencePerLevel;
+        experiencePerLevel.reserve(100);
+        for (int index{ 0 }; index < 40; ++index)
+        {
+            experiencePerLevel.push_back(t_context.player.experienceForLevel(index));
+        }
+        util::StatsDisplay<int>::makeAndSavePNG(
+            "exp-per-level", t_context.fonts.font(), experiencePerLevel);
+        //
+        std::vector<int> experienceDeltas;
+        experienceDeltas.reserve(experiencePerLevel.size());
+        for (int index{ 0 }; index < static_cast<int>(experiencePerLevel.size() - 1); ++index)
+        {
+            experienceDeltas.push_back(
+                experiencePerLevel.at(static_cast<std::size_t>(index + 1)) -
+                experiencePerLevel.at(static_cast<std::size_t>(index)));
+        }
+        util::StatsDisplay<int>::makeAndSavePNG(
+            "exp-per-level-delta", t_context.fonts.font(), experienceDeltas);
 
         //
         m_mapChars = std::vector<std::string>(
