@@ -130,7 +130,7 @@ namespace castlecrawl
         }
 
       private:
-        constexpr void advanceExperienceForLevel()
+        void advanceExperienceForLevel()
         {
             const int expForLevel = (experienceForLevel(m_level + 1) - experienceForLevel(m_level));
             m_experienceBase += expForLevel;
