@@ -47,7 +47,7 @@ namespace castlecrawl
             redraw();
         }
 
-        [[nodiscard]] std::size_t selectedIndex() const noexcept
+        [[nodiscard]] constexpr std::size_t selectedIndex() const noexcept
         {
             return (m_indexes.display + m_indexes.offset);
         }

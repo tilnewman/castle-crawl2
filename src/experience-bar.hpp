@@ -21,7 +21,7 @@ namespace castlecrawl
         void setup(const Context & t_context);
         void update(const Context & t_context);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
-        [[nodiscard]] inline const sf::FloatRect bounds() const { return m_statBar.bounds(); }
+        [[nodiscard]] inline const sf::FloatRect bounds() const noexcept { return m_statBar.bounds(); }
 
       private:
         StatBar m_statBar;

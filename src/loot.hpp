@@ -23,8 +23,6 @@ namespace castlecrawl
 
         int gold{ 0 };
         bool will_randomize_gold{ false };
-
-
     };
 
     using LootOpt_t = std::optional<Loot>;
