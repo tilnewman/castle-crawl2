@@ -17,10 +17,11 @@
 namespace util
 {
 
-    struct Counts
+    struct TextureCounts
     {
         std::size_t loads{ 0 };
-        std::size_t bytes{ 0 }; // size in memrory not filesize
+        std::size_t memory_bytes{ 0 };
+        std::size_t file_bytes{ 0 };
     };
 
     class TextureLoader
@@ -41,12 +42,20 @@ namespace util
             {
                 t_texture.setSmooth(t_willSmooth);
 
-                const std::size_t byteCount =
+                TextureCounts & counts = m_pathCountMap[t_pathStr];
+                ++counts.loads;
+
+                counts.memory_bytes =
                     static_cast<std::size_t>(t_texture.getSize().x * t_texture.getSize().y * 4u);
 
-                Counts & counts = m_pathCountMap[t_pathStr];
-                ++counts.loads;
-                counts.bytes = byteCount;
+                std::error_code errorCode;
+                const uintmax_t fileSizeBytes =
+                    std::filesystem::file_size(std::filesystem::path(t_pathStr), errorCode);
+
+                if (!errorCode)
+                {
+                    counts.file_bytes = fileSizeBytes;
+                }
             }
             else
             {
@@ -65,13 +74,18 @@ namespace util
             std::ostringstream ss;
             ss.imbue(std::locale("")); // this is only to put commas in the big numbers
 
-            std::size_t totalLoadCount  = 0;
-            std::size_t uniqueByteCount = 0;
-            std::size_t longestFilename = 0;
+            std::size_t totalLoadCount        = 0;
+            std::size_t uniqueMemoryByteCount = 0;
+            std::size_t uniqueFileByteCount   = 0;
+            std::size_t longestFilename       = 0;
             for (const auto & pathCountPair : m_pathCountMap)
             {
                 totalLoadCount += pathCountPair.second.loads;
-                uniqueByteCount += (pathCountPair.second.bytes * pathCountPair.second.loads);
+                uniqueMemoryByteCount +=
+                    (pathCountPair.second.memory_bytes * pathCountPair.second.loads);
+
+                uniqueFileByteCount +=
+                    (pathCountPair.second.file_bytes * pathCountPair.second.loads);
 
                 const std::filesystem::path path{ pathCountPair.first };
                 const std::size_t filenameLength = path.filename().string().size();
@@ -81,8 +95,9 @@ namespace util
                 }
             }
 
-            ss << m_pathCountMap.size() << " textures (" << uniqueByteCount << "bytes) were loaded "
-               << totalLoadCount << " times:";
+            ss << m_pathCountMap.size() << " textures (" << (uniqueMemoryByteCount / 1'000_st)
+               << "k in memeory)  (" << (uniqueFileByteCount / 1'000_st)
+               << "k on disk) were loaded " << totalLoadCount << " times:";
 
             std::clog << ss.str() << '\n';
 
@@ -93,15 +108,16 @@ namespace util
                 std::string filename = path.filename().string();
                 filename += std::string((longestFilename - filename.size()), ' ');
 
-                ss << '\t' << filename << '\t' << (pathCountPair.second.bytes / 1000_st)
-                   << "k\t\tx " << pathCountPair.second.loads << '\n';
+                ss << '\t' << filename << "\t" << (pathCountPair.second.memory_bytes / 1000_st)
+                   << "k\t" << '\t' << pathCountPair.second.file_bytes << "\t\tx"
+                   << pathCountPair.second.loads << '\n';
             }
 
             std::clog << ss.str() << '\n';
         }
 
       private:
-        static inline std::map<std::string, Counts> m_pathCountMap;
+        static inline std::map<std::string, TextureCounts> m_pathCountMap;
     };
 
 } // namespace util
