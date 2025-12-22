@@ -151,6 +151,8 @@ namespace castlecrawl
     {
         util::SfmlDefaults::instance().teardown();
 
+        util::TextureLoader::dumpInfo(*m_contextUPtr);
+
         m_contextUPtr.reset();
 
         // this order is NOT critical
@@ -184,8 +186,6 @@ namespace castlecrawl
         m_randomUPtr.reset();
 
         m_renderWindow.close();
-
-        util::TextureLoader::dumpInfo();
     }
 
     void LoopCoordinator::runLoop()
