@@ -46,7 +46,10 @@ namespace util
 
                 Counts & counts = m_pathCountMap[t_pathStr];
                 ++counts.loads;
-                counts.bytes = byteCount;
+                if (1 == counts.loads)
+                {
+                    counts.bytes = byteCount;
+                }
             }
             else
             {
@@ -71,7 +74,7 @@ namespace util
             for (const auto & pathCountPair : m_pathCountMap)
             {
                 totalLoadCount += pathCountPair.second.loads;
-                uniqueByteCount += pathCountPair.second.bytes;
+                uniqueByteCount += (pathCountPair.second.bytes * pathCountPair.second.loads);
 
                 const std::filesystem::path path{ pathCountPair.first };
                 const std::size_t filenameLength = path.filename().string().size();
