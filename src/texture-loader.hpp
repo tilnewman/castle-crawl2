@@ -45,8 +45,9 @@ namespace util
                 TextureCounts & counts = m_pathCountMap[t_pathStr];
                 ++counts.loads;
 
-                counts.memory_bytes =
-                    static_cast<std::size_t>(t_texture.getSize().x * t_texture.getSize().y * 4u);
+                counts.memory_bytes = static_cast<std::size_t>(
+                    t_texture.getSize().x * t_texture.getSize().y *
+                    (sf::VideoMode::getDesktopMode().bitsPerPixel / 8u));
 
                 std::error_code errorCode;
                 const uintmax_t fileSizeBytes =
