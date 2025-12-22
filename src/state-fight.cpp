@@ -145,7 +145,7 @@ namespace castlecrawl
             t_context.sfx.play("barrel-break.ogg"); // intentionally using barrel sfx
 
             const bool willSpawnMonster =
-                (t_context.random.fromTo(1, t_context.config.barrel_contains_monster_chance) == 1);
+                (t_context.random.fromTo(1, t_context.config.coffin_contains_monster_chance) == 1);
 
             if (willSpawnMonster)
             {
