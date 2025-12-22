@@ -7,7 +7,9 @@ add_executable(${PROJECT_NAME} ${source_files})
 
 
 #on windows we build sfml from source, otherwise just use find_package()
-if(WIN32)
+if (APPLE)
+	find_package(SFML 3.0.0 COMPONENTS System Window Graphics Audio REQUIRED)
+else()
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 	option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
@@ -16,9 +18,7 @@ if(WIN32)
 		GIT_REPOSITORY https://github.com/SFML/SFML.git
 		GIT_TAG 3.0.0
 		GIT_SHALLOW ON)
-	FetchContent_MakeAvailable(SFML)
-else()
-	find_package(SFML 3.0.0 COMPONENTS System Window Graphics Audio REQUIRED)
+	FetchContent_MakeAvailable(SFML)	
 endif()
 
 
