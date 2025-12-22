@@ -990,7 +990,7 @@ namespace util
     }
 
     // returns desktop mode if none found matching the desktop bpp
-    inline const sf::VideoMode findHighestVideoMode()
+    inline const sf::VideoMode findHighestVideoMode(const unsigned bitsPerPixel)
     {
         std::vector<sf::VideoMode> videoModes = sf::VideoMode::getFullscreenModes();
 
@@ -998,9 +998,7 @@ namespace util
             std::remove_if(
                 std::begin(videoModes),
                 std::end(videoModes),
-                [&](const auto & vm) {
-                    return (vm.bitsPerPixel != sf::VideoMode::getDesktopMode().bitsPerPixel);
-                }),
+                [&](const auto & vm) { return (vm.bitsPerPixel != bitsPerPixel); }),
             std::end(videoModes));
 
         if (videoModes.empty())
@@ -1021,20 +1019,16 @@ namespace util
     }
 
     [[nodiscard]] inline std::string makeSupportedVideoModesString(
-        const bool willSkipDiffBitsPerPixel = false, const std::string & separator = "\n")
+        const unsigned bitsPerPixel, const std::string & separator = "\n")
     {
-        const unsigned int desktopBitsPerPixel{ sf::VideoMode::getDesktopMode().bitsPerPixel };
-
         std::vector<sf::VideoMode> videoModes{ sf::VideoMode::getFullscreenModes() };
         std::reverse(std::begin(videoModes), std::end(videoModes));
-
-        // const std::size_t modeCountOrig{ videoModes.size() };
 
         std::size_t count{ 0 };
         std::ostringstream ss;
         for (const sf::VideoMode & vm : videoModes)
         {
-            if (willSkipDiffBitsPerPixel && (vm.bitsPerPixel != desktopBitsPerPixel))
+            if (vm.bitsPerPixel != bitsPerPixel)
             {
                 continue;
             }
@@ -1047,11 +1041,6 @@ namespace util
             ss << vm;
             ++count;
         }
-
-        // const std::size_t modeCountReturned{ count };
-
-        // ss << separator << "(total_supported=" << modeCountOrig << ")";
-        // ss << separator << "(total_listed=" << modeCountReturned << ")";
 
         return ss.str();
     }

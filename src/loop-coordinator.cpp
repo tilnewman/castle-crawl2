@@ -243,10 +243,11 @@ namespace castlecrawl
         if (!m_config.video_mode.isValid())
         {
             std::cout << "but that is not suported.  Valid video modes at "
-                      << sf::VideoMode::getDesktopMode().bitsPerPixel << "bpp:" << std::endl
-                      << util::makeSupportedVideoModesString(true) << std::endl;
+                      << m_config.video_mode.bitsPerPixel << "bpp:\n"
+                      << util::makeSupportedVideoModesString(m_config.video_mode.bitsPerPixel)
+                      << '\n';
 
-            t_videoMode = util::findHighestVideoMode();
+            t_videoMode = util::findHighestVideoMode(m_config.video_mode.bitsPerPixel);
             setupRenderWindow(t_videoMode);
             return;
         }
