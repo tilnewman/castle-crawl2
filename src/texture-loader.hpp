@@ -45,9 +45,15 @@ namespace util
                 TextureCounts & counts = m_pathCountMap[t_pathStr];
                 ++counts.loads;
 
+                unsigned bitsPerPixel = sf::VideoMode::getDesktopMode().bitsPerPixel;
+                if (0 == bitsPerPixel)
+                {
+                    // some video cards report zero when they mean 32...
+                    bitsPerPixel = 32;
+                }
+
                 counts.memory_bytes = static_cast<std::size_t>(
-                    t_texture.getSize().x * t_texture.getSize().y *
-                    (sf::VideoMode::getDesktopMode().bitsPerPixel / 8u));
+                    t_texture.getSize().x * t_texture.getSize().y * (bitsPerPixel / 8u));
 
                 std::error_code errorCode;
                 const uintmax_t fileSizeBytes =
