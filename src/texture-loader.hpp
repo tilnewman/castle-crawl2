@@ -20,7 +20,7 @@ namespace util
     struct Counts
     {
         std::size_t loads{ 0 };
-        std::size_t bytes{ 0 };
+        std::size_t bytes{ 0 }; // size in memrory not filesize
     };
 
     class TextureLoader
@@ -46,10 +46,7 @@ namespace util
 
                 Counts & counts = m_pathCountMap[t_pathStr];
                 ++counts.loads;
-                if (1 == counts.loads)
-                {
-                    counts.bytes = byteCount;
-                }
+                counts.bytes = byteCount;
             }
             else
             {
