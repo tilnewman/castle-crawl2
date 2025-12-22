@@ -62,37 +62,42 @@ namespace util
 
         static void dumpInfo()
         {
+            std::ostringstream ss;
+            ss.imbue(std::locale("")); // this is only to put commas in the big numbers
+
+            std::size_t totalLoadCount  = 0;
+            std::size_t uniqueByteCount = 0;
+            std::size_t longestFilename = 0;
+            for (const auto & pathCountPair : m_pathCountMap)
             {
-                std::ostringstream ss;
-                ss.imbue(std::locale("")); // this is only to put commas in the big numbers
+                totalLoadCount += pathCountPair.second.loads;
+                uniqueByteCount += pathCountPair.second.bytes;
 
-                std::size_t totalLoadCount  = 0;
-                std::size_t uniqueByteCount = 0;
-                for (const auto & pathCountPair : m_pathCountMap)
+                const std::filesystem::path path{ pathCountPair.first };
+                const std::size_t filenameLength = path.filename().string().size();
+                if (filenameLength > longestFilename)
                 {
-                    totalLoadCount += pathCountPair.second.loads;
-                    uniqueByteCount += pathCountPair.second.bytes;
+                    longestFilename = filenameLength;
                 }
-
-                ss << m_pathCountMap.size() << " textures (" << uniqueByteCount
-                   << "bytes) were loaded " << totalLoadCount << " times:";
-
-                std::clog << ss.str() << '\n';
             }
 
+            ss << m_pathCountMap.size() << " textures (" << uniqueByteCount << "bytes) were loaded "
+               << totalLoadCount << " times:";
+
+            std::clog << ss.str() << '\n';
+
+            ss.str("");
+            for (const auto & pathCountPair : m_pathCountMap)
             {
-                std::ostringstream ss;
-                ss.imbue(std::locale("")); // this is only to put commas in the big numbers
+                const std::filesystem::path path{ pathCountPair.first };
+                std::string filename = path.filename().string();
+                filename += std::string((longestFilename - filename.size()), ' ');
 
-                for (const auto & pathCountPair : m_pathCountMap)
-                {
-                    const std::filesystem::path path{ pathCountPair.first };
-                    ss << '\t' << path.filename().string() << "\t\t" << pathCountPair.second.bytes
-                       << "\t\tx" << pathCountPair.second.loads << '\n';
-                }
-
-                std::clog << ss.str() << '\n';
+                ss << '\t' << filename << '\t' << (pathCountPair.second.bytes / 1000_st)
+                   << "k\t\tx " << pathCountPair.second.loads << '\n';
             }
+
+            std::clog << ss.str() << '\n';
         }
 
       private:
