@@ -438,7 +438,10 @@ namespace castlecrawl
 
         const auto foundWaterIter = std::find_if(
             std::begin(surroundingCells), std::end(surroundingCells), [](const MapCell & cell) {
-                return (cell.object_char == tileImageToChar(TileImage::Water));
+                return (
+                    (cell.object_char == tileImageToChar(TileImage::Water)) ||
+                    (cell.object_char == tileImageToChar(TileImage::Blood)) ||
+                    (cell.object_char == tileImageToChar(TileImage::Slime)));
             });
 
         if (foundWaterIter == std::end(surroundingCells))
