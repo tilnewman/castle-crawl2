@@ -157,7 +157,7 @@ namespace castlecrawl::item
     const std::string Item::makeFullName() const
     {
         std::string str;
-        str.reserve(32); // longest is 25 as of 2024-7-28
+        str.reserve(26); // longest is 25 as of 2024-7-28
 
         if (isArmor())
         {
@@ -212,7 +212,7 @@ namespace castlecrawl::item
             return str;
         }
 
-        str.reserve(256); // longest is 104 as of 2024-7-28
+        str.reserve(105); // longest is 104 as of 2024-7-28
 
         str += name();
         str += " is";
