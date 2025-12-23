@@ -64,6 +64,12 @@ namespace castlecrawl
             }
         }
 
+        if (positions.empty())
+        {
+            // there are no adjacent valid and empty positions, so do nothing
+            return false;
+        }
+
         // sort it by distance to the t_targetMapPos
         std::sort(
             std::begin(positions),
@@ -71,12 +77,6 @@ namespace castlecrawl
             [](const PositionDistance & a, const PositionDistance & b) {
                 return (a.distance < b.distance);
             });
-
-        if (positions.empty())
-        {
-            // there are no adjacent valid and empty positions, so do nothing
-            return false;
-        }
 
         // allow moving away from the target half of the time
         // this makes no sense but looks like more natural eager monster movement
