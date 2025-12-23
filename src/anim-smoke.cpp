@@ -106,7 +106,7 @@ namespace castlecrawl
         const MapPos_t & t_mapPos)
         : particles{}
     {
-        for (std::size_t i{ 0 }; i < 30; ++i) // 30 looks good :)
+        for (std::size_t i{ 0 }; i < 20; ++i) // 30 looks good :)
         {
             particles.emplace_back(t_context, t_texture, t_textureRect, t_mapPos);
         }
