@@ -65,14 +65,8 @@ namespace castlecrawl
     const sf::IntRect InfernoAnimation::frameRect(const std::size_t t_index) const
     {
         sf::IntRect rect{ { 0, 0 }, { 64, 64 } };
-
         rect.position.x = ((static_cast<int>(t_index) % 8) * 64);
         rect.position.y = ((static_cast<int>(t_index) / 8) * 64);
-
-        // The logic above is perfect, but a flaw in the art means we need to add one.
-        // Maybe someday I'll spend the hour in photoshop required to fix the art.
-        ++rect.position.y;
-
         return rect;
     }
 
