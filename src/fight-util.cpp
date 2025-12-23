@@ -292,17 +292,14 @@ namespace castlecrawl::fight
                 charToTileImage(t_context.maps.current().cell(t_mapPos).object_char)))
         {
             const sf::Vector2i damageMinMax{ toDamageMinMax(t_spell) };
-            if (damageMinMax.x < damageMinMax.y)
-            {
-                const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
+            const int damage{ t_context.random.fromTo(damageMinMax.x, damageMinMax.y) };
 
-                fight::damageMonster(
-                    t_context,
-                    damage,
-                    fight::RollResult{},
-                    t_mapPos,
-                    t_context.config.message_color_cast_spell);
-            }
+            fight::damageMonster(
+                t_context,
+                damage,
+                fight::RollResult{},
+                t_mapPos,
+                t_context.config.message_color_cast_spell);
         }
 
         t_context.sfx.play(std::string(toSfxFilename(t_spell)));
