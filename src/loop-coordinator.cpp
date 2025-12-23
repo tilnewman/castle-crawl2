@@ -62,7 +62,8 @@ namespace castlecrawl
 
         setupRenderWindow(m_config.video_mode);
 
-        m_renderWindow.setMouseCursorVisible(false);
+        // TODO uncomment after editor is no longer needed
+        // m_renderWindow.setMouseCursorVisible(false);
 
         util::SfmlDefaults::instance().setup();
 
