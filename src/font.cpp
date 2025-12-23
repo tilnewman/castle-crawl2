@@ -22,7 +22,7 @@ namespace castlecrawl
     {
         M_CHECK(
             m_font.openFromFile(
-                (t_config.media_path / "font/gentium-plus/gentium-plus.ttf").string()),
+                (t_config.media_path / "font" / "gentium-plus" / "gentium-plus.ttf").string()),
             "Failed to open font");
 
         setupFontExtents(t_config);
