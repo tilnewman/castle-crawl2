@@ -218,7 +218,7 @@ namespace castlecrawl
             pos.y += t_context.layout.cellSize().y;
         }
 
-        return { invalidMapPos };
+        return invalidMapPos;
     }
 
     sf::Vector2f Map::mapPosToScreenPos(const Context & t_context, const MapPos_t & t_mapPos) const

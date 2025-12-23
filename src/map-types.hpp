@@ -22,7 +22,7 @@ namespace castlecrawl
     struct MapCell
     {
         // these default values are safe where needed and invalid where needed -don't change
-        MapPos_t position = { invalidMapPos };
+        MapPos_t position = invalidMapPos;
         char object_char  = '.';
         char floor_char   = ' ';
     };
