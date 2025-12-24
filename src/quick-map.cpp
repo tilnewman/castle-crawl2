@@ -101,14 +101,16 @@ namespace castlecrawl
                 }
 
                 // check all four corners
-                const char tl{ getChar(x - 1, y - 1) };
-                const char tr{ getChar(x + 1, y - 1) };
-                const char bl{ getChar(x - 1, y + 1) };
-                const char br{ getChar(x + 1, y + 1) };
+                const char topLeft{ getChar(x - 1, y - 1) };
+                const char topRight{ getChar(x + 1, y - 1) };
+                const char botLeft{ getChar(x - 1, y + 1) };
+                const char botRight{ getChar(x + 1, y + 1) };
 
-                if (isNotObs(tl) || isNotObs(tr) || isNotObs(bl) || isNotObs(br))
+                if (isNotObs(topLeft) || isNotObs(topRight) || isNotObs(botLeft) ||
+                    isNotObs(botRight))
                 {
-                    setChar(x, y, 'Y'); // 'X' works here too
+                    // 'X' works here too but don't make it random so maps always look the same
+                    setChar(x, y, 'Y');
                     continue;
                 }
             }
