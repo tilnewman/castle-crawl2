@@ -272,15 +272,17 @@ namespace castlecrawl
         m_unTitleText = t_context.fonts.makeText(
             FontSize::Small, "Unequipped Items:", sf::Color(255, 255, 255, 160));
 
-        m_unTitleText.setPosition({ m_unListboxUPtr->getGlobalBounds().position.x,
-                                    (m_unListboxUPtr->getGlobalBounds().position.y -
-                                     m_unTitleText.getGlobalBounds().size.y) });
+        m_unTitleText.setPosition(
+            { m_unListboxUPtr->getGlobalBounds().position.x,
+              (m_unListboxUPtr->getGlobalBounds().position.y -
+               m_unTitleText.getGlobalBounds().size.y) });
 
         m_eqTitleText = t_context.fonts.makeText(
             FontSize::Small, "Equipped Items:", sf::Color(255, 255, 255, 160));
 
-        m_eqTitleText.setPosition({ m_eqListboxUPtr->getGlobalBounds().position.x,
-                                    m_unTitleText.getGlobalBounds().position.y });
+        m_eqTitleText.setPosition(
+            { m_eqListboxUPtr->getGlobalBounds().position.x,
+              m_unTitleText.getGlobalBounds().position.y });
 
         //
         m_fadeRectangle.setFillColor(t_context.config.stage_background_color);
@@ -412,7 +414,7 @@ namespace castlecrawl
                 t_context.sfx.play("flute");
                 t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
                 t_context.state.setChangePending(State::Play);
-                //TODO set the interaction for nearby targets?  Something anyway...
+                // TODO set the interaction for nearby targets?  Something anyway...
                 return;
             }
             else
@@ -590,9 +592,10 @@ namespace castlecrawl
         m_errorText.setString(t_message);
         m_errorText.setFillColor(t_context.config.error_message_color);
 
-        m_errorText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
-                                   (m_errorText.getGlobalBounds().size.x * 0.5f)),
-                                  (util::bottom(m_itemDescText) + 40.0f) });
+        m_errorText.setPosition(
+            { ((t_context.layout.screenRegion().size.x * 0.5f) -
+               (m_errorText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_itemDescText) + 40.0f) });
 
         t_context.sfx.play("error-2");
     }
@@ -620,9 +623,10 @@ namespace castlecrawl
 
         m_itemDescText.setString(descStr);
 
-        m_itemDescText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
-                                      (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
-                                     util::bottom(*m_unListboxUPtr) });
+        m_itemDescText.setPosition(
+            { ((t_context.layout.screenRegion().size.x * 0.5f) -
+               (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(*m_unListboxUPtr) });
     }
 
     void StateInventory::updateStatText(const Context & t_context)
@@ -659,9 +663,10 @@ namespace castlecrawl
 
         m_itemHintText.setString(equipHintStr);
 
-        m_itemHintText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
-                                      (m_itemHintText.getGlobalBounds().size.x * 0.5f)),
-                                     (util::bottom(m_itemDescText) + 0.0f) });
+        m_itemHintText.setPosition(
+            { ((t_context.layout.screenRegion().size.x * 0.5f) -
+               (m_itemHintText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(m_itemDescText) });
     }
 
     void StateInventory::updateWeaponText(const Context & t_context)
