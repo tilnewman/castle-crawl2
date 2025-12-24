@@ -76,6 +76,8 @@ namespace castlecrawl
         const sf::FloatRect botRect = t_context.layout.botRegion();
 
         // establish how tall the stats rows will be
+        // the "Dy" string reachees typically high and low to estimate typical text
+        // use m_strTitleText but any sf::Text object would work
         m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Dy");
 
         const float statRowHeight{ m_strTitleText.getGlobalBounds().size.y +
@@ -410,6 +412,7 @@ namespace castlecrawl
                 t_context.sfx.play("flute");
                 t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
                 t_context.state.setChangePending(State::Play);
+                //TODO set the interaction for nearby targets?  Something anyway...
                 return;
             }
             else
