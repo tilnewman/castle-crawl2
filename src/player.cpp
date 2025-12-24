@@ -98,23 +98,28 @@ namespace castlecrawl
         else
         {
             int exp = (t_level * 200);
-            exp += static_cast<int>(sqrt(static_cast<float>(exp)) * static_cast<float>(t_level * 10));
+
+            exp +=
+                static_cast<int>(sqrt(static_cast<float>(exp)) * static_cast<float>(t_level * 10));
+
             return exp;
         }
     }
 
     void Player::dumpInfo(const Context & t_context)
     {
+        const std::size_t graphCount = 100;
         std::vector<int> experiencePerLevel;
-        experiencePerLevel.reserve(200);
-        for (int index{ 0 }; index < 200; ++index)
+        experiencePerLevel.reserve(graphCount);
+
+        for (int index{ 0 }; index < static_cast<int>(graphCount); ++index)
         {
             experiencePerLevel.push_back(t_context.player.experienceForLevel(index));
         }
-        
+
         util::StatsDisplay<int>::makeAndSavePNG(
             "exp-per-level", t_context.fonts.font(), experiencePerLevel);
-        
+
         std::vector<int> experienceDeltas;
         experienceDeltas.reserve(experiencePerLevel.size());
         for (int index{ 0 }; index < static_cast<int>(experiencePerLevel.size() - 1); ++index)
@@ -123,7 +128,7 @@ namespace castlecrawl
                 experiencePerLevel.at(static_cast<std::size_t>(index + 1)) -
                 experiencePerLevel.at(static_cast<std::size_t>(index)));
         }
-        
+
         util::StatsDisplay<int>::makeAndSavePNG(
             "exp-per-level-delta", t_context.fonts.font(), experienceDeltas);
     }
