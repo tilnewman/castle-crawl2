@@ -155,7 +155,7 @@ namespace castlecrawl
             "Ziesche Til Newman",
             (t_context.config.media_path / "image/credits/avatar.png"),
             0.062f,
-            "Design, Programming");
+            "Design, Software");
 
         softwareCredit.vertPosition(t_context, screenRect.size.y);
 
