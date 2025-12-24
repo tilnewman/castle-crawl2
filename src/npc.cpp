@@ -18,7 +18,7 @@ namespace castlecrawl
 
     CreatureAction Npc::takeTurn(const Context & t_context)
     {
-        // only walk about a sixth of the time
+        // only walk if they player is not standing next to and then only about a sixth of the time
         if (!isPlayerAdjacent(t_context) && (t_context.random.fromTo(1, 6) == 1))
         {
             std::vector<MapCell> adjacentCells =

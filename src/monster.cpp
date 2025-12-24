@@ -292,7 +292,7 @@ namespace castlecrawl
     const std::vector<Spell> Monster::spellsThereIsManaEnoughToCast() const
     {
         std::vector<Spell> spells;
-        spells.reserve(4);
+        spells.reserve(4); // no monster has more than four spells they can cast
 
         for (const Spell spell : m_stats.spells)
         {
