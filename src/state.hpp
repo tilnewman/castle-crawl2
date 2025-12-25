@@ -93,7 +93,12 @@ namespace castlecrawl
         virtual void onEnter(const Context &) override {}
         virtual void onExit(const Context &) override {}
         virtual void update(const Context &, const float) override {}
-        virtual void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override {}
+
+        virtual void draw(
+            const Context & t_context,
+            sf::RenderTarget & t_target,
+            sf::RenderStates t_states) const override;
+
         virtual void handleEvent(const Context &, const sf::Event &) override {}
     };
 
