@@ -96,7 +96,7 @@ namespace castlecrawl
 
     inline void from_json(const nlohmann::json & j, Stat & s)
     {
-        j.at("currrent").get_to(s.m_current);
+        j.at("current").get_to(s.m_current);
         j.at("normal").get_to(s.m_normal);
         j.at("min").get_to(s.m_min);
         j.at("max").get_to(s.m_max);

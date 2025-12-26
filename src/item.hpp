@@ -164,7 +164,7 @@ namespace castlecrawl::item
                             { "armor", i.m_armor },
                             { "misc", i.m_misc },
                             { "armorMaterial", i.m_armorMaterial },
-                            { "weaponMateraial", i.m_weaponMaterial },
+                            { "weaponMaterial", i.m_weaponMaterial },
                             { "miscMaterial", i.m_miscMaterial },
                             { "useStrength", i.m_useStrength },
                             { "armorRating", i.m_armorRating },
