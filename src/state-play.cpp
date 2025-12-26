@@ -142,6 +142,10 @@ namespace castlecrawl
             {
                 t_context.state.setChangePending(State::SaveGame);
             }
+            else if (keyPtr->control && (keyPtr->scancode == sf::Keyboard::Scancode::L))
+            {
+                t_context.state.setChangePending(State::LoadGame);
+            }
             else if (
                 (keyPtr->scancode == sf::Keyboard::Scancode::Up) ||
                 (keyPtr->scancode == sf::Keyboard::Scancode::Down) ||

@@ -73,7 +73,6 @@ namespace castlecrawl
         sf::RectangleShape m_bgFadeRectangle;
         sf::Text m_titleText;
         sf::Text m_subTitleText;
-        const std::string m_filename;
     };
 
 } // namespace castlecrawl

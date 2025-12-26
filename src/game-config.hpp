@@ -4,6 +4,7 @@
 // game-config.hpp
 //
 #include <filesystem>
+#include <string>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -62,6 +63,8 @@ namespace castlecrawl
         const float popup_text_region_ratio = 0.35f;
         const float look_text_region_ratio  = 0.5f;
         const float text_inner_pad_ratio    = 0.15f;
+
+        const std::string save_game_file_name = "save-game.txt";
 
         // DON'T CHANGE UNLESS YOU ALSO CHECK EVERYTHING IN MAPS.CPP
         const sf::Vector2i map_size_max = { 41, 23 };

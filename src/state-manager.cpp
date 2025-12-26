@@ -13,6 +13,7 @@
 #include "state-fight.hpp"
 #include "state-inventory.hpp"
 #include "state-levelup.hpp"
+#include "state-load-game.hpp"
 #include "state-look-event.hpp"
 #include "state-look.hpp"
 #include "state-play.hpp"
@@ -72,6 +73,7 @@ namespace castlecrawl
             case State::LookEvent:  { return std::make_unique<StateLookEvent>(); }
             case State::TextPopup:  { return std::make_unique<StateTextPopup>(); }
             case State::SaveGame:   { return std::make_unique<StateSaveGame>(); }
+            case State::LoadGame:   { return std::make_unique<StateLoadGame>(); }
             default:
             {
                 throw std::runtime_error("Error: state-manager::factory() called with unknown state!");
