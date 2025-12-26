@@ -3,6 +3,7 @@
 //
 // look-event.hpp
 //
+#include "json-wrapper.hpp"
 #include "map-types.hpp"
 
 #include <optional>
@@ -29,6 +30,22 @@ namespace castlecrawl
         int lck{ 0 };
         int str{ 0 };
     };
+
+    inline void to_json(nlohmann::json & j, const Stats & s)
+    {
+        j = nlohmann::json{
+            { "acc", s.acc }, { "arc", s.arc }, { "dex", s.dex }, { "lck", s.lck }, { "str", s.str }
+        };
+    }
+
+    inline void from_json(const nlohmann::json & j, Stats & s)
+    {
+        j.at("acc").get_to(s.acc);
+        j.at("arc").get_to(s.arc);
+        j.at("dex").get_to(s.dex);
+        j.at("lck").get_to(s.lck);
+        j.at("str").get_to(s.str);
+    }
 
     //
 
@@ -73,6 +90,47 @@ namespace castlecrawl
 
     using LookEvents_t   = std::vector<LookEvent>;
     using LookEventOpt_t = std::optional<LookEvent>;
+
+    inline void to_json(nlohmann::json & j, const LookEvent & le)
+    {
+        j = nlohmann::json{ { "has_happened", le.has_happened },
+                            { "will_always_happen", le.will_always_happen },
+                            { "map_pos_x", le.map_pos.x },
+                            { "map_pos_y", le.map_pos.y },
+                            { "message", le.message },
+                            { "stats_required", le.stats_required },
+                            { "item_required", le.item_required },
+                            { "item_keyword_required", le.item_keyword_required },
+                            { "gold_required", le.gold_required },
+                            { "message_pass", le.message_pass },
+                            { "item_given_pass", le.item_given_pass },
+                            { "health_adj_pass", le.health_adj_pass },
+                            { "gold_adj_pass", le.gold_adj_pass },
+                            { "stats_adj_pass", le.stats_adj_pass },
+                            { "will_spawn_monster", le.will_spawn_monster },
+                            { "message_fail", le.message_fail },
+                            { "health_adj_fail", le.health_adj_fail } };
+    }
+
+    inline void from_json(const nlohmann::json & j, LookEvent & le)
+    {
+        j.at("has_happened").get_to(le.has_happened);
+        j.at("will_always_happen").get_to(le.will_always_happen);
+        j.at("map_pos_x").get_to(le.map_pos.x);
+        j.at("map_pos_y").get_to(le.map_pos.y);
+        j.at("message").get_to(le.message);
+        j.at("stats_required").get_to(le.stats_required);
+        j.at("item_required").get_to(le.item_required);
+        j.at("item_keyword_required").get_to(le.item_keyword_required);
+        j.at("message_pass").get_to(le.message_pass);
+        j.at("item_given_pass").get_to(le.item_given_pass);
+        j.at("health_adj_pass").get_to(le.health_adj_pass);
+        j.at("gold_adj_pass").get_to(le.gold_adj_pass);
+        j.at("stats_adj_pass").get_to(le.stats_adj_pass);
+        j.at("will_spawn_monster").get_to(le.will_spawn_monster);
+        j.at("message_fail").get_to(le.message_fail);
+        j.at("health_adj_fail").get_to(le.health_adj_fail);
+    }
 
     //
 

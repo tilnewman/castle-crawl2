@@ -20,8 +20,18 @@ namespace castlecrawl
 {
     Maps::Maps()
         : m_maps{}
-        , m_currentIter{ std::end(m_maps) }
+        , m_currentIndex{ 0 }
     {}
+
+    Map & Maps::current()
+    {
+        M_CHECK(
+            (m_currentIndex < m_maps.size()),
+            "m_currentIndex=" << m_currentIndex
+                              << " is out of range with m_maps.size()=" << m_maps.size());
+
+        return m_maps.at(m_currentIndex);
+    }
 
     void Maps::setup(const Context & t_context)
     {
@@ -31,19 +41,28 @@ namespace castlecrawl
 
     void Maps::change(const Context & t_context, MapName t_mapName, const MapPos_t & t_pos)
     {
+        M_CHECK(
+            !m_maps.empty(),
+            "Tried to change() to map named \"" << toString(t_mapName)
+                                                << "\" but m_maps was empty!");
+
         unloadCreatures(t_context);
         unloadAnimations(t_context);
 
-        m_currentIter = std::find_if(std::begin(m_maps), std::end(m_maps), [&](const Map & map) {
-            return (map.name() == t_mapName);
-        });
+        for (m_currentIndex = 0; m_currentIndex < m_maps.size(); ++m_currentIndex)
+        {
+            if (current().name() == t_mapName)
+            {
+                break;
+            }
+        }
 
         M_CHECK(
-            (m_currentIter != std::end(m_maps)),
-            "Tried to change to map named \"" << toString(t_mapName)
-                                              << "\" but that map could not be found!");
+            (current().name() == t_mapName),
+            "Tried to change() to map named \"" << toString(t_mapName)
+                                                << "\" but that map could not be found!");
 
-        m_currentIter->setDiscovered();
+        current().setDiscovered();
         t_context.map_display.load(t_context);
         t_context.player_display.position(t_context, t_pos);
 
@@ -112,7 +131,8 @@ namespace castlecrawl
         unloadCreatures(t_context);
         unloadAnimations(t_context);
 
-        *m_currentIter = t_map;
+        // just overwrite whatever the current map is
+        current() = t_map;
 
         t_context.map_display.load(t_context);
 
@@ -123,6 +143,8 @@ namespace castlecrawl
     void Maps::load(const Context & t_context)
     {
         m_maps.clear();
+
+        // Level_1_Cell must always been at m_maps.front(), or put another way, first in this list
 
         // clang-format off
         m_maps.emplace_back(
@@ -583,7 +605,7 @@ namespace castlecrawl
             } );
         // clang-format on
 
-        m_currentIter = std::begin(m_maps);
+        m_currentIndex = 0;
     }
 
     void Maps::verify(const Context & t_context) const

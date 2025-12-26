@@ -36,8 +36,7 @@ namespace sf
 }
 
 namespace util
-{
-
+{   
     // two triangles with three verts each, see setupTriangleVerts() below
     constexpr std::size_t verts_per_quad{ 6 };
 

@@ -3,6 +3,8 @@
 //
 // map.hpp
 //
+#include "json-wrapper.hpp"
+
 #include <cmath>
 #include <ostream>
 #include <string>
@@ -19,6 +21,30 @@ namespace castlecrawl
 
     static inline const MapPos_t invalidMapPos = { -1, -1 }; // any two negative values work here
 
+    // template <typename T>
+    // inline void to_json(nlohmann::json & j, const sf::Vector2<T> & v)
+    //{
+    //     j = nlohmann::json{ { "x", v.x }, { "y", v.y } };
+    // }
+    //
+    // template <typename T>
+    // inline void from_json(const nlohmann::json & j, sf::Vector2f & v)
+    //{
+    //     j.at("x").get_to(v.x);
+    //     j.at("y").get_to(v.y);
+    // }
+    //
+    // inline void to_json(nlohmann::json & j, const MapPos_t & mp)
+    //{
+    //     j = nlohmann::json{ { "x", mp.x }, { "y", mp.y } };
+    // }
+    //
+    // inline void from_json(const nlohmann::json & j, MapPos_t & mp)
+    //{
+    //     j.at("x").get_to(mp.x);
+    //     j.at("y").get_to(mp.y);
+    // }
+
     struct MapCell
     {
         // these default values are safe where needed and invalid where needed -don't change
@@ -26,6 +52,22 @@ namespace castlecrawl
         char object_char  = '.';
         char floor_char   = ' ';
     };
+
+    inline void to_json(nlohmann::json & j, const MapCell & mc)
+    {
+        j = nlohmann::json{ { "position_x", mc.position.x },
+                            { "position_y", mc.position.y },
+                            { "object_char", mc.object_char },
+                            { "floor_char", mc.floor_char } };
+    }
+
+    inline void from_json(const nlohmann::json & j, MapCell & mc)
+    {
+        j.at("position_x").get_to(mc.position.x);
+        j.at("position_y").get_to(mc.position.y);
+        j.at("object_char").get_to(mc.object_char);
+        j.at("floor_char").get_to(mc.floor_char);
+    }
 
     [[nodiscard]] inline int distance(const MapPos_t & t_posA, const MapPos_t & t_posB) noexcept
     {
@@ -128,6 +170,24 @@ namespace castlecrawl
     };
 
     using MapTransitions_t = std::vector<MapTransition>;
+
+    inline void to_json(nlohmann::json & j, const MapTransition & mt)
+    {
+        j = nlohmann::json{ { "from_pos_x", mt.from_pos.x },
+                            { "from_pos_y", mt.from_pos.y },
+                            { "to_name", mt.to_name },
+                            { "to_pos_x", mt.to_pos.x },
+                            { "to_pos_y", mt.to_pos.y } };
+    }
+
+    inline void from_json(const nlohmann::json & j, MapTransition & mt)
+    {
+        j.at("from_pos_x").get_to(mt.from_pos.x);
+        j.at("from_pos_y").get_to(mt.from_pos.y);
+        j.at("to_name").get_to(mt.to_name);
+        j.at("to_pos_x").get_to(mt.to_pos.x);
+        j.at("to_pos_y").get_to(mt.to_pos.y);
+    }
 
 } // namespace castlecrawl
 

@@ -4,6 +4,7 @@
 // map.hpp
 //
 #include "door-lock.hpp"
+#include "json-wrapper.hpp"
 #include "look-event.hpp"
 #include "loot.hpp"
 #include "map-types.hpp"
@@ -15,7 +16,7 @@ namespace castlecrawl
     class Map
     {
       public:
-        Map();
+        Map(); // this default contstructor creates an invalid map and is used by json
 
         Map(const MapName t_name,
             const Context & t_context,
@@ -69,6 +70,9 @@ namespace castlecrawl
 
         void dumpToConsole() const;
 
+        friend void to_json(nlohmann::json & j, const Map & m);
+        friend void from_json(const nlohmann::json & j, Map & m);
+
       private:
         MapName m_name;
         Map_t m_map;
@@ -79,6 +83,30 @@ namespace castlecrawl
         DoorLocks_t m_doorLocks;
         Loots_t m_loots;
     };
+
+    inline void to_json(nlohmann::json & j, const Map & m)
+    {
+        j = nlohmann::json{ { "name", m.m_name } };
+        j = nlohmann::json{ { "map", m.m_map } };
+        j = nlohmann::json{ { "floor", m.m_floor } };
+        j = nlohmann::json{ { "transitions", m.m_transitions } };
+        j = nlohmann::json{ { "isDiscovered", m.m_isDiscovered } };
+        j = nlohmann::json{ { "lookEvents", m.m_lookEvents } };
+        j = nlohmann::json{ { "doorLocks", m.m_doorLocks } };
+        j = nlohmann::json{ { "loots", m.m_loots } };
+    }
+
+    inline void from_json(const nlohmann::json & j, Map & m)
+    {
+        j.at("name").get_to(m.m_name);
+        j.at("map").get_to(m.m_map);
+        j.at("floor").get_to(m.m_floor);
+        j.at("transitions").get_to(m.m_transitions);
+        j.at("isDiscovered").get_to(m.m_isDiscovered);
+        j.at("lookEvents").get_to(m.m_lookEvents);
+        j.at("doorLocks").get_to(m.m_doorLocks);
+        j.at("loots").get_to(m.m_loots);
+    }
 
 } // namespace castlecrawl
 
