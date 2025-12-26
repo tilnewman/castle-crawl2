@@ -152,7 +152,7 @@ namespace castlecrawl
     {
         util::SfmlDefaults::instance().teardown();
 
-        util::TextureLoader::dumpInfo(*m_contextUPtr);
+        // util::TextureLoader::dumpInfo(*m_contextUPtr);
 
         m_contextUPtr.reset();
 
