@@ -86,14 +86,14 @@ namespace castlecrawl
 
     inline void to_json(nlohmann::json & j, const Map & m)
     {
-        j = nlohmann::json{ { "name", m.m_name } };
-        j = nlohmann::json{ { "map", m.m_map } };
-        j = nlohmann::json{ { "floor", m.m_floor } };
-        j = nlohmann::json{ { "transitions", m.m_transitions } };
-        j = nlohmann::json{ { "isDiscovered", m.m_isDiscovered } };
-        j = nlohmann::json{ { "lookEvents", m.m_lookEvents } };
-        j = nlohmann::json{ { "doorLocks", m.m_doorLocks } };
-        j = nlohmann::json{ { "loots", m.m_loots } };
+        j = nlohmann::json{ { "name", m.m_name },
+                            { "map", m.m_map },
+                            { "floor", m.m_floor },
+                            { "transitions", m.m_transitions },
+                            { "isDiscovered", m.m_isDiscovered },
+                            { "lookEvents", m.m_lookEvents },
+                            { "doorLocks", m.m_doorLocks },
+                            { "loots", m.m_loots } };
     }
 
     inline void from_json(const nlohmann::json & j, Map & m)
