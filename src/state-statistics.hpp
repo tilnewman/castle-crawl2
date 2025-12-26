@@ -47,7 +47,7 @@ namespace castlecrawl
         virtual ~StateStatistics() final {}
 
         virtual void onEnter(const Context & t_context) final;
-        [[nodiscard]] virtual State which() const final { return State::LevelUp; }
+        [[nodiscard]] virtual State which() const final { return State::Statistics; }
         virtual void update(const Context & t_context, const float t_elapsedSec) final;
 
         virtual void draw(
