@@ -46,8 +46,7 @@ namespace castlecrawl
 
     inline void to_json(nlohmann::json & j, const Maps & m)
     {
-        j = nlohmann::json{ { "maps", m.m_maps } };
-        j = nlohmann::json{ { "currentIndex", m.m_currentIndex } };
+        j = nlohmann::json{ { "maps", m.m_maps }, { "currentIndex", m.m_currentIndex } };
     }
 
     inline void from_json(const nlohmann::json & j, Maps & m)
