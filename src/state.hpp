@@ -31,7 +31,8 @@ namespace castlecrawl
         Statistics,
         Look,
         LookEvent,
-        TextPopup
+        TextPopup,
+        SaveGame
     };
 
     constexpr std::string_view toString(const State t_state) noexcept
@@ -55,6 +56,7 @@ namespace castlecrawl
             case State::Look:       { return "Look"; }
             case State::LookEvent:  { return "LookEvent"; } 
             case State::TextPopup:  { return "TextPopup"; }
+            case State::SaveGame:   { return "SaveGame"; }
             default:                { return "unknown_state_error"; }
                 // clang-format on
         }
