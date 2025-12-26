@@ -6,6 +6,7 @@
 #include "condition.hpp"
 #include "inventory.hpp"
 #include "item-enums.hpp"
+#include "json-wrapper.hpp"
 #include "spells.hpp"
 #include "stat.hpp"
 #include "strong-types.hpp"
@@ -129,6 +130,9 @@ namespace castlecrawl
             m_spellLastCastDir = t_dir;
         }
 
+        friend void to_json(nlohmann::json & j, const Player & p);
+        friend void from_json(const nlohmann::json & j, Player & p);
+
       private:
         void advanceExperienceForLevel()
         {
@@ -169,6 +173,54 @@ namespace castlecrawl
         Spell m_spellLastCast;
         sf::Keyboard::Scancode m_spellLastCastDir;
     };
+
+    inline void to_json(nlohmann::json & j, const Player & p)
+    {
+        j = nlohmann::json{ { "strength", p.m_strength },
+                            { "dexterity", p.m_dexterity },
+                            { "arcane", p.m_arcane },
+                            { "accuracy", p.m_accuracy },
+                            { "luck", p.m_luck },
+                            { "health", p.m_health },
+                            { "healthMax", p.m_healthMax },
+                            { "mana", p.m_mana },
+                            { "manaMax", p.m_manaMax },
+                            { "level", p.m_level },
+                            { "experienceBase", p.m_experienceBase },
+                            { "experienceOffset", p.m_experienceOffset },
+                            { "gold", p.m_gold },
+                            { "maxGoldHeld", p.m_maxGoldHeld },
+                            { "inventory", p.m_inventory },
+                            { "equipEffects", p.m_equipEffects },
+                            { "conditions", p.m_conditions },
+                            { "spells", p.m_spells },
+                            { "spellLastCast", p.m_spellLastCast },
+                            { "spellLastCastDir", p.m_spellLastCastDir } };
+    }
+
+    inline void from_json(const nlohmann::json & j, Player & p)
+    {
+        j.at("strength").get_to(p.m_strength);
+        j.at("dexterity").get_to(p.m_dexterity);
+        j.at("arcane").get_to(p.m_arcane);
+        j.at("accuracy").get_to(p.m_accuracy);
+        j.at("luck").get_to(p.m_luck);
+        j.at("health").get_to(p.m_health);
+        j.at("healthMax").get_to(p.m_healthMax);
+        j.at("mana").get_to(p.m_mana);
+        j.at("manaMax").get_to(p.m_manaMax);
+        j.at("level").get_to(p.m_level);
+        j.at("experienceBase").get_to(p.m_experienceBase);
+        j.at("experienceOffset").get_to(p.m_experienceOffset);
+        j.at("gold").get_to(p.m_gold);
+        j.at("maxGoldHeld").get_to(p.m_maxGoldHeld);
+        j.at("inventory").get_to(p.m_inventory);
+        j.at("equipEffects").get_to(p.m_equipEffects);
+        j.at("conditions").get_to(p.m_conditions);
+        j.at("spells").get_to(p.m_spells);
+        j.at("spellLastCast").get_to(p.m_spellLastCast);
+        j.at("spellLastCastDir").get_to(p.m_spellLastCastDir);
+    }
 
 } // namespace castlecrawl
 

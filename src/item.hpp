@@ -4,6 +4,7 @@
 // item.hpp
 //
 #include "item-enums.hpp"
+#include "json-wrapper.hpp"
 #include "strong-types.hpp"
 
 #include <optional>
@@ -17,7 +18,7 @@ namespace castlecrawl::item
     class Item
     {
       public:
-        // the default constructor makes an invalid item
+        // the default constructor makes an invalid item and is needed by json
         Item();
 
         // normal weapon constructor
@@ -114,6 +115,9 @@ namespace castlecrawl::item
         auto operator<=>(const Item &) const = default;
         friend std::ostream & operator<<(std::ostream & t_os, const Item & t_item);
 
+        friend void to_json(nlohmann::json & j, const Item & i);
+        friend void from_json(const nlohmann::json & j, Item & i);
+
       private:
         [[nodiscard]] int calcValue() const;
         [[nodiscard]] const std::string makeFullName() const;
@@ -150,6 +154,46 @@ namespace castlecrawl::item
     std::ostream & operator<<(std::ostream & t_os, const Item & t_item);
 
     [[nodiscard]] inline std::string toString(const item::Item & t_item) { return t_item.name(); }
+
+    inline void to_json(nlohmann::json & j, const Item & i)
+    {
+        j = nlohmann::json{ { "baseName", i.m_baseName },
+                            { "fullName", i.m_fullName },
+                            { "description", i.m_description },
+                            { "weapon", i.m_weapon },
+                            { "armor", i.m_armor },
+                            { "misc", i.m_misc },
+                            { "armorMaterial", i.m_armorMaterial },
+                            { "weaponMateraial", i.m_weaponMaterial },
+                            { "miscMaterial", i.m_miscMaterial },
+                            { "useStrength", i.m_useStrength },
+                            { "armorRating", i.m_armorRating },
+                            { "value", i.m_value },
+                            { "damageMin", i.m_damageMin },
+                            { "damageMax", i.m_damageMax },
+                            { "useEffect", i.m_useEffect },
+                            { "equipEffect", i.m_equipEffect } };
+    }
+
+    inline void from_json(const nlohmann::json & j, Item & i)
+    {
+        j.at("baseName").get_to(i.m_baseName);
+        j.at("fullName").get_to(i.m_fullName);
+        j.at("description").get_to(i.m_description);
+        j.at("weapon").get_to(i.m_weapon);
+        j.at("armor").get_to(i.m_armor);
+        j.at("misc").get_to(i.m_misc);
+        j.at("armorMaterial").get_to(i.m_armorMaterial);
+        j.at("weaponMaterial").get_to(i.m_weaponMaterial);
+        j.at("miscMaterial").get_to(i.m_miscMaterial);
+        j.at("useStrength").get_to(i.m_useStrength);
+        j.at("armorRating").get_to(i.m_armorRating);
+        j.at("value").get_to(i.m_value);
+        j.at("damageMin").get_to(i.m_damageMin);
+        j.at("damageMax").get_to(i.m_damageMax);
+        j.at("useEffect").get_to(i.m_useEffect);
+        j.at("equipEffect").get_to(i.m_equipEffect);
+    }
 
 } // namespace castlecrawl::item
 

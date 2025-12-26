@@ -4,6 +4,7 @@
 // inventory.hpp
 //
 #include "item.hpp"
+#include "json-wrapper.hpp"
 
 #include <optional>
 #include <string>
@@ -36,6 +37,9 @@ namespace castlecrawl::item
         [[nodiscard]] bool contains(const std::string & t_name) const;
         [[nodiscard]] bool containsKeyword(const std::string & t_name) const;
 
+        friend void to_json(nlohmann::json & j, const Inventory & i);
+        friend void from_json(const nlohmann::json & j, Inventory & i);
+
       private:
         [[nodiscard]] bool hasEquipped(const Armor armor) const;
         [[nodiscard]] std::size_t countOfEquipped(const Misc misc) const;
@@ -44,6 +48,17 @@ namespace castlecrawl::item
         ItemVec_t m_items;
         ItemVec_t m_eqItems;
     };
+
+    inline void to_json(nlohmann::json & j, const Inventory & i)
+    {
+        j = nlohmann::json{ { "items", i.m_items }, { "eqItems", i.m_eqItems } };
+    }
+
+    inline void from_json(const nlohmann::json & j, Inventory & i)
+    {
+        j.at("items").get_to(i.m_items);
+        j.at("eqItems").get_to(i.m_eqItems);
+    }
 
 } // namespace castlecrawl::item
 

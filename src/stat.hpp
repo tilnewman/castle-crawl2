@@ -3,11 +3,12 @@
 //
 // stat.hpp
 //
+#include "json-wrapper.hpp"
+
 #include <algorithm>
 
 namespace castlecrawl
 {
-
     // Tracks a player's stat (i.e. strength) which is the m_normal value that
     // is always clamped between a min and max, but can be temporarily changed
     // by magical items etc so this also tracks a m_current value that can
@@ -15,6 +16,11 @@ namespace castlecrawl
     class Stat
     {
       public:
+        // this default constructor is only here to support json serialization
+        constexpr Stat() noexcept
+            : Stat(0, 0, 0)
+        {}
+
         constexpr Stat(const int t_value, const int t_min, const int t_max) noexcept
             : m_current{ t_value }
             , m_normal{ t_value }
@@ -70,12 +76,31 @@ namespace castlecrawl
             }
         }
 
+        friend void to_json(nlohmann::json & j, const Stat & s);
+        friend void from_json(const nlohmann::json & j, Stat & s);
+
       private:
         int m_current;
         int m_normal;
         int m_min;
         int m_max;
     };
+
+    inline void to_json(nlohmann::json & j, const Stat & s)
+    {
+        j = nlohmann::json{ { "current", s.m_current },
+                            { "normal", s.m_normal },
+                            { "min", s.m_min },
+                            { "max", s.m_max } };
+    }
+
+    inline void from_json(const nlohmann::json & j, Stat & s)
+    {
+        j.at("currrent").get_to(s.m_current);
+        j.at("normal").get_to(s.m_normal);
+        j.at("min").get_to(s.m_min);
+        j.at("max").get_to(s.m_max);
+    }
 
 } // namespace castlecrawl
 

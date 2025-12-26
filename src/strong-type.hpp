@@ -3,6 +3,8 @@
 //
 // strong-type.hpp
 //
+#include "json-wrapper.hpp"
+
 #include <ostream>
 #include <type_traits>
 
@@ -119,11 +121,11 @@ namespace util
             return temp;
         }
 
-        // template <typename I, typename U>
-        // friend void to_json(json & j, const StrongType<I, U> & st);
-        //
-        // template <typename I, typename U>
-        // friend void from_json(const json & j, StrongType<I, U> & st);
+        template <typename I, typename U>
+        friend void to_json(nlohmann::json & j, const StrongType<I, U> & st);
+
+        template <typename I, typename U>
+        friend void from_json(const nlohmann::json & j, StrongType<I, U> & st);
 
         auto operator<=>(const StrongType<T, Parameter_t> &) const = default;
 
@@ -139,17 +141,17 @@ namespace util
             "StrongTypes of simple numeric types like int SHOULD be trivial.  No biscuit.");
     } // namespace test
 
-    // template <typename T, typename Parameter_t>
-    // inline void to_json(json & j, const StrongType<T, Parameter_t> & st)
-    //{
-    //    j = json{ { "value", st.m_value } };
-    //}
-    //
-    // template <typename T, typename Parameter_t>
-    // inline void from_json(const json & j, StrongType<T, Parameter_t> & st)
-    //{
-    //    j.at("value").get_to(st.m_value);
-    //}
+    template <typename T, typename Parameter_t>
+    inline void to_json(nlohmann::json & j, const StrongType<T, Parameter_t> & st)
+    {
+        j = nlohmann::json{ { "value", st.m_value } };
+    }
+
+    template <typename T, typename Parameter_t>
+    inline void from_json(const nlohmann::json & j, StrongType<T, Parameter_t> & st)
+    {
+        j.at("value").get_to(st.m_value);
+    }
 
     template <typename T, typename Parameter_t>
     inline std::ostream & operator<<(std::ostream & os, const StrongType<T, Parameter_t> & rhs)

@@ -3,6 +3,8 @@
 //
 // item-enums.hpp
 //
+#include "json-wrapper.hpp"
+
 #include <string_view>
 
 #include <SFML/System/Vector2.hpp>
@@ -19,6 +21,17 @@ namespace castlecrawl::item
         [[nodiscard]] constexpr bool empty() const noexcept { return (total() == 0); }
         auto operator<=>(const UseEffect &) const noexcept = default;
     };
+
+    inline void to_json(nlohmann::json & j, const UseEffect & ue)
+    {
+        j = nlohmann::json{ { "health", ue.health }, { "mana", ue.mana } };
+    }
+
+    inline void from_json(const nlohmann::json & j, UseEffect & ue)
+    {
+        j.at("health").get_to(ue.health);
+        j.at("mana").get_to(ue.mana);
+    }
 
     //
 
@@ -59,6 +72,22 @@ namespace castlecrawl::item
 
         auto operator<=>(const EquipEffect &) const noexcept = default;
     };
+
+    inline void to_json(nlohmann::json & j, const EquipEffect & ee)
+    {
+        j = nlohmann::json{ { "acc", ee.acc }, { "arc", ee.arc }, { "dex", ee.dex },
+                            { "lck", ee.lck }, { "str", ee.str }, { "dmg", ee.dmg } };
+    }
+
+    inline void from_json(const nlohmann::json & j, EquipEffect & ee)
+    {
+        j.at("acc").get_to(ee.acc);
+        j.at("arc").get_to(ee.arc);
+        j.at("dex").get_to(ee.dex);
+        j.at("lck").get_to(ee.lck);
+        j.at("str").get_to(ee.str);
+        j.at("dmg").get_to(ee.dmg);
+    }
 
     //
 
