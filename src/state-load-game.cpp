@@ -12,6 +12,7 @@
 #include "game-config.hpp"
 #include "json-wrapper.hpp"
 #include "layout.hpp"
+#include "map-display.hpp"
 #include "player-display.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
@@ -109,8 +110,12 @@ namespace castlecrawl
                 ifStream >> json;
             }
 
-            SavedGamePack pack;
-            pack = json.get<SavedGamePack>();
+            SavedGamePack pack = json.get<SavedGamePack>();
+            t_context.player = pack.player;
+            t_context.maps   = pack.maps;
+
+            t_context.top_panel.update(t_context);
+            t_context.maps.change(t_context, t_context.maps.current().name(), pack.player_position);
 
             t_context.sfx.play("magic-1");
             t_context.state.setChangePending(State::Play);

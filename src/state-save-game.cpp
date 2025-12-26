@@ -101,8 +101,7 @@ namespace castlecrawl
             pack.player          = t_context.player;
             pack.maps            = t_context.maps;
 
-            nlohmann::json json;
-            json = pack;
+            nlohmann::json json = pack;
 
             {
                 std::ofstream ofStream(t_context.config.save_game_file_name, std::ios::trunc);
