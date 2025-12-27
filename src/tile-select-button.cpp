@@ -190,7 +190,7 @@ namespace castlecrawl
 
             if (m_isDroppedDown)
             {
-                bounds.size.y = (static_cast<float>(m_tiles.size()) * bounds.size.y);
+                bounds.size.y = (static_cast<float>(m_tiles.size()) * (bounds.size.y + 1.0f));
             }
         }
 
