@@ -14,7 +14,9 @@
 #include "layout.hpp"
 #include "map-display.hpp"
 #include "maps.hpp"
+#include "monster-manager.hpp"
 #include "monster-stats-database.hpp"
+#include "npc-manager.hpp"
 #include "player.hpp"
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
@@ -69,7 +71,7 @@ namespace castlecrawl
         t_context.items.dumpInfo(t_context.fonts.font());
         t_context.monster_stats.dumpInfo(t_context);
         t_context.player.dumpInfo(t_context);
-        
+
         //
         m_mapChars = std::vector<std::string>(
             static_cast<std::size_t>(t_context.config.map_size_max.y),
@@ -380,6 +382,8 @@ namespace castlecrawl
         const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states) const
     {
         t_context.map_display.draw(t_context, t_target, t_states);
+        t_context.monsters.draw(t_context, t_target, t_states);
+        t_context.npcs.draw(t_target, t_states);
         t_context.anim.draw(t_target, t_states);
 
         if (!m_keyText.getString().isEmpty())
