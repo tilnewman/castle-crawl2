@@ -111,10 +111,11 @@ namespace castlecrawl
             }
 
             SavedGamePack pack = json.get<SavedGamePack>();
-            t_context.player = pack.player;
-            t_context.maps   = pack.maps;
 
+            t_context.player = pack.player;
             t_context.top_panel.update(t_context);
+
+            t_context.maps = pack.maps;
             t_context.maps.change(t_context, t_context.maps.current().name(), pack.player_position);
 
             t_context.sfx.play("magic-1");
