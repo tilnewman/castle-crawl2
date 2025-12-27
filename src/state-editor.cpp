@@ -39,6 +39,7 @@ namespace castlecrawl
         , m_fadeText{ util::SfmlDefaults::instance().font() }
         , m_fadeTextTimerSec{ 0.0f }
         , m_mouseover{}
+        , m_dragBoxColor{ 0, 255, 255, 64 }
         , m_isDragging{ false }
         , m_dragPosStart{ 0.0f, 0.0f }
         , m_dragPosStop{ 0.0f, 0.0f }
@@ -72,7 +73,7 @@ namespace castlecrawl
         t_context.monster_stats.dumpInfo(t_context);
         t_context.player.dumpInfo(t_context);
 
-        //
+        // this editor keeps the map as a 'QuickMap' and only converts before displaying changes
         m_mapChars = std::vector<std::string>(
             static_cast<std::size_t>(t_context.config.map_size_max.y),
             std::string(static_cast<std::size_t>(t_context.config.map_size_max.x), '.'));
@@ -80,7 +81,7 @@ namespace castlecrawl
         resetMap(t_context);
 
         //
-        m_editRectangle.setFillColor(sf::Color(0, 255, 255, 64));
+        m_editRectangle.setFillColor(m_dragBoxColor);
         m_editRectangle.setOutlineColor(sf::Color(0, 255, 255));
         m_editRectangle.setOutlineThickness(1.0f);
         m_editRectangle.setSize(t_context.layout.cellSize());
@@ -92,7 +93,7 @@ namespace castlecrawl
         m_borderRectangle.setPosition(t_context.layout.mapRect().position);
         m_borderRectangle.setSize(t_context.layout.mapRect().size);
 
-        m_dragRectangle.setFillColor(sf::Color(0, 255, 255, 64));
+        m_dragRectangle.setFillColor(m_dragBoxColor);
 
         m_keyText  = t_context.fonts.makeText(FontSize::Small, "", sf::Color::White);
         m_fadeText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
@@ -406,7 +407,7 @@ namespace castlecrawl
         for (const MapEntry & entry : m_dragSelectedEntrys)
         {
             sf::RectangleShape rectangle;
-            rectangle.setFillColor(sf::Color(0, 255, 255, 64));
+            rectangle.setFillColor(m_dragBoxColor);
             rectangle.setPosition(entry.rect.position);
             rectangle.setSize(entry.rect.size);
 
@@ -919,6 +920,7 @@ namespace castlecrawl
 
     void StateEditor::resetMap(const Context & t_context)
     {
+        // using MapName::Level_1_Cell but any would work here
         Map map(MapName::Level_1_Cell, t_context, m_floor, m_mapChars, MapTransitions_t{});
         t_context.maps.forceMapForEditting(t_context, map);
     }

@@ -81,6 +81,7 @@ namespace castlecrawl
         sf::Text m_fadeText;
         float m_fadeTextTimerSec;
         Mouseover m_mouseover;
+        sf::Color m_dragBoxColor;
         bool m_isDragging;
         sf::Vector2f m_dragPosStart;
         sf::Vector2f m_dragPosStop;
