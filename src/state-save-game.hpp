@@ -8,6 +8,7 @@
 #include "maps.hpp"
 #include "player.hpp"
 #include "state.hpp"
+#include "statistics.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -29,6 +30,7 @@ namespace castlecrawl
         MapPos_t player_position{ invalidMapPos };
         Player player{};
         Maps maps{};
+        Statistics statistics{};
     };
 
     inline void to_json(nlohmann::json & j, const SavedGamePack & sgp)
@@ -36,7 +38,8 @@ namespace castlecrawl
         j = nlohmann::json{ { "player_position_x", sgp.player_position.x },
                             { "player_position_y", sgp.player_position.y },
                             { "player", sgp.player },
-                            { "maps", sgp.maps } };
+                            { "maps", sgp.maps },
+                            { "statistics", sgp.statistics } };
     }
 
     inline void from_json(const nlohmann::json & j, SavedGamePack & sgp)
@@ -45,6 +48,7 @@ namespace castlecrawl
         j.at("player_position_y").get_to(sgp.player_position.y);
         j.at("player").get_to(sgp.player);
         j.at("maps").get_to(sgp.maps);
+        j.at("statistics").get_to(sgp.statistics);
     }
 
     //

@@ -100,6 +100,7 @@ namespace castlecrawl
             pack.player_position = t_context.player_display.position();
             pack.player          = t_context.player;
             pack.maps            = t_context.maps;
+            pack.statistics      = t_context.statistics;
 
             nlohmann::json json = pack;
 
