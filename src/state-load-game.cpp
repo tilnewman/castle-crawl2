@@ -101,6 +101,8 @@ namespace castlecrawl
 
     void StateLoadGame::loadGame(const Context & t_context)
     {
+        m_errorText.setString("");
+
         try
         {
             nlohmann::json json;

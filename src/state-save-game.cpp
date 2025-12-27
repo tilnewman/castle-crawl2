@@ -110,6 +110,7 @@ namespace castlecrawl
 
             t_context.sfx.play("magic-1");
             t_context.state.setChangePending(State::Play);
+            return;
         }
         catch (...)
         {
