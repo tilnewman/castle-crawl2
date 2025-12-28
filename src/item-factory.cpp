@@ -425,6 +425,8 @@ namespace castlecrawl::item
 
     void ItemFactory::dumpInfo(const sf::Font & t_font) const
     {
+        std::ostringstream summarySS;
+
         // write all items to a spreadsheet
         {
             std::ofstream fileStream("item-stats.csv", std::ios_base::trunc);
@@ -462,7 +464,7 @@ namespace castlecrawl::item
             }
         }
 
-        std::cout << std::endl << "Armor/Weapon/Misc Counts and Value:" << std::endl;
+        summarySS << std::endl << "Armor/Weapon/Misc Counts and Value:" << std::endl;
         std::size_t miscCount   = 0;
         std::size_t weaponCount = 0;
         std::size_t armorCount  = 0;
@@ -489,43 +491,44 @@ namespace castlecrawl::item
                 miscValue += static_cast<std::size_t>(item.value());
             }
         }
-        std::cout << "\tWeapons Count " << weaponCount << " with total value " << weaponValue
+
+        summarySS << "\tWeapons Count " << weaponCount << " with total value " << weaponValue
                   << " and average " << (weaponValue / weaponCount) << std::endl;
 
-        std::cout << "\tArmor   Count " << armorCount << " with total value " << armorValue
+        summarySS << "\tArmor   Count " << armorCount << " with total value " << armorValue
                   << " and average " << (armorValue / armorCount) << std::endl;
 
-        std::cout << "\tMisc    Count " << miscCount << " with total value " << miscValue
+        summarySS << "\tMisc    Count " << miscCount << " with total value " << miscValue
                   << " and average " << (miscValue / miscCount) << std::endl;
 
-        std::cout << std::endl << "All Useable:" << std::endl;
+        summarySS << std::endl << "All Useable:" << std::endl;
         for (const Item & item : m_allItems)
         {
             if (item.isUseable())
             {
-                std::cout << '\t' << item.value() << "\t" << item << '\n';
+                summarySS << '\t' << item.value() << "\t" << item << '\n';
             }
         }
 
-        std::cout << std::endl << "All Non-Magical:" << std::endl;
+        summarySS << std::endl << "All Non-Magical:" << std::endl;
         for (const Item & item : m_allItems)
         {
             if (!item.isMagical())
             {
-                std::cout << '\t' << item.value() << "\t" << item << '\n';
+                summarySS << '\t' << item.value() << "\t" << item << '\n';
             }
         }
 
-        std::cout << std::endl << "All Magical Weapons and Armor:" << std::endl;
+        summarySS << std::endl << "All Magical Weapons and Armor:" << std::endl;
         for (const Item & item : m_allItems)
         {
             if (item.isMagical() && (item.isWeapon() || item.isArmor()))
             {
-                std::cout << '\t' << item.value() << '\t' << item.description() << '\n';
+                summarySS << '\t' << item.value() << '\t' << item.description() << '\n';
             }
         }
 
-        std::cout << std::endl << "Value to Item Count Distribution:" << std::endl;
+        summarySS << std::endl << "Value to Item Count Distribution:" << std::endl;
         std::map<int, std::size_t> valueCountMap;
         std::vector<int> values;
         for (const Item & item : m_allItems)
@@ -540,12 +543,12 @@ namespace castlecrawl::item
                 continue;
             }
 
-            std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
+            summarySS << '\t' << pair.first << '\t' << pair.second << " items\n";
         }
         const auto valueStats = util::makeStats(values);
-        std::cout << "  Value Statistics: " << valueStats.toString(0) << std::endl;
+        summarySS << "  Value Statistics: " << valueStats.toString(0) << std::endl;
 
-        std::cout << std::endl << "Armor Rating Distribution:" << std::endl;
+        summarySS << std::endl << "Armor Rating Distribution:" << std::endl;
         std::map<Armor_t, std::size_t> armorRatingCountMap;
         for (const Item & item : m_allItems)
         {
@@ -558,10 +561,10 @@ namespace castlecrawl::item
         }
         for (const auto pair : armorRatingCountMap)
         {
-            std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
+            summarySS << '\t' << pair.first << '\t' << pair.second << " items\n";
         }
 
-        std::cout << std::endl << "Weapon Average Damage Distribution:" << std::endl;
+        summarySS << std::endl << "Weapon Average Damage Distribution:" << std::endl;
         std::map<int, std::size_t> avgDamageCountMap;
         for (const Item & item : m_allItems)
         {
@@ -574,7 +577,7 @@ namespace castlecrawl::item
         }
         for (const auto pair : avgDamageCountMap)
         {
-            std::cout << '\t' << pair.first << '\t' << pair.second << " items\n";
+            summarySS << '\t' << pair.first << '\t' << pair.second << " items\n";
         }
 
         std::vector<int> allValues;
@@ -608,15 +611,18 @@ namespace castlecrawl::item
         util::StatsDisplay<std::size_t>::makeAndSavePNG("item-name-lengths", t_font, nameLengths);
         util::StatsDisplay<std::size_t>::makeAndSavePNG("item-desc-lengths", t_font, descLengths);
 
-        std::cout << std::endl;
-        std::cout << "item count    = " << m_allItems.size() << std::endl;
-        std::cout << "unique values = " << valueCountMap.size() << std::endl;
-        std::cout << "lowest value  = " << m_allItems.front().value() << std::endl;
-        std::cout << "highest value = " << m_allItems.back().value() << std::endl;
-        std::cout << "longest name  = " << m_textExtent.longest_name << std::endl;
-        std::cout << "longest desc  = " << m_textExtent.longest_desc << std::endl;
-        std::cout << "item size     = " << sizeof(Item) << "bytes" << std::endl;
-        std::cout << std::endl;
+        summarySS << std::endl;
+        summarySS << "item count    = " << m_allItems.size() << std::endl;
+        summarySS << "unique values = " << valueCountMap.size() << std::endl;
+        summarySS << "lowest value  = " << m_allItems.front().value() << std::endl;
+        summarySS << "highest value = " << m_allItems.back().value() << std::endl;
+        summarySS << "longest name  = " << m_textExtent.longest_name << std::endl;
+        summarySS << "longest desc  = " << m_textExtent.longest_desc << std::endl;
+        summarySS << "item size     = " << sizeof(Item) << "bytes" << std::endl;
+        summarySS << std::endl;
+
+        std::ofstream summaryStream("item-summary.txt", std::ios::trunc);
+        summaryStream << summarySS.str();
     }
 
     void ItemFactory::throwIfInvalid(const Item & t_item) const
