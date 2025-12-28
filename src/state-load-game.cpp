@@ -21,6 +21,8 @@
 #include "state-save-game.hpp"
 #include "top-panel.hpp"
 
+#include <exception>
+#include <filesystem>
 #include <fstream>
 
 namespace castlecrawl
@@ -107,8 +109,19 @@ namespace castlecrawl
         {
             nlohmann::json json;
 
+            if (!std::filesystem::exists(
+                    std::filesystem::path(t_context.config.save_game_file_name)))
+            {
+                throw std::runtime_error("No saved game to load.");
+            }
+
             {
                 std::ifstream ifStream(t_context.config.save_game_file_name);
+                if (!ifStream)
+                {
+                    throw std::runtime_error("The saved game file could not be opened or read.");
+                }
+
                 ifStream >> json;
             }
 
@@ -137,7 +150,6 @@ namespace castlecrawl
 
         util::setOriginToPosition(m_errorText);
         util::centerInside(m_errorText, t_context.layout.botRegion());
-
         t_context.sfx.play("error-1");
     }
 
