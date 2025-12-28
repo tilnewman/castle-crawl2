@@ -1525,7 +1525,7 @@ namespace castlecrawl
         }
 
         // calc some statistics
-        std::cout << std::endl << "Monster Statistics:" << std::endl;
+        // std::cout << std::endl << "Monster Statistics:" << std::endl;
 
         struct MonsterValue
         {
@@ -1536,39 +1536,39 @@ namespace castlecrawl
         std::vector<MonsterValue> values;
         std::vector<int> rawValues;
 
-        std::size_t undeadCount        = 0;
-        std::size_t flyingCount        = 0;
-        std::size_t breatheFireCount   = 0;
-        std::size_t immuneCount        = 0;
-        std::size_t spellCasterCount   = 0;
-        const std::size_t monsterCount = m_imageStatsMap.size();
+        // std::size_t undeadCount        = 0;
+        // std::size_t flyingCount        = 0;
+        // std::size_t breatheFireCount   = 0;
+        // std::size_t immuneCount        = 0;
+        // std::size_t spellCasterCount   = 0;
+        // const std::size_t monsterCount = m_imageStatsMap.size();
 
         for (const auto & pair : m_imageStatsMap)
         {
-            if (pair.second.is_undead)
-            {
-                ++undeadCount;
-            }
-
-            if (pair.second.is_flying)
-            {
-                ++flyingCount;
-            }
-
-            if (pair.second.breathe_fire_attack_ratio > 0.0f)
-            {
-                ++breatheFireCount;
-            }
-
-            if (pair.second.is_immune_to_nonmagical_weapons)
-            {
-                ++immuneCount;
-            }
-
-            if (pair.second.isSpellCaster())
-            {
-                ++spellCasterCount;
-            }
+            // if (pair.second.is_undead)
+            // {
+            //     ++undeadCount;
+            // }
+            //
+            // if (pair.second.is_flying)
+            // {
+            //     ++flyingCount;
+            // }
+            //
+            // if (pair.second.breathe_fire_attack_ratio > 0.0f)
+            // {
+            //     ++breatheFireCount;
+            // }
+            //
+            // if (pair.second.is_immune_to_nonmagical_weapons)
+            // {
+            //     ++immuneCount;
+            // }
+            //
+            // if (pair.second.isSpellCaster())
+            // {
+            //     ++spellCasterCount;
+            // }
 
             MonsterValue value;
             value.name  = toString(pair.first);
@@ -1578,22 +1578,22 @@ namespace castlecrawl
             rawValues.push_back(value.value);
         }
 
-        std::cout << "\tTotal of " << monsterCount << " monsters\n";
-
-        std::cout << "\tUndead count = " << undeadCount << " / "
-                  << util::makePercentString(undeadCount, monsterCount) << '\n';
-
-        std::cout << "\tFlying count = " << flyingCount << " / "
-                  << util::makePercentString(flyingCount, monsterCount) << '\n';
-
-        std::cout << "\tBreathe fire count = " << breatheFireCount << " / "
-                  << util::makePercentString(breatheFireCount, monsterCount) << '\n';
-
-        std::cout << "\tImmune to nonmagical weapons count = " << immuneCount << " / "
-                  << util::makePercentString(immuneCount, monsterCount) << '\n';
-
-        std::cout << "\tSpellcaster count = " << spellCasterCount << " / "
-                  << util::makePercentString(spellCasterCount, monsterCount) << '\n';
+        // std::cout << "\tTotal of " << monsterCount << " monsters\n";
+        //
+        // std::cout << "\tUndead count = " << undeadCount << " / "
+        //           << util::makePercentString(undeadCount, monsterCount) << '\n';
+        //
+        // std::cout << "\tFlying count = " << flyingCount << " / "
+        //           << util::makePercentString(flyingCount, monsterCount) << '\n';
+        //
+        // std::cout << "\tBreathe fire count = " << breatheFireCount << " / "
+        //           << util::makePercentString(breatheFireCount, monsterCount) << '\n';
+        //
+        // std::cout << "\tImmune to nonmagical weapons count = " << immuneCount << " / "
+        //           << util::makePercentString(immuneCount, monsterCount) << '\n';
+        //
+        // std::cout << "\tSpellcaster count = " << spellCasterCount << " / "
+        //           << util::makePercentString(spellCasterCount, monsterCount) << '\n';
 
         // make a picture of the graph of monster values
         std::sort(std::begin(rawValues), std::end(rawValues));
