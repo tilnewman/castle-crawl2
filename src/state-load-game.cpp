@@ -145,7 +145,7 @@ namespace castlecrawl
         }
         catch (...)
         {
-            m_errorText.setString("Unknown (non std) exception error!");
+            m_errorText.setString("Unknown (non-standard) exception error!");
         }
 
         util::setOriginToPosition(m_errorText);
