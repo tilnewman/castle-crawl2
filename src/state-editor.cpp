@@ -43,7 +43,8 @@ namespace castlecrawl
         , m_isDragging{ false }
         , m_dragPosStart{ 0.0f, 0.0f }
         , m_dragPosStop{ 0.0f, 0.0f }
-        , m_dragRectangle{}
+        , m_draggingRectangle{}
+        , m_dragSelectedRectangle{}
         , m_dragSelectedEntrys{}
         , m_miscButton{}
         , m_doorwayButton{}
@@ -93,7 +94,8 @@ namespace castlecrawl
         m_borderRectangle.setPosition(t_context.layout.mapRect().position);
         m_borderRectangle.setSize(t_context.layout.mapRect().size);
 
-        m_dragRectangle.setFillColor(m_dragBoxColor);
+        m_draggingRectangle.setFillColor(m_dragBoxColor);
+        m_dragSelectedRectangle.setFillColor(m_dragBoxColor);
 
         m_keyText  = t_context.fonts.makeText(FontSize::Small, "", sf::Color::White);
         m_fadeText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
@@ -397,21 +399,16 @@ namespace castlecrawl
 
         if (m_isDragging)
         {
-            t_target.draw(m_dragRectangle);
+            t_target.draw(m_draggingRectangle);
         }
         else
         {
             t_target.draw(m_editRectangle, t_states);
         }
 
-        for (const MapEntry & entry : m_dragSelectedEntrys)
+        if (!m_dragSelectedEntrys.empty())
         {
-            sf::RectangleShape rectangle;
-            rectangle.setFillColor(m_dragBoxColor);
-            rectangle.setPosition(entry.rect.position);
-            rectangle.setSize(entry.rect.size);
-
-            t_target.draw(rectangle);
+            t_target.draw(m_dragSelectedRectangle, t_states);
         }
 
         // draw in reverse order so the description text is visible at the top
@@ -630,11 +627,13 @@ namespace castlecrawl
         {
             fadeText(t_context, "Saving...");
             save(t_context);
+            m_dragSelectedEntrys.clear();
         }
         else if ((keyScancode == sf::Keyboard::Scancode::L) && isCntrlPressed())
         {
             fadeText(t_context, "Loading...");
             load(t_context);
+            m_dragSelectedEntrys.clear();
         }
         else if ((keyScancode == sf::Keyboard::Scancode::R) && isCntrlPressed())
         {
@@ -1105,8 +1104,8 @@ namespace castlecrawl
         }
         else
         {
-            m_dragRectangle.setPosition({ 0.0f, 0.0f });
-            m_dragRectangle.setSize({ 0.0f, 0.0f });
+            m_draggingRectangle.setPosition({ 0.0f, 0.0f });
+            m_draggingRectangle.setSize({ 0.0f, 0.0f });
         }
     }
 
@@ -1119,22 +1118,28 @@ namespace castlecrawl
 
     void StateEditor::updateDragRect()
     {
-        m_dragRectangle.setPosition(
+        m_draggingRectangle.setPosition(
             { util::min(m_dragPosStart.x, m_dragPosStop.x),
               util::min(m_dragPosStart.y, m_dragPosStop.y) });
 
-        m_dragRectangle.setSize(
+        m_draggingRectangle.setSize(
             sf::Vector2f{ util::abs(m_dragPosStart.x - m_dragPosStop.x),
                           util::abs(m_dragPosStart.y - m_dragPosStop.y) });
     }
 
     void StateEditor::updateDragSelectedMapCells(const Context & t_context)
     {
-        m_dragSelectedEntrys.clear();
-
         const sf::FloatRect mapRect = t_context.layout.mapRect();
         const sf::Vector2i mapSize  = t_context.layout.cellCount();
 
+        const sf::FloatRect dragRect{ util::position(m_draggingRectangle),
+                                      util::size(m_draggingRectangle) };
+
+        m_dragSelectedEntrys.clear();
+        m_dragSelectedEntrys.reserve(static_cast<std::size_t>(mapSize.x * mapSize.y));
+
+        sf::Vector2f topLeft{ -1.0f, -1.0f };
+        sf::Vector2f botRight{ -1.0f, -1.0f };
         sf::Vector2f screenPos = mapRect.position;
         for (int y(0); y < mapSize.y; ++y)
         {
@@ -1142,13 +1147,29 @@ namespace castlecrawl
             {
                 const sf::FloatRect screenRect{ screenPos, t_context.layout.cellSize() };
 
-                const sf::FloatRect dragRect{ util::position(m_dragRectangle),
-                                              util::size(m_dragRectangle) };
-
                 if (screenRect.findIntersection(dragRect))
                 {
-                    const MapEntry entry{ { x, y }, screenRect };
-                    m_dragSelectedEntrys.push_back(entry);
+                    m_dragSelectedEntrys.emplace_back(MapPos_t{ x, y }, screenRect);
+
+                    if ((topLeft.x < 0.0f) || (screenPos.x < topLeft.x))
+                    {
+                        topLeft.x = screenPos.x;
+                    }
+
+                    if ((topLeft.y < 0.0f) || (screenPos.y < topLeft.y))
+                    {
+                        topLeft.y = screenPos.y;
+                    }
+
+                    if ((botRight.x < 0.0f) || (util::right(screenRect) > botRight.x))
+                    {
+                        botRight.x = util::right(screenRect);
+                    }
+
+                    if ((botRight.y < 0.0f) || (util::bottom(screenRect) > botRight.y))
+                    {
+                        botRight.y = util::bottom(screenRect);
+                    }
                 }
 
                 screenPos.x += t_context.layout.cellSize().x;
@@ -1157,6 +1178,9 @@ namespace castlecrawl
             screenPos.x = mapRect.position.x;
             screenPos.y += t_context.layout.cellSize().y;
         }
+
+        m_dragSelectedRectangle.setPosition(topLeft);
+        m_dragSelectedRectangle.setSize(botRight - topLeft);
     }
 
 } // namespace castlecrawl
