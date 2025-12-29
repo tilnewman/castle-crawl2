@@ -18,7 +18,7 @@ namespace castlecrawl
 {
 
     MapDisplay::MapDisplay()
-        : m_backgroundRectangle()
+        : m_backgroundRectangle{}
         , m_objectVerts{}
         , m_floorVerts{}
         , m_borderVerts{}
