@@ -381,7 +381,7 @@ namespace castlecrawl
     {
         for (const MapCell & surrCell : t_context.maps.current().surroundingCellsHorizVert(t_pos))
         {
-            if (' ' != surrCell.floor_char)
+            if (tileImageToChar(TileImage::Empty) != surrCell.floor_char)
             {
                 return true;
             }
