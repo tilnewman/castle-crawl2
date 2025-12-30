@@ -131,6 +131,7 @@ namespace castlecrawl
         Level_1_LavaHiddenPath,
         Level_1_Basement,
         Level_1_Forest,
+        Level_1_BloodPool,
         Count
     };
 
@@ -150,6 +151,7 @@ namespace castlecrawl
             case MapName::Level_1_LavaHiddenPath:   { return "Level_1_LavaHiddenPath"; }
             case MapName::Level_1_Basement:         { return "Level_1_Basement"; }
             case MapName::Level_1_Forest:           { return "Level_1_Forest"; }
+            case MapName::Level_1_BloodPool:        { return "Level_1_BloodPool"; }
             case MapName::Count:
             default:                                { return "(unknown_MapName)"; }
         }
