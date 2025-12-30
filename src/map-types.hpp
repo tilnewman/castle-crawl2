@@ -4,6 +4,7 @@
 // map.hpp
 //
 #include "json-wrapper.hpp"
+#include "tile-image-enum.hpp"
 
 #include <cmath>
 #include <ostream>
@@ -49,8 +50,8 @@ namespace castlecrawl
     {
         // these default values are safe where needed and invalid where needed -don't change
         MapPos_t position = invalidMapPos;
-        char object_char  = '.';
-        char floor_char   = ' ';
+        char object_char  = tileImageToChar(TileImage::QuickMapEdge);
+        char floor_char   = tileImageToChar(TileImage::Empty);
     };
 
     inline void to_json(nlohmann::json & j, const MapCell & mc)
