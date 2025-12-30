@@ -61,7 +61,7 @@ namespace castlecrawl
                 cell.object_char = quickMap.getChar(x, y);
 
                 // put random floor tiles under everything except edges
-                if (cell.object_char != '.')
+                if (cell.object_char != tileImageToChar(TileImage::QuickMapEdge))
                 {
                     if (Floor::Stone == m_floor)
                     {

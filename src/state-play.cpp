@@ -279,7 +279,7 @@ namespace castlecrawl
         }
 
         const MapPos_t mapPosAfter = [&]() {
-            if (didUnlockDoor || (mapCharAttempted == '.') ||
+            if (didUnlockDoor || (mapCharAttempted == tileImageToChar(TileImage::QuickMapEdge)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Empty)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Door)) ||
                 (mapCharAttempted == tileImageToChar(TileImage::Stair_Down)) ||

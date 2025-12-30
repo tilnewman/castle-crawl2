@@ -74,11 +74,13 @@ namespace castlecrawl
             return (
                 (ch != tileImageToChar(TileImage::Campfire)) &&
                 (ch != tileImageToChar(TileImage::Inferno)) &&
-                (ch != tileImageToChar(TileImage::Empty)) && (ch != '.') &&
+                (ch != tileImageToChar(TileImage::Empty)) &&
+                (ch != tileImageToChar(TileImage::QuickMapEdge)) &&
                 !isTileImageMonster(charToTileImage(ch)) && !isTileImageNpc(charToTileImage(ch)));
         };
 
-        char prevObjectChar('.'); // anything except 'X' works here
+        // anything except TileImage::Wall_Horiz works here
+        char prevObjectChar(tileImageToChar(TileImage::QuickMapEdge));
 
         // any TileImage works here because only using the position and size
         sf::Sprite edgeSprite = t_context.tile_images.sprite(t_context, TileImage::Lava);
@@ -104,7 +106,8 @@ namespace castlecrawl
                 const MapCell cell = t_context.maps.current().cell({ x, y });
 
                 // black floor borders tiles
-                if (('.' == cell.object_char) && isFloorAdjacent(t_context, cell.position))
+                if ((tileImageToChar(TileImage::QuickMapEdge) == cell.object_char) &&
+                    isFloorAdjacent(t_context, cell.position))
                 {
                     edgeSprite.setPosition(screenPos);
                     edgeSprite.move({ -overlapDimm, -overlapDimm });
@@ -116,7 +119,8 @@ namespace castlecrawl
                 }
 
                 // floor tiles
-                if ((' ' != cell.floor_char) && ('.' != cell.floor_char))
+                if ((tileImageToChar(TileImage::Empty) != cell.floor_char) &&
+                    (tileImageToChar(TileImage::QuickMapEdge) != cell.floor_char))
                 {
                     appendTileVerts(
                         t_context, charToTileImage(cell.floor_char), screenPos, m_floorVerts);
@@ -131,7 +135,8 @@ namespace castlecrawl
 
                 // wall shadow object tiles to the right of various wall blocks
                 // must be added after object tiles
-                if (('X' == cell.object_char) && ('X' != prevObjectChar))
+                if ((tileImageToChar(TileImage::Wall_Horiz) == cell.object_char) &&
+                    (tileImageToChar(TileImage::Wall_Horiz) != prevObjectChar))
                 {
                     appendTileVerts(t_context, TileImage::Wall_Shadow, screenPos, m_objectVerts);
                 }

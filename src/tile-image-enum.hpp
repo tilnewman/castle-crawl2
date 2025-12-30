@@ -44,6 +44,7 @@ namespace castlecrawl
         Coins,
         Well,
         DarkBackground,
+        QuickMapEdge,
 
         Wall_TopLeft,
         Wall_Horiz,
@@ -300,8 +301,6 @@ namespace castlecrawl
             //case '\'':
             //case '}';
             //case '\x7F':
-            //
-            //case '.': //this is not used because it is required by QuickMaps
     */
     constexpr TileImage charToTileImage(const char ch) noexcept
     {
@@ -335,6 +334,7 @@ namespace castlecrawl
             case 'M':    { return TileImage::Tree3;                 }
             case '~':    { return TileImage::Coins;                 }
             case '{':    { return TileImage::Well;                  }
+            case '.':    { return TileImage::QuickMapEdge;          }
 
             case 'n':    { return TileImage::Statue_Twins;          }
             case 'N':    { return TileImage::Statue_Mermaid;        }
@@ -624,6 +624,7 @@ namespace castlecrawl
             case TileImage::Tree3:               { return 'M'; }
             case TileImage::Coins:               { return '~'; }
             case TileImage::Well:                { return '{'; }
+            case TileImage::QuickMapEdge:        { return '.'; }
             
             case TileImage::Statue_Twins:        { return 'n'; }
             case TileImage::Statue_Mermaid:      { return 'N'; }
@@ -1170,6 +1171,7 @@ namespace castlecrawl
             case TileImage::GreenRanger:        { return sf::IntRect( {448,480},{32,32}); }
             case TileImage::BookSpeaker:        { return sf::IntRect( {480,480},{32,32}); }
 
+            case TileImage::QuickMapEdge:
             case TileImage::Empty:
             case TileImage::Inferno:
             case TileImage::Campfire:
@@ -1208,6 +1210,7 @@ namespace castlecrawl
             case TileImage::Tree3:              { return "Tree"; }
             case TileImage::Coins:              { return "Coins"; }
             case TileImage::Well:               { return "Well"; }
+            case TileImage::QuickMapEdge:       { return "QuickMap Edge"; }
 
             case TileImage::DarkBackground:     { return "DarkBackground"; }
             case TileImage::Wall_Shadow:        { return "Wall_Shadow"; }

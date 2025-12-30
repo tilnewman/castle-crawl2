@@ -77,7 +77,9 @@ namespace castlecrawl
         // this editor keeps the map as a 'QuickMap' and only converts before displaying changes
         m_mapChars = std::vector<std::string>(
             static_cast<std::size_t>(t_context.config.map_size_max.y),
-            std::string(static_cast<std::size_t>(t_context.config.map_size_max.x), '.'));
+            std::string(
+                static_cast<std::size_t>(t_context.config.map_size_max.x),
+                tileImageToChar(TileImage::QuickMapEdge)));
 
         resetMap(t_context);
 
@@ -639,7 +641,9 @@ namespace castlecrawl
         {
             m_mapChars = std::vector<std::string>(
                 static_cast<std::size_t>(t_context.config.map_size_max.y),
-                std::string(static_cast<std::size_t>(t_context.config.map_size_max.x), '.'));
+                std::string(
+                    static_cast<std::size_t>(t_context.config.map_size_max.x),
+                    tileImageToChar(TileImage::QuickMapEdge)));
 
             resetMap(t_context);
 
@@ -732,7 +736,7 @@ namespace castlecrawl
         }
         else if (keyScancode == sf::Keyboard::Scancode::Period)
         {
-            editMap(t_context, '.', "Erase");
+            editMap(t_context, tileImageToChar(TileImage::QuickMapEdge), "Erase");
         }
         else if (keyScancode == sf::Keyboard::Scancode::Space)
         {

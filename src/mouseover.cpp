@@ -75,7 +75,9 @@ namespace castlecrawl
         {
             message = "you";
         }
-        else if ((mapCell.object_char != ' ') && (mapCell.object_char != '.'))
+        else if (
+            (mapCell.object_char != tileImageToChar(TileImage::Empty)) &&
+            (mapCell.object_char != tileImageToChar(TileImage::QuickMapEdge)))
         {
             message = toString(charToTileImage(mapCell.object_char));
         }
