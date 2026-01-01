@@ -192,7 +192,7 @@ namespace castlecrawl
     void LoopCoordinator::runLoop()
     {
         sf::Clock frameClock;
-        while (m_renderWindow.isOpen() && (m_contextUPtr->state.current().which() != State::Quit))
+        while (m_renderWindow.isOpen() && (m_stateManagerUPtr->current().which() != State::Quit))
         {
             handleEvents();
             update(frameClock.restart().asSeconds());
