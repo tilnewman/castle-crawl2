@@ -39,15 +39,9 @@ int main(const int argc, const char * const argv[])
 
         std::cout << "Using media folder: " << config.media_path.string() << std::endl;
 
-        config.video_mode.bitsPerPixel = 32u;   // sf::VideoMode::getDesktopMode();
+        config.video_mode.bitsPerPixel = 32u;   // sf::VideoMode::getDesktopMode().bitsperpixel;
         config.video_mode.size.x       = 4112u; // 1920
         config.video_mode.size.y       = 2580u; // 1200
-
-        // sometimes the bpp is detected as zero and I don't know why but this forces a valid value
-        if (0 == config.video_mode.bitsPerPixel)
-        {
-            config.video_mode.bitsPerPixel = 32;
-        }
 
         LoopCoordinator coordinator(config);
         coordinator.playGame();
