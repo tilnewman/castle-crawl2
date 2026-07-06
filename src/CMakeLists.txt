@@ -89,6 +89,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         -Woverloaded-virtual
         -Wcast-align
         -Wformat=2
+	-Wno-extra-semi-stmt
         -Wno-c++20-extensions)
 
     option(ASAN "Using Clang's Address Sanitizer" ON)
