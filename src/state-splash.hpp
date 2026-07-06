@@ -15,7 +15,7 @@ namespace castlecrawl
 {
     struct Context;
 
-    class StateSplash : public StateBase
+    class StateSplash final : public StateBase
     {
       public:
         StateSplash();

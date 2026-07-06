@@ -106,7 +106,7 @@ namespace castlecrawl
         virtual void handleEvent(const Context &, const sf::Event &) override {}
     };
 
-    class StateInit : public StateBase
+    class StateInit final : public StateBase
     {
       public:
         StateInit() {}
@@ -114,7 +114,7 @@ namespace castlecrawl
         virtual State which() const final { return State::Init; }
     };
 
-    class StateQuit : public StateBase
+    class StateQuit final : public StateBase
     {
       public:
         StateQuit() {}

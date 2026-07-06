@@ -18,7 +18,7 @@ namespace castlecrawl
 
     //
 
-    class StateLook : public StateBase
+    class StateLook final : public StateBase
     {
       public:
         StateLook();

@@ -15,7 +15,7 @@ namespace castlecrawl
 {
     struct Context;
 
-    class StateDeath : public StateBase
+    class StateDeath final : public StateBase
     {
       public:
         StateDeath();

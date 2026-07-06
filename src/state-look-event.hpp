@@ -19,7 +19,7 @@ namespace castlecrawl
 
     //
 
-    class StateLookEvent : public StateBase
+    class StateLookEvent final: public StateBase
     {
       public:
         StateLookEvent();

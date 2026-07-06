@@ -40,7 +40,7 @@ namespace castlecrawl
 
     //
 
-    class StateStatistics : public StateBase
+    class StateStatistics final : public StateBase
     {
       public:
         StateStatistics();

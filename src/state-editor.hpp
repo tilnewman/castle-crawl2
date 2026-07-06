@@ -31,7 +31,7 @@ namespace castlecrawl
 
     //
 
-    class StateEditor : public StateBase
+    class StateEditor final : public StateBase
     {
       public:
         StateEditor();

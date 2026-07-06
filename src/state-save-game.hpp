@@ -53,7 +53,7 @@ namespace castlecrawl
 
     //
 
-    class StateSaveGame : public StateBase
+    class StateSaveGame final : public StateBase
     {
       public:
         StateSaveGame();

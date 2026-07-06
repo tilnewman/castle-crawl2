@@ -18,7 +18,7 @@ namespace castlecrawl
 
     //
 
-    class StateFight : public StateBase
+    class StateFight final : public StateBase
     {
       public:
         StateFight();

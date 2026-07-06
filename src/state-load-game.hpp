@@ -24,7 +24,7 @@ namespace castlecrawl
 
     //
 
-    class StateLoadGame : public StateBase
+    class StateLoadGame final : public StateBase
     {
       public:
         StateLoadGame();

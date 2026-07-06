@@ -53,7 +53,7 @@ namespace castlecrawl
 
     //
 
-    class StateLevelUp : public StateBase
+    class StateLevelUp final : public StateBase
     {
       public:
         StateLevelUp();

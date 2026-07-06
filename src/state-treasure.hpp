@@ -19,7 +19,7 @@ namespace castlecrawl
 {
     struct Context;
 
-    class StateTreasure : public StateBase
+    class StateTreasure final : public StateBase
     {
       public:
         StateTreasure();

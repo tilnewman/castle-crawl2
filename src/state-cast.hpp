@@ -59,7 +59,7 @@ namespace castlecrawl
 
     //
 
-    class StateCast : public StateBase
+    class StateCast final : public StateBase
     {
       public:
         StateCast();

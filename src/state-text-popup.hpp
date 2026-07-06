@@ -62,7 +62,7 @@ namespace castlecrawl
 
     //
 
-    class StateTextPopup : public StateBase
+    class StateTextPopup final : public StateBase
     {
       public:
         StateTextPopup();
