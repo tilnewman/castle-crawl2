@@ -22,7 +22,7 @@ namespace castlecrawl
         , m_map{}
         , m_floor{ Floor::Dirt } // anything works here
         , m_transitions{}
-        , m_isDiscovered{ false }
+        , m_isDiscovered{ false } // anything works here
         , m_lookEvents{}
         , m_doorLocks{}
         , m_loots{}
@@ -50,11 +50,11 @@ namespace castlecrawl
 
         const sf::Vector2i size = quickMap.size();
 
-        for (int y(0); y < size.y; ++y)
+        for (int y{ 0 }; y < size.y; ++y)
         {
             m_map.push_back({});
 
-            for (int x(0); x < size.x; ++x)
+            for (int x{ 0 }; x < size.x; ++x)
             {
                 MapCell cell;
                 cell.position    = { x, y };
@@ -201,9 +201,9 @@ namespace castlecrawl
         sf::Vector2f pos            = mapRect.position;
 
         const sf::Vector2i mapSize = size();
-        for (int y(0); y < mapSize.y; ++y)
+        for (int y{ 0 }; y < mapSize.y; ++y)
         {
-            for (int x(0); x < mapSize.x; ++x)
+            for (int x{ 0 }; x < mapSize.x; ++x)
             {
                 const sf::FloatRect cellRect(pos, t_context.layout.cellSize());
                 if (cellRect.contains(t_screenPos))
@@ -261,9 +261,9 @@ namespace castlecrawl
         std::vector<MapCell> cells;
         cells.reserve(8);
 
-        for (int y(t_pos.y - 1); y <= (t_pos.y + 1); ++y)
+        for (int y{ t_pos.y - 1 }; y <= (t_pos.y + 1); ++y)
         {
-            for (int x(t_pos.x - 1); x <= (t_pos.x + 1); ++x)
+            for (int x{ t_pos.x - 1 }; x <= (t_pos.x + 1); ++x)
             {
                 const MapPos_t position(x, y);
                 if (position == t_pos)
