@@ -475,7 +475,7 @@ namespace util
         const float durationRatio{ (t_anim.sec_elapsed / t_anim.config.duration_sec) };
         const std::size_t newFrameIndex(static_cast<std::size_t>(frameCount * durationRatio));
 
-        if (newFrameIndex > frameCount)
+        if (newFrameIndex > static_cast<std::size_t>(frameCount))
         {
             t_anim.is_playing = false;
             return;
