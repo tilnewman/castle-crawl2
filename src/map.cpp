@@ -50,9 +50,12 @@ namespace castlecrawl
 
         const sf::Vector2i size = quickMap.size();
 
+        m_map.reserve(static_cast<size_t>(size.y));
+
         for (int y{ 0 }; y < size.y; ++y)
         {
             m_map.push_back({});
+            m_map.back().reserve(static_cast<size_t>(size.x));
 
             for (int x{ 0 }; x < size.x; ++x)
             {
