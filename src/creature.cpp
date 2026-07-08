@@ -26,7 +26,7 @@ namespace castlecrawl
               t_context,
               t_tileImage,
               t_context.maps.current().mapPosToScreenPos(t_context, t_mapPos)) }
-        , m_isFacingLeft{ true } // all creature/npc images from stone soup face left
+        , m_isFacingLeft{ true } // all creature and npc images from stone soup face left
     {}
 
     void Creature::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -83,6 +83,7 @@ namespace castlecrawl
         // this also allows monsters to sometimes move around obstacles more naturally
         if (t_context.random.boolean())
         {
+            // remove any positions that are further away than the current position
             const int currentDistance = distance(t_targetMapPos, m_mapPos);
 
             std::erase_if(positions, [&](const PositionDistance & mpd) {

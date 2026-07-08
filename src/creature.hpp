@@ -75,13 +75,12 @@ namespace castlecrawl
 
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
 
-        // returns true if m_mapPos was changed
         virtual CreatureAction takeTurn(const Context & t_context) = 0;
 
       protected:
         [[nodiscard]] bool isPlayerAdjacent(const Context & t_context) const;
 
-        // returns true if actually moved (might not if not possible)
+        // returns true if actually moved (might not be possible)
         bool moveToward(const Context & t_context, const MapPos_t & t_targetMapPos);
 
         void moveTo(const Context & t_context, const MapPos_t & t_newMapPos);
