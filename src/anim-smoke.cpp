@@ -74,8 +74,8 @@ namespace castlecrawl
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
         sf::Vector2f screenPos{ cellScreenPos + (cellSize * 0.5f) };
-        screenPos.x += t_context.random.fromTo(-10.0f, 10.0f);
-        screenPos.y += t_context.random.fromTo(-10.0f, 10.0f);
+        screenPos.x += t_context.random.fromTo(-(cellSize.x * 0.2f), (cellSize.x * 0.2f));
+        screenPos.y += t_context.random.fromTo(-(cellSize.y * 0.1f), (cellSize.y * 0.1f));
         sprite.setPosition(screenPos);
 
         // fade out speed
