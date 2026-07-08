@@ -41,11 +41,11 @@ namespace castlecrawl
         m_cellSize.y = m_cellSize.x;
     }
 
-    void Layout::setupNewMap(const sf::Vector2i & t_cellCountParam)
+    void Layout::setupNewMap(const sf::Vector2i & t_cellCount)
     {
-        m_cellCount = t_cellCountParam;
+        m_cellCount = t_cellCount;
 
-        const sf::Vector2f boardSizeOrig{ sf::Vector2i(m_cellSize) * t_cellCountParam };
+        const sf::Vector2f boardSizeOrig{ sf::Vector2i(m_cellSize) * t_cellCount };
         const sf::Vector2f boardSize{ std::floor(boardSizeOrig.x), std::floor(boardSizeOrig.y) };
 
         const sf::Vector2f boardPosOrig{ util::center(m_botRect) - (boardSize / 2.0f) };
