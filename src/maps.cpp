@@ -73,9 +73,9 @@ namespace castlecrawl
     void Maps::loadCreatures(const Context & t_context)
     {
         const sf::Vector2i size = current().size();
-        for (int y(0); y < size.y; ++y)
+        for (int y{ 0 }; y < size.y; ++y)
         {
-            for (int x(0); x < size.x; ++x)
+            for (int x{ 0 }; x < size.x; ++x)
             {
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
@@ -101,9 +101,9 @@ namespace castlecrawl
     void Maps::loadAnimations(const Context & t_context)
     {
         const sf::Vector2i size = current().size();
-        for (int y(0); y < size.y; ++y)
+        for (int y{ 0 }; y < size.y; ++y)
         {
-            for (int x(0); x < size.x; ++x)
+            for (int x{ 0 }; x < size.x; ++x)
             {
                 const MapPos_t pos{ x, y };
                 const char ch = current().cell(pos).object_char;
