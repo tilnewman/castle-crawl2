@@ -11,6 +11,7 @@ namespace castlecrawl::item
 {
     Inventory::Inventory()
         : m_items{}
+        , m_eqItems{}
     {}
 
     void Inventory::add(const ItemVec_t & t_items)
