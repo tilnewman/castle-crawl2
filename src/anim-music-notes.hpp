@@ -57,7 +57,7 @@ namespace castlecrawl
         }
 
       private:
-        const sf::IntRect randomNoteRect(const Context & t_context) const;
+        [[nodiscard]] const sf::IntRect randomNoteRect(const Context & t_context) const;
 
       private:
         bool m_isAlive;
