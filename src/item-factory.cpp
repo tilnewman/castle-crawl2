@@ -39,10 +39,10 @@ namespace castlecrawl::item
 
     void ItemFactory::makeWeapons(ItemVec_t & t_items) const
     {
-        for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Weapon::Count); ++i)
         {
             const auto type = static_cast<Weapon>(i);
-            for (int m = 0; m < static_cast<int>(WeaponMaterial::Count); ++m)
+            for (int m{ 0 }; m < static_cast<int>(WeaponMaterial::Count); ++m)
             {
                 const auto material = static_cast<WeaponMaterial>(m);
                 t_items.emplace_back(type, material);
@@ -52,10 +52,10 @@ namespace castlecrawl::item
 
     void ItemFactory::makeArmor(ItemVec_t & t_items) const
     {
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
-            for (int m = 0; m < static_cast<int>(ArmorMaterial::Count); ++m)
+            for (int m{ 0 }; m < static_cast<int>(ArmorMaterial::Count); ++m)
             {
                 const auto material = static_cast<ArmorMaterial>(m);
                 t_items.emplace_back(type, material);
@@ -66,7 +66,7 @@ namespace castlecrawl::item
     void ItemFactory::makeMisc(ItemVec_t & t_items) const
     {
         // generate the equipable (non useable) mist items, see below for the others
-        for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Misc::Count); ++i)
         {
             const auto type = static_cast<Misc>(i);
             if (!isMiscEquipable(type))
@@ -74,7 +74,7 @@ namespace castlecrawl::item
                 continue;
             }
 
-            for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
+            for (int m{ 0 }; m < static_cast<int>(MiscMaterial::Count); ++m)
             {
                 const auto material = static_cast<MiscMaterial>(m);
                 if (material == MiscMaterial::Magic)
@@ -94,7 +94,7 @@ namespace castlecrawl::item
         // these are the useable misc items not generated above
 
         // flutes and keys (these have no equip effect)
-        for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
+        for (int m{ 0 }; m < static_cast<int>(MiscMaterial::Count); ++m)
         {
             const auto material = static_cast<MiscMaterial>(m);
             if (material == MiscMaterial::Magic)
@@ -143,7 +143,7 @@ namespace castlecrawl::item
     {
         // weapons
 
-        for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Weapon::Count); ++i)
         {
             const auto type = static_cast<Weapon>(i);
 
@@ -154,7 +154,7 @@ namespace castlecrawl::item
                 EquipEffect{ .arc = 3, .dmg = 3 });
         }
 
-        for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Weapon::Count); ++i)
         {
             const auto type = static_cast<Weapon>(i);
 
@@ -165,7 +165,7 @@ namespace castlecrawl::item
                 EquipEffect{ .arc = 1, .str = 1, .dmg = 1 });
         }
 
-        for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Weapon::Count); ++i)
         {
             const auto type = static_cast<Weapon>(i);
 
@@ -246,7 +246,7 @@ namespace castlecrawl::item
 
         // armor
 
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
 
@@ -257,7 +257,7 @@ namespace castlecrawl::item
                 EquipEffect{ .acc = 3, .str = 3, .dmg = 3 });
         }
 
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
 
@@ -268,7 +268,7 @@ namespace castlecrawl::item
                 EquipEffect{ .acc = 1, .lck = 2, .str = 3 });
         }
 
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
 
@@ -279,7 +279,7 @@ namespace castlecrawl::item
                 EquipEffect{ .acc = 1, .str = 1 });
         }
 
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
 
@@ -290,7 +290,7 @@ namespace castlecrawl::item
                 EquipEffect{ .acc = 3, .str = 3 });
         }
 
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
 
@@ -301,7 +301,7 @@ namespace castlecrawl::item
                 EquipEffect{ .arc = 2, .lck = 2 });
         }
 
-        for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+        for (int i{ 0 }; i < static_cast<int>(Armor::Count); ++i)
         {
             const auto type = static_cast<Armor>(i);
 
