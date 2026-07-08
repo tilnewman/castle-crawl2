@@ -64,7 +64,6 @@ namespace castlecrawl::fight
         sf::Color backgroundColor{ rectangles.background.getFillColor() };
         backgroundColor.a = 64;
         rectangles.background.setFillColor(backgroundColor);
-
         rectangles.background.setSize({ cellSize.x, height });
 
         return rectangles;
