@@ -25,7 +25,6 @@ namespace castlecrawl
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
         void reset();
 
-        // returns true if the monster changed map position
         CreatureAction takeTurn(const Context & t_context, const std::size_t t_uniqueId);
 
         void draw(const Context & t_context, sf::RenderTarget & t_target, sf::RenderStates t_states)
