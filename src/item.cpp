@@ -26,7 +26,7 @@ namespace castlecrawl::item
         , m_useEffect{}
         , m_equipEffect{}
     {
-        setup();
+        setup(); // if default constructed items are suposed to be invalid then why bother with this?
     }
 
     Item::Item(const Weapon t_weapon, const WeaponMaterial t_material)
