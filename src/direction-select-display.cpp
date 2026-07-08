@@ -124,7 +124,6 @@ namespace castlecrawl
                     m_botRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
 
             m_arrowSpriteDown.setPosition(util::center(m_botRectangle.getGlobalBounds()));
-
             m_arrowSpriteDown.move({ 0.0f, -arrowMove });
         }
 
@@ -148,7 +147,6 @@ namespace castlecrawl
                     m_leftRectangle.getGlobalBounds(), arrowSpriteShrinkScale));
 
             m_arrowSpriteLeft.setPosition(util::center(m_leftRectangle.getGlobalBounds()));
-
             m_arrowSpriteLeft.move({ (arrowMove * 2.0f), 0.0f });
         }
 
