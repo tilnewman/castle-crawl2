@@ -431,7 +431,7 @@ namespace castlecrawl::item
         {
             std::ofstream fileStream("item-stats.csv", std::ios_base::trunc);
 
-            fileStream << "name,value,type,magical,Description\n";
+            fileStream << "name,value,type,magical,description\n";
 
             for (const Item & item : m_allItems)
             {
@@ -679,7 +679,7 @@ namespace castlecrawl::item
         if (t_item.isArmor())
         {
             M_CHECK(
-                (t_item.armorRating() >= 1_armor), "Armor item's amor_rating invalid: " << t_item);
+                (t_item.armorRating() >= 1_armor), "Armor item's armor_rating invalid: " << t_item);
 
             M_CHECK(
                 (t_item.armorMaterial() != ArmorMaterial::Count),
