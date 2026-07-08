@@ -50,7 +50,7 @@ namespace castlecrawl
 
         t_states.texture = &t_context.tile_images.texture();
         t_target.draw(m_floorBuffer, t_states);
-        t_target.draw(m_borderBuffer); // no states here because edge verts are solid black
+        t_target.draw(m_borderBuffer); // no t_states here because edge verts are solid black
         t_target.draw(m_objectBuffer, t_states);
     }
 
@@ -80,7 +80,7 @@ namespace castlecrawl
         };
 
         // anything except TileImage::Wall_Horiz works here
-        char prevObjectChar(tileImageToChar(TileImage::QuickMapEdge));
+        char prevObjectChar{ tileImageToChar(TileImage::QuickMapEdge) };
 
         // any TileImage works here because only using the position and size
         sf::Sprite edgeSprite = t_context.tile_images.sprite(t_context, TileImage::Lava);
@@ -89,7 +89,7 @@ namespace castlecrawl
         //
         // This causes some verts to be drawn outside of the t_context.layout.mapRect(),
         // so those verts will need to be adjusted after this loop -see below.
-        const float growScale = 0.25f;
+        const float growScale{ 0.25f };
 
         const float overlapDimm{ static_cast<float>(t_context.layout.cellSize().x) *
                                  (growScale * 0.5f) };
@@ -99,9 +99,9 @@ namespace castlecrawl
         // loop over map chars and for each map tile/object/shadow/etc append quad verts
         const sf::Vector2i mapSize = t_context.maps.current().size();
         sf::Vector2f screenPos     = t_context.layout.mapRect().position;
-        for (int y(0); y < mapSize.y; ++y)
+        for (int y{ 0 }; y < mapSize.y; ++y)
         {
-            for (int x(0); x < mapSize.x; ++x)
+            for (int x{ 0 }; x < mapSize.x; ++x)
             {
                 const MapCell cell = t_context.maps.current().cell({ x, y });
 
@@ -203,7 +203,7 @@ namespace castlecrawl
 
     void MapDisplay::appendLiquidEdgeVerts(const Context & t_context)
     {
-        // liquids, ice, etc. (anything that needs the stone edges drawn around it)
+        // anything that needs the stone edges drawn around it
         auto isLiquid = [](const char ch) {
             return (
                 (ch == tileImageToChar(TileImage::Lava)) ||
@@ -223,9 +223,9 @@ namespace castlecrawl
 
         const sf::Vector2i mapSize = t_context.maps.current().size();
         sf::Vector2f screenPos     = t_context.layout.mapRect().position;
-        for (int y(0); y < mapSize.y; ++y)
+        for (int y{ 0 }; y < mapSize.y; ++y)
         {
-            for (int x(0); x < mapSize.x; ++x)
+            for (int x{ 0 }; x < mapSize.x; ++x)
             {
                 // chars in all directions
                 const char ch{ getChar(x, y) };
