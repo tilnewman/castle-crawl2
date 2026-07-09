@@ -20,10 +20,14 @@ namespace castlecrawl
         PlayerDisplay();
 
         void setup(const Context & t_context);
+
         [[nodiscard]] inline const MapPos_t position() const noexcept { return m_mapPos; }
         void position(const Context & t_context, const MapPos_t & t_newPosition);
+        
         void update(const Context & t_context, const float t_elapsedSec);
+        
         constexpr void shake() noexcept { m_isShaking = true; }
+        
         void bloodSplatStart(const Context & t_context);
         constexpr void bloodSplatStop() noexcept { m_splatTimeSec = 0.0f; }
 
@@ -45,4 +49,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // PLAYER_HPP_INCLUDED
+#endif // PLAYERDISPLAY_HPP_INCLUDED
