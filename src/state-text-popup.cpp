@@ -38,7 +38,7 @@ namespace castlecrawl
             "State TextPopup was switched to but there was no TextPopupInfo!");
 
         util::TextureLoader::load(
-            m_paperTexture, (t_context.config.media_path / "image/old-paper.png"), true);
+            m_paperTexture, (t_context.config.media_path / "image" / "old-paper.png"), true);
 
         m_paperSprite.setTexture(m_paperTexture, true);
 
@@ -55,8 +55,8 @@ namespace castlecrawl
             m_info.will_center_justify,
             m_info.color);
 
-        const sf::FloatRect accentRect = util::scaleRectInPlaceCopy(
-            region, (1.0f - t_context.config.text_inner_pad_ratio));
+        const sf::FloatRect accentRect =
+            util::scaleRectInPlaceCopy(region, (1.0f - t_context.config.text_inner_pad_ratio));
 
         m_accentImage.setup(t_context, accentRect);
     }
