@@ -36,7 +36,7 @@ namespace castlecrawl
         , m_nameText{ util::SfmlDefaults::instance().font() }
         , m_valueText{ util::SfmlDefaults::instance().font() }
     {
-        const float pad = (t_context.layout.screenRegion().size.x * 0.01f);
+        const float pad{ t_context.layout.screenRegion().size.x * 0.01f };
 
         m_nameText = t_context.fonts.makeText(FontSize::Medium, m_name);
         util::centerInside(m_nameText, m_rect);
@@ -86,7 +86,7 @@ namespace castlecrawl
             { ((botRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
               (botRect.position.y + pad) });
 
-        // sub tittle text
+        // sub title text
         m_subTitleText = t_context.fonts.makeText(
             FontSize::Medium,
             "You may have died, but take a moment to look at some achievments.",
