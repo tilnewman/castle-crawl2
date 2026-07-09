@@ -29,12 +29,7 @@ namespace castlecrawl
     struct TextPopupInfo
     {
         TextPopupInfo()
-            : message{ "" }
-            , map_pos{ -1, -1 } // both must be negative to be invalid
-            , will_advance_turn{ false }
-            , will_center_justify{ true }
-            , color{ sf::Color::Black }
-            , font_size{ FontSize::Medium }
+            : TextPopupInfo("", invalidMapPos, false, true, sf::Color::Black, FontSize::Medium)
         {}
 
         TextPopupInfo(
