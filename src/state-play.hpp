@@ -48,7 +48,7 @@ namespace castlecrawl
 
       private:
         Mouseover m_mouseover;
-        std::size_t m_monsterUniqueId;
+        std::size_t m_monsterUniqueId; // which monster is currently taking its turn
     };
 
 } // namespace castlecrawl
