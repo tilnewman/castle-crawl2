@@ -77,11 +77,10 @@ namespace castlecrawl
 
         // establish how tall the stats rows will be
         // the "Dy" string reachees typically high and low to estimate typical text
-        // use m_strTitleText but any sf::Text object would work
-        m_strTitleText = t_context.fonts.makeText(FontSize::Medium, "Dy");
+        const sf::Text statTextHeightHelper = t_context.fonts.makeText(FontSize::Medium, "Dy");
 
-        const float statRowHeight{ m_strTitleText.getGlobalBounds().size.y +
-                                   (m_strTitleText.getGlobalBounds().size.y * 0.17f) };
+        const float statRowHeight{ statTextHeightHelper.getGlobalBounds().size.y +
+                                   (statTextHeightHelper.getGlobalBounds().size.y * 0.17f) };
 
         // setup the stats box background rectangle
         m_statRectangle.setFillColor(sf::Color(255, 255, 255, 32));
