@@ -21,7 +21,7 @@ namespace castlecrawl
         NpcManager();
 
         void add(const Context & t_context, const MapPos_t & t_mapPos, const char t_mapChar);
-        inline void reset() { m_npcs.clear(); }
+        inline void reset() noexcept { m_npcs.clear(); }
 
         // returns true if any monsters change map position
         bool takeTurns(const Context & t_context);
