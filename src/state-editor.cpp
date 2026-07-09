@@ -82,9 +82,7 @@ namespace castlecrawl
                 tileImageToChar(TileImage::QuickMapEdge)));
 
         resetMap(t_context);
-        t_context.anim
-            .clear(); // clear these in case there were any loaded with the first playable map
-
+        
         //
         m_editRectangle.setFillColor(m_dragBoxColor);
         m_editRectangle.setOutlineColor(sf::Color(0, 255, 255));
