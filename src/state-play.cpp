@@ -135,7 +135,7 @@ namespace castlecrawl
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                // TODO remove after testing, quit exit with one keypress for easier testing
+                // TODO remove after testing, quit with one keypress for easier testing
                 t_context.state.setChangePending(State::Quit);
             }
             else if (keyPtr->control && (keyPtr->scancode == sf::Keyboard::Scancode::S))
@@ -243,10 +243,6 @@ namespace castlecrawl
                 }
             }
             // todo remove these after testing
-            else if (keyPtr->scancode == sf::Keyboard::Scancode::A)
-            {
-                t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
-            }
             else if (keyPtr->scancode == sf::Keyboard::Scancode::B)
             {
                 t_context.player.experinceAdj(50);
