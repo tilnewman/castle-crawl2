@@ -407,12 +407,12 @@ namespace castlecrawl
                 t_context.sfx.play("flute");
                 t_context.anim.musicalNotes().add(t_context, t_context.player_display.position());
                 t_context.state.setChangePending(State::Play);
-                // TODO set the interaction for nearby targets?  Something anyway...
+                // TODO perform the interaction for all nearby targets
                 return;
             }
             else
             {
-                // TODO use all the other items
+                // TODO use all the other useable items
             }
         }
         else if (keyPtr->scancode == sf::Keyboard::Scancode::E)
