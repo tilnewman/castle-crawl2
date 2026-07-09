@@ -480,7 +480,7 @@ namespace castlecrawl
                 m_errorText.setString("");
             }
         }
-        
+
         if (m_isAnimatingCategorySelection)
         {
             m_categoryAnimTimerSec += t_elapsedSec;
@@ -642,6 +642,7 @@ namespace castlecrawl
         }
         else
         {
+            // there should always be a focused category, but if not, default to the left-most, fire
             m_fireRectangleUPtr->setFocus(t_context, true);
             return m_fireRectangleUPtr;
         }
