@@ -44,7 +44,7 @@ namespace util
         static void dumpInfo(const castlecrawl::Context & t_context);
 
       private:
-        static inline std::map<std::string, TextureRecord> m_pathRecordtMap;
+        static inline std::map<std::string, TextureRecord> m_pathRecordMap;
     };
 
 } // namespace util

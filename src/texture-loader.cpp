@@ -28,7 +28,7 @@ namespace util
         {
             t_texture.setSmooth(t_willSmooth);
 
-            TextureRecord & record = m_pathRecordtMap[t_pathStr];
+            TextureRecord & record = m_pathRecordMap[t_pathStr];
             ++record.loads;
             record.size = t_texture.getSize();
 
@@ -63,13 +63,13 @@ namespace util
         };
 
         std::vector<Record> records;
-        records.reserve(m_pathRecordtMap.size());
+        records.reserve(m_pathRecordMap.size());
 
         std::size_t totalLoadCount        = 0;
         std::size_t uniqueMemoryByteCount = 0;
         std::size_t uniqueFileByteCount   = 0;
         std::size_t longestFilename       = 0;
-        for (const auto & pathCountPair : m_pathRecordtMap)
+        for (const auto & pathCountPair : m_pathRecordMap)
         {
             totalLoadCount += pathCountPair.second.loads;
 
@@ -107,7 +107,7 @@ namespace util
             records.push_back(record);
         }
 
-        ss << m_pathRecordtMap.size() << " textures (" << (uniqueMemoryByteCount / 1'000_st)
+        ss << m_pathRecordMap.size() << " textures (" << (uniqueMemoryByteCount / 1'000_st)
            << "k in memeory)  (" << (uniqueFileByteCount / 1'000_st) << "k on disk) were loaded "
            << totalLoadCount << " times:";
 
