@@ -39,7 +39,7 @@ namespace castlecrawl
         m_rectangle.setPosition(m_rect.position);
         m_rectangle.setOutlineThickness(0.0f);
 
-        const float pad = (t_context.layout.screenRegion().size.x * 0.01f);
+        const float pad{ t_context.layout.screenRegion().size.x * 0.01f };
 
         m_nameText = t_context.fonts.makeText(FontSize::Medium, m_name);
         util::centerInside(m_nameText, m_rect);
