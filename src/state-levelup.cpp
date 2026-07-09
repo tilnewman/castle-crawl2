@@ -184,7 +184,7 @@ namespace castlecrawl
             { ((botRect.size.x * 0.5f) - (m_titleText.getGlobalBounds().size.x * 0.5f)),
               (botRect.position.y + pad) });
 
-        // sub tittle text
+        // sub title text
         std::string subTitleStr =
             "Congradulations!  You have earned enough experience to advance to level ";
 
