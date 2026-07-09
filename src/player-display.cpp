@@ -38,7 +38,7 @@ namespace castlecrawl
     void PlayerDisplay::position(const Context & t_context, const MapPos_t & t_newPosition)
     {
         // Assert player in a valid position?
-        // No, because map transitions are intentionally invalid positions (one value is negative)
+        // No, because map transitions are intentionally invalid positions
 
         m_isShaking = false;
         m_mapPos    = t_newPosition;
