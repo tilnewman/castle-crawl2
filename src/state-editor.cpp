@@ -82,6 +82,8 @@ namespace castlecrawl
                 tileImageToChar(TileImage::QuickMapEdge)));
 
         resetMap(t_context);
+        t_context.anim
+            .clear(); // clear these in case there were any loaded with the first playable map
 
         //
         m_editRectangle.setFillColor(m_dragBoxColor);
@@ -101,9 +103,6 @@ namespace castlecrawl
 
         m_keyText  = t_context.fonts.makeText(FontSize::Small, "", sf::Color::White);
         m_fadeText = t_context.fonts.makeText(FontSize::Large, "", sf::Color::Transparent);
-
-        // clear these in case there were any loaded with the first playable map
-        t_context.anim.clear();
 
         const sf::Vector2f cellSize = t_context.layout.cellSize();
 
@@ -413,7 +412,7 @@ namespace castlecrawl
             t_target.draw(m_dragSelectedRectangle, t_states);
         }
 
-        // draw in reverse order so the description text is visible at the top
+        // draw in right-left order so the description text at the top of the button is not clipped
         m_monsterButton11.draw(t_target, t_states);
         m_monsterButton10.draw(t_target, t_states);
         m_monsterButton9.draw(t_target, t_states);
@@ -601,7 +600,7 @@ namespace castlecrawl
             return;
         }
 
-        // all remaining events are key pressed events
+        // all remaining handled events are key pressed events
         if (!t_event.is<sf::Event::KeyPressed>())
         {
             return;
