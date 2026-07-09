@@ -39,7 +39,7 @@ namespace castlecrawl
             !m_lookEvent.empty(), "State LookEvent was switched to but there was no LookEvent!");
 
         util::TextureLoader::load(
-            m_paperTexture, (t_context.config.media_path / "image/old-paper.png"), true);
+            m_paperTexture, (t_context.config.media_path / "image" / "old-paper.png"), true);
 
         m_paperSprite.setTexture(m_paperTexture, true);
 
