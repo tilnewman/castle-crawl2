@@ -117,9 +117,9 @@ namespace castlecrawl
         float m_errorTimerSec;
         sf::Text m_descriptionText;
         sf::Text m_instructionText;
-        sf::Sprite m_categroyAnimSprite;
+        sf::Sprite m_categoryAnimSprite;
         bool m_isAnimatingCategorySelection;
-        float m_gategoryAnimTimerSec;
+        float m_categoryAnimTimerSec;
     };
 
 } // namespace castlecrawl

@@ -255,9 +255,9 @@ namespace castlecrawl
         , m_errorTimerSec{ 0.0f }
         , m_descriptionText{ util::SfmlDefaults::instance().font() }
         , m_instructionText{ util::SfmlDefaults::instance().font() }
-        , m_categroyAnimSprite{ util::SfmlDefaults::instance().texture() }
+        , m_categoryAnimSprite{ util::SfmlDefaults::instance().texture() }
         , m_isAnimatingCategorySelection{ false }
-        , m_gategoryAnimTimerSec{ 0.0f }
+        , m_categoryAnimTimerSec{ 0.0f }
     {}
 
     void StateCast::onEnter(const Context & t_context)
@@ -480,25 +480,25 @@ namespace castlecrawl
                 m_errorText.setString("");
             }
         }
-
+        
         if (m_isAnimatingCategorySelection)
         {
-            m_gategoryAnimTimerSec += t_elapsedSec;
+            m_categoryAnimTimerSec += t_elapsedSec;
             const float categoryAnimDuration{ 0.5f };
-            if (m_gategoryAnimTimerSec < categoryAnimDuration)
+            if (m_categoryAnimTimerSec < categoryAnimDuration)
             {
                 const int alpha{
-                    255 - util::map(m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 192, 255)
+                    255 - util::map(m_categoryAnimTimerSec, 0.0f, categoryAnimDuration, 192, 255)
                 };
 
-                sf::Color color{ m_categroyAnimSprite.getColor() };
+                sf::Color color{ m_categoryAnimSprite.getColor() };
                 color.a = static_cast<uint8_t>(alpha);
-                m_categroyAnimSprite.setColor(color);
+                m_categoryAnimSprite.setColor(color);
 
                 const float scale{ util::map(
-                    m_gategoryAnimTimerSec, 0.0f, categoryAnimDuration, 1.0f, 3.0f) };
+                    m_categoryAnimTimerSec, 0.0f, categoryAnimDuration, 1.0f, 3.0f) };
 
-                m_categroyAnimSprite.setScale({ scale, scale });
+                m_categoryAnimSprite.setScale({ scale, scale });
             }
             else
             {
@@ -534,7 +534,7 @@ namespace castlecrawl
             if (m_isAnimatingCategorySelection)
             {
                 t_states.blendMode = sf::BlendAdd;
-                t_target.draw(m_categroyAnimSprite, t_states);
+                t_target.draw(m_categoryAnimSprite, t_states);
                 t_states.blendMode = sf::BlendAlpha;
             }
         }
@@ -667,13 +667,13 @@ namespace castlecrawl
                 return;
             }
 
-            m_categroyAnimSprite = focusedCategory(t_context)->sprite;
+            m_categoryAnimSprite = focusedCategory(t_context)->sprite;
 
-            m_categroyAnimSprite.setPosition(
-                m_categroyAnimSprite.getGlobalBounds().position +
-                (m_categroyAnimSprite.getGlobalBounds().size * 0.5f));
+            m_categoryAnimSprite.setPosition(
+                m_categoryAnimSprite.getGlobalBounds().position +
+                (m_categoryAnimSprite.getGlobalBounds().size * 0.5f));
 
-            util::setOriginToCenter(m_categroyAnimSprite);
+            util::setOriginToCenter(m_categoryAnimSprite);
 
             m_isAnimatingCategorySelection = true;
             t_context.sfx.play("gui-twing");
