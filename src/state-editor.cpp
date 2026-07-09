@@ -1142,9 +1142,9 @@ namespace castlecrawl
         sf::Vector2f topLeft{ -1.0f, -1.0f };
         sf::Vector2f botRight{ -1.0f, -1.0f };
         sf::Vector2f screenPos = mapRect.position;
-        for (int y(0); y < mapSize.y; ++y)
+        for (int y{ 0 }; y < mapSize.y; ++y)
         {
-            for (int x(0); x < mapSize.x; ++x)
+            for (int x{ 0 }; x < mapSize.x; ++x)
             {
                 const sf::FloatRect screenRect{ screenPos, t_context.layout.cellSize() };
 
