@@ -36,12 +36,12 @@ namespace util
         }
         else
         {
-            // SFML already prints a very nice message including paths upon failure
+            // SFML already prints a very nice message including paths upon loadFromFile() failure
 
             static const sf::Image image({ 64, 64 }, sf::Color::Red);
             if (!t_texture.loadFromImage(image))
             {
-                std::clog << "Not even the default solid red image could be loaded!\n";
+                std::cerr << "Not even the default solid red image could be loaded!\n";
             }
 
             return false;
