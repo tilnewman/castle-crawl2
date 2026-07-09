@@ -49,6 +49,7 @@ namespace castlecrawl
 
     void StateDeath::update(const Context & t_context, const float t_elapsedSec)
     {
+        // this allows any previously playing animations to continue during this fade out state
         t_context.anim.update(t_context, t_elapsedSec);
 
         if (m_fadeRedRectangle.getFillColor().a < 255)
