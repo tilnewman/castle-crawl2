@@ -27,7 +27,7 @@ namespace castlecrawl
 {
 
     StateManager::StateManager()
-        : m_stateUPtr(factory(State::Init))
+        : m_stateUPtr{ factory(State::Init) }
     {}
 
     void StateManager::change(const Context & t_context)
