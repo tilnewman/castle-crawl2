@@ -29,7 +29,7 @@ namespace castlecrawl
     struct TextPopupInfo
     {
         TextPopupInfo()
-            : TextPopupInfo("", invalidMapPos, false, true, sf::Color::Black, FontSize::Medium)
+            : TextPopupInfo("", invalidMapPos, false)
         {}
 
         TextPopupInfo(
