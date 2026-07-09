@@ -920,7 +920,7 @@ namespace castlecrawl
 
     void StateEditor::resetMap(const Context & t_context)
     {
-        // using MapName::Level_1_Cell but any would work here
+        // using MapName::Level_1_Cell but any would work here because it will be ignored
         Map map(MapName::Level_1_Cell, t_context, m_floor, m_mapChars, MapTransitions_t{});
         t_context.maps.forceMapForEditting(t_context, map);
     }
