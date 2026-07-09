@@ -37,7 +37,6 @@ namespace castlecrawl
 
       private:
         void handleSelectDirection(const Context & t_context, const sf::Keyboard::Scancode t_key);
-        void look(const Context & t_context, const MapPos_t & t_pos);
 
       private:
         bool m_isDirectionSelected;
