@@ -420,7 +420,8 @@ namespace castlecrawl
             if (!m_unListboxUPtr->getFocus())
             {
                 showErrorText(
-                    t_context, "First press the left arrow key to select an unequipped item.");
+                    t_context,
+                    "First press the left arrow key to select an unequipped item to equip.");
 
                 return;
             }
@@ -459,7 +460,8 @@ namespace castlecrawl
             if (!m_eqListboxUPtr->getFocus())
             {
                 showErrorText(
-                    t_context, "First press the right arrow key to select an equipped item.");
+                    t_context,
+                    "First press the right arrow key to select an equipped item to unequip.");
 
                 return;
             }
