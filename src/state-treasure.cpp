@@ -30,12 +30,12 @@ namespace castlecrawl
     item::Treasure StateTreasure::m_treasure;
 
     StateTreasure::StateTreasure()
-        : m_fadeRectangle()
-        , m_itemListboxUPtr()
-        , m_titleText(util::SfmlDefaults::instance().font())
-        , m_descText(util::SfmlDefaults::instance().font())
-        , m_itemDescText(util::SfmlDefaults::instance().font())
-        , m_helpText(util::SfmlDefaults::instance().font())
+        : m_fadeRectangle{}
+        , m_itemListboxUPtr{}
+        , m_titleText{ util::SfmlDefaults::instance().font() }
+        , m_descText{ util::SfmlDefaults::instance().font() }
+        , m_itemDescText{ util::SfmlDefaults::instance().font() }
+        , m_helpText{ util::SfmlDefaults::instance().font() }
     {}
 
     void StateTreasure::onEnter(const Context & t_context)
@@ -224,9 +224,10 @@ namespace castlecrawl
             }
         }
 
-        m_itemDescText.setPosition({ ((t_context.layout.screenRegion().size.x * 0.5f) -
-                                      (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
-                                     util::bottom(*m_itemListboxUPtr) });
+        m_itemDescText.setPosition(
+            { ((t_context.layout.screenRegion().size.x * 0.5f) -
+               (m_itemDescText.getGlobalBounds().size.x * 0.5f)),
+              util::bottom(*m_itemListboxUPtr) });
     }
 
 } // namespace castlecrawl
